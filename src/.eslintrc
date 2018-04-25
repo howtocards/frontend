@@ -1,0 +1,16 @@
+{
+  "extends": "@atomix/react",
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": [
+          "../node_modules",
+          "./"
+        ]
+      }
+    }
+  },
+  "rules": {
+    "react/sort-comp": "off"
+  }
+}

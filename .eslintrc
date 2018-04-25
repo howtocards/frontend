@@ -1,0 +1,8 @@
+{
+  "parser": "babel-eslint",
+  "extends": "@atomix/eslint-config",
+  "env": {
+    "browser": true,
+    "es6": true
+  }
+}
