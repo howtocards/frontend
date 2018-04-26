@@ -7,7 +7,9 @@
     "test": "npm run test:eslint",
     "test:eslint": "eslint .",
     "prepush": "npm run test:eslint",
-    "precommit": "npm run test:eslint"
+    "precommit": "npm run test:eslint",
+    "build:prod": "NODE_ENV=production webpack-cli",
+    "dev": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -43,6 +45,7 @@
     "react-hot-loader": "^4.1.2",
     "react-svg-loader": "^2.1.0",
     "rimraf": "^2.6.2",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.15",
     "webpack-dev-server": "^3.1.3",
@@ -67,6 +70,7 @@
     "redux-symbiote": "^2.0.3",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
+    "styled-jss": "^2.2.2",
     "symbiote-fetching": "^0.3.2",
     "validator": "^9.4.1"
   },

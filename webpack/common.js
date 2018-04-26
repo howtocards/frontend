@@ -3,9 +3,6 @@ process.title = 'howtocards:webpack'
 const { cpus } = require('os')
 const { resolve } = require('path')
 const {
-  // optimize: {
-  //   CommonsChunkPlugin,
-  // },
   NoEmitOnErrorsPlugin,
   EnvironmentPlugin,
 } = require('webpack')
@@ -71,8 +68,7 @@ const config = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [
-          // 'happypack/loader',
-          'babel-loader',
+          'happypack/loader',
         ],
       },
       {
@@ -86,26 +82,10 @@ const config = {
 
   plugins: [
     new NoEmitOnErrorsPlugin(),
-    // new HappyPack({
-    //   threads: cpus().length,
-    //   loaders: ['babel-loader'],
-    // }),
-    // new CommonsChunkPlugin({
-    //   name: 'vendor',
-    //   chunks: ['index'],
-    //   filename: IS_DEV ? '[name].js' : '[name]-[chunkhash].js',
-    //   minChunks: (module) => module.context && module.context.indexOf('node_modules') !== -1,
-    // }),
-    // new CommonsChunkPlugin({
-    //   name: 'index',
-    //   filename: IS_DEV ? '[name].js' : '[name]-[chunkhash].js',
-    //   children: true,
-    //   minChunks: 2,
-    // }),
-    // new CommonsChunkPlugin({
-    //   name: 'manifest',
-    //   minChunks: Infinity,
-    // }),
+    new HappyPack({
+      threads: cpus().length,
+      loaders: ['babel-loader'],
+    }),
     new EnvironmentPlugin({
       NODE_ENV: process.env.NODE_ENV || 'development',
     }),
@@ -116,10 +96,7 @@ const config = {
     }),
   ],
 
-  // stats: {
-  //   colors: true,
-  //   children: false,
-  // },
+  stats: 'errors-only',
 }
 
 

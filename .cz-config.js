@@ -44,6 +44,7 @@ module.exports = {
     globMap('src/features/*/features/*', (path) => path.replace('src/', '').replace(/\/features\//, '/')),
     globMap('src/ui/*/', (path) => path.replace(/^src\//, '')),
     [
+      'app',
       'features',
       'ui',
     ]

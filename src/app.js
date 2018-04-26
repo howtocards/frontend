@@ -5,6 +5,6 @@ import { BrowserRouter } from 'react-router-dom'
 
 export const App = hot(module)(() => (
   <BrowserRouter>
-    <div>Hello world!</div>
+    <div>Hello world</div>
   </BrowserRouter>
 ))

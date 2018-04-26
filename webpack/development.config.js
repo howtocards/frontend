@@ -22,13 +22,11 @@ module.exports = merge(config, {
     pathinfo: true,
   },
 
-  performance: {
-    hints: false,
-  },
+  performance: false,
 
   plugins: [
     new LoaderOptionsPlugin({
-      debug: true,
+      // debug: true,
       minimize: false,
     }),
 
@@ -37,31 +35,15 @@ module.exports = merge(config, {
     }),
 
     new NamedModulesPlugin(),
-
     new HotModuleReplacementPlugin(),
   ],
+
+  stats: false,
 
   devServer: {
     contentBase: resolve(__dirname, '..', 'public'),
     port: 3001,
     hot: true,
-    // noInfo: true,
-    // historyApiFallback: true,
-    // inline: false,
-    // stats: {
-    //   colors: true,
-    //   chunks: false,
-    //   children: false,
-    // },
-    // watchOptions: {
-    //   aggregateTimeout: 300,
-    //   poll: true,
-    // },
-    stats: false,
+    stats: 'minimal',
   },
 })
-
-// module.exports.entry = {
-//   index: ['react-hot-loader/patch'].concat(config.entry.index),
-//   polyfill: ['react-hot-loader/patch'].concat(config.entry.polyfill),
-// }
