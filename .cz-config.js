@@ -39,7 +39,7 @@ module.exports = {
     { value: 'WIP', name: 'WIP:      Work in progress' },
   ],
   scopes: [].concat(
-    globMap('src/*/').filter(exclude(['/features', '/ui'])),
+    globMap('src/*/', (path) => path.replace(/src\//, '')).filter(exclude(['/features', '/ui'])),
     globMap('src/features/*/', (path) => path.replace('src/', '')),
     globMap('src/features/*/features/*', (path) => path.replace('src/', '').replace(/\/features\//, '/')),
     globMap('src/ui/*/', (path) => path.replace(/^src\//, '')),
