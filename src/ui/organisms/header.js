@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-jss'
+import { Link } from 'react-router-dom'
 
 import { Container } from 'ui/templates'
 
@@ -14,14 +15,13 @@ const HeaderBox = styled('header')(
     padding: '1rem 0',
     zIndex: 1000,
     '& > div > * + *': {
-      marginLeft: '1rem',
+      marginLeft: '2rem',
     },
   },
   ({ theme }) => theme.embed.card,
 )
 
 const SearchBox = styled('div')({
-  padding: '0 2rem',
   flexGrow: 1,
   display: 'flex',
   alignItems: 'stretch',
@@ -42,20 +42,28 @@ const SearchInput = styled('input')(
   ({ theme }) => theme.embed.canvas,
 )
 
-const Navigation = styled('nav')({
-  display: 'flex',
-  flexFlow: 'row nowrap',
-})
+const NavItem = styled(Link)(
+  {
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    alignItems: 'center',
+    fontSize: '1.4rem',
+    cursor: 'pointer',
+    textDecoration: 'none',
+    fontWeight: '600',
+  },
+  ({ theme }) => ({ color: theme.embed.card.color }),
+)
 
 export const Header = ({ children }) => (
   <HeaderBox>
-    <Container wide>
+    <Container>
+      <NavItem to="/">HowToCards</NavItem>
       <SearchBox>
         <SearchInput autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" />
       </SearchBox>
-      <Navigation>
-        Menu
-      </Navigation>
+      <NavItem to="/feed">Feed</NavItem>
+      <NavItem to="/table">Table</NavItem>
     </Container>
   </HeaderBox>
 )
