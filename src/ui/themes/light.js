@@ -8,13 +8,14 @@ const palette = {
 }
 
 const embed = {
+  link: {
+    color: material.palette.Grey['900'],
+  },
   card: {
     ...createEmbed('White'),
     borderColor: material.palette.Black.Dividers,
   },
-  canvas: {
-    ...createEmbed('Blue Grey', '50'),
-  },
+  canvas: createEmbed('Blue Grey', '50'),
 }
 
 export const lightTheme = {

@@ -42,18 +42,19 @@ const SearchInput = styled('input')(
   ({ theme }) => theme.embed.canvas,
 )
 
-const NavItem = styled(Link)(
-  {
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    alignItems: 'center',
-    fontSize: '1.4rem',
-    cursor: 'pointer',
-    textDecoration: 'none',
-    fontWeight: '600',
+const NavItem = styled(Link)(({ theme }) => ({
+  ...theme.embed.link,
+  display: 'flex',
+  flexFlow: 'row nowrap',
+  alignItems: 'center',
+  fontSize: '1.4rem',
+  cursor: 'pointer',
+  textDecoration: 'none',
+  fontWeight: '600',
+  '&:hover': {
+    color: '#ff0000',
   },
-  ({ theme }) => ({ color: theme.embed.card.color }),
-)
+}))
 
 export const Header = ({ children }) => (
   <HeaderBox>
