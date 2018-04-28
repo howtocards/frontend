@@ -11,10 +11,10 @@ import { Container } from 'ui/templates'
 const HeaderBox = styled.header`
   border-bottom: 1px solid;
   display: flex;
-  height: 6rem;
+  height: 7rem;
   justify-content: center;
-  padding: 1rem 0;
   z-index: 1000;
+  box-sizing: border-box;
 
   & > div > * + * {
     margin-left: 2rem;
@@ -27,6 +27,7 @@ const SearchBox = styled.div`
   flex-grow: 1;
   display: flex;
   align-items: stretch;
+  padding: 1rem 0;
 `
 
 const SearchInput = styled.input`
@@ -51,6 +52,11 @@ const NavItem = styled.div`
   cursor: pointer;
   text-decoration: none;
   font-weight: 600;
+  user-select: none;
+
+  &:hover {
+    color: ${({ theme }) => theme.palette.primary.initial};
+  }
 
   ${({ theme }) => theme.embed.link}
 `
@@ -69,8 +75,8 @@ export const Header = ({ children }) => (
       <NavLink to="/table">Table</NavLink>
       <NavLink to="/join">Join</NavLink>
       <ToggleThemeConsumer>
-        {({ toggleDark }) => (
-          <NavItem onClick={toggleDark}>Toggle</NavItem>
+        {({ toggleDark, dark }) => (
+          <NavItem onClick={toggleDark}>{dark ? 'Lumos' : 'Nox'}</NavItem>
         )}
       </ToggleThemeConsumer>
     </Container>

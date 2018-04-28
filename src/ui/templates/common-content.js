@@ -6,5 +6,5 @@ export const CommonContent = styled.div`
   justify-content: center;
   flex-grow: 1;
   overflow-y: auto;
-  ${({ theme }) => theme.embed.card}
+  ${({ theme }) => theme.embed.canvas}
 `

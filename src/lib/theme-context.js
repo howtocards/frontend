@@ -8,6 +8,8 @@ const ThemeContext = createContext({
   toggleDark: () => {},
 })
 
+const getCurrentTheme = () => String(localStorage.getItem('dark-theme')) === 'true'
+
 /* eslint-disable react/no-unused-state, react/forbid-prop-types */
 export class ToggleThemeProvider extends PureComponent {
   static propTypes = {
@@ -16,14 +18,16 @@ export class ToggleThemeProvider extends PureComponent {
     children: PropTypes.node.isRequired,
   }
 
-  state = {
-    dark: false,
-    toggleDark: this.toggleDark,
+  toggleDark = () => {
+    this.setState((prevState) => {
+      localStorage.setItem('dark-theme', String(!prevState.dark))
+      return { dark: !prevState.dark }
+    })
   }
 
-  toggleDark = () => {
-    console.log('toggle dark')
-    this.setState((prevState) => ({ dark: !prevState.dark }))
+  state = {
+    dark: getCurrentTheme(),
+    toggleDark: this.toggleDark,
   }
 
   render() {
