@@ -1,70 +1,78 @@
 import React from 'react'
-import styled from 'styled-jss'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
+import { ToggleThemeConsumer } from 'lib/theme-context'
 import { Container } from 'ui/templates'
+
 
 // https://codepen.io/anon/pen/PebeaL
 
-const HeaderBox = styled('header')(
-  {
-    borderBottom: '1px solid',
-    display: 'flex',
-    height: '6rem',
-    justifyContent: 'center',
-    padding: '1rem 0',
-    zIndex: 1000,
-    '& > div > * + *': {
-      marginLeft: '2rem',
-    },
-  },
-  ({ theme }) => theme.embed.card,
-)
+const HeaderBox = styled.header`
+  border-bottom: 1px solid;
+  display: flex;
+  height: 6rem;
+  justify-content: center;
+  padding: 1rem 0;
+  z-index: 1000;
 
-const SearchBox = styled('div')({
-  flexGrow: 1,
-  display: 'flex',
-  alignItems: 'stretch',
-})
+  & > div > * + * {
+    margin-left: 2rem;
+  }
 
-const SearchInput = styled('input')(
-  {
-    appearance: 'none',
-    border: 'none',
-    borderRadius: '6px',
-    boxShadow: 'none',
-    boxSizing: 'border-box',
-    fontSize: '1.6rem',
-    outline: 'none',
-    width: '100%',
-    padding: '0 2rem',
-  },
-  ({ theme }) => theme.embed.canvas,
-)
+  ${({ theme }) => theme.embed.card}
+`
 
-const NavItem = styled(Link)(({ theme }) => ({
-  ...theme.embed.link,
-  display: 'flex',
-  flexFlow: 'row nowrap',
-  alignItems: 'center',
-  fontSize: '1.4rem',
-  cursor: 'pointer',
-  textDecoration: 'none',
-  fontWeight: '600',
-  '&:hover': {
-    color: '#ff0000',
-  },
-}))
+const SearchBox = styled.div`
+  flex-grow: 1;
+  display: flex;
+  align-items: stretch;
+`
+
+const SearchInput = styled.input`
+  appearance: none;
+  border: none;
+  border-radius: 6px;
+  box-shadow: none;
+  box-sizing: border-box;
+  font-size: 1.6rem;
+  outline: none;
+  width: 100%;
+  padding: 0 2rem;
+
+  ${({ theme }) => theme.embed.canvas}
+`
+
+const NavItem = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+
+  ${({ theme }) => theme.embed.link}
+`
+
+const NavLink = NavItem.withComponent(Link)
+
 
 export const Header = ({ children }) => (
   <HeaderBox>
     <Container>
-      <NavItem to="/">HowToCards</NavItem>
+      <NavLink to="/">HowToCards</NavLink>
       <SearchBox>
         <SearchInput autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" />
       </SearchBox>
-      <NavItem to="/feed">Feed</NavItem>
-      <NavItem to="/table">Table</NavItem>
+      <NavLink to="/feed">Feed</NavLink>
+      <NavLink to="/table">Table</NavLink>
+      <NavLink to="/join">Join</NavLink>
+      <ToggleThemeConsumer>
+        {({ toggleDark }) => (
+          <NavItem onClick={toggleDark}>Toggle</NavItem>
+        )}
+      </ToggleThemeConsumer>
     </Container>
   </HeaderBox>
 )

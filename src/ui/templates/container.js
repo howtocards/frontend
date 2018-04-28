@@ -1,11 +1,11 @@
-import styled from 'styled-jss'
+import styled from 'styled-components'
 
 
-export const Container = styled('div')({
-  maxWidth: '120rem',
-  width: '100%',
-  display: 'inherit',
-  flex: 'inherit',
-  flexFlow: 'inherit',
-  flexDirection: 'inherit',
-})
+export const Container = styled.div`
+  max-width: 120rem;
+  width: 100%;
+  display: inherit;
+  flex: inherit;
+  flex-flow: inherit;
+  flex-direction: inherit;
+`

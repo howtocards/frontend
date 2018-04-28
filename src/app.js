@@ -1,16 +1,17 @@
 import React from 'react'
 import { hot } from 'react-hot-loader'
 import { BrowserRouter } from 'react-router-dom'
-import { ThemeProvider } from 'styled-jss'
 
+import { ToggleThemeProvider } from 'lib/theme-context'
 import { Header } from 'ui/organisms'
 import { Container, CommonContent } from 'ui/templates'
 import { lightTheme } from 'ui/themes/light'
+import { darkTheme } from 'ui/themes/dark'
 
 
 export const App = hot(module)(() => (
   <BrowserRouter>
-    <ThemeProvider theme={lightTheme}>
+    <ToggleThemeProvider light={lightTheme} dark={darkTheme}>
       <React.Fragment>
         <Header>header</Header>
         <CommonContent>
@@ -19,6 +20,6 @@ export const App = hot(module)(() => (
           </Container>
         </CommonContent>
       </React.Fragment>
-    </ThemeProvider>
+    </ToggleThemeProvider>
   </BrowserRouter>
 ))

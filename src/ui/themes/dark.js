@@ -23,7 +23,7 @@ const embed = {
   `,
 }
 
-export const lightTheme = {
+export const darkTheme = {
   palette,
   embed,
 }

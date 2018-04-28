@@ -1,12 +1,10 @@
-import styled from 'styled-jss'
+import styled from 'styled-components'
 
 
-export const CommonContent = styled('div')(
-  {
-    display: 'flex',
-    justifyContent: 'center',
-    flexGrow: 1,
-    overflowY: 'auto',
-  },
-  ({ theme }) => theme.embed.canvas,
-)
+export const CommonContent = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  overflow-y: auto;
+  ${({ theme }) => theme.embed.card}
+`

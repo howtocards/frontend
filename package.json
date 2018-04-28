@@ -71,7 +71,7 @@
     "redux-symbiote": "^2.0.3",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
-    "styled-jss": "^2.2.2",
+    "styled-components": "^3.2.6",
     "symbiote-fetching": "^0.3.2",
     "validator": "^9.4.1"
   },
