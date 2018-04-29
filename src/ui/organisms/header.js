@@ -44,7 +44,7 @@ const SearchInput = styled.input`
   transition: box-shadow 120ms;
 
   &:focus {
-    box-shadow: 0 0 0 3px ${({ theme }) => theme.palette.primary.initial};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.palette.primary.initial.background};
   }
 
   ${({ theme }) => theme.embed.canvas}
@@ -61,7 +61,7 @@ const NavItem = styled.div`
   user-select: none;
 
   &:hover {
-    color: ${({ theme }) => theme.palette.primary.initial};
+    color: ${({ theme }) => theme.palette.primary.initial.background};
   }
 
   ${({ theme }) => theme.embed.link}
@@ -75,7 +75,13 @@ export const Header = () => (
     <Container>
       <NavLink to="/">HowToCards</NavLink>
       <SearchBox>
-        <SearchInput autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" />
+        <SearchInput
+          placeholder="Search..."
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
+        />
       </SearchBox>
       <NavLink to="/feed">Feed</NavLink>
       <NavLink to="/table">Table</NavLink>

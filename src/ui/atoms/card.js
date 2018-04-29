@@ -6,7 +6,9 @@ export const Card = styled.div`
   flex-flow: column;
   border: 1px solid;
   border-radius: 4px;
-  padding: 1rem;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
 
   ${({ theme }) => theme.embed.card}
 `

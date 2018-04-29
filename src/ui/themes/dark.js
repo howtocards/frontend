@@ -4,7 +4,11 @@ import { material, createEmbed } from 'lib/material-colors'
 
 const palette = {
   primary: {
-    initial: material.palette.Blue['300'],
+    initial: createEmbed('Blue', '300'),
+    hover: createEmbed('Blue', '500'),
+  },
+  decoration: {
+    borders: material.palette.White.Dividers,
   },
 }
 
@@ -15,12 +19,15 @@ const embed = {
   card: css`
     color: ${createEmbed('Blue Grey', '800').color};
     background-color: ${createEmbed('Blue Grey', '800').background};
-    border-color: ${material.palette.White.Dividers};
+    border-color: ${palette.decoration.borders};
   `,
   canvas: css`
     color: ${createEmbed('Blue Grey', '900').color};
     background-color: ${createEmbed('Blue Grey', '900').background};
   `,
+  button: {
+    primary: css``,
+  },
 }
 
 export const darkTheme = {

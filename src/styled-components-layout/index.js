@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
 
-const WithTag = ({ as: HtmlTagName, children, ...props }) => (
+export const WithTag = ({ as: HtmlTagName, children, ...props }) => (
   <HtmlTagName {...props}>
     {children}
   </HtmlTagName>
@@ -25,16 +25,18 @@ WithTag.defaultProps = {
 }
 
 const is = (value) => typeof value !== 'undefined'
+const prop = (value) => is(value) ? value : 'initial'
 
-const mixins = (props) => css`
-  flex-grow: ${is(props.grow) ? props.grow : 'initial'};
-  flex-shrink: ${is(props.shrink) ? props.shrink : 'initial'};
-  flex-basis: ${is(props.basis) ? props.basis : 'initial'};
-  padding: ${is(props.padding) ? props.padding : 'initial'};
-  align-items: ${is(props.align) ? props.align : 'initial'};
-  justify-content: ${is(props.justify) ? props.justify : 'initial'};
-  align-content: ${is(props.alignContent) ? props.alignContent : 'initial'};
-  order: ${is(props.order) ? props.order : 'initial'};
+export const mixins = (props) => css`
+  flex-grow: ${prop(props.grow)};
+  flex-shrink: ${prop(props.shrink)};
+  flex-basis: ${prop(props.basis)};
+  padding: ${prop(props.padding)};
+  align-items: ${prop(props.align)};
+  justify-content: ${prop(props.justify)};
+  align-content: ${prop(props.alignContent)};
+  order: ${prop(props.order)};
+  width: ${prop(props.width)};
 `
 
 export const Row = styled(WithTag)`
@@ -102,4 +104,9 @@ Row.propTypes = Col.propTypes = {
   alignContent: PropTypes.oneOf(['flex-start', 'flex-end', 'center', 'space-around', 'space-between', 'stretch']),
 
   order: PropTypes.number,
+
+  width: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
 }
