@@ -13,4 +13,4 @@ export const Container = styled.div`
   ${(p) => p['justify-content'] && `justify-content: ${p['justify-content']};`}
   ${(p) => p['align-content'] && `align-content: ${p['align-content']};`}
   ${(p) => p.padding && `padding: ${p.padding};`}
-`.extend.withConfig({ componentId: 'Container' })``
+`

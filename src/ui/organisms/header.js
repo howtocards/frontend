@@ -22,14 +22,14 @@ const HeaderBox = styled.header`
   }
 
   ${({ theme }) => theme.embed.card}
-`.extend.withConfig({ componentId: 'HeaderBox' })``
+`
 
 const SearchBox = styled.div`
   flex-grow: 1;
   display: flex;
   align-items: stretch;
   padding: 1.3rem 0;
-`.extend.withConfig({ componentId: 'SearchBox' })``
+`
 
 const SearchInput = styled.input`
   appearance: none;

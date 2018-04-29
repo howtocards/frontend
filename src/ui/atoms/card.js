@@ -9,4 +9,4 @@ export const Card = styled.div`
   padding: 1rem;
 
   ${({ theme }) => theme.embed.card}
-`.extend.withConfig({ componentId: 'Card' })``
+`
