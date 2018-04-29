@@ -26,7 +26,7 @@ module.exports = merge(config, {
 
   plugins: [
     new LoaderOptionsPlugin({
-      // debug: true,
+      debug: true,
       minimize: false,
     }),
 
@@ -45,5 +45,6 @@ module.exports = merge(config, {
     port: 3001,
     hot: true,
     stats: 'minimal',
+    historyApiFallback: true,
   },
 })

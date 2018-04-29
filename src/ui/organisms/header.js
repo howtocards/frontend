@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
@@ -21,14 +22,14 @@ const HeaderBox = styled.header`
   }
 
   ${({ theme }) => theme.embed.card}
-`
+`.extend.withConfig({ componentId: 'HeaderBox' })``
 
 const SearchBox = styled.div`
   flex-grow: 1;
   display: flex;
   align-items: stretch;
-  padding: 1rem 0;
-`
+  padding: 1.3rem 0;
+`.extend.withConfig({ componentId: 'SearchBox' })``
 
 const SearchInput = styled.input`
   appearance: none;
@@ -40,6 +41,11 @@ const SearchInput = styled.input`
   outline: none;
   width: 100%;
   padding: 0 2rem;
+  transition: box-shadow 120ms;
+
+  &:focus {
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.palette.primary.initial};
+  }
 
   ${({ theme }) => theme.embed.canvas}
 `
@@ -64,7 +70,7 @@ const NavItem = styled.div`
 const NavLink = NavItem.withComponent(Link)
 
 
-export const Header = ({ children }) => (
+export const Header = () => (
   <HeaderBox>
     <Container>
       <NavLink to="/">HowToCards</NavLink>
@@ -76,9 +82,10 @@ export const Header = ({ children }) => (
       <NavLink to="/join">Join</NavLink>
       <ToggleThemeConsumer>
         {({ toggleDark, dark }) => (
-          <NavItem onClick={toggleDark}>{dark ? 'Lumos' : 'Nox'}</NavItem>
+          <NavItem onClick={toggleDark}>{dark ? '🌔' : '☀️'}</NavItem>
         )}
       </ToggleThemeConsumer>
     </Container>
   </HeaderBox>
 )
+

@@ -4,7 +4,7 @@ import { material, createEmbed } from 'lib/material-colors'
 
 const palette = {
   primary: {
-    initial: material.palette.Blue['500'],
+    initial: material.palette.Blue['400'],
   },
 }
 

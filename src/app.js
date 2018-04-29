@@ -4,22 +4,22 @@ import { BrowserRouter } from 'react-router-dom'
 
 import { ToggleThemeProvider } from 'lib/theme-context'
 import { Header } from 'ui/organisms'
-import { Container, CommonContent } from 'ui/templates'
+import { CommonContent } from 'ui/templates'
 import { lightTheme } from 'ui/themes/light'
 import { darkTheme } from 'ui/themes/dark'
 
+import { rootRoutes } from './routes'
+
 
 export const App = hot(module)(() => (
-  <BrowserRouter>
-    <ToggleThemeProvider light={lightTheme} dark={darkTheme}>
+  <ToggleThemeProvider light={lightTheme} dark={darkTheme}>
+    <BrowserRouter>
       <React.Fragment>
-        <Header>header</Header>
+        <Header />
         <CommonContent>
-          <Container>
-            Hell
-          </Container>
+          {rootRoutes()}
         </CommonContent>
       </React.Fragment>
-    </ToggleThemeProvider>
-  </BrowserRouter>
+    </BrowserRouter>
+  </ToggleThemeProvider>
 ))
