@@ -13,8 +13,8 @@ export const JoinPage = () => (
         <Col gap="1rem">
           <H2>Welcome to HowToCards</H2>
           <H3>Find and save solution</H3>
-          <Input type="email" placeholder="Email" />
-          <Input type="password" placeholder="Password" />
+          <Input type="email" name="email" placeholder="Email" />
+          <Input type="password" name="password" placeholder="Password" />
           <Button.Primary type="submit">Continue</Button.Primary>
         </Col>
       </Card>
