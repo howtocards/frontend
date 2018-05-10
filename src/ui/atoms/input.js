@@ -15,9 +15,10 @@ export const Input = styled.input`
   background-color: white;
   transition: box-shadow 120ms, border-color 120ms;
   ${({ theme }) => theme.embed.card}
+  box-shadow: 0 0 0 1px ${({ theme }) => theme.palette.decoration.borders};
 
   &:focus {
-    box-shadow: 0 0 0 3px ${({ theme }) => theme.palette.primary.initial.background};
+    box-shadow: 0 0 0 1px ${({ theme }) => theme.palette.primary.initial.background};
     border-color: ${({ theme }) => theme.palette.primary.initial.background};
   }
 

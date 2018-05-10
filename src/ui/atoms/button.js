@@ -9,7 +9,7 @@ export const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
   outline: none;
-  transition: box-shadow 120ms, background-image 120ms;
+  transition: box-shadow 120ms;
   user-select: none;
 
   ${({ theme }) => theme.embed.button.primary}
@@ -24,11 +24,7 @@ Button.Primary = styled(Button)`
     background-image: linear-gradient(to right, #00d2ff, #3a7bd5);
 
     &:hover {
-      color: ${theme.palette.primary.hover.color};
-    }
-
-    &:focus {
-      background: linear-gradient(to right, #00d2ff, #00d2ff);
+      background-image: linear-gradient(to right, #00d2ff, #3a7bd5);
     }
   `}
 `
