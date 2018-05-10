@@ -10,12 +10,12 @@ import { Container } from 'ui/templates'
 // https://codepen.io/anon/pen/PebeaL
 
 const HeaderBox = styled.header`
-  border-bottom: 1px solid;
   display: flex;
   height: 7rem;
   justify-content: center;
   z-index: 1000;
   box-sizing: border-box;
+  /* box-shadow: 0 10px 20px rgba(36,37,38,0.08); */
 
   & > div > * + * {
     margin-left: 2rem;
@@ -86,11 +86,11 @@ export const Header = () => (
       <NavLink to="/feed">Feed</NavLink>
       <NavLink to="/table">Table</NavLink>
       <NavLink to="/join">Join</NavLink>
-      <ToggleThemeConsumer>
+      {/* <ToggleThemeConsumer>
         {({ toggleDark, dark }) => (
           <NavItem onClick={toggleDark}>{dark ? '🌔' : '☀️'}</NavItem>
         )}
-      </ToggleThemeConsumer>
+      </ToggleThemeConsumer> */}
     </Container>
   </HeaderBox>
 )

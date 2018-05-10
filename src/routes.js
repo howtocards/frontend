@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Switch, Route } from 'react-router-dom'
 
-import { Container } from 'ui/templates'
+import { Container, CommonContentTemplate } from 'ui/templates'
 import { joinRoutes } from 'features/join'
 
 
@@ -15,11 +15,13 @@ const NFPad = styled.div`
 `
 
 const NotFoundPage = () => (
-  <Container>
-    <NFPad>
-      Page not found! =(
-    </NFPad>
-  </Container>
+  <CommonContentTemplate>
+    <Container>
+      <NFPad>
+        Page not found! =(
+      </NFPad>
+    </Container>
+  </CommonContentTemplate>
 )
 
 export const rootRoutes = () => (
