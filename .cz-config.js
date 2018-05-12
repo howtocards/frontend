@@ -43,10 +43,12 @@ module.exports = {
     globMap('src/features/*/', (path) => path.replace('src/', '')),
     globMap('src/features/*/features/*', (path) => path.replace('src/', '').replace(/\/features\//, '/')),
     globMap('src/ui/*/', (path) => path.replace(/^src\//, '')),
+    globMap('mock-server/server/*/**/', (path) => path.replace(/mock\-server\//, '')),
     [
       'app',
       'features',
       'ui',
+      'server',
     ]
   ),
   allowCustomScopes: true,

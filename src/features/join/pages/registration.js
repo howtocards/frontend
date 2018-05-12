@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { withFormik } from 'formik'
 
 import { Col, Row } from 'styled-components-layout'
 import { Card, Input, H2, H3, Button, Link } from 'ui/atoms'
@@ -11,9 +12,24 @@ const RegisterForm = () => (
   <form>
     <Col gap="1rem">
       <H2>Join to HowToCards</H2>
-      <Input type="email" name="email" placeholder="Email" />
-      <Input type="password" name="password" placeholder="Password" />
-      <Input type="password" name="password_repeat" placeholder="Repeat password" />
+      <Input
+        type="email"
+        name="email"
+        placeholder="Email"
+        autoComplete="emails"
+      />
+      <Input
+        type="password"
+        name="password"
+        placeholder="Password"
+        autoComplete="password"
+      />
+      <Input
+        type="password"
+        name="password_repeat"
+        placeholder="Repeat password"
+        autoComplete="password"
+      />
       <Button.Primary type="submit">Create account</Button.Primary>
     </Col>
   </form>

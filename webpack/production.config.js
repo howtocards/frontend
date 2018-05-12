@@ -14,7 +14,7 @@ const { config } = require('./common')
 
 module.exports = merge(config, {
   mode: 'production',
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
 
   output: {
     filename: '[name].[chunkhash].js',

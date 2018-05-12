@@ -1,0 +1,33 @@
+{
+  "name": "@howtocards/mock-server",
+  "version": "0.1.0",
+  "description": "Simple mock server",
+  "scripts": {
+    "start": "node bin/www.js",
+    "dev": "nodemon ./bin.js -w server"
+  },
+  "author": "Sergey Sova <mail@sergeysova.com> (https://sergeysova.com)",
+  "license": "MIT",
+  "dependencies": {
+    "@es2/option-result": "git+https://gist.github.com/4ce658448e0ed8842a5693d251515465.git",
+    "ajv": "^6.5.0",
+    "createrest": "^0.15.0",
+    "createrest-koa": "^0.14.2",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "git+https://github.com/sergeysova/koa-bodyparser.git",
+    "koa-compress": "^3.0.0",
+    "koa-helmet": "^4.0.0",
+    "koa-logger": "^3.2.0",
+    "koa-mount": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "nodemon": "^1.17.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/howtocards/frontend.git"
+  }
+}
