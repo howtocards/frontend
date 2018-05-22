@@ -7,6 +7,7 @@ import { contentSecurityPolicy } from 'koa-helmet'
 import { Some, None } from '@es2/option-result'
 
 import { api } from './api'
+import { createDatabase } from './models'
 
 
 function createApp() {
@@ -36,6 +37,7 @@ function createApp() {
 }
 
 export async function main() {
+  await createDatabase()
   const app = createApp()
   const server = http.createServer(app.callback())
 

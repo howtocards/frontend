@@ -46,7 +46,7 @@ const statusOf = (result) => {
     return STATUS_NO_CONTENT
   }
 
-  return STATUS_NOT_IMPLEMENTED
+  return STATUS_BAD_REQUEST
 }
 
 export const apiWrapper = () => async (ctx, next) => {
