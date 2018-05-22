@@ -24,6 +24,14 @@ function createApp() {
     },
   }))
 
+  app.use((ctx) => {
+    ctx.body = {
+      ok: false,
+      error: 'route_not_found',
+      status: 404,
+    }
+  })
+
   return app
 }
 
