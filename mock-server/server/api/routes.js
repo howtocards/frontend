@@ -2,7 +2,7 @@ import { Ok, Err } from '@es2/option-result'
 import { createRest } from 'createrest'
 import Ajv from 'ajv'
 
-import { userRegister } from '../commands/register'
+import { userRegister, userLogin } from '../commands/user'
 
 
 const ajv = new Ajv()
@@ -27,8 +27,9 @@ const status = () => Ok({
 })
 
 const register = (ctx) => userRegister(ctx.request.body)
+const login = (ctx) => userLogin(ctx.request.body)
 
-const registerScheme = {
+const authScheme = {
   properties: {
     email: { type: 'string' },
     password: { type: 'string' },
@@ -41,6 +42,10 @@ export const routes = createRest((root) => {
   root.get('/status', status)
 
   root.scope('account', (account) => {
-    account.post(validate(registerScheme), register)
+    account.post(validate(authScheme), register)
+
+    account.scope('session', (session) => {
+      session.post(validate(authScheme), login)
+    })
   })
 })

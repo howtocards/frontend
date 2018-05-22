@@ -26,3 +26,21 @@ export const userRegister = async (registerData) => {
 
   return Result.Ok(user.$loki)
 }
+
+/**
+ * @param {{ email: string, password: string }} loginData
+ * @return {Promise<Result<string, string>>}
+ */
+export const userLogin = async (loginData) => {
+  const found = models.Users.findOne({ email: loginData.email })
+
+  if (!found) {
+    return Result.Err('not_found')
+  }
+  if (loginData.password !== found.password) {
+    return Result.Err('bad_credentials')
+  }
+  const token = models.Tokens.insert({ userId: found.$loki, token: createToken(5, '%') })
+
+  return Result.Ok({ token: token.token })
+}

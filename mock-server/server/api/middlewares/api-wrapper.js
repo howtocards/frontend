@@ -54,7 +54,6 @@ export const apiWrapper = () => async (ctx, next) => {
   try {
     const result = wrapResult(await next())
 
-    console.log({ result: result.isOk(), status: ctx.status })
     ctx.status = ctx.status === STATUS_NOT_IMPLEMENTED
       ? statusOf(result)
       : ctx.status
