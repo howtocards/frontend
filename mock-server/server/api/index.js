@@ -9,6 +9,6 @@ import { routes } from './routes'
 export const api = new Koa()
 const router = createKoaRouter(routes)
 
-api.use(apiWrapper())
 api.use(bodyParser())
+api.use(apiWrapper())
 api.use(router.routes(), router.allowedMethods())

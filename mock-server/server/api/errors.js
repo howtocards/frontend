@@ -1,6 +1,7 @@
 
-export class EmptyResult extends Error {
+export class EmptyResultError extends Error {
   constructor() {
     super('Returned empty result')
   }
 }
+

@@ -1,6 +1,5 @@
-import { Ok } from '@es2/option-result'
+import { Ok, None } from '@es2/option-result'
 import { createRest } from 'createrest'
-import { defaultOk } from './middlewares/default-ok'
 
 
 const api = () => Ok({
@@ -11,9 +10,10 @@ const status = () => Ok({
   status: 'ok',
 })
 
-export const routes = createRest((root) => {
-  root.beforeEach(defaultOk)
+const test = async () => Ok(1)
 
+export const routes = createRest((root) => {
   root.get('/', api)
   root.get('/status', status)
+  root.get('/test', test)
 })
