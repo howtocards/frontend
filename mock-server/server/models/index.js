@@ -42,6 +42,7 @@ const databaseInitialize = (resolve, reject) => (error) => {
 function createDatabase() {
   return new Promise((resolve, reject) => {
     db = new Loki('/tmp/howtocards.db', {
+      verbose: true,
       autoload: true,
       autoloadCallback: databaseInitialize(resolve, reject),
       autosave: true,

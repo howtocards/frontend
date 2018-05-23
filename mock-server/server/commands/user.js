@@ -44,3 +44,39 @@ export const userLogin = async (loginData) => {
 
   return Result.Ok({ token: token.token })
 }
+
+/**
+ * @param {string} token
+ * @return {Promise<Result<number, string>>}
+ */
+export const userGet = async (token) => {
+  const found = models.Tokens.findOne({ token })
+
+  if (!found) {
+    return Result.Err('invalid_token')
+  }
+
+  const user = models.Users.findOne({ $loki: found.userId })
+
+  if (!user) {
+    return Result.Err('invalid_token')
+  }
+
+  return Result.Ok(user)
+}
+
+/**
+ * @param {models.Users} user
+ * @param {string?} token
+ * @return {Promise<Result<boolean, string>>}
+ */
+export const userSessionDrop = async (user, token) => {
+  if (token) {
+    models.Tokens.findAndRemove({ token, userId: user.$loki })
+  }
+  else {
+    models.Tokens.findAndRemove({ userId: user.$loki })
+  }
+
+  return Result.Ok(true)
+}
