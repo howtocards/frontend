@@ -4,11 +4,16 @@ import thunk from 'redux-thunk'
 
 
 import { rootReducer } from './reducers'
+import { Api } from './request-api'
+import { JoinApi } from './features/join'
 
 
 export function configureStore(initialState = {}) {
+  const api = new Api('/api')
+  const joinApi = new JoinApi(api)
+
   const middlewares = [
-    thunk.withExtraArgument({ }),
+    thunk.withExtraArgument({ joinApi }),
     createLogger({ collapsed: true }),
   ]
   // eslint-disable-next-line no-underscore-dangle
