@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 
 export const Input = styled.input`
@@ -30,4 +30,13 @@ export const Input = styled.input`
   &:disabled::placeholder {
     color: ${({ theme }) => theme.palette.decoration.borders};
   }
+
+  &:disabled {
+    background-color: rgba(80, 80, 80, .1);
+  }
+
+  ${({ failed }) => failed && css`
+    box-shadow: 0 0 0 1px red;
+    border-color: red;
+  `}
 `
