@@ -46,5 +46,8 @@ module.exports = merge(config, {
     hot: true,
     stats: 'minimal',
     historyApiFallback: true,
+    proxy: {
+      '/api': 'http://localhost:3000/',
+    },
   },
 })
