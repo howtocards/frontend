@@ -13,6 +13,10 @@ export const Button = styled.button`
   user-select: none;
 
   ${({ theme }) => theme.embed.button.primary}
+
+  &:disabled {
+    cursor: default;
+  }
 `
 
 Button.Primary = styled(Button)`
