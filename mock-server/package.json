@@ -20,13 +20,13 @@
     "koa-helmet": "^4.0.0",
     "koa-logger": "^3.2.0",
     "koa-mount": "^3.0.0",
-    "lokijs": "^1.5.4"
+    "lokijs": "^1.5.5"
   },
   "devDependencies": {
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-register": "^6.26.0",
-    "nodemon": "^1.17.4"
+    "nodemon": "^1.17.5"
   },
   "repository": {
     "type": "git",
