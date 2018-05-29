@@ -1,2 +1,8 @@
+import { combineReducers } from 'redux'
 
-export const rootReducer = () => ({ a: 4 })
+import { accountReducer as account } from './features/account'
+
+
+export const rootReducer = combineReducers({
+  account,
+})

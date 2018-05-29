@@ -1,4 +1,5 @@
 import Cookies from 'browser-cookies'
+import { fetchAccount } from 'features/account'
 
 
 export const registerUser = ({ email, password }) => (
@@ -22,6 +23,8 @@ export const loginUser = ({ email, password }) => (
       if (ok) {
         Cookies.set('hw-token', result.token)
       }
+
+      await dispatch(fetchAccount())
 
       return ok
     }

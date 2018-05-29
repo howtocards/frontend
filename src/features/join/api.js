@@ -11,15 +11,6 @@ export class JoinApi {
   }
 
   /**
-   * Get info about current account.
-   * @see https://github.com/howtocards/frontend/tree/master/mock-server/server#get-account-user-account-status
-   * @return {Promise<{ user: { email: string } }>}
-   */
-  getAccount() {
-    return this.api.get('/account')
-  }
-
-  /**
    * Register.
    * Create user account.
    * @see https://github.com/howtocards/frontend/tree/master/mock-server/server#post-account-create-user-account

@@ -2,36 +2,43 @@ import Cookies from 'browser-cookies'
 
 
 export class Api {
-  constructor(serverUri, defaultOptions = {}) {
+  constructor(serverUri, defaultOptions = { headers: {} }) {
     this.baseUri = serverUri
-    this.options = defaultOptions
+    this.options = {
+      ...defaultOptions,
+      headers: {
+        ...defaultOptions.headers || {},
+      },
+    }
   }
 
   request(method, url, options = {}) {
-    if (localStorage.getItem('api-debug')) {
-      /* eslint-disable no-console */
-      const group = `API >> ${method} ${url}`
-
-      console.groupCollapsed(group)
-      console.log(options)
-      console.groupEnd(group)
-      /* eslint-enable no-console */
-    }
-
     const token = Cookies.get('hw-token')
 
     const fullOptions = {
       credentials: 'same-origin',
       method,
-      headers: {
-        ...this.options.headers,
-        'Content-Type': options.body ? 'application/json' : this.options.headers['Content-Type'],
-        Authorization: token ? `token ${token}` : undefined,
-        ...options,
-      },
       ...this.options,
       ...options,
+      headers: {
+        ...this.options.headers,
+        'Content-Type': options.body ? 'application/json' : (options.headers && options.headers['Content-Type']),
+        Authorization: token ? `token ${token}` : undefined,
+        ...options.headers,
+      },
       body: options.body ? JSON.stringify(options.body) : undefined,
+    }
+
+    if (localStorage.getItem('api-debug')) {
+      /* eslint-disable no-console */
+      const group = `API >> ${method} ${url}`
+
+      console.groupCollapsed(group)
+      console.log('options:', options)
+      console.log('fullOptions:', fullOptions)
+      console.log('token:', token)
+      console.groupEnd(group)
+      /* eslint-enable no-console */
     }
 
     return fetch(`${this.baseUri}${url}`, fullOptions)
