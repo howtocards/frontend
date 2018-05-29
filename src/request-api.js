@@ -1,3 +1,5 @@
+import Cookies from 'browser-cookies'
+
 
 export class Api {
   constructor(serverUri, defaultOptions = {}) {
@@ -16,13 +18,16 @@ export class Api {
       /* eslint-enable no-console */
     }
 
+    const token = Cookies.get('hw-token')
+
     const fullOptions = {
       credentials: 'same-origin',
       method,
       headers: {
         ...this.options.headers,
-        ...options,
         'Content-Type': options.body ? 'application/json' : this.options.headers['Content-Type'],
+        Authorization: token ? `token ${token}` : undefined,
+        ...options,
       },
       ...this.options,
       ...options,

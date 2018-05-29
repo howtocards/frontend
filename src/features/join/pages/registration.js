@@ -1,15 +1,69 @@
 import React from 'react'
-import styled from 'styled-components'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
 import { withFormik } from 'formik'
 
 import { Col, Row } from 'styled-components-layout'
-import { Card, Input, H2, H3, Button, Link } from 'ui/atoms'
+import { Card, Input, H2, Button, Link } from 'ui/atoms'
 import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
 
+import { registerUser, loginUser } from '../actions/registration'
 
-const RegisterForm = () => (
-  <form>
+
+const formik = {
+  mapPropsToValues: () => ({
+    email: '',
+    password: '',
+    passwordRepeat: '',
+  }),
+  validate: (values) => {
+    const errors = {}
+
+    if (!values.email) {
+      errors.email = 'Required'
+    }
+
+    if (!values.password) {
+      errors.password = 'Required'
+    }
+
+    if (values.password !== values.passwordRepeat) {
+      errors.passwordRepeat = 'Not equals'
+    }
+
+    return errors
+  },
+  handleSubmit: async (values, { props, setSubmitting, setErrors }) => {
+    const { ok, error } = await props.dispatch(registerUser(values))
+
+    if (ok) {
+      const isLogged = await props.dispatch(loginUser(values))
+
+      console.log({ isLogged })
+    }
+    else {
+      console.warn({ error })
+    }
+    setSubmitting(false)
+  },
+}
+
+const enhance = compose(
+  connect(),
+  withFormik(formik),
+)
+
+const RegisterForm = enhance(({
+  values,
+  errors,
+  touched,
+  handleChange,
+  handleBlur,
+  handleSubmit,
+  isSubmitting,
+}) => (
+  <form onSubmit={handleSubmit}>
     <Col gap="1rem">
       <H2>Join to HowToCards</H2>
       <Input
@@ -17,23 +71,43 @@ const RegisterForm = () => (
         name="email"
         placeholder="Email"
         autoComplete="emails"
+        disabled={isSubmitting}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.email}
+        failed={touched.email && Boolean(errors.email)}
       />
       <Input
         type="password"
         name="password"
         placeholder="Password"
         autoComplete="password"
+        disabled={isSubmitting}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.password}
+        failed={touched.password && Boolean(errors.password)}
       />
       <Input
         type="password"
-        name="password_repeat"
+        name="passwordRepeat"
         placeholder="Repeat password"
         autoComplete="password"
+        disabled={isSubmitting}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.passwordRepeat}
+        failed={touched.passwordRepeat && Boolean(errors.passwordRepeat)}
       />
-      <Button.Primary type="submit">Create account</Button.Primary>
+      <Button.Primary
+        type="submit"
+        disabled={isSubmitting}
+      >
+        Create account
+      </Button.Primary>
     </Col>
   </form>
-)
+))
 
 export const RegistrationPage = () => (
   <CenterContentTemplate footer={<PrimitiveFooter />}>
