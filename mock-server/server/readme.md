@@ -52,7 +52,7 @@ Route can return Result, Option or any value.
 
 ### Validation
 
-[validate](./middlewares/validate.js) middleware checks request body to correct form through [ajv](https://npmjs.com/ajv).
+[validate](./api/middlewares/validate.js) middleware checks request body to correct form through [ajv](https://npmjs.com/ajv).
 
 If request body is incorrect, route return `400 Bad Request` with `invalid_request_body` error.
 
