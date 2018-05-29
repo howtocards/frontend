@@ -13,6 +13,8 @@ const createToken = (iterations = 3, sep = '') => {
   return result.join(sep)
 }
 
+const USER_TOKEN_SIZE = 5
+
 /**
  * @param {{ email: string, password: string }} registerData
  * @return {Promise<Result<number, string>>}
@@ -40,7 +42,7 @@ export const userLogin = async (loginData) => {
   if (loginData.password !== found.password) {
     return Result.Err('bad_credentials')
   }
-  const token = models.Tokens.insert({ userId: found.$loki, token: createToken(5, '%') })
+  const token = models.Tokens.insert({ userId: found.$loki, token: createToken(USER_TOKEN_SIZE, '%') })
 
   return Result.Ok({ token: token.token })
 }

@@ -6,7 +6,7 @@ import compress from 'koa-compress'
 import { contentSecurityPolicy } from 'koa-helmet'
 import { Some, None } from '@es2/option-result'
 
-import { api } from './api'
+import { api, printRoutes } from './api'
 import { createDatabase } from './models'
 
 
@@ -50,5 +50,7 @@ export async function main() {
 
     // eslint-disable-next-line no-console
     console.log(`\n\\> Listening on http://localhost:${address.port}\n`)
+
+    printRoutes()
   })
 }
