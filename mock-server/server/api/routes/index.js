@@ -1,4 +1,4 @@
-import { Ok } from '@es2/option-result'
+import { Ok, None } from '@es2/option-result'
 import { createRest } from 'createrest'
 
 import { authenticated } from '../middlewares/auth'

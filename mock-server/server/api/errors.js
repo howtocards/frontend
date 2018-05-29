@@ -1,7 +1,7 @@
 
 export class EmptyResultError extends Error {
   constructor() {
-    super('Returned empty result')
+    super('empty_result')
   }
 }
 
