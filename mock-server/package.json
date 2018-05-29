@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "@es2/option-result": "git+https://gist.github.com/4ce658448e0ed8842a5693d251515465.git",
+    "@koa/cors": "^2.2.1",
     "ajv": "^6.5.0",
     "createrest": "^0.15.0",
     "createrest-koa": "^0.14.2",

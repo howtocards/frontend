@@ -2,6 +2,7 @@ import * as http from 'http'
 import Koa from 'koa'
 import mount from 'koa-mount'
 import logger from 'koa-logger'
+import cors from '@koa/cors'
 import compress from 'koa-compress'
 import { contentSecurityPolicy } from 'koa-helmet'
 
@@ -12,6 +13,7 @@ import { createDatabase } from './models'
 function createApp() {
   const app = new Koa()
 
+  app.use(cors())
   app.use(compress())
   app.use(logger())
 
