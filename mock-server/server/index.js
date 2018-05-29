@@ -4,7 +4,6 @@ import mount from 'koa-mount'
 import logger from 'koa-logger'
 import compress from 'koa-compress'
 import { contentSecurityPolicy } from 'koa-helmet'
-import { Some, None } from '@es2/option-result'
 
 import { api, printRoutes } from './api'
 import { createDatabase } from './models'
