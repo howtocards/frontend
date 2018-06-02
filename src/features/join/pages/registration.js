@@ -8,8 +8,8 @@ import { Card, Input, H2, Button, Link } from 'ui/atoms'
 import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
 
-import { registerUser } from '../actions/registration'
-import { loginUser } from '../actions/join'
+import { userRegister } from '../actions/registration'
+import { userLogin } from '../actions/join'
 
 
 const formik = {
@@ -36,10 +36,10 @@ const formik = {
     return errors
   },
   handleSubmit: async (values, { props, setSubmitting, setErrors }) => {
-    const { ok, error } = await props.dispatch(registerUser(values))
+    const { ok, error } = await props.dispatch(userRegister(values))
 
     if (ok) {
-      const isLogged = await props.dispatch(loginUser(values))
+      const isLogged = await props.dispatch(userLogin(values))
 
       console.log({ isLogged })
     }

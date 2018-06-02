@@ -1,15 +1,14 @@
-import Cookies from 'browser-cookies'
-import { fetchAccount } from 'features/account'
+import { accountFetch, tokenSet } from 'features/account'
 
 
-export const loginUser = ({ email, password }) => (
+export const userLogin = ({ email, password }) => (
   async (dispatch, getState, { joinApi }) => {
     try {
       const { result, ok, error } = await joinApi.createToken({ email, password })
 
       if (ok) {
-        Cookies.set('hw-token', result.token)
-        await dispatch(fetchAccount())
+        await dispatch(tokenSet(result.token))
+        await dispatch(accountFetch())
       }
 
       return ok

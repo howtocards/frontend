@@ -1,8 +1,18 @@
+import Cookies from 'browser-cookies'
 import { handleFetching } from 'symbiote-fetching'
+
 import { actions } from './reducers'
 
 
-export const fetchAccount = () => handleFetching(actions.fetch, {
+const TOKEN_ID = 'hw-token'
+
+export const tokenSet = (token) => () => {
+  Cookies.set(TOKEN_ID, token)
+}
+
+export const tokenGet = () => () => Cookies.get(TOKEN_ID)
+
+export const accountFetch = () => handleFetching(actions.fetch, {
   async run(dispatch, getState, { accountApi }) {
     const { ok, result, error } = await accountApi.getAccount()
 

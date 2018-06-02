@@ -8,7 +8,7 @@ import { Card, Input, H2, Button, Link } from 'ui/atoms'
 import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
 
-import { loginUser } from '../actions/join'
+import { userLogin } from '../actions/join'
 
 
 const formik = {
@@ -30,7 +30,7 @@ const formik = {
     return errors
   },
   handleSubmit: async (values, { props, setSubmitting, setErrors }) => {
-    const isLogged = await props.dispatch(loginUser(values))
+    const isLogged = await props.dispatch(userLogin(values))
 
     if (isLogged) {
       props.history.push('/')

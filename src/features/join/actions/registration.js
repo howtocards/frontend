@@ -1,6 +1,6 @@
 
 
-export const registerUser = ({ email, password }) => (
+export const userRegister = ({ email, password }) => (
   async (dispatch, getState, { joinApi }) => {
     try {
       const { result, ok, error } = await joinApi.createAccount({ email, password })
