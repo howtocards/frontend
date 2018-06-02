@@ -49,7 +49,7 @@ export const userLogin = async (loginData) => {
 
 /**
  * @param {string} token
- * @return {Promise<Result<number, string>>}
+ * @return {Promise<Result<User, string>>}
  */
 export const userGet = async (token) => {
   const found = models.Tokens.findOne({ token })
