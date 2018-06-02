@@ -12,6 +12,7 @@
   },
   "rules": {
     "react/sort-comp": "off",
-    "jsx-a11y/anchor-is-valid": "off"
+    "jsx-a11y/anchor-is-valid": "off",
+    "max-len": ["error", 120]
   }
 }

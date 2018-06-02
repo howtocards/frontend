@@ -1,5 +1,5 @@
 export { AccountApi } from './api'
 export { accountFetch, tokenSet } from './actions'
-export { AccountLoader } from './organisms/account-loader'
+export { AccountLoader, WithAccount } from './organisms'
 export { accountSelector, accountFetchingSelector } from './selectors'
 export { reducer as accountReducer } from './reducers'

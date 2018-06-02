@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { ToggleThemeConsumer } from 'lib/theme-context'
 import { Container } from 'ui/templates'
+import { WithAccount } from 'features/account'
 
 
 // https://codepen.io/anon/pen/PebeaL
@@ -85,7 +86,17 @@ export const Header = () => (
       </SearchBox>
       <NavLink to="/feed">Feed</NavLink>
       <NavLink to="/table">Table</NavLink>
-      <NavLink to="/join">Join</NavLink>
+      <WithAccount
+        renderExists={({ account }) => (
+          <React.Fragment>
+            <NavLink to={`/@${account.id}`}>{account.email}</NavLink>
+            <NavLink to="/logout">Logout</NavLink>
+          </React.Fragment>
+        )}
+        renderEmpty={() => (
+          <NavLink to="/join">Join</NavLink>
+        )}
+      />
       {/* <ToggleThemeConsumer>
         {({ toggleDark, dark }) => (
           <NavItem onClick={toggleDark}>{dark ? '🌔' : '☀️'}</NavItem>
