@@ -8,7 +8,8 @@ import { Card, Input, H2, Button, Link } from 'ui/atoms'
 import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
 
-import { registerUser, loginUser } from '../actions/registration'
+import { registerUser } from '../actions/registration'
+import { loginUser } from '../actions/join'
 
 
 const formik = {
@@ -55,13 +56,13 @@ const enhance = compose(
 )
 
 const RegisterForm = enhance(({
-  values,
   errors,
-  touched,
-  handleChange,
   handleBlur,
+  handleChange,
   handleSubmit,
   isSubmitting,
+  touched,
+  values,
 }) => (
   <form onSubmit={handleSubmit}>
     <Col gap="1rem">
