@@ -42,11 +42,17 @@ const formik = {
       const isLogged = await props.dispatch(userLogin(values))
 
       console.log({ isLogged })
+      if (isLogged) {
+        props.history.push('/')
+      }
+      else {
+        setSubmitting(false)
+      }
     }
     else {
       console.warn({ error })
+      setSubmitting(false)
     }
-    setSubmitting(false)
   },
 }
 
@@ -110,12 +116,12 @@ const RegisterForm = enhance(({
   </form>
 ))
 
-export const RegistrationPage = () => (
+export const RegistrationPage = ({ history }) => (
   <CenterContentTemplate footer={<PrimitiveFooter />}>
     <Container justify="center" align="center">
       <Col align="center" width="40rem">
         <Card>
-          <RegisterForm />
+          <RegisterForm history={history} />
         </Card>
         <Row padding="3rem 0 0" gap="0.5rem">
           <span>Already have account?</span>

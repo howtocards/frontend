@@ -96,7 +96,9 @@ Row.propTypes = Col.propTypes = {
   align: PropTypes.oneOf(['flex-start', 'flex-end', 'center', 'baseline', 'stretch']),
 
 
-  justify: PropTypes.oneOf(['flex-start', 'flex-end', 'center', 'space-around', 'space-between', 'space-evenly', 'safe center', 'unsafe center']),
+  justify: PropTypes.oneOf([
+    'flex-start', 'flex-end', 'center', 'space-around', 'space-between', 'space-evenly', 'safe center', 'unsafe center',
+  ]),
 
   /**
    * Set `align-content` css-property

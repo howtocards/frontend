@@ -12,6 +12,10 @@ export const tokenSet = (token) => () => {
 
 export const tokenGet = () => () => Cookies.get(TOKEN_ID)
 
+export const tokenUnset = () => () => {
+  Cookies.erase(TOKEN_ID)
+}
+
 export const accountFetch = () => handleFetching(actions.fetch, {
   async run(dispatch, getState, { accountApi }) {
     const { ok, result, error } = await accountApi.getAccount()
@@ -23,3 +27,10 @@ export const accountFetch = () => handleFetching(actions.fetch, {
     }
   },
 })
+
+export const accountReset = () => (
+  (dispatch) => {
+    dispatch(actions.unset())
+    dispatch(tokenUnset())
+  }
+)

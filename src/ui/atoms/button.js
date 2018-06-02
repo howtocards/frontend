@@ -13,6 +13,7 @@ export const Button = styled.button`
   user-select: none;
 
   ${({ theme }) => theme.embed.button.primary}
+  ${({ grow }) => grow && css`flex-grow: 1;`}
 
   &:disabled {
     cursor: default;
