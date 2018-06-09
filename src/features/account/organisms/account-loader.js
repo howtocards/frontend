@@ -2,7 +2,7 @@ import React from 'react'
 import { compose, withPropsOnChange } from 'recompose'
 import { connect } from 'react-redux'
 
-import { accountFetch, tokenGet } from '../actions'
+import { accountFetch, tokenGet } from '../effects'
 import { accountFetchingSelector, accountIdSelector } from '../selectors'
 
 

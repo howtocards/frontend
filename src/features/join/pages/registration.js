@@ -8,7 +8,7 @@ import { Card, Input, H2, Button, Link } from 'ui/atoms'
 import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
 
-import { userRegister } from '../actions/registration'
+import { userRegister } from '../effects/registration'
 import { userLogin } from '../actions/join'
 
 
