@@ -1,9 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-import { ToggleThemeConsumer } from 'lib/theme-context'
+// import { ToggleThemeConsumer } from 'lib/theme-context'
 import { Container } from 'ui/templates'
 import { WithAccount } from 'features/account'
 
@@ -51,7 +51,7 @@ const SearchInput = styled.input`
   ${({ theme }) => theme.embed.canvas}
 `
 
-const NavItem = styled.div`
+const NavItem = styled.a`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -85,7 +85,7 @@ export const Header = () => (
         />
       </SearchBox>
       <NavLink to="/feed">Feed</NavLink>
-      <NavLink to="/table">Table</NavLink>
+      <NavItem href="https://github.com/howtocards/frontend" target="_blank">Contribute</NavItem>
       <WithAccount
         renderExists={({ account }) => (
           <React.Fragment>
