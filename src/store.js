@@ -1,21 +1,27 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
+import { createApi } from 'api-injector'
+import { Requester } from 'request-api'
 
 
 import { rootReducer } from './reducers'
-import { Api } from './request-api'
-import { JoinApi } from './features/join'
 import { AccountApi } from './features/account'
+import { CardsApi } from './features/cards'
+import { JoinApi } from './features/join'
 
 
 export function configureStore(initialState = {}) {
-  const api = new Api('/api')
-  const joinApi = new JoinApi(api)
-  const accountApi = new AccountApi(api)
+  const requester = new Requester('/api')
+
+  const api = createApi(requester, [
+    AccountApi,
+    CardsApi,
+    JoinApi,
+  ])
 
   const middlewares = [
-    thunk.withExtraArgument({ joinApi, accountApi }),
+    thunk.withExtraArgument({ api }),
     createLogger({ collapsed: true }),
   ]
   // eslint-disable-next-line no-underscore-dangle

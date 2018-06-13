@@ -2,9 +2,9 @@ import { accountFetch, tokenSet } from 'features/account'
 
 
 export const userLogin = ({ email, password }) => (
-  async (dispatch, getState, { joinApi }) => {
+  async (dispatch, getState, { api }) => {
     try {
-      const { result, ok, error } = await joinApi.createToken({ email, password })
+      const { result, ok, error } = await api.join.createToken({ email, password })
 
       if (ok) {
         await dispatch(tokenSet(result.token))

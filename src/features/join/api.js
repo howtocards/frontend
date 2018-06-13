@@ -1,10 +1,11 @@
 // eslint-disable-next-line no-unused-vars
-import { Api } from 'request-api'
+import { Requester } from 'request-api'
 
 
 export class JoinApi {
+  static apiName = 'join'
   /**
-   * @param {Api} api
+   * @param {Requester} api
    */
   constructor(api) {
     this.api = api

@@ -17,8 +17,8 @@ export const tokenUnset = () => () => {
 }
 
 export const accountFetch = () => handleFetching(actions.fetch, {
-  async run(dispatch, getState, { accountApi }) {
-    const { ok, result, error } = await accountApi.getAccount()
+  async run(dispatch, getState, { api }) {
+    const { ok, result, error } = await api.account.getAccount()
 
     console.log({ ok, result, error })
 

@@ -1,9 +1,9 @@
 
 
 export const userRegister = ({ email, password }) => (
-  async (dispatch, getState, { joinApi }) => {
+  async (dispatch, getState, { api }) => {
     try {
-      const { result, ok, error } = await joinApi.createAccount({ email, password })
+      const { result, ok, error } = await api.join.createAccount({ email, password })
 
       return { ok, error }
     }

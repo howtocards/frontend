@@ -1,7 +1,7 @@
 import Cookies from 'browser-cookies'
 
 
-export class Api {
+export class Requester {
   constructor(serverUri, defaultOptions = { headers: {} }) {
     this.baseUri = serverUri
     this.options = {
