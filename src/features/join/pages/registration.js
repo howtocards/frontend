@@ -9,7 +9,7 @@ import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
 
 import { userRegister } from '../effects/registration'
-import { userLogin } from '../actions/join'
+import { userLogin } from '../effects/join'
 
 
 const formik = {
