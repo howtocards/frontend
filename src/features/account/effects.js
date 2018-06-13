@@ -30,7 +30,7 @@ export const accountFetch = () => handleFetching(actions.fetch, {
 
 export const accountReset = () => (
   (dispatch) => {
-    dispatch(actions.unset())
     dispatch(tokenUnset())
+    dispatch(actions.unset())
   }
 )

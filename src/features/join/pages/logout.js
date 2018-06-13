@@ -21,7 +21,7 @@ const enhance = compose(
 
       setTimeout(() => {
         dispatch(accountReset())
-        setTimeout(() => history.push('/'), 50)
+        setTimeout(() => history.push('/'), 150)
       }, RESET_TIMEOUT)
     },
     back: ({ history }) => () => {
