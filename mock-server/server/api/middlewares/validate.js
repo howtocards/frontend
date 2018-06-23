@@ -7,8 +7,9 @@ export const ajv = new Ajv()
 export const validate = (schema) => {
   const isValid = ajv.compile(schema)
 
-  return (ctx, next) => {
+  return function validate_(ctx, next) {
     if (!isValid(ctx.request.body)) {
+      // eslint-disable-next-line no-console
       console.error(ctx.request.body, isValid.errors)
       return Err('invalid_request_body')
     }
