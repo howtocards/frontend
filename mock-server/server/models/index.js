@@ -1,4 +1,4 @@
-const Loki = require('lokijs')
+import Loki from 'lokijs'
 
 /**
  * @type {Loki.Collection<{ email: string, password: string }>}
@@ -10,9 +10,15 @@ let Users
  */
 let Tokens
 
-const models = {
-  Users,
+/**
+ * @type {Loki.Collection<{ authorId: number, content: string, title: string }>}
+ */
+let Cards
+
+export const models = {
+  Cards,
   Tokens,
+  Users,
 }
 
 /**
@@ -35,11 +41,12 @@ const databaseInitialize = (resolve, reject) => (error) => {
   else {
     models.Users = makeCollection('users', { unique: ['email'] })
     models.Tokens = makeCollection('tokens', { unique: ['email'] })
+    models.Cards = makeCollection('cards', {})
     resolve()
   }
 }
 
-function createDatabase() {
+export function createDatabase() {
   return new Promise((resolve, reject) => {
     db = new Loki('/tmp/howtocards.db', {
       verbose: true,
@@ -51,4 +58,3 @@ function createDatabase() {
   })
 }
 
-module.exports = { models, createDatabase }

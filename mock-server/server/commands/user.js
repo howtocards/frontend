@@ -1,7 +1,8 @@
-const { Result } = require('@es2/option-result')
-const { models } = require('../models')
+import { Result } from '@es2/option-result'
+import { models } from '../models'
 
 
+// eslint-disable-next-line no-magic-numbers
 const createToken = (iterations = 3, sep = '') => {
   let cnt = 0
   const result = []

@@ -82,6 +82,7 @@ export const apiWrapper = () => async (ctx, next) => {
       ok: false,
       status: ctx.status,
     }
+    // eslint-disable-next-line no-console
     console.log('error', error)
     ctx.app.emit('error', error, ctx)
 
