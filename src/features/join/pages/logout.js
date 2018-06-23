@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { compose, withHandlers, withState } from 'recompose'
 
 import { Col, Row } from 'styled-components-layout'
-import { Card, Button } from 'ui/atoms'
+import { Card, Button, Table } from 'ui/atoms'
 import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
 

@@ -7,6 +7,7 @@ const createToken = (iterations = 3, sep = '') => {
   const result = []
 
   while (cnt++ < iterations) {
+    // eslint-disable-next-line no-magic-numbers
     result.push(Math.floor(Math.random() * 100000000000).toString(36))
   }
 

@@ -7,7 +7,7 @@ export const ajv = new Ajv()
 export const validate = (schema) => {
   const isValid = ajv.compile(schema)
 
-  return function validate_(ctx, next) {
+  const middleware = (ctx, next) => {
     if (!isValid(ctx.request.body)) {
       // eslint-disable-next-line no-console
       console.error(ctx.request.body, isValid.errors)
@@ -15,4 +15,8 @@ export const validate = (schema) => {
     }
     return next()
   }
+
+  middleware.displayName = '`validate'
+
+  return middleware
 }
