@@ -84,6 +84,11 @@ export const Header = () => (
           spellCheck="false"
         />
       </SearchBox>
+      <WithAccount
+        renderExists={() => (
+          <NavLink to="/new">+ Create</NavLink>
+        )}
+      />
       <NavLink to="/feed">Feed</NavLink>
       <NavItem href="https://github.com/howtocards/frontend" target="_blank">Contribute</NavItem>
       <WithAccount

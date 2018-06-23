@@ -4,6 +4,7 @@ import { handleFetching } from 'symbiote-fetching'
 import { actions } from './reducers'
 
 
+const unexpectedToken = 'UNEXPECTED_TOKEN'
 const TOKEN_ID = 'hw-token'
 
 export const tokenSet = (token) => () => {
@@ -20,10 +21,11 @@ export const accountFetch = () => handleFetching(actions.fetch, {
   async run(dispatch, getState, { api }) {
     const { ok, result, error } = await api.account.getAccount()
 
-    console.log({ ok, result, error })
-
     if (ok) {
       dispatch(actions.set(result.user))
+    }
+    else {
+      throw unexpectedToken
     }
   },
 })

@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 
 import { Container, CommonContentTemplate } from 'ui/templates'
 import { joinRoutes } from 'features/join'
+import { cardsRoutes } from 'features/cards'
 
 
 const NFPad = styled.div`
@@ -26,6 +27,7 @@ const NotFoundPage = () => (
 
 export const rootRoutes = () => (
   <Switch>
+    {cardsRoutes()}
     {joinRoutes()}
     <Route component={NotFoundPage} />
   </Switch>
