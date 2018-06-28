@@ -1,22 +1,28 @@
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware, compose as composeEnhancers } from 'redux'
+import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { createLogger } from 'redux-logger'
 import { createExecue } from 'redux-execue'
+import { required } from 'lib/dev'
 
 
 import { rootReducer } from './reducers'
 
 
-export function configureStore(initialState = {}) {
+const loggerOptions = {
+  predicate: (getState, action) => !action.type.startsWith('@@router/'),
+  collapsed: true,
+}
+
+export function configureStore({ history, initialState = {} } = required('configureStoreOptions')) {
+  const connectedRouter = connectRouter(history)
   const middlewares = [
     createExecue({ log: true }),
-    createLogger({ collapsed: true }),
+    createLogger(loggerOptions),
+    routerMiddleware(history),
   ]
 
-  // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-  const composeEnhancers = compose
-
   const store = createStore(
-    rootReducer,
+    connectedRouter(rootReducer),
     initialState,
     composeEnhancers(applyMiddleware(...middlewares)),
   )
@@ -24,11 +30,13 @@ export function configureStore(initialState = {}) {
   if (module.hot) {
     module.hot.accept('./reducers', () => {
       // eslint-disable-next-line global-require
-      const nextRootReducer = require('./reducers')
+      const next = require('./reducers')
 
-      store.replaceReducer(nextRootReducer.rootReducer)
+      store.replaceReducer(connectedRouter(next.rootReducer))
     })
   }
 
   return store
 }
+
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
