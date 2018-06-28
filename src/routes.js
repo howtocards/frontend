@@ -1,34 +1,19 @@
 import React from 'react'
-import styled from 'styled-components'
-import { Switch, Route } from 'react-router-dom'
+import { renderRoutes } from 'react-router-config'
 
-import { Container, CommonContentTemplate } from 'ui/templates'
+import { NotFoundPage } from 'features/common'
 import { joinRoutes } from 'features/join'
 import { cardsRoutes } from 'features/cards'
 
 
-const NFPad = styled.div`
-  display: flex;
-  flex-grow: 1;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-`
-
-const NotFoundPage = () => (
-  <CommonContentTemplate>
-    <Container>
-      <NFPad>
-        Page not found! =(
-      </NFPad>
-    </Container>
-  </CommonContentTemplate>
-)
+const routes = [
+  ...cardsRoutes(),
+  ...joinRoutes(),
+  { component: NotFoundPage },
+]
 
 export const rootRoutes = () => (
-  <Switch>
-    {cardsRoutes()}
-    {joinRoutes()}
-    <Route component={NotFoundPage} />
-  </Switch>
+  <React.Fragment>
+    {renderRoutes(routes)}
+  </React.Fragment>
 )
