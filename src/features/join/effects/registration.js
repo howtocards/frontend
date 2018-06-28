@@ -1,9 +1,10 @@
+import { accountCreate } from '../api'
 
 
 export const userRegister = ({ email, password }) => (
-  async (dispatch, getState, { api }) => {
+  async (dispatch) => {
     try {
-      const { result, ok, error } = await api.join.createAccount({ email, password })
+      const { result, ok, error } = await dispatch(accountCreate, { email, password })
 
       return { ok, error }
     }

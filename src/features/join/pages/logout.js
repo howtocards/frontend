@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { compose, withHandlers, withState } from 'recompose'
 
 import { Col, Row } from 'styled-components-layout'
-import { Card, Button, Table } from 'ui/atoms'
+import { Card, Button } from 'ui/atoms'
 import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
 
@@ -12,15 +12,19 @@ import { accountReset } from 'features/account'
 
 const RESET_TIMEOUT = 500
 
+const mapDispatchToProps = (dispatch) => ({
+  onReset: () => dispatch(accountReset),
+})
+
 const enhance = compose(
-  connect(),
+  connect(null, mapDispatchToProps),
   withState('isLogouting', 'setLogouting', false),
   withHandlers({
-    logout: ({ dispatch, history, setLogouting }) => () => {
+    logout: ({ history, setLogouting, onReset }) => () => {
       setLogouting(true)
 
       setTimeout(() => {
-        dispatch(accountReset())
+        onReset()
         setTimeout(() => history.push('/'), 150)
       }, RESET_TIMEOUT)
     },

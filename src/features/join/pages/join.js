@@ -30,7 +30,7 @@ const formik = {
     return errors
   },
   handleSubmit: async (values, { props, setSubmitting, setErrors }) => {
-    const isLogged = await props.dispatch(userLogin(values))
+    const isLogged = await props.dispatch(userLogin, values)
 
     if (isLogged) {
       props.history.push('/')

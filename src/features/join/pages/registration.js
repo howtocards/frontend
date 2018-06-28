@@ -12,6 +12,11 @@ import { userRegister } from '../effects/registration'
 import { userLogin } from '../effects/join'
 
 
+const mapDispatchToProps = (dispatch) => ({
+  onRegister: (registerData) => dispatch(userRegister, registerData),
+  onLogin: (loginData) => dispatch(userLogin, loginData),
+})
+
 const formik = {
   mapPropsToValues: () => ({
     email: '',
@@ -36,10 +41,10 @@ const formik = {
     return errors
   },
   handleSubmit: async (values, { props, setSubmitting, setErrors }) => {
-    const { ok, error } = await props.dispatch(userRegister(values))
+    const { ok, error } = await props.onRegister(values)
 
     if (ok) {
-      const isLogged = await props.dispatch(userLogin(values))
+      const isLogged = await props.onLogin(values)
 
       console.log({ isLogged })
       if (isLogged) {
@@ -57,7 +62,7 @@ const formik = {
 }
 
 const enhance = compose(
-  connect(),
+  connect(null, mapDispatchToProps),
   withFormik(formik),
 )
 

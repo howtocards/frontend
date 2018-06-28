@@ -11,13 +11,18 @@ const mapStateToProps = (state) => ({
   accountId: accountIdSelector(state),
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  onFetch: () => dispatch(accountFetch),
+  getToken: () => dispatch(tokenGet),
+})
+
 const enhance = compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   withPropsOnChange(
     (props, nextProps) => props.accountId !== nextProps.accountId,
-    ({ dispatch, accountId }) => {
-      if (dispatch(tokenGet()) && !accountId) {
-        dispatch(accountFetch())
+    ({ accountId, getToken, onFetch }) => {
+      if (getToken() && !accountId) {
+        onFetch()
       }
     },
   ),
