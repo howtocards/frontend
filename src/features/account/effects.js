@@ -3,7 +3,7 @@ import { handleFetching } from 'symbiote-fetching'
 
 import { api } from 'features/common'
 import * as accountsApi from './api'
-import { actions } from './reducers'
+import { actions } from './symbiotes'
 
 
 const unexpectedToken = 'UNEXPECTED_TOKEN'

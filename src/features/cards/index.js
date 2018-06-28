@@ -1,2 +1,2 @@
-export { reducer as cardsReducer } from './reducers'
+export { reducer as cardsReducer } from './symbiotes'
 export { cardsRoutes } from './routes'
