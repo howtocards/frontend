@@ -39,17 +39,15 @@ module.exports = {
     { value: 'WIP', name: 'WIP:      Work in progress' },
   ],
   scopes: [].concat(
-    globMap('src/*/', (path) => path.replace(/src\//, '')).filter(exclude(['/features', '/ui'])),
+    'app',
+    globMap('src/*/', (path) => path.replace(/src\//, '')).filter(exclude(['features', 'ui'])),
+    'features',
     globMap('src/features/*/', (path) => path.replace('src/', '')),
     globMap('src/features/*/features/*', (path) => path.replace('src/', '').replace(/\/features\//, '/')),
+    'ui',
     globMap('src/ui/*/', (path) => path.replace(/^src\//, '')),
+    'server',
     globMap('mock-server/server/*/**/', (path) => path.replace(/mock\-server\//, '')),
-    [
-      'app',
-      'features',
-      'ui',
-      'server',
-    ]
   ),
   allowCustomScopes: true,
   allowBreakingChanges: ['feat', 'fix', 'revert'],
