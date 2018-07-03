@@ -38,5 +38,3 @@ export function configureStore({ history, initialState = {} } = required('config
 
   return store
 }
-
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

@@ -8,10 +8,11 @@ import { api } from 'features/common'
  * @return {Promise<{ result: number }>}
  */
 export const accountCreate = (loginData) => (
-  (dispatch) => dispatch(
-    api.post,
-    '/account',
-    loginData,
+  (
+    api.post(
+      '/account',
+      loginData,
+    )
   )
 )
 
@@ -23,10 +24,11 @@ export const accountCreate = (loginData) => (
  * @return {Promise<{ result: { token: string } }>}
  */
 export const tokenCreate = (loginData) => (
-  (dispatch) => dispatch(
-    api.post,
-    '/account/session',
-    loginData,
+  (
+    api.post(
+      '/account/session',
+      loginData,
+    )
   )
 )
 
@@ -37,10 +39,11 @@ export const tokenCreate = (loginData) => (
  * @return {Promise<{ result: boolean }>}
  */
 export const tokenDrop = (token) => (
-  (dispatch) => dispatch(
-    api.destroy,
-    '/account/session',
-    { token },
+  (
+    api.destroy(
+      '/account/session',
+      { token },
+    )
   )
 )
 
@@ -50,5 +53,5 @@ export const tokenDrop = (token) => (
  * @return {Promise<{ result: boolean }>}
 */
 export const sessionDrop = () => (
-  (dispatch) => dispatch(api.destroy, '/account/session')
+  (api.destroy('/account/session'))
 )

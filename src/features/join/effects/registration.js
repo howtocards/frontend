@@ -1,16 +1,14 @@
 import { accountCreate } from '../api'
 
 
-export const userRegister = ({ email, password }) => (
-  async (dispatch) => {
-    try {
-      const { result, ok, error } = await dispatch(accountCreate, { email, password })
+export const userRegister = async ({ email, password }) => {
+  try {
+    const { result, ok, error } = await accountCreate({ email, password })
 
-      return { ok, error }
-    }
-    catch (error) {
-      return { ok: false, error: 'Unknown error' }
-    }
+    return { ok, error }
   }
-)
+  catch (error) {
+    return { ok: false, error: 'Unknown error' }
+  }
+}
 

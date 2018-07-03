@@ -12,19 +12,15 @@ import { accountReset } from 'features/account'
 
 const RESET_TIMEOUT = 500
 
-const mapDispatchToProps = (dispatch) => ({
-  onReset: () => dispatch(accountReset),
-})
-
 const enhance = compose(
-  connect(null, mapDispatchToProps),
+  connect(),
   withState('isLogouting', 'setLogouting', false),
   withHandlers({
-    logout: ({ history, setLogouting, onReset }) => () => {
+    logout: ({ history, setLogouting }) => () => {
       setLogouting(true)
 
       setTimeout(() => {
-        onReset()
+        accountReset()
         setTimeout(() => history.push('/'), 150)
       }, RESET_TIMEOUT)
     },

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { compose } from 'recompose'
+import { compose, withHandlers } from 'recompose'
 import { withFormik } from 'formik'
 
 import { Col, Row } from 'styled-components-layout'
@@ -11,11 +11,6 @@ import { Container, CenterContentTemplate } from 'ui/templates'
 import { userRegister } from '../effects/registration'
 import { userLogin } from '../effects/join'
 
-
-const mapDispatchToProps = (dispatch) => ({
-  onRegister: (registerData) => dispatch(userRegister, registerData),
-  onLogin: (loginData) => dispatch(userLogin, loginData),
-})
 
 const formik = {
   mapPropsToValues: () => ({
@@ -62,7 +57,11 @@ const formik = {
 }
 
 const enhance = compose(
-  connect(null, mapDispatchToProps),
+  connect(),
+  withHandlers({
+    onRegister: () => userRegister,
+    onLogin: () => userLogin,
+  }),
   withFormik(formik),
 )
 

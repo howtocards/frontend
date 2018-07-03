@@ -7,7 +7,7 @@ import { darkTheme } from 'ui/themes/dark'
 
 import { AccountLoader } from 'features/account'
 
-import { rootRoutes } from './routes'
+import { rootRoutes } from './core/routes'
 
 
 export const App = hot(module)(() => (
