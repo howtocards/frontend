@@ -4,6 +4,7 @@ import styled from 'styled-components'
 export const Card = styled.div`
   display: flex;
   flex-flow: column;
+  flex-shrink: 0;
   border-radius: 4px;
   padding: 2rem;
   width: 100%;
