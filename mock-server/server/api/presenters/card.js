@@ -12,8 +12,10 @@ export const cardRepresent = ({ id, content, title }) => ({
 /**
  * From server to client
  */
-export const cardPresent = ({ $loki, content, title }) => ({
+export const cardPresent = ({ $loki, content, title, authorId, meta }) => ({
   id: $loki,
   content,
   title,
+  authorId,
+  createdAt: meta.created,
 })

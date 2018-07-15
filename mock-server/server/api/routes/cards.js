@@ -1,5 +1,3 @@
-import { Ok } from '@es2/option-result'
-
 import { validate } from '../middlewares/validate'
 import { authenticated } from '../middlewares/auth'
 import { createCardScheme } from '../schemes/card'

@@ -9,4 +9,5 @@ export const cardScheme = {
 export const createCardScheme = {
   ...cardScheme,
   required: ['title', 'content'],
+  additionalProperties: false,
 }
