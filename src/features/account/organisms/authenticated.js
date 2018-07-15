@@ -5,7 +5,7 @@ import { fetchStatus } from 'symbiote-fetching'
 import { WithAccount } from './with-account'
 
 
-export const Authenticated = ({ render, account }) => (
+export const Authenticated = ({ render }) => (
   <WithAccount
     renderExists={render}
     render={({ fetching }) => {
