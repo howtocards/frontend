@@ -6,8 +6,8 @@ import { Header } from 'ui/organisms'
 export const CommonContent = styled.div`
   display: flex;
   justify-content: center;
-  flex-grow: 1;
   overflow-y: auto;
+  height: 100%;
   ${({ theme }) => theme.embed.canvas}
 `
 
