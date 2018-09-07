@@ -13,3 +13,16 @@ export const letterCreate = ({ title, content }) => (
     }
   }
 )
+
+export const getAllCards = () => (
+  async (dispatch) => {
+    try {
+      const { result, ok, error } = await dispatch(api.cardsGet)
+
+      return { ok, error, result }
+    }
+    catch (error) {
+      return { ok: false, error: String(error) }
+    }
+  }
+)

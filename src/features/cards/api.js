@@ -12,3 +12,10 @@ export const cardCreate = (cardData) => (
     cardData,
   )
 )
+
+export const cardsGet = () => (
+  (dispatch) => dispatch(
+    api.get,
+    '/cards',
+  )
+)

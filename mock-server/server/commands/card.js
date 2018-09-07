@@ -15,3 +15,16 @@ export async function cardCreate(cardData) {
 
   return Result.Ok(card)
 }
+
+export async function cardsGet() {
+  const data = models.Cards.chain().simplesort('created').data().map(({ content, title, meta: { created }, authorId }) => {
+    const { email } = models.Users.findOne({ $loki: authorId })
+
+    return ({ content, title, created, email })
+  })
+
+  console.log({ data })
+
+
+  return Result.Ok(data)
+}
