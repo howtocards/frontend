@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
 import { cardsSelector, cardsFetchingSelector } from '../selectors'
 
 
@@ -9,17 +8,10 @@ const mapStateToProps = (state) => ({
   cards: cardsSelector(state),
 })
 
-const enhance = connect(mapStateToProps)
-
-const passProps = ({ render, renderExists, renderEmpty, fetching, cards }) => {
-  if (cards && renderExists) {
+export const WithCards = connect(mapStateToProps)(({ renderExists, renderEmpty, fetching, cards }) => {
+  if (cards && cards.length > 0) {
     return renderExists({ fetching, cards })
   }
-  else if (renderEmpty) {
-    return renderEmpty({ fetching, cards })
-  }
 
-  return render ? render({ fetching, cards }) : null
-}
-
-export const WithCards = enhance(passProps)
+  return renderEmpty({ fetching, cards })
+})

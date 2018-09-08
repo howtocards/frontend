@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { format } from 'date-fns'
-import { WithCards } from 'features/cards'
-import { Container } from 'ui/templates'
 import { Card, H3, Text } from 'ui/atoms'
 
 
@@ -13,31 +11,32 @@ const CardBox = styled.div`
 
 const CardsWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
 `
 
-const renderCard = (item) => (
-  <CardBox key={item.created}>
-    <Card>
-      <H3>{item.title}</H3>
-      {format(new Date(item.created), 'MM/DD/YYYY')}
-      <Text>{item.content}</Text>
-    </Card>
-  </CardBox>
-)
-
-export const Cards = () => (
+export const Cards = ({ component: WithCards }) => (
   <CardsWrapper>
     <WithCards
       renderExists={({ cards }) => (
         <React.Fragment>
-          {cards.map(renderCard)}
+          {cards.map((item) => (
+            <CardBox key={item.created}>
+              <Card>
+                <H3>{item.title}</H3>
+                <Text> {format(new Date(item.created), 'MM/DD/YYYY')}</Text>
+                <Text>{item.content}</Text>
+              </Card>
+            </CardBox>
+            ))}
         </React.Fragment>
-      )}
+        )}
       renderEmpty={() => (
         <div>Not found</div>
-      )}
+        )}
     />
   </CardsWrapper>
 
 )
+

@@ -4,6 +4,7 @@ import { compose, lifecycle } from 'recompose'
 import { Cards } from 'ui/organisms'
 import { getAllCards } from '../effects'
 import { CardsCommonTemplate } from '../templates/common'
+import { WithCards } from '../organisms'
 
 
 const mapStateToProps = null
@@ -20,7 +21,7 @@ const enhance = compose(connect(mapStateToProps, mapDispatchToProps), lifecycle(
 
 export const CardsGetView = () => (
   <CardsCommonTemplate>
-    <Cards />
+    <Cards component={WithCards} />
   </CardsCommonTemplate>
 )
 
