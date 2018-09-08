@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Header } from 'ui/organisms'
 
@@ -11,7 +12,7 @@ export const CommonContent = styled.div`
   ${({ theme }) => theme.embed.canvas}
 `
 
-export const CommonContentTemplate = ({ children, header = <Header /> }) => (
+export const CommonContentTemplate = ({ children, header }) => (
   <React.Fragment>
     {header}
     <CommonContent>
@@ -19,3 +20,12 @@ export const CommonContentTemplate = ({ children, header = <Header /> }) => (
     </CommonContent>
   </React.Fragment>
 )
+
+CommonContentTemplate.propTypes = {
+  children: PropTypes.node.isRequired,
+  header: PropTypes.node,
+}
+
+CommonContentTemplate.defaultProps = {
+  header: <Header />,
+}

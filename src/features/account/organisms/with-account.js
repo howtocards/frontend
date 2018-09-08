@@ -16,7 +16,7 @@ const passProps = ({ render, renderExists, renderEmpty, fetching, account, accou
   if (account && renderExists) {
     return renderExists({ fetching, account, accountId })
   }
-  else if (renderEmpty) {
+  if (renderEmpty) {
     return renderEmpty({ fetching, account, accountId })
   }
 

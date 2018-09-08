@@ -110,4 +110,3 @@ export const Header = () => (
     </Container>
   </HeaderBox>
 )
-

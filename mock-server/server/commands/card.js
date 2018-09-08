@@ -11,7 +11,5 @@ export async function cardCreate(cardData) {
 
   const card = models.Cards.insert({ title, content, authorId })
 
-  console.log({ card })
-
   return Result.Ok(card)
 }

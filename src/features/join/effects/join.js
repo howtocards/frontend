@@ -5,7 +5,7 @@ import { tokenCreate } from '../api'
 export const userLogin = ({ email, password }) => (
   async (dispatch) => {
     try {
-      const { result, ok, error } = await dispatch(tokenCreate, { email, password })
+      const { result, ok } = await dispatch(tokenCreate, { email, password })
 
       if (ok) {
         await dispatch(tokenSet, result.token)

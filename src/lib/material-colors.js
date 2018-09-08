@@ -671,7 +671,9 @@ export const material = {
   },
 }
 
-export const createEmbed = (name, shade = 500) => ({
+const DEFAULT_SHADE = 500
+
+export const createEmbed = (name, shade = DEFAULT_SHADE) => ({
   background: material.palette[name][shade],
   color: material.paletteText[name][shade],
 })

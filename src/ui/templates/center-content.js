@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 
@@ -13,9 +14,18 @@ export const CenterContent = styled.main`
   ${({ theme }) => theme.embed.canvas}
 `
 
-export const CenterContentTemplate = ({ children, footer = null }) => (
+export const CenterContentTemplate = ({ children, footer }) => (
   <CenterContent>
     {children}
     {footer}
   </CenterContent>
 )
+
+CenterContentTemplate.propTypes = {
+  children: PropTypes.node.isRequired,
+  footer: PropTypes.node,
+}
+
+CenterContentTemplate.defaultProps = {
+  footer: null,
+}

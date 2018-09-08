@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { withFormik } from 'formik'
@@ -40,13 +41,12 @@ const formik = {
 
     return errors
   },
-  handleSubmit: async (values, { props, setSubmitting, setErrors }) => {
-    const { ok, error } = await props.onRegister(values)
+  handleSubmit: async (values, { props, setSubmitting }) => {
+    const { ok } = await props.onRegister(values)
 
     if (ok) {
       const isLogged = await props.onLogin(values)
 
-      console.log({ isLogged })
       if (isLogged) {
         props.history.push('/')
       }
@@ -55,7 +55,6 @@ const formik = {
       }
     }
     else {
-      console.warn({ error })
       setSubmitting(false)
     }
   },
@@ -137,3 +136,6 @@ export const RegistrationPage = ({ history }) => (
   </CenterContentTemplate>
 )
 
+RegistrationPage.propTypes = {
+  history: PropTypes.shape({}).isRequired,
+}

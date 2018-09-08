@@ -21,7 +21,7 @@ export const tokenUnset = () => () => {
 
 export const accountFetch = () => handleFetching(actions.fetch, {
   async run(dispatch) {
-    const { ok, result, error } = await dispatch(accountsApi.accountFetch)
+    const { ok, result } = await dispatch(accountsApi.accountFetch)
 
     if (ok) {
       dispatch(actions.set(result.user))

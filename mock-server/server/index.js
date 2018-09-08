@@ -37,12 +37,14 @@ function createApp() {
   return app
 }
 
+const DEFAULT_PORT = 3000
+
 export async function main() {
   await createDatabase()
   const app = createApp()
   const server = http.createServer(app.callback())
 
-  server.listen(process.env.PORT || 3000)
+  server.listen(process.env.PORT || DEFAULT_PORT)
   server.on('error', (error) => {
     throw error
   })

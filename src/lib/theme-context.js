@@ -32,10 +32,11 @@ export class ToggleThemeProvider extends PureComponent {
 
   render() {
     const { dark, light, children } = this.props
+    const { dark: stateDark } = this.state
 
     return (
       <ThemeContext.Provider value={this.state}>
-        <ThemeProvider theme={this.state.dark ? dark : light}>
+        <ThemeProvider theme={stateDark ? dark : light}>
           {children}
         </ThemeProvider>
       </ThemeContext.Provider>

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { withFormik } from 'formik'
@@ -29,7 +30,7 @@ const formik = {
 
     return errors
   },
-  handleSubmit: async (values, { props, setSubmitting, setErrors }) => {
+  handleSubmit: async (values, { props, setSubmitting }) => {
     const isLogged = await props.dispatch(userLogin, values)
 
     if (isLogged) {
@@ -101,3 +102,6 @@ export const JoinPage = ({ history }) => (
   </CenterContentTemplate>
 )
 
+JoinPage.propTypes = {
+  history: PropTypes.shape({}).isRequired,
+}

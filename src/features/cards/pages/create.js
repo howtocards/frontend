@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { withFormik } from 'formik'
@@ -36,11 +37,9 @@ const formik = {
     }
     return errors
   },
-  handleSubmit: async (values, { props, setSubmitting, setErrors }) => {
-    console.log({ values })
-    const result = await props.onCreate(values)
+  handleSubmit: async (values, { props, setSubmitting }) => {
+    /* const result = */ await props.onCreate(values)
 
-    console.log({ result })
     setSubmitting(false)
     // ...
   },
@@ -97,5 +96,15 @@ export const CardCreateView = ({
     />
   </CardsCommonTemplate>
 )
+
+CardCreateView.propTypes = {
+  errors: PropTypes.shape({}).isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+  touched: PropTypes.bool.isRequired,
+  values: PropTypes.shape({}).isRequired,
+}
 
 export const CardCreatePage = enhance(CardCreateView)

@@ -4,7 +4,7 @@ import { accountCreate } from '../api'
 export const userRegister = ({ email, password }) => (
   async (dispatch) => {
     try {
-      const { result, ok, error } = await dispatch(accountCreate, { email, password })
+      const { /* result, */ ok, error } = await dispatch(accountCreate, { email, password })
 
       return { ok, error }
     }
@@ -13,4 +13,3 @@ export const userRegister = ({ email, password }) => (
     }
   }
 )
-

@@ -4,4 +4,3 @@ export class EmptyResultError extends Error {
     super('empty_result')
   }
 }
-

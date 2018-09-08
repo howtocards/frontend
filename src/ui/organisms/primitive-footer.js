@@ -15,6 +15,8 @@ const FooterBlock = styled.footer`
 
 export const PrimitiveFooter = () => (
   <FooterBlock>
-    Go to&nbsp;<Link to="/">home</Link>&nbsp;page
+    Go to&nbsp;
+    <Link to="/">home</Link>
+&nbsp;page
   </FooterBlock>
 )
