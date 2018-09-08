@@ -1,1 +1,1 @@
-export { WithCards } from './with-card'
+export { WithCards } from './with-cards'

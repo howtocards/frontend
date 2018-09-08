@@ -11,13 +11,12 @@ const mapDispatchToProps = (dispatch) => ({
   onGetAllCards: (card) => dispatch(getAllCards, card),
 })
 
-const withUserData = lifecycle({
+
+const enhance = compose(connect(mapStateToProps, mapDispatchToProps), lifecycle({
   componentDidMount() {
     this.props.onGetAllCards()
   },
-})
-
-const enhance = compose(connect(mapStateToProps, mapDispatchToProps), withUserData)
+}))
 
 export const CardsGetView = () => (
   <CardsCommonTemplate>
@@ -25,4 +24,4 @@ export const CardsGetView = () => (
   </CardsCommonTemplate>
 )
 
-export const CardsGetPage = enhance(CardsGetView)
+export const CardsListPage = enhance(CardsGetView)

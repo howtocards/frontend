@@ -8,7 +8,12 @@ import { Card, H3, Text } from 'ui/atoms'
 
 const CardBox = styled.div`
   margin: 1.5rem 0.5rem;
-  min-width: 200px;
+  min-width: 250px;
+`
+
+const CardsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `
 
 const renderCard = (item) => (
@@ -22,7 +27,7 @@ const renderCard = (item) => (
 )
 
 export const Cards = () => (
-  <Container>
+  <CardsWrapper>
     <WithCards
       renderExists={({ cards }) => (
         <React.Fragment>
@@ -33,5 +38,6 @@ export const Cards = () => (
         <div>Not found</div>
       )}
     />
-  </Container>
+  </CardsWrapper>
+
 )
