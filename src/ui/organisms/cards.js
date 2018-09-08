@@ -6,7 +6,8 @@ import { Card, H3, Text } from 'ui/atoms'
 
 const CardBox = styled.div`
   margin: 1.5rem 0.5rem;
-  min-width: 250px;
+  width: 290px;
+  height: 270px;
 `
 
 const CardsWrapper = styled.div`
@@ -24,9 +25,10 @@ export const Cards = ({ component: WithCards }) => (
           {cards.map((item) => (
             <CardBox key={item.created}>
               <Card>
-                <H3>{item.title}</H3>
-                <Text> {format(new Date(item.created), 'MM/DD/YYYY')}</Text>
-                <Text>{item.content}</Text>
+                <H3>title: {item.title}</H3>
+                <H3>author_id: {item.author_id}</H3>
+                <Text>time: {format(new Date(item.created), 'MM/DD/YYYY')}</Text>
+                <Text>content: {item.content}</Text>
               </Card>
             </CardBox>
             ))}

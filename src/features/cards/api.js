@@ -15,7 +15,7 @@ export const cardCreate = (cardData) => (
 
 
 /**
- * @return {Promise<{ result: Array<{content: string, created: number, email: string, title: string}> }>}
+ * @return {Promise<{ result: Array<{content: string, created: number, author_id: string, title: string}> }>}
  */
 
 export const cardsGet = () => (

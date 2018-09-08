@@ -17,14 +17,16 @@ export async function cardCreate(cardData) {
 }
 
 export async function cardsGet() {
-  const data = models.Cards.chain().simplesort('created').data().map(({ content, title, meta: { created }, authorId }) => {
+  const data = models.Cards.chain().data().map(({
+    content, title,
+    meta: { created }, authorId,
+  }) => {
     const { email } = models.Users.findOne({ $loki: authorId })
 
-    return ({ content, title, created, email })
-  })
+    return ({ content, title, created, author_id: email })
+  }).reverse()
 
   console.log({ data })
-
 
   return Result.Ok(data)
 }
