@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose, lifecycle } from 'recompose'
+import { Cards } from 'ui/organisms'
 import { getAllCards } from '../effects'
 import { CardsCommonTemplate } from '../templates/common'
 
@@ -18,8 +19,10 @@ const withUserData = lifecycle({
 
 const enhance = compose(connect(mapStateToProps, mapDispatchToProps), withUserData)
 
-export const CardsAllGetView = () => (
-  <CardsCommonTemplate>CardsAllGetView</CardsCommonTemplate>
+export const CardsGetView = () => (
+  <CardsCommonTemplate>
+    <Cards />
+  </CardsCommonTemplate>
 )
 
-export const CardsAllGetPage = enhance(CardsAllGetView)
+export const CardsGetPage = enhance(CardsGetView)

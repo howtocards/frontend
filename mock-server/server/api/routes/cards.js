@@ -15,7 +15,7 @@ const update = () => null
 const destroy = () => null
 
 export const cardsApi = (cards) => {
-  cards.get(authenticated(), cardsGet)
+  cards.get(cardsGet)
   cards.post(authenticated(), validate(createCardScheme), create)
   cards.scope(':cardId', (card) => {
     card.get(read)

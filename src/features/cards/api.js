@@ -13,6 +13,11 @@ export const cardCreate = (cardData) => (
   )
 )
 
+
+/**
+ * @return {Promise<{ result: Array<{content: string, created: number, email: string, title: string}> }>}
+ */
+
 export const cardsGet = () => (
   (dispatch) => dispatch(
     api.get,

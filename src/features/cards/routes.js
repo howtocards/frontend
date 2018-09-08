@@ -1,12 +1,12 @@
 import { CardCreatePage } from './pages/create'
-import { CardsAllGetPage } from './pages/all'
+import { CardsGetPage } from './pages/all'
 
 
 export const cardsRoutes = () => [
   {
     path: '/',
     exact: true,
-    component: CardsAllGetPage,
+    component: CardsGetPage,
   },
   {
     path: '/new',
