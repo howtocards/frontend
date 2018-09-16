@@ -2,18 +2,21 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose, lifecycle } from 'recompose'
 
-import { Cards } from 'ui/organisms'
+import { CardsList, CardItem } from 'ui/organisms'
 
 import { getAllCards } from '../effects'
 import { CardsCommonTemplate } from '../templates/common'
-import { WithCards } from '../organisms'
+import { cardsSelector, cardsFetchingSelector } from '../selectors'
 
 
-const mapStateToProps = null
+const mapStateToProps = (state) => ({
+  fetching: cardsFetchingSelector(state),
+  cards: cardsSelector(state),
+})
+
 const mapDispatchToProps = (dispatch) => ({
   onGetAllCards: (card) => dispatch(getAllCards, card),
 })
-
 
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
@@ -24,10 +27,12 @@ const enhance = compose(
   }),
 )
 
-export const CardsGetView = () => (
+export const CardsListPage = enhance(({ cards }) => (
   <CardsCommonTemplate>
-    <Cards component={WithCards} />
+    <CardsList
+      list={cards}
+      renderExists={(card) => <CardItem {...card} />}
+      renderEmpty={(error) => <div>{error.text}</div>}
+    />
   </CardsCommonTemplate>
-)
-
-export const CardsListPage = enhance(CardsGetView)
+))
