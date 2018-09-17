@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, compose as composeEnhancers } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { createLogger } from 'redux-logger'
 import { createExecue } from 'redux-execue'
@@ -12,6 +12,8 @@ const loggerOptions = {
   predicate: (getState, action) => !action.type.startsWith('@@router/'),
   collapsed: true,
 }
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose // eslint-disable-line no-underscore-dangle, max-len
 
 export function configureStore({ history, initialState = {} } = required('configureStoreOptions')) {
   const connectedRouter = connectRouter(history)
@@ -39,4 +41,3 @@ export function configureStore({ history, initialState = {} } = required('config
   return store
 }
 
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

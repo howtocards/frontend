@@ -1,8 +1,13 @@
-import { combineReducers } from 'redux'
+import { createSymbiote } from 'redux-symbiote'
+import { initialFetching, createFetching } from 'symbiote-fetching'
 
 
-const list = (a) => a
+const initialState = {
+  cards: null,
+  fetching: initialFetching,
+}
 
-export const reducer = combineReducers({
-  list,
-})
+export const { actions, reducer } = createSymbiote(initialState, {
+  fetch: createFetching('fetching'),
+  set: (state, cards) => ({ ...state, cards }),
+}, 'cards')
