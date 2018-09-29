@@ -7,8 +7,12 @@ const {
 } = require('webpack')
 const merge = require('webpack-merge')
 
+require('dotenv').config()
+
 const { config, DIST } = require('./common')
 
+
+const DEFAULT_PORT = 3000
 
 module.exports = merge(config, {
   profile: true,
@@ -47,7 +51,7 @@ module.exports = merge(config, {
     stats: 'minimal',
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:3000/',
+      '/api': `http://localhost:${process.env.BACKEND_PORT || DEFAULT_PORT}`,
     },
   },
 })

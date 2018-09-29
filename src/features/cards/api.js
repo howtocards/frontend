@@ -8,7 +8,7 @@ import { api } from 'features/common'
 export const cardCreate = (cardData) => (
   (dispatch) => dispatch(
     api.post,
-    '/cards',
+    '/cards/',
     cardData,
   )
 )
@@ -21,6 +21,6 @@ export const cardCreate = (cardData) => (
 export const cardsGet = () => (
   (dispatch) => dispatch(
     api.get,
-    '/cards',
+    '/cards/',
   )
 )

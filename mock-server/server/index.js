@@ -1,10 +1,12 @@
 import * as http from 'http'
+import * as path from 'path'
 import Koa from 'koa'
 import mount from 'koa-mount'
 import logger from 'koa-logger'
 import cors from '@koa/cors'
 import compress from 'koa-compress'
 import { contentSecurityPolicy } from 'koa-helmet'
+import dotenv from 'dotenv'
 
 import { api, printRoutes } from './api'
 import { createDatabase } from './models'
@@ -40,11 +42,12 @@ function createApp() {
 const DEFAULT_PORT = 3000
 
 export async function main() {
+  dotenv.config({ path: path.resolve(__dirname, '..', '..', '.env') })
   await createDatabase()
   const app = createApp()
   const server = http.createServer(app.callback())
 
-  server.listen(process.env.PORT || DEFAULT_PORT)
+  server.listen(process.env.BACKEND_PORT || DEFAULT_PORT)
   server.on('error', (error) => {
     throw error
   })

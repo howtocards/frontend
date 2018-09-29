@@ -10,7 +10,7 @@ import { api } from 'features/common'
 export const accountCreate = (loginData) => (
   (dispatch) => dispatch(
     api.post,
-    '/account',
+    '/account/',
     loginData,
   )
 )
@@ -25,7 +25,7 @@ export const accountCreate = (loginData) => (
 export const tokenCreate = (loginData) => (
   (dispatch) => dispatch(
     api.post,
-    '/account/session',
+    '/account/session/',
     loginData,
   )
 )
@@ -39,7 +39,7 @@ export const tokenCreate = (loginData) => (
 export const tokenDrop = (token) => (
   (dispatch) => dispatch(
     api.destroy,
-    '/account/session',
+    '/account/session/',
     { token },
   )
 )
@@ -50,5 +50,5 @@ export const tokenDrop = (token) => (
  * @return {Promise<{ result: boolean }>}
 */
 export const sessionDrop = () => (
-  (dispatch) => dispatch(api.destroy, '/account/session')
+  (dispatch) => dispatch(api.destroy, '/account/session/')
 )

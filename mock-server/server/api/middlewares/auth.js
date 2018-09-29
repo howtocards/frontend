@@ -9,7 +9,7 @@ export const authenticated = () => {
     if (ctx.request.header.authorization) {
       const [word, token] = ctx.request.header.authorization.split(' ')
 
-      if (word === 'token' && token && token.length > MIN_TOKEN_LENGTH) {
+      if (word === 'bearer' && token && token.length > MIN_TOKEN_LENGTH) {
         const userResult = (await userGet(token))
           .map((user) => {
             ctx.user = user
@@ -18,6 +18,7 @@ export const authenticated = () => {
 
         // if token valid
         if (userResult.isOk()) {
+          ctx.auth = { token }
           return next()
         }
 

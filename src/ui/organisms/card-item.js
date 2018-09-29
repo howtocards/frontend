@@ -14,10 +14,22 @@ const CardBox = styled.div`
 export const CardItem = ({ title, author_id: authorId, created, content }) => (
   <CardBox>
     <Card>
-      <H3>title: {title}</H3>
-      <H3>author_id: {authorId}</H3>
-      <Text>time: {format(new Date(created), 'HH:MM MM/DD/YYYY')}</Text>
-      <Text>content: {content}</Text>
+      <H3>
+        title:
+        {title}
+      </H3>
+      <H3>
+        author_id:
+        {authorId}
+      </H3>
+      <Text>
+        time:
+        {format(new Date(created), 'HH:MM MM/DD/YYYY')}
+      </Text>
+      <Text>
+        content:
+        {content}
+      </Text>
     </Card>
   </CardBox>
 )

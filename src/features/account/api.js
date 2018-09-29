@@ -8,5 +8,5 @@ import { api } from 'features/common'
  * @return {Promise<{ user: { email: string } }>}
  */
 export const accountFetch = () => (
-  (dispatch) => dispatch(api.get, '/account')
+  (dispatch) => dispatch(api.get, '/account/session/')
 )

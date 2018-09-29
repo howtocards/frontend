@@ -24,7 +24,7 @@ export const accountFetch = () => handleFetching(actions.fetch, {
     const { ok, result } = await dispatch(accountsApi.accountFetch)
 
     if (ok) {
-      dispatch(actions.set(result.user))
+      dispatch(actions.set(result))
     }
     else {
       throw unexpectedToken

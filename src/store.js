@@ -40,4 +40,3 @@ export function configureStore({ history, initialState = {} } = required('config
 
   return store
 }
-

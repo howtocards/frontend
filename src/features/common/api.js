@@ -17,7 +17,7 @@ export const request = (method, url, options = {}) => (
       headers: {
         ...defaultOptions.headers,
         'Content-Type': options.body ? 'application/json' : (options.headers && options.headers['Content-Type']),
-        Authorization: token ? `token ${token}` : undefined,
+        Authorization: token ? `bearer ${token}` : undefined,
         ...options.headers,
       },
       body: options.body ? JSON.stringify(options.body) : undefined,
