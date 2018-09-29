@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onGetAllCards: (card) => dispatch(getAllCards, card),
+  onGetAllCards: () => dispatch(getAllCards),
 })
 
 const enhance = compose(

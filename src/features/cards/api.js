@@ -15,12 +15,23 @@ export const cardCreate = (cardData) => (
 
 
 /**
- * @return {Promise<{ result: Array<{content: string, created: number, author_id: string, title: string}> }>}
+ * @return {Promise<{ result: Array<{id: number, content: string, created: number, author_id: string, title: string}>}>}
  */
 
 export const cardsGet = () => (
   (dispatch) => dispatch(
     api.get,
     '/cards',
+  )
+)
+
+/**
+ * @return {Promise<{result: Array<{id: number, content: string, created: number, author_id: string, title: string}>}>}
+ */
+
+export const cardRead = (id) => (
+  (dispatch) => dispatch(
+    api.get,
+    `/cards/${id}`,
   )
 )

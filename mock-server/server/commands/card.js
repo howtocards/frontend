@@ -16,16 +16,26 @@ export async function cardCreate(cardData) {
   return Result.Ok(card)
 }
 
+const getAuthorEmail = (id) => models.Users.findOne({ $loki: id }).email
+
+const formatterCardsData = ({
+  content, title,
+  meta: { created }, authorId,
+  $loki,
+}) => ({ id: $loki, content, title, created, author_id: getAuthorEmail(authorId) })
+
 export async function cardsGet() {
-  const data = models.Cards.chain().data().map(({
-    content, title,
-    meta: { created }, authorId,
-  }) => {
-    const { email } = models.Users.findOne({ $loki: authorId })
+  const data = models.Cards.chain().data().map(formatterCardsData).reverse()
 
-    return ({ content, title, created, author_id: email })
-  }).reverse()
+  console.log({ data })
 
+  return Result.Ok(data)
+}
+
+export async function cardRead(ctx) {
+  let data = models.Cards.findOne({ $loki: +ctx.params.cardId })
+
+  data = formatterCardsData(data)
   console.log({ data })
 
   return Result.Ok(data)
