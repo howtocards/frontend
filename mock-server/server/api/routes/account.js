@@ -12,10 +12,10 @@ const me = (ctx) => Ok({ id: ctx.user.$loki, email: ctx.user.email, token: ctx.a
 const drop = (ctx) => userSessionDrop(ctx.user, ctx.request.body.token)
 
 export const accountApi = (account) => {
-  account.get(authenticated(), me)
   account.post(validate(authScheme), register)
 
   account.scope('session', (session) => {
+    session.get(authenticated(), me)
     session.post(validate(authScheme), login)
     session.delete(authenticated(), validate(sessionDropSchema), drop)
   })
