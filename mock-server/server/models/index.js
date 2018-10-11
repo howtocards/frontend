@@ -1,3 +1,4 @@
+import Future from 'fluture'
 import Loki from 'lokijs'
 
 /**
@@ -36,7 +37,7 @@ const makeCollection = (name, options) => {
   return coll
 }
 
-const databaseInitialize = (resolve, reject) => (error) => {
+const databaseInitialize = (reject, resolve) => (error) => {
   if (error) reject(error)
   else {
     models.Users = makeCollection('users', { unique: ['email'] })
@@ -46,12 +47,13 @@ const databaseInitialize = (resolve, reject) => (error) => {
   }
 }
 
+
 export function createDatabase() {
-  return new Promise((resolve, reject) => {
+  return Future((reject, resolve) => {
     db = new Loki('/tmp/howtocards.db', {
       verbose: true,
       autoload: true,
-      autoloadCallback: databaseInitialize(resolve, reject),
+      autoloadCallback: databaseInitialize(reject, resolve),
       autosave: true,
       autosaveInterval: 1000,
     })

@@ -12,6 +12,26 @@ import { api, printRoutes } from './api'
 import { createDatabase } from './models'
 
 
+const DEFAULT_PORT = 3000
+
+export async function main() {
+  configureEnv()
+  await createDatabase().promise()
+
+  const app = createApp()
+  const server = http.createServer(app.callback())
+
+  server.on('error', errorHandler)
+  server.on('listening', listeningHandler)
+  server.listen(process.env.BACKEND_PORT || DEFAULT_PORT)
+}
+
+function configureEnv() {
+  dotenv.config({
+    path: path.resolve(__dirname, '..', '..', '.env'),
+  })
+}
+
 function createApp() {
   const app = new Koa()
 
@@ -28,35 +48,29 @@ function createApp() {
     },
   }))
 
-  app.use((ctx) => {
-    ctx.body = {
-      ok: false,
-      error: 'route_not_found',
-      status: 404,
-    }
-  })
+  app.use(notFoundMiddleware)
 
   return app
 }
 
-const DEFAULT_PORT = 3000
+function notFoundMiddleware(ctx) {
+  ctx.status = 404
+  ctx.body = {
+    ok: false,
+    error: 'route_not_found',
+    status: 404,
+  }
+}
 
-export async function main() {
-  dotenv.config({ path: path.resolve(__dirname, '..', '..', '.env') })
-  await createDatabase()
-  const app = createApp()
-  const server = http.createServer(app.callback())
+function errorHandler(error) {
+  throw error
+}
 
-  server.listen(process.env.BACKEND_PORT || DEFAULT_PORT)
-  server.on('error', (error) => {
-    throw error
-  })
-  server.on('listening', () => {
-    const address = server.address()
+function listeningHandler() {
+  const address = this.address()
 
-    // eslint-disable-next-line no-console
-    console.log(`\n\\> Listening on http://localhost:${address.port}\n`)
+  // eslint-disable-next-line no-console
+  console.log(`\n\\> Listening on http://localhost:${address.port}\n`)
 
-    printRoutes()
-  })
+  printRoutes()
 }

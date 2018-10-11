@@ -1,4 +1,4 @@
-import { Result } from '@es2/option-result'
+import Future from 'fluture'
 import { models } from '../models'
 
 
@@ -19,62 +19,62 @@ const USER_TOKEN_SIZE = 5
 
 /**
  * @param {{ email: string, password: string }} registerData
- * @return {Promise<Result<number, string>>}
  */
-export const userRegister = async (registerData) => {
-  if (models.Users.chain().find({ email: registerData.email }).count()) {
-    return Result.Err('already_exists')
+export const userRegister = (registerData) => {
+  const usersWithEmail = models.Users.chain().find({ email: registerData.email })
+
+  if (usersWithEmail.count() > 0) {
+    return Future.reject('already_exists')
   }
 
-  const user = models.Users.insert({ email: registerData.email, password: registerData.password })
+  const createdUser = models.Users
+    .insert({ email: registerData.email, password: registerData.password })
 
-  return Result.Ok(user.$loki)
+  return Future.of(createdUser.$loki)
 }
 
 /**
  * @param {{ email: string, password: string }} loginData
- * @return {Promise<Result<string, string>>}
  */
-export const userLogin = async (loginData) => {
-  const found = models.Users.findOne({ email: loginData.email })
+export const userLogin = (loginData) => {
+  const foundUser = models.Users.findOne({ email: loginData.email })
 
-  if (!found) {
-    return Result.Err('not_found')
+  if (!foundUser) {
+    return Future.reject('not_found')
   }
-  if (loginData.password !== found.password) {
-    return Result.Err('bad_credentials')
+  if (loginData.password !== foundUser.password) {
+    return Future.reject('bad_credentials')
   }
-  const token = models.Tokens.insert({ userId: found.$loki, token: createToken(USER_TOKEN_SIZE, '%') })
+  const createdToken = models.Tokens
+    .insert({ userId: foundUser.$loki, token: createToken(USER_TOKEN_SIZE, '%') })
 
-  return Result.Ok({ token: token.token })
+  return Future.of({ token: createdToken.token })
 }
 
 /**
  * @param {string} token
- * @return {Promise<Result<User, string>>}
  */
-export const userGet = async (token) => {
-  const found = models.Tokens.findOne({ token })
+export const userGet = (token) => {
+  const foundToken = models.Tokens.findOne({ token })
 
-  if (!found) {
-    return Result.Err('invalid_token')
+  if (!foundToken) {
+    return Future.reject('invalid_token')
   }
 
-  const user = models.Users.findOne({ $loki: found.userId })
+  const foundUser = models.Users.findOne({ $loki: foundToken.userId })
 
-  if (!user) {
-    return Result.Err('invalid_token')
+  if (!foundUser) {
+    return Future.reject('invalid_token')
   }
 
-  return Result.Ok(user)
+  return Future.of(foundUser)
 }
 
 /**
  * @param {models.Users} user
  * @param {string?} token
- * @return {Promise<Result<boolean, string>>}
  */
-export const userSessionDrop = async (user, token) => {
+export const userSessionDrop = (user, token) => {
   if (token) {
     models.Tokens.findAndRemove({ token, userId: user.$loki })
   }
@@ -82,5 +82,5 @@ export const userSessionDrop = async (user, token) => {
     models.Tokens.findAndRemove({ userId: user.$loki })
   }
 
-  return Result.Ok(true)
+  return Future.of(true)
 }

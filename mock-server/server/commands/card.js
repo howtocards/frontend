@@ -1,30 +1,30 @@
-import { Result } from '@es2/option-result'
+import Future from 'fluture'
 import { models } from '../models'
 
 
 /**
  * @param {{ title: string, content: string, authorId: number }} cardData
- * @return {Promise<Result<{ $loki: number }, string>>} created card
+ * @return created card
  */
-export async function cardCreate(cardData) {
+export function cardCreate(cardData) {
   const { title, content, authorId } = cardData
 
   const card = models.Cards.insert({ title, content, authorId })
 
-  return Result.Ok(card)
+  return Future.of(card)
 }
 
-export async function cardsGet() {
-  const data = models.Cards.chain().data().map(({
-    content, title,
-    meta: { created }, authorId,
-  }) => {
-    const { email } = models.Users.findOne({ $loki: authorId })
+export function cardsGet() {
+  const map = ({ $loki, content, title, meta, authorId }) => ({
+    $loki,
+    content,
+    title,
+    meta,
+    authorId,
+  })
 
-    return ({ content, title, created, author_id: email })
-  }).reverse()
 
-  console.log({ data })
+  const data = models.Cards.chain().data().map(map).reverse()
 
-  return Result.Ok(data)
+  return Future.of(data)
 }

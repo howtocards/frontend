@@ -1,91 +1,61 @@
-import { Option, Result } from '@es2/option-result'
-import { EmptyResultError } from '../errors'
+import Future from 'fluture'
+import { EmptyResultError, InternalServerError } from '../errors'
 
 
 const STATUS_OK = 200
-const STATUS_NO_CONTENT = 204
-const STATUS_INTERNAL_SERVER_ERROR = 500
+// const STATUS_NO_CONTENT = 204
+// const STATUS_INTERNAL_SERVER_ERROR = 500
 const STATUS_NOT_IMPLEMENTED = 501
 const STATUS_BAD_REQUEST = 400
 
-/**
- * Wrap any result from route to Result.
- * If Option passed as result, converts it to Result.okOr(EmptyResultError)
- * @param {Result|Option|any} result
- * @return {Result}
- */
-const wrapResult = (result) => {
-  if (typeof result === 'undefined' || result === null) {
-    return Result.Err(new EmptyResultError())
-  }
-
-  if (Result.isResult(result)) {
-    return result
-  }
-
-  if (Option.isOption(result)) {
-    return result.okOr(new EmptyResultError())
-  }
-
-  return Result.Ok(result)
-}
-
-/**
- * Resolve status of result from route
- * @param {Result} result
- * @return {number}
- */
-const statusOf = (result) => {
-  if (result.isOk()) {
-    return STATUS_OK
-  }
-
-  const error = result.unwrapErr()
-
-  if (error instanceof EmptyResultError) {
-    return STATUS_NO_CONTENT
-  }
-
-  return STATUS_BAD_REQUEST
-}
 
 export const apiWrapper = () => async (ctx, next) => {
   ctx.status = STATUS_NOT_IMPLEMENTED
+
+  const responseFuture = (await resolveMiddlewareToFuture(ctx, next))
+    .chain(emptyToError)
+    .map((value) => ({
+      ok: true,
+      result: value,
+      status: statusDefaultOr(ctx.status, STATUS_OK),
+    }))
+    .mapRej((error) => ({
+      ok: false,
+      error: error.message || error.name || error,
+      status: statusDefaultOr(ctx.status, error.httpStatus || STATUS_BAD_REQUEST),
+    }))
+    .chainRej(Future.of)
+
+  const response = await responseFuture.promise()
+
+  ctx.status = response.status
+  ctx.body = response
+
+  return responseFuture
+}
+
+const resolveMiddlewareToFuture = async (ctx, next) => {
   try {
-    const result = wrapResult(await next())
-
-    ctx.status = ctx.status === STATUS_NOT_IMPLEMENTED
-      ? statusOf(result)
-      : ctx.status
-
-    const ok = ctx.status < STATUS_BAD_REQUEST
-
-    ctx.body = result
-      .map((value) => ({ result: value }))
-      .mapErr((error) => ({ error: error.message || error.name || error }))
-      .chainErr(Result.Ok)
-      .map((part) => ({
-        ok,
-        ...part,
-        status: ctx.status,
-      }))
-      .unwrap()
-
-    return result
+    return Future.resolve(await next())
   }
   catch (error) {
-    ctx.status = STATUS_INTERNAL_SERVER_ERROR
-
-    ctx.body = {
-      error: 'internal_server_error',
-      message: 'Internal Server Error',
-      ok: false,
-      status: ctx.status,
-    }
     // eslint-disable-next-line no-console
-    console.log('error', error)
+    console.error('error', error)
     ctx.app.emit('error', error, ctx)
-
-    return Result.Err(error)
+    return Future.reject(new InternalServerError(error))
   }
 }
+
+const emptyToError = (result) => {
+  if (typeof result === 'undefined' || result === null) {
+    return Future.reject(new EmptyResultError())
+  }
+  return result
+}
+
+
+const statusDefaultOr = (currentStatus, defaultStatus) => (
+  currentStatus === STATUS_NOT_IMPLEMENTED
+    ? defaultStatus
+    : currentStatus
+)
