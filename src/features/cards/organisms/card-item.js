@@ -3,32 +3,24 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { format } from 'date-fns'
 
+import { Col, Row } from 'styled-components-layout'
 import { Card, H3, Text } from 'ui/atoms'
 
 
 const CardBox = styled.div`
   margin: 1.5rem 0.5rem;
-  width: 290px;
-  height: 270px;
 `
 
-export const CardItem = ({ title, author_id: authorId, created, content }) => (
+export const CardItem = ({ title, created_at: createdAt, content }) => (
   <CardBox>
     <Card>
-      <H3>
-        title:
-        {title}
-      </H3>
-      <H3>
-        author_id:
-        {authorId}
-      </H3>
+      <Col>
+        <Row justify="space-between">
+          <H3 narrow>{title}</H3>
+          <i narrow>{format(new Date(createdAt), 'HH:MM MM/DD/YYYY')}</i>
+        </Row>
+      </Col>
       <Text>
-        time:
-        {format(new Date(created), 'HH:MM MM/DD/YYYY')}
-      </Text>
-      <Text>
-        content:
         {content}
       </Text>
     </Card>
@@ -37,7 +29,7 @@ export const CardItem = ({ title, author_id: authorId, created, content }) => (
 
 CardItem.propTypes = {
   title: PropTypes.string.isRequired,
-  author_id: PropTypes.number.isRequired,
-  created: PropTypes.string.isRequired,
+  // author_id: PropTypes.number.isRequired,
+  created_at: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
 }

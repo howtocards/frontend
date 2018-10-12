@@ -2,12 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose, lifecycle } from 'recompose'
 
-import { ConditionalList, ItemsList } from 'ui/organisms'
-
 import { getAllCards } from '../effects'
 import { CardsCommonTemplate } from '../templates/common'
 import { cardsSelector, cardsFetchingSelector } from '../selectors'
-import { CardItem } from '../organisms'
+import { CardsList, CardItem } from '../organisms'
 
 
 const mapStateToProps = (state) => ({
@@ -30,16 +28,9 @@ const enhance = compose(
 
 export const CardsListPage = enhance(({ cards }) => (
   <CardsCommonTemplate>
-    <ConditionalList
-      list={cards}
-      renderExists={(list) => (
-        <ItemsList
-          items={list}
-          render={(item) => (
-            <CardItem key={item.created} {...item} />
-          )}
-        />
-      )}
+    <CardsList
+      cards={cards || []}
+      renderCard={(item) => <CardItem {...item} key={item.id} />}
     />
   </CardsCommonTemplate>
 ))
