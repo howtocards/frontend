@@ -1,4 +1,3 @@
-
 export const authScheme = {
   properties: {
     email: { type: 'string' },

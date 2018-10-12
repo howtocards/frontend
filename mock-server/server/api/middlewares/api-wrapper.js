@@ -8,7 +8,6 @@ const STATUS_OK = 200
 const STATUS_NOT_IMPLEMENTED = 501
 const STATUS_BAD_REQUEST = 400
 
-
 export const apiWrapper = () => async (ctx, next) => {
   ctx.status = STATUS_NOT_IMPLEMENTED
 
@@ -52,7 +51,6 @@ const emptyToError = (result) => {
   }
   return result
 }
-
 
 const statusDefaultOr = (currentStatus, defaultStatus) => (
   currentStatus === STATUS_NOT_IMPLEMENTED

@@ -1,4 +1,3 @@
-
 export const cardScheme = {
   properties: {
     title: { type: 'string' },

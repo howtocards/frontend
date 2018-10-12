@@ -12,7 +12,6 @@ export const rootApi = (root) => {
   root.scope('cards', cardsApi)
 }
 
-
 const api = () => Future.of({
   cards: 'works',
 })

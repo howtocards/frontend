@@ -47,7 +47,6 @@ const databaseInitialize = (reject, resolve) => (error) => {
   }
 }
 
-
 export function createDatabase() {
   return Future((reject, resolve) => {
     db = new Loki('/tmp/howtocards.db', {

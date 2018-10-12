@@ -1,4 +1,3 @@
-
 /**
  * From client to server
  */
@@ -7,7 +6,6 @@ export const cardRepresent = ({ id, content, title }) => ({
   content,
   title,
 })
-
 
 /**
  * From server to client

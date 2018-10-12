@@ -18,12 +18,13 @@ export const accountApi = (account) => {
 }
 
 const register = (ctx) => userRegister(ctx.request.body)
-const login = (ctx) => (
-  userLogin(ctx.request.body)
-    .mapRej((error) => {
-      if (error === 'not_found') return new NotFoundError()
-      return error
-    })
-)
-const me = (ctx) => Future.of({ id: ctx.user.$loki, email: ctx.user.email, token: ctx.auth.token })
+const login = (ctx) => userLogin(ctx.request.body).mapRej((error) => {
+  if (error === 'not_found') return new NotFoundError()
+  return error
+})
+const me = (ctx) => Future.of({
+  id: ctx.user.$loki,
+  email: ctx.user.email,
+  token: ctx.auth.token,
+})
 const drop = (ctx) => userSessionDrop(ctx.user, ctx.request.body.token)

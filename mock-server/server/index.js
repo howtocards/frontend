@@ -41,12 +41,14 @@ function createApp() {
 
   app.use(mount('/api', api))
 
-  app.use(contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-    },
-  }))
+  app.use(
+    contentSecurityPolicy({
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+      },
+    })
+  )
 
   app.use(notFoundMiddleware)
 

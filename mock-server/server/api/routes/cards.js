@@ -15,7 +15,6 @@ export const cardsApi = (cards) => {
   })
 }
 
-
 const read = () => null
 
 const create = (ctx) => (
@@ -23,10 +22,7 @@ const create = (ctx) => (
     .map(cardPresent)
 )
 
-const list = () => (
-  cardsGet()
-    .map((cards) => cards.map(cardPresent))
-)
+const list = () => cardsGet().map((cards) => cards.map(cardPresent))
 
 const update = () => null
 const destroy = () => null

@@ -1,7 +1,6 @@
 import Future from 'fluture'
 import { models } from '../models'
 
-
 // eslint-disable-next-line no-magic-numbers
 const createToken = (iterations = 3, sep = '') => {
   let cnt = 0
@@ -21,14 +20,18 @@ const USER_TOKEN_SIZE = 5
  * @param {{ email: string, password: string }} registerData
  */
 export const userRegister = (registerData) => {
-  const usersWithEmail = models.Users.chain().find({ email: registerData.email })
+  const usersWithEmail = models.Users.chain().find({
+    email: registerData.email,
+  })
 
   if (usersWithEmail.count() > 0) {
     return Future.reject('already_exists')
   }
 
-  const createdUser = models.Users
-    .insert({ email: registerData.email, password: registerData.password })
+  const createdUser = models.Users.insert({
+    email: registerData.email,
+    password: registerData.password,
+  })
 
   return Future.of(createdUser.$loki)
 }
@@ -45,8 +48,10 @@ export const userLogin = (loginData) => {
   if (loginData.password !== foundUser.password) {
     return Future.reject('bad_credentials')
   }
-  const createdToken = models.Tokens
-    .insert({ userId: foundUser.$loki, token: createToken(USER_TOKEN_SIZE, '%') })
+  const createdToken = models.Tokens.insert({
+    userId: foundUser.$loki,
+    token: createToken(USER_TOKEN_SIZE, '%'),
+  })
 
   return Future.of({ token: createdToken.token })
 }
