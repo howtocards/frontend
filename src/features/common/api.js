@@ -59,3 +59,12 @@ export const patch = (url, body, options = {}) => (
 export const destroy = (url, options = {}) => (
   (dispatch) => dispatch(request, 'DELETE', url, options)
 )
+
+/**
+ * Get info about current account.
+ * @see https://github.com/howtocards/frontend/tree/master/mock-server/server#get-account-user-account-status
+ * @return {Promise<{ user: { email: string } }>}
+ */
+export const accountFetch = () => (
+  (dispatch) => dispatch(get, '/account/session/')
+)

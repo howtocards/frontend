@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 // import { ToggleThemeConsumer } from 'lib/theme-context'
 import { Container } from 'ui/templates'
-import { WithAccount } from 'features/account'
+import { WithAccount } from './with-account'
 
 
 // https://codepen.io/anon/pen/PebeaL
@@ -16,7 +16,7 @@ const HeaderBox = styled.header`
   justify-content: center;
   z-index: 1000;
   box-sizing: border-box;
-  /* box-shadow: 0 10px 20px rgba(36,37,38,0.08); */
+  box-shadow: 0 10px 20px rgba(36,37,38,0.08);
 
   & > div > * + * {
     margin-left: 2rem;

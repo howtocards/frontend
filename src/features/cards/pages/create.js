@@ -5,9 +5,9 @@ import { compose } from 'recompose'
 import { withFormik } from 'formik'
 import { Col } from 'styled-components-layout'
 
+import { Authenticated } from 'features/common'
 import { Card, Input, Button } from 'ui/atoms'
 import { TextArea } from 'ui/molecules'
-import { Authenticated } from 'features/account'
 import { CardsCommonTemplate } from '../templates/common'
 import { letterCreate } from '../effects'
 

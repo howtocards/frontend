@@ -1,20 +1,19 @@
 import Cookies from 'browser-cookies'
 import { handleFetching } from 'symbiote-fetching'
 
-import { api } from 'features/common'
-import * as accountsApi from './api'
+import * as api from './api'
 import { actions } from './symbiotes'
 
 
 const unexpectedToken = 'UNEXPECTED_TOKEN'
 
 
-export const accountFetch = () => handleFetching(actions.fetch, {
+export const accountFetch = () => handleFetching(actions.account.fetch, {
   async run(dispatch) {
-    const { ok, result } = await dispatch(accountsApi.accountFetch)
+    const { ok, result } = await dispatch(api.accountFetch)
 
     if (ok) {
-      dispatch(actions.set(result))
+      dispatch(actions.account.set(result))
     }
     else {
       throw unexpectedToken
@@ -35,6 +34,6 @@ export const tokenUnset = () => () => {
 export const accountReset = () => (
   (dispatch) => {
     dispatch(tokenUnset)
-    dispatch(actions.unset())
+    dispatch(actions.account.unset())
   }
 )

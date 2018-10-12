@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Header } from 'ui/organisms'
+
+import { Header } from '../organisms'
 
 
 export const CommonContent = styled.div`

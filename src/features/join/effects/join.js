@@ -1,4 +1,4 @@
-import { accountFetch, tokenSet } from 'features/account'
+import { accountFetch, tokenSet } from 'features/common'
 import { tokenCreate } from '../api'
 
 

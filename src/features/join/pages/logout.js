@@ -4,11 +4,11 @@ import { connect } from 'react-redux'
 import { compose, withHandlers, withState } from 'recompose'
 
 import { Col, Row } from 'styled-components-layout'
+import { accountReset } from 'features/common'
+
 import { Card, Button } from 'ui/atoms'
 import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
-
-import { accountReset } from 'features/account'
 
 
 const TIMEOUT_RESET = 500

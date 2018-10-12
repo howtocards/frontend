@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Container, CommonContentTemplate } from 'ui/templates'
+import { CommonContentTemplate } from 'features/common'
+import { Container } from 'ui/templates'
 
 
 export const CardsCommonTemplate = ({ children }) => (
