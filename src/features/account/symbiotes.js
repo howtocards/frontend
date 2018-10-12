@@ -7,8 +7,10 @@ const initialState = {
   fetching: initialFetching,
 }
 
-export const { actions, reducer } = createSymbiote(initialState, {
+const symbiotes = {
   fetch: createFetching('fetching'),
   set: (state, account) => ({ ...state, account }),
   unset: (state) => ({ ...state, account: null }),
-}, 'account')
+}
+
+export const { actions, reducer } = createSymbiote(initialState, symbiotes, 'account')

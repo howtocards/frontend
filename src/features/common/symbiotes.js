@@ -6,7 +6,9 @@ const initialState = {
   options: {},
 }
 
-export const { actions, reducer } = createSymbiote(initialState, {
+const symbiotes = {
   setBaseUri: (state, uri) => ({ ...state, baseUri: uri }),
   setOptions: (state, options = {}) => ({ ...state, options }),
-}, 'common')
+}
+
+export const { actions, reducer } = createSymbiote(initialState, symbiotes, 'common')

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Container, CommonContentTemplate } from 'ui/templates'
 
 
-const NFPad = styled.div`
+const NotFoundContainer = styled.div`
   display: flex;
   flex-grow: 1;
   align-items: center;
@@ -15,9 +15,9 @@ const NFPad = styled.div`
 export const NotFoundPage = () => (
   <CommonContentTemplate>
     <Container>
-      <NFPad>
+      <NotFoundContainer>
         Page not found! =(
-      </NFPad>
+      </NotFoundContainer>
     </Container>
   </CommonContentTemplate>
 )

@@ -9,16 +9,6 @@ import { actions } from './symbiotes'
 const unexpectedToken = 'UNEXPECTED_TOKEN'
 
 
-export const tokenSet = (token) => () => {
-  Cookies.set(api.TOKEN_ID, token)
-}
-
-export const tokenGet = () => () => Cookies.get(api.TOKEN_ID)
-
-export const tokenUnset = () => () => {
-  Cookies.erase(api.TOKEN_ID)
-}
-
 export const accountFetch = () => handleFetching(actions.fetch, {
   async run(dispatch) {
     const { ok, result } = await dispatch(accountsApi.accountFetch)
@@ -31,6 +21,16 @@ export const accountFetch = () => handleFetching(actions.fetch, {
     }
   },
 })
+
+export const tokenSet = (token) => () => {
+  Cookies.set(api.TOKEN_ID, token)
+}
+
+export const tokenGet = () => () => Cookies.get(api.TOKEN_ID)
+
+export const tokenUnset = () => () => {
+  Cookies.erase(api.TOKEN_ID)
+}
 
 export const accountReset = () => (
   (dispatch) => {

@@ -28,6 +28,9 @@
         "react-hot-loader/babel",
         "styled-name"
       ]
+    },
+    "test": {
+      "presets": [["env"], "react"]
     }
   }
 }

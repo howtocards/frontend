@@ -1,8 +1,18 @@
 {
   "parser": "babel-eslint",
-  "extends": "@atomix/eslint-config",
+  "plugins": [
+    "jest"
+  ],
+  "extends": ["plugin:jest/recommended", "@atomix/eslint-config"],
   "env": {
     "browser": true,
     "es6": true
+  },
+  "rules": {
+    "no-use-before-define": ["error", {
+      "functions": false,
+      "classes": true,
+      "variables": true
+    }]
   }
 }
