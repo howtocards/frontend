@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { format } from 'date-fns'
 
 import { Card, H3, Text } from 'ui/atoms'
@@ -33,3 +34,10 @@ export const CardItem = ({ title, author_id: authorId, created, content }) => (
     </Card>
   </CardBox>
 )
+
+CardItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  author_id: PropTypes.number.isRequired,
+  created: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+}

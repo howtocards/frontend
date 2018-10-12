@@ -17,6 +17,6 @@ export const PrimitiveFooter = () => (
   <FooterBlock>
     Go to&nbsp;
     <Link to="/">home</Link>
-&nbsp;page
+    &nbsp;page
   </FooterBlock>
 )

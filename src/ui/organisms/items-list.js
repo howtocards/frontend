@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 
 const Items = styled.div`
@@ -14,3 +15,9 @@ export const ItemsList = ({ items, render }) => (
     {items.map((item) => render(item))}
   </Items>
 )
+
+ItemsList.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  items: PropTypes.array.isRequired,
+  render: PropTypes.func.isRequired,
+}
