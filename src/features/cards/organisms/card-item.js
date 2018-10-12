@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { format } from 'date-fns'
+import Markdown from 'react-markdown'
 
 import { Col, Row } from 'styled-components-layout'
 import { Card, H3, Text } from 'ui/atoms'
@@ -21,7 +22,7 @@ export const CardItem = ({ title, created_at: createdAt, content }) => (
         </Row>
       </Col>
       <Text>
-        {content}
+        <Markdown source={content} />
       </Text>
     </Card>
   </CardBox>
