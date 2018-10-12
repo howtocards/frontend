@@ -1,5 +1,6 @@
+import styled from 'styled-components'
 import { Input } from '../atoms'
 
 
-export const TextArea = Input.extend`
+export const TextArea = styled(Input)`
 `.withComponent('textarea')
