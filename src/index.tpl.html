@@ -6,6 +6,7 @@
   <title>
     <%= htmlWebpackPlugin.options.title %>
   </title>
+  <link rel="stylesheet" href="https://unpkg.com/highlightjs@9.10.0/styles/github.css"></link>
   <style>
     html {
       font-size: 10px;
@@ -26,6 +27,11 @@
       align-items: stretch;
       height: 100vh;
       overflow: hidden;
+    }
+
+    tt, code, kbd, samp, listing {
+      font-family: hasklig, Hack, "Fira Code", "Source Code Pro", monaco, menlo, consolas, monospace;
+      font-variant-ligatures: contextual;
     }
   </style>
 </head>
