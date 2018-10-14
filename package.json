@@ -71,7 +71,8 @@
     "whatwg-fetch": "^3.0.0"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "@material-ui/core": "^3.3.2",
+    "@material-ui/icons": "^3.0.1",
     "browser-cookies": "^1.2.0",
     "connected-react-router": "^4.4.1",
     "core-js": "^2.5.7",
@@ -82,6 +83,8 @@
     "history": "^4.7.2",
     "koa-mount": "^4.0.0",
     "nanoid": "^2.0.0",
+    "is-hotkey": "^0.1.4",
+    "prismjs": "^1.15.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
@@ -99,6 +102,9 @@
     "styled-breakpoints": "^4.0.3",
     "styled-components": "^4.1.1",
     "styled-normalize": "^8.0.4",
+    "slate": "^0.43.0",
+    "slate-plain-serializer": "^0.6.16",
+    "slate-react": "^0.20.0",
     "symbiote-fetching": "^0.7.0",
     "validator": "^10.9.0"
   },

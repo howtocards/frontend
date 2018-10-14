@@ -1,6 +1,7 @@
 import Future from 'fluture'
 import { models } from '../models'
 
+
 /**
  * @param {{ title: string, content: string, authorId: number }} cardData
  * @return created card
@@ -13,19 +14,26 @@ export function cardCreate(cardData) {
   return Future.of(card)
 }
 
-export function cardsGet() {
-  const map = ({ $loki, content, title, meta, authorId }) => ({
-    $loki,
-    content,
-    title,
-    meta,
-    authorId,
-  })
 
+const mapCard = ({ $loki, content, title, meta, authorId }) => ({
+  $loki,
+  content,
+  title,
+  meta,
+  authorId,
+})
+
+export function cardsGet() {
   const data = models.Cards.chain()
     .data()
-    .map(map)
+    .map(mapCard)
     .reverse()
+
+  return Future.of(data)
+}
+
+export async function cardRead(ctx) {
+  const data = mapCard(models.Cards.findOne({ $loki: +ctx.params.cardId }))
 
   return Future.of(data)
 }
