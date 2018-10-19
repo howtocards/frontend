@@ -35,7 +35,7 @@ export class CardItem extends Component {
   }
 
   render() {
-    const { title, created_at: createdAt, content } = this.props
+    const { title, createdAt, content } = this.props
 
     return (
       <CardBox>
@@ -58,6 +58,6 @@ export class CardItem extends Component {
 CardItem.propTypes = {
   title: PropTypes.string.isRequired,
   // author_id: PropTypes.number.isRequired,
-  created_at: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
 }
