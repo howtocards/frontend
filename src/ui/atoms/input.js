@@ -39,6 +39,7 @@ const InputLabel = styled.label`
   color: currentColor;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
+  text-align: left;
 `
 
 const ErrorLabel = styled.label`
@@ -46,6 +47,7 @@ const ErrorLabel = styled.label`
   font-size: 0.9em;
   color: red;
   margin-top: 0.2rem;
+  text-align: left;
 `
 
 /**
