@@ -5,7 +5,7 @@ import { compose } from 'recompose'
 import { withFormik } from 'formik'
 
 import { Col, Row } from 'styled-components-layout'
-import { Card, Input, H2, Button, Link, ErrorBox } from 'ui/atoms'
+import { Card, Input, H2, ButtonPrimary, Link, ErrorBox } from 'ui/atoms'
 import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
 
@@ -127,12 +127,12 @@ const RegisterForm = enhance(({
         value={values.passwordRepeat}
         error={touched.passwordRepeat && errors.passwordRepeat}
       />
-      <Button.Primary
+      <ButtonPrimary
         type="submit"
         disabled={isSubmitting}
       >
         Create account
-      </Button.Primary>
+      </ButtonPrimary>
     </Col>
   </form>
 ))

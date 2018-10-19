@@ -6,7 +6,7 @@ import { compose, withHandlers, withState } from 'recompose'
 import { Col, Row } from 'styled-components-layout'
 import { accountReset } from 'features/common'
 
-import { Card, Button } from 'ui/atoms'
+import { Card, ButtonPrimary, Button } from 'ui/atoms'
 import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
 
@@ -39,19 +39,19 @@ const enhance = compose(
 export const LogoutView = ({ onLogout, onBack, isLogouting }) => (
   <CenterContentTemplate footer={<PrimitiveFooter />}>
     <Container justify="center" align="center">
-      <Col align="center" width="40rem">
+      <Col align="stretch" width="40rem">
         <Card>
           <Row padding="0 0 2rem 0">
             Stop session?
           </Row>
           <Row gap="1rem">
-            <Button.Primary
+            <ButtonPrimary
               grow
               disabled={isLogouting}
               onClick={onLogout}
             >
               {isLogouting ? 'Logging out…' : 'Logout'}
-            </Button.Primary>
+            </ButtonPrimary>
             <Button disabled={isLogouting} onClick={onBack}>Back</Button>
           </Row>
         </Card>
