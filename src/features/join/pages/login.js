@@ -5,7 +5,7 @@ import { compose } from 'recompose'
 import { withFormik } from 'formik'
 
 import { Col, Row } from 'styled-components-layout'
-import { Card, Input, H2, ButtonPrimary, Link } from 'ui/atoms'
+import { Card, Input, H2, ButtonPrimary, Link, ErrorBox } from 'ui/atoms'
 import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
 
@@ -72,6 +72,7 @@ const LoginForm = enhance(({
   <form onSubmit={handleSubmit}>
     <Col gap="1rem">
       <H2>Welcome to HowToCards</H2>
+      {errors.common && <ErrorBox>{errors.common}</ErrorBox>}
       <Input
         type="email"
         name="email"
