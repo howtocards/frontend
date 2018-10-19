@@ -9,7 +9,7 @@ export const userRegister = ({ email, password }) => (
       return { ok, error }
     }
     catch (error) {
-      return { ok: false, error: 'Unknown error' }
+      return { ok: false, error: 'unknown_error' }
     }
   }
 )

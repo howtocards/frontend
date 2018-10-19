@@ -5,12 +5,24 @@ import { compose } from 'recompose'
 import { withFormik } from 'formik'
 
 import { Col, Row } from 'styled-components-layout'
-import { Card, Input, H2, Button, Link } from 'ui/atoms'
+import { Card, Input, H2, ButtonPrimary, Link, ErrorBox } from 'ui/atoms'
 import { PrimitiveFooter } from 'ui/organisms'
 import { Container, CenterContentTemplate } from 'ui/templates'
 
 import { userLogin } from '../effects/join'
 
+
+const mapServerToClientError = (error) => {
+  switch (error) {
+    case 'user_not_found': return 'Email not found or password is wrong'
+    case 'cant_create_session': // pass thru
+    default: return 'Got an unexpected error. Try again later'
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  onLogin: (loginData) => dispatch(userLogin, loginData),
+})
 
 const formik = {
   mapPropsToValues: () => ({
@@ -21,29 +33,30 @@ const formik = {
     const errors = {}
 
     if (!values.email) {
-      errors.email = 'Required'
+      errors.email = 'To register you should enter your email'
     }
 
     if (!values.password) {
-      errors.password = 'Required'
+      errors.password = 'Please enter password which you will use to login later'
     }
 
     return errors
   },
-  handleSubmit: async (values, { props, setSubmitting }) => {
-    const isLogged = await props.dispatch(userLogin, values)
+  handleSubmit: async (values, { props, setSubmitting, setErrors }) => {
+    const loginResult = await props.onLogin(values)
 
-    if (isLogged) {
+    if (loginResult.ok) {
       props.history.push('/')
     }
     else {
+      setErrors({ common: mapServerToClientError(loginResult.error) })
       setSubmitting(false)
     }
   },
 }
 
 const enhance = compose(
-  connect(),
+  connect(null, mapDispatchToProps),
   withFormik(formik),
 )
 
@@ -59,37 +72,38 @@ const LoginForm = enhance(({
   <form onSubmit={handleSubmit}>
     <Col gap="1rem">
       <H2>Welcome to HowToCards</H2>
+      {errors.common && <ErrorBox>{errors.common}</ErrorBox>}
       <Input
         type="email"
         name="email"
         autoComplete="email"
-        placeholder="Email"
+        label="Email"
         disabled={isSubmitting}
         onChange={handleChange}
         onBlur={handleBlur}
         value={values.email}
-        failed={touched.email && Boolean(errors.email)}
+        error={touched.email && errors.email}
       />
       <Input
         type="password"
         name="password"
         autoComplete="password"
-        placeholder="Password"
+        label="Password"
         disabled={isSubmitting}
         onChange={handleChange}
         onBlur={handleBlur}
         value={values.password}
-        failed={touched.password && Boolean(errors.password)}
+        error={touched.password && errors.password}
       />
-      <Button.Primary type="submit">Continue</Button.Primary>
+      <ButtonPrimary disabled={isSubmitting} type="submit">Continue</ButtonPrimary>
     </Col>
   </form>
 ))
 
-export const JoinPage = ({ history }) => (
+export const LoginPage = ({ history }) => (
   <CenterContentTemplate footer={<PrimitiveFooter />}>
     <Container justify="center" align="center">
-      <Col align="center" width="40rem">
+      <Col align="stretch" width="40rem">
         <Card>
           <LoginForm history={history} />
         </Card>
@@ -102,6 +116,6 @@ export const JoinPage = ({ history }) => (
   </CenterContentTemplate>
 )
 
-JoinPage.propTypes = {
+LoginPage.propTypes = {
   history: PropTypes.shape({}).isRequired,
 }

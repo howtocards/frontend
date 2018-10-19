@@ -1,4 +1,4 @@
-import { JoinPage } from './pages/join'
+import { LoginPage } from './pages/login'
 import { LogoutPage } from './pages/logout'
 import { RegistrationPage } from './pages/registration'
 
@@ -7,7 +7,7 @@ export const joinRoutes = () => [
   {
     path: '/join',
     exact: true,
-    component: JoinPage,
+    component: LoginPage,
   },
   {
     path: '/join/registration',

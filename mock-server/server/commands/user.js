@@ -25,7 +25,7 @@ export const userRegister = (registerData) => {
   })
 
   if (usersWithEmail.count() > 0) {
-    return Future.reject('already_exists')
+    return Future.reject('email_already_exists')
   }
 
   const createdUser = models.Users.insert({
@@ -33,7 +33,7 @@ export const userRegister = (registerData) => {
     password: registerData.password,
   })
 
-  return Future.of(createdUser.$loki)
+  return Future.of({ userId: createdUser.$loki })
 }
 
 /**
