@@ -99,7 +99,7 @@ const LoginForm = enhance(({
   </form>
 ))
 
-export const JoinPage = ({ history }) => (
+export const LoginPage = ({ history }) => (
   <CenterContentTemplate footer={<PrimitiveFooter />}>
     <Container justify="center" align="center">
       <Col align="stretch" width="40rem">
@@ -115,6 +115,6 @@ export const JoinPage = ({ history }) => (
   </CenterContentTemplate>
 )
 
-JoinPage.propTypes = {
+LoginPage.propTypes = {
   history: PropTypes.shape({}).isRequired,
 }

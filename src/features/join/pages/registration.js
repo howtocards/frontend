@@ -92,7 +92,7 @@ const RegisterForm = enhance(({
 }) => (
   <form onSubmit={handleSubmit}>
     <Col gap="1rem">
-      <H2>Join to HowToCards</H2>
+      <H2>Registration to HowToCards</H2>
       {errors.common && <ErrorBox>{errors.common}</ErrorBox>}
       <Input
         type="email"
@@ -146,7 +146,7 @@ export const RegistrationPage = ({ history }) => (
         </Card>
         <Row padding="3rem 0 0" gap="0.5rem">
           <span>Already have account?</span>
-          <Link to="/join">Join</Link>
+          <Link to="/join">Log in</Link>
         </Row>
       </Col>
     </Container>
