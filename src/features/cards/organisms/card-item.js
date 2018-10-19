@@ -13,6 +13,13 @@ const CardBox = styled.div`
   margin: 1.5rem 0.5rem;
 `
 
+const CardContent = styled(Text)`
+  font-size: 1.4rem;
+  line-height: 1.2;
+  max-height: calc(10 * 2.2rem);
+  overflow: hidden;
+`
+
 export class CardItem extends Component {
   contentRef = React.createRef()
 
@@ -46,9 +53,9 @@ export class CardItem extends Component {
               <i>{format(new Date(createdAt), 'HH:MM MM/DD/YYYY')}</i>
             </Row>
           </Col>
-          <Text innerRef={this.contentRef}>
+          <CardContent innerRef={this.contentRef}>
             <Markdown source={content} />
-          </Text>
+          </CardContent>
         </Card>
       </CardBox>
     )
