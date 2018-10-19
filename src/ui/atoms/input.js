@@ -1,8 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
+import { Col } from 'styled-components-layout'
 
-export const Input = styled.input`
+
+const InputNative = styled.input`
   border: 1px solid;
   border-radius: 4px;
   position: relative;
@@ -14,29 +17,86 @@ export const Input = styled.input`
   box-shadow: none;
   background-color: white;
   transition: box-shadow 120ms, border-color 120ms;
-  ${({ theme }) => theme.embed.card}
-  box-shadow: 0 0 0 1px ${({ theme }) => theme.palette.decoration.borders};
+  ${(p) => p.theme.embed.card}
+  box-shadow: 0 0 0 1px ${(p) => p.theme.palette.decoration.borders};
 
   &:focus {
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.palette.primary.initial.background};
-    border-color: ${({ theme }) => theme.palette.primary.initial.background};
-  }
-
-  &::placeholder {
-    color: currentColor;
-    font-style: italic;
-  }
-
-  &:disabled::placeholder {
-    color: ${({ theme }) => theme.palette.decoration.borders};
+    box-shadow: 0 0 0 1px ${(p) => p.theme.palette.primary.initial.background};
+    border-color: ${(p) => p.theme.palette.primary.initial.background};
   }
 
   &:disabled {
     background-color: rgba(80, 80, 80, .1);
   }
 
-  ${({ failed }) => failed && css`
+  ${(p) => p.error && css`
     box-shadow: 0 0 0 1px red;
     border-color: red;
   `}
 `
+
+const InputLabel = styled.label`
+  color: currentColor;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+`
+
+const ErrorLabel = styled.label`
+  display: block;
+  font-size: 0.9em;
+  color: red;
+  margin-top: 0.2rem;
+`
+
+/**
+ * Required: `value`
+ */
+export const Input = ({
+  autoComplete,
+  disabled,
+  error,
+  label,
+  name,
+  onBlur,
+  onChange,
+  type,
+  value,
+}) => (
+  <Col>
+    {label && <InputLabel>{label}</InputLabel>}
+    <InputNative
+      autoComplete={autoComplete}
+      disabled={disabled}
+      error={Boolean(error)}
+      name={name}
+      onBlur={onBlur}
+      onChange={onChange}
+      type={type}
+      value={value}
+    />
+    <ErrorLabel>{error}</ErrorLabel>
+  </Col>
+)
+
+Input.propTypes = {
+  autoComplete: PropTypes.string,
+  disabled: PropTypes.bool,
+  error: PropTypes.string,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  type: PropTypes.string,
+  value: PropTypes.string.isRequired,
+}
+
+Input.defaultProps = {
+  autoComplete: undefined,
+  disabled: false,
+  error: undefined,
+  label: undefined,
+  name: undefined,
+  onBlur: undefined,
+  onChange: undefined,
+  type: 'text',
+}
