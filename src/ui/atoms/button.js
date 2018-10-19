@@ -30,5 +30,12 @@ Button.Primary = styled(Button)`
     &:hover {
       background-image: linear-gradient(to right, #00d2ff, #3a7bd5);
     }
+
+    &:disabled {
+      background-color: gray !important;
+      background-image: none !important;
+    }
   `}
 `
+
+export const ButtonPrimary = Button.Primary
