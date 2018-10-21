@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { above } from 'styled-breakpoints'
 
 
-const Container = styled.div`
+const SidebarContainer = styled.div`
   display: grid;
   grid-column-gap: 2rem;
   max-width: 900px;
@@ -27,19 +27,17 @@ const Container = styled.div`
 
 const Sidebar = styled.aside`
   grid-area: sidebar;
-  background-color: gold;
 `
 
 const Main = styled.main`
   grid-area: main;
-  background-color: rebeccapurple;
 `
 
 export const SidebarTemplate = ({ sidebar, children }) => (
-  <Container>
+  <SidebarContainer>
     <Sidebar>{sidebar}</Sidebar>
     <Main>{children}</Main>
-  </Container>
+  </SidebarContainer>
 )
 
 SidebarTemplate.propTypes = {
