@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 
-const Container = styled.div`
+const MainContainer = styled.div`
   display: grid;
   min-height: 100vh;
   grid-template-rows: auto 1fr auto;
@@ -11,29 +11,27 @@ const Container = styled.div`
 
 const Header = styled.header`
   padding: 1rem;
-  background-color: tomato;
 `
 
 const Footer = styled.footer`
   padding: 2rem;
-  background-color: gray;
 `
 
 export const MainTemplate = ({ header, footer, children }) => (
-  <Container>
+  <MainContainer>
     {header && <Header>{header}</Header>}
     {children}
     {footer && <Footer>{footer}</Footer>}
-  </Container>
+  </MainContainer>
 )
-
-MainTemplate.defaultProps = {
-  header: null,
-  footer: null,
-}
 
 MainTemplate.propTypes = {
   header: PropTypes.node,
   footer: PropTypes.node,
   children: PropTypes.node.isRequired,
+}
+
+MainTemplate.defaultProps = {
+  header: null,
+  footer: null,
 }
