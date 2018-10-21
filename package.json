@@ -87,7 +87,9 @@
     "redux-logger": "^3.0.6",
     "redux-symbiote": "^2.4.0",
     "reselect": "^3.0.1",
+    "styled-breakpoints": "^4.0.1",
     "styled-components": "^3.4.5",
+    "styled-normalize": "^8.0.2",
     "symbiote-fetching": "^0.7.0",
     "validator": "^10.7.1"
   },
