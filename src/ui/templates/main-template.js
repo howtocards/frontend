@@ -6,15 +6,21 @@ import styled from 'styled-components'
 const MainContainer = styled.div`
   display: grid;
   min-height: 100vh;
+  max-height: 100vh;
   grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header"
+    "."
+    "footer";
 `
 
 const Header = styled.header`
-  padding: 1rem;
+  grid-area: header;
+  z-index: 1;
 `
 
 const Footer = styled.footer`
-  padding: 2rem;
+  grid-area: footer;
 `
 
 export const MainTemplate = ({ header, footer, children }) => (

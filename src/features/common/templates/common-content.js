@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+import { MainTemplate } from 'ui/templates'
 import { Header } from '../organisms'
 
 
@@ -9,17 +10,15 @@ export const CommonContent = styled.div`
   display: flex;
   justify-content: center;
   overflow-y: auto;
-  height: 100%;
   ${({ theme }) => theme.embed.canvas}
 `
 
-export const CommonContentTemplate = ({ children, header }) => (
-  <React.Fragment>
-    {header}
+export const CommonContentTemplate = ({ header, children }) => (
+  <MainTemplate header={header}>
     <CommonContent>
       {children}
     </CommonContent>
-  </React.Fragment>
+  </MainTemplate>
 )
 
 CommonContentTemplate.propTypes = {
