@@ -7,36 +7,35 @@ import { above } from 'styled-breakpoints'
 const SidebarContainer = styled.div`
   display: grid;
   grid-column-gap: 2rem;
-  max-width: 900px;
+  padding: 2rem 0;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   grid-template-columns: auto;
   grid-template-rows: 1fr 1fr;
-  grid-template-areas: 
+  grid-template-areas:
     "sidebar"
     "main";
 
   ${above('tablet')} {
     grid-template-rows: 1fr;
-    grid-template-columns: 30% auto;
-    grid-template-areas: "sidebar main";
+    grid-template-columns: auto 30%;
+    grid-template-areas: "main sidebar";
   }
-
 `
 
 const Sidebar = styled.aside`
   grid-area: sidebar;
 `
 
-const Main = styled.main`
+const Main = styled.div`
   grid-area: main;
 `
 
 export const SidebarTemplate = ({ sidebar, children }) => (
   <SidebarContainer>
-    <Sidebar>{sidebar}</Sidebar>
     <Main>{children}</Main>
+    <Sidebar>{sidebar}</Sidebar>
   </SidebarContainer>
 )
 
