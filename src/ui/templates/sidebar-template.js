@@ -15,12 +15,16 @@ const SidebarContainer = styled.div`
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
     "sidebar"
-    "main";
+    "main"
+    "footer";
 
   ${above('tablet')} {
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr auto;
     grid-template-columns: auto 30%;
-    grid-template-areas: "main sidebar";
+    grid-template-areas:
+      "main sidebar"
+      "footer footer"
+      ;
   }
 `
 
@@ -33,6 +37,7 @@ const Main = styled.div`
 `
 
 const ScrollableFooter = styled.footer`
+  grid-area: footer;
   margin-top: 4rem;
   display: block;
   height: 4rem;
@@ -42,9 +47,9 @@ export const SidebarTemplate = ({ sidebar, children, footer }) => (
   <SidebarContainer>
     <Main>
       {children}
-      {footer && <ScrollableFooter>{footer}</ScrollableFooter>}
     </Main>
     <Sidebar>{sidebar}</Sidebar>
+    {footer && <ScrollableFooter>{footer}</ScrollableFooter>}
   </SidebarContainer>
 )
 
