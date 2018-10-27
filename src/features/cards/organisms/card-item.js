@@ -9,10 +9,6 @@ import { Col, Row } from 'styled-components-layout'
 import { Card, H3, Text } from 'ui/atoms'
 
 
-const CardBox = styled.div`
-  margin: 1.5rem 0.5rem;
-`
-
 const CardContent = styled(Text)`
   font-size: 1.4rem;
   line-height: 1.2;
@@ -45,19 +41,17 @@ export class CardItem extends Component {
     const { title, createdAt, content } = this.props
 
     return (
-      <CardBox>
-        <Card>
-          <Col>
-            <Row justify="space-between">
-              <H3 narrow>{title}</H3>
-              <i>{format(new Date(createdAt), 'HH:MM MM/DD/YYYY')}</i>
-            </Row>
-          </Col>
-          <CardContent innerRef={this.contentRef}>
-            <Markdown source={content} />
-          </CardContent>
-        </Card>
-      </CardBox>
+      <Card>
+        <Col>
+          <Row justify="space-between">
+            <H3 narrow>{title}</H3>
+            <i>{format(new Date(createdAt), 'HH:MM MM/DD/YYYY')}</i>
+          </Row>
+        </Col>
+        <CardContent innerRef={this.contentRef}>
+          <Markdown source={content} />
+        </CardContent>
+      </Card>
     )
   }
 }
