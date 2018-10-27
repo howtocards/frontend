@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-// import { ToggleThemeConsumer } from 'lib/theme-context'
+import { ToggleThemeConsumer } from 'lib/theme-context'
 import { Container } from 'ui/templates'
 import { WithAccount } from './with-account'
 
@@ -86,11 +86,11 @@ export const Header = () => (
       </SearchBox>
       <WithAccount
         renderExists={() => (
-          <NavLink to="/new">+ Create</NavLink>
+          <NavLink to="/new">+ New</NavLink>
         )}
       />
-      <NavLink to="/feed">Feed</NavLink>
-      <NavItem href="https://github.com/howtocards/frontend" target="_blank">Contribute</NavItem>
+      {/* <NavLink to="/feed">Feed</NavLink> */}
+      {/* <NavItem href="https://github.com/howtocards/frontend" target="_blank">Contribute</NavItem> */}
       <WithAccount
         renderExists={({ account }) => (
           <React.Fragment>
@@ -102,11 +102,11 @@ export const Header = () => (
           <NavLink to="/join">Join</NavLink>
         )}
       />
-      {/* <ToggleThemeConsumer>
+      <ToggleThemeConsumer>
         {({ toggleDark, dark }) => (
           <NavItem onClick={toggleDark}>{dark ? '🌔' : '☀️'}</NavItem>
         )}
-      </ToggleThemeConsumer> */}
+      </ToggleThemeConsumer>
     </Container>
   </HeaderBox>
 )
