@@ -21,7 +21,7 @@ const Sidebar = () => (
 export const CardsCommonTemplate = ({ children }) => (
   <CommonContentTemplate>
     <Container>
-      <SidebarTemplate sidebar={<Sidebar />}>
+      <SidebarTemplate sidebar={<Sidebar />} footer="&copy; 2018 HowTo.cards Team">
         {children}
       </SidebarTemplate>
     </Container>
