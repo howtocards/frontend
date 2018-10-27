@@ -32,9 +32,18 @@ const Main = styled.div`
   grid-area: main;
 `
 
-export const SidebarTemplate = ({ sidebar, children }) => (
+const ScrollableFooter = styled.footer`
+  margin-top: 4rem;
+  display: block;
+  height: 4rem;
+`
+
+export const SidebarTemplate = ({ sidebar, children, footer }) => (
   <SidebarContainer>
-    <Main>{children}</Main>
+    <Main>
+      {children}
+      {footer && <ScrollableFooter>{footer}</ScrollableFooter>}
+    </Main>
     <Sidebar>{sidebar}</Sidebar>
   </SidebarContainer>
 )
@@ -42,4 +51,9 @@ export const SidebarTemplate = ({ sidebar, children }) => (
 SidebarTemplate.propTypes = {
   sidebar: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired,
+  footer: PropTypes.number,
+}
+
+SidebarTemplate.defaultProps = {
+  footer: null,
 }
