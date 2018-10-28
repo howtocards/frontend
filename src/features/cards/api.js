@@ -1,5 +1,10 @@
-import { api } from 'features/common'
+import { api, rpc } from 'features/common'
 
+
+export const cards = {
+  create: ({ title, content }) => rpc.send('cards::create', { title, content }),
+  getLatest: () => rpc.send('cards::get_latest'),
+}
 
 /**
  * @param {{ title: string, content: string }} cardData
