@@ -1,7 +1,11 @@
-import * as api from './api'
+import { request, TOKEN_ID } from './request'
+import { get, post, put, patch, destroy } from './api'
+import * as rpc from './rpc'
 
+// TODO remove old api. Use rpc
+export const api = { request, get, post, put, patch, destroy, TOKEN_ID }
 
-export { api }
+export { rpc }
 export { NotFoundPage } from './pages/not-found'
 export { reducer as commonReducer } from './symbiotes'
 export { commonApiSelector } from './selectors'

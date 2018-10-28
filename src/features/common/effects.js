@@ -2,6 +2,7 @@ import Cookies from 'browser-cookies'
 import { handleFetching } from 'symbiote-fetching'
 
 import * as api from './api'
+import { TOKEN_ID } from './request'
 import { actions } from './symbiotes'
 
 
@@ -22,13 +23,13 @@ export const accountFetch = () => handleFetching(actions.account.fetch, {
 })
 
 export const tokenSet = (token) => () => {
-  Cookies.set(api.TOKEN_ID, token)
+  Cookies.set(TOKEN_ID, token)
 }
 
-export const tokenGet = () => () => Cookies.get(api.TOKEN_ID)
+export const tokenGet = () => () => Cookies.get(TOKEN_ID)
 
 export const tokenUnset = () => () => {
-  Cookies.erase(api.TOKEN_ID)
+  Cookies.erase(TOKEN_ID)
 }
 
 export const accountReset = () => (
