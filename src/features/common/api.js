@@ -1,5 +1,5 @@
 import { request } from './request'
-import * as rpc from './rpc'
+// import * as rpc from './rpc'
 
 
 export const get = (url, options = {}) => (
@@ -23,22 +23,14 @@ export const destroy = (url, options = {}) => (
 )
 
 
-export const api = {
+export const commonApi = {
   account: {
     /**
      * Get info about current account.
      * https://github.com/howtocards/frontend/tree/master/mock-server/server#get-account-user-account-status
      * @return {Promise<{ user: { email: string } }>}
      */
-    getCurrent: () => rpc.send('account::get_current'),
+    getCurrent: () => get('/account/session'),
+    // getCurrent: () => rpc.send('account::get_current'),
   },
 }
-
-/**
- * Get info about current account.
- * @see https://github.com/howtocards/frontend/tree/master/mock-server/server#get-account-user-account-status
- * @return {Promise<{ user: { email: string } }>}
- */
-export const accountFetch = () => (
-  (dispatch) => dispatch(get, '/account/session/')
-)
