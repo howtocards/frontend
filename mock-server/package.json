@@ -14,13 +14,16 @@
     "createrest": "^0.15.0",
     "createrest-koa": "^0.14.2",
     "dotenv": "^6.0.0",
+    "flat": "^4.1.0",
     "fluture": "^10.1.0",
     "koa": "^2.5.1",
     "koa-bodyparser": "git+https://github.com/sergeysova/koa-bodyparser.git",
+    "koa-compose": "^4.1.0",
     "koa-compress": "^3.0.0",
     "koa-helmet": "^4.0.0",
     "koa-logger": "^3.2.0",
     "koa-mount": "^3.0.0",
+    "koa-router": "^7.4.0",
     "lokijs": "^1.5.5"
   },
   "devDependencies": {

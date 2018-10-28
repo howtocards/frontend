@@ -5,6 +5,7 @@ import { createKoaRouter } from 'createrest-koa'
 
 import { apiWrapper } from './middlewares/api-wrapper'
 import { rootApi } from './routes'
+import './rpc'
 
 
 export const api = new Koa()

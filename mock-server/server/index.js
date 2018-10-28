@@ -10,6 +10,7 @@ import dotenv from 'dotenv'
 
 import { api, printRoutes } from './api'
 import { createDatabase } from './models'
+// import { rpc } from './api/rpc'
 
 
 const DEFAULT_PORT = 3000
@@ -39,6 +40,7 @@ function createApp() {
   app.use(compress())
   app.use(logger())
 
+  // app.use(mount('/rpc', rpc))
   app.use(mount('/api', api))
 
   app.use(
