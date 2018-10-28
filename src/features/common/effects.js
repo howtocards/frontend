@@ -1,7 +1,7 @@
 import Cookies from 'browser-cookies'
 import { handleFetching } from 'symbiote-fetching'
 
-import * as api from './api'
+import { commonApi } from './api'
 import { TOKEN_ID } from './request'
 import { actions } from './symbiotes'
 
@@ -11,7 +11,7 @@ const unexpectedToken = 'UNEXPECTED_TOKEN'
 
 export const accountFetch = () => handleFetching(actions.account.fetch, {
   async run(dispatch) {
-    const { ok, result } = await dispatch(api.accountFetch)
+    const { ok, result } = await dispatch(commonApi.account.getCurrent)
 
     if (ok) {
       dispatch(actions.account.set(result))
