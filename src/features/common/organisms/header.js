@@ -3,8 +3,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-import { ToggleThemeConsumer } from 'lib/theme-context'
-import { Container } from 'ui/templates'
+import { ToggleThemeConsumer } from '@lib/theme-context'
+import { Container } from '@ui/templates'
 import { WithAccount } from './with-account'
 
 

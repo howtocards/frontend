@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { MainTemplate } from 'ui/templates'
+import { MainTemplate } from '@ui/templates'
 import { Header } from '../organisms'
 
 

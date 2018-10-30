@@ -5,8 +5,8 @@ import { format } from 'date-fns'
 import Markdown from 'react-markdown'
 import highlight from 'highlightjs'
 
-import { Col, Row } from 'styled-components-layout'
-import { Card, H3, Text } from 'ui/atoms'
+import { Col, Row } from '@lib/styled-components-layout'
+import { Card, H3, Text } from '@ui/atoms'
 
 
 const CardContent = styled(Text)`

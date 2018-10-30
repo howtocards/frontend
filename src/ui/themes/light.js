@@ -1,5 +1,5 @@
 import { css } from 'styled-components'
-import { material, createEmbed } from 'lib/material-colors'
+import { material, createEmbed } from '@lib/material-colors'
 
 
 const palette = {

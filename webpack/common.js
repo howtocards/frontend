@@ -54,8 +54,12 @@ const config = {
     extensions: ['.js'],
     modules: [
       'node_modules',
-      SRC,
     ],
+    alias: {
+      '@features': resolve(SRC, 'features'),
+      '@lib': resolve(SRC, 'lib'),
+      '@ui': resolve(SRC, 'ui'),
+    },
   },
 
   output: {

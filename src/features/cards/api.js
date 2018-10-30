@@ -1,4 +1,4 @@
-import { api } from 'features/common'
+import { api } from '@features/common'
 
 
 export const cardsApi = {
