@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Link } from 'ui/atoms'
+import { Link } from '../atoms'
 
 
 const FooterBlock = styled.footer`

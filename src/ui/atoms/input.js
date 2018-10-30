@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
-import { Col } from 'styled-components-layout'
+// TODO remove layout
+import { Col } from '@lib/styled-components-layout'
 
 
 const InputNative = styled.input`

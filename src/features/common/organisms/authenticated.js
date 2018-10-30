@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { fetchStatus } from 'symbiote-fetching'
+
 import { WithAccount } from './with-account'
 
 

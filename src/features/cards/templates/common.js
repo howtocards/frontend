@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { CommonContentTemplate } from 'features/common'
-import { Container, SidebarTemplate } from 'ui/templates'
-import { Card } from 'ui/atoms'
+import { CommonContentTemplate } from '@features/common'
+import { Container, SidebarTemplate } from '@ui/templates'
+import { Card } from '@ui/atoms'
 
 
 const StickyCard = styled(Card)`

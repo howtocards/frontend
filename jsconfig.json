@@ -7,7 +7,12 @@
       "es2015",
       "es2016",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@features/*": ["./features/*"],
+      "@ui/*": ["./ui/*"],
+      "@lib/*": ["./lib/*"]
+    }
   },
   "exclude": [
     "node_modules",

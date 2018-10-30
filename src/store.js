@@ -2,9 +2,8 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { createLogger } from 'redux-logger'
 import { createExecue } from 'redux-execue'
-import { required } from 'lib/dev'
 
-
+import { required } from '@lib/dev'
 import { rootReducer } from './reducers'
 
 

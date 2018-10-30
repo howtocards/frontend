@@ -1,4 +1,4 @@
-import { accountFetch, tokenSet } from 'features/common'
+import { accountFetch, tokenSet } from '@features/common'
 import { sessionApi } from '../api'
 
 

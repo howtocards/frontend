@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose, withHandlers, withState } from 'recompose'
 
-import { Col, Row } from 'styled-components-layout'
-import { accountReset } from 'features/common'
+import { Col, Row } from '@lib/styled-components-layout'
+import { accountReset } from '@features/common'
 
-import { Card, ButtonPrimary, Button } from 'ui/atoms'
-import { PrimitiveFooter } from 'ui/organisms'
-import { Container, CenterContentTemplate } from 'ui/templates'
+import { Card, ButtonPrimary, Button } from '@ui/atoms'
+import { PrimitiveFooter } from '@ui/organisms'
+import { Container, CenterContentTemplate } from '@ui/templates'
 
 
 const TIMEOUT_RESET = 500
