@@ -9,7 +9,7 @@
     "@babel/react"
   ],
   "plugins": [
-    ["@babel/proposal-class-properties", { "loose": false }],
+    ["@babel/plugin-proposal-class-properties", { "loose": false }],
     "@babel/proposal-export-namespace-from",
     "@babel/syntax-dynamic-import",
     "@babel/plugin-proposal-json-strings"

@@ -7,10 +7,14 @@
     "test": "npm run test:eslint && npm run test:code",
     "test:code": "jest",
     "test:eslint": "eslint .",
-    "prepush": "npm run test:eslint",
-    "precommit": "npm run test:eslint",
     "build:prod": "NODE_ENV=production webpack-cli",
     "dev": "webpack-dev-server"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test:eslint",
+      "pre-push": "npm run test:eslint"
+    }
   },
   "repository": {
     "type": "git",
@@ -33,7 +37,9 @@
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
     "assets-webpack-plugin": "^3.9.6",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-styled-name": "^2.0.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.20",
