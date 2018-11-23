@@ -19,7 +19,7 @@ export const accountApi = (account) => {
 
 const register = (ctx) => userRegister(ctx.request.body)
 const login = (ctx) => userLogin(ctx.request.body).mapRej((error) => {
-  if (error === 'not_found') return new NotFoundError()
+  if (error === 'not_found') return new NotFoundError('user_not_found')
   return error
 })
 const me = (ctx) => Future.of({
