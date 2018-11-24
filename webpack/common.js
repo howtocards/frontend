@@ -25,7 +25,6 @@ const config = {
 
   entry: {
     polyfill: [
-      'babel-regenerator-runtime',
       // 'core-js/modules/es6.array.fill',
       // 'core-js/modules/es6.array.from',
       // 'core-js/modules/es6.array.iterator',
@@ -40,9 +39,9 @@ const config = {
       // 'core-js/modules/es7.array.includes',
       // 'core-js/modules/es7.object.entries',
       // 'core-js/modules/es7.object.values',
-      // 'core-js/modules/es7.promise.finally',
-      // 'core-js/modules/es7.promise.try',
-      // 'core-js/modules/es7.set.from',
+      'core-js/modules/es7.promise.finally',
+      'core-js/modules/es7.promise.try',
+      'core-js/modules/es7.set.from',
       // 'core-js/modules/es7.set.of',
       // 'core-js/modules/es7.string.at',
       'whatwg-fetch',

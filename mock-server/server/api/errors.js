@@ -29,8 +29,8 @@ export class AuthorizationError extends Error {
 }
 
 export class NotFoundError extends Error {
-  constructor() {
-    super('not_found')
+  constructor(type = 'not_found') {
+    super(type)
     this.httpStatus = 404
   }
 }

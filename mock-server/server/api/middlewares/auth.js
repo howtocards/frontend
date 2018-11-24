@@ -18,8 +18,7 @@ export const authenticated = () => {
             ctx.auth = { token }
             return user
           })
-          .promise()
-          .then(next)
+          .map(next)
       }
     }
 

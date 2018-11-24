@@ -6,6 +6,7 @@ const {
   NamedModulesPlugin,
 } = require('webpack')
 const merge = require('webpack-merge')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 require('dotenv').config()
 
@@ -40,6 +41,8 @@ module.exports = merge(config, {
 
     new NamedModulesPlugin(),
     new HotModuleReplacementPlugin(),
+
+    new BundleAnalyzerPlugin(),
   ],
 
   stats: false,

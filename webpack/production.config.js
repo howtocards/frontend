@@ -1,4 +1,5 @@
 const os = require('os')
+const path = require('path')
 const {
   LoaderOptionsPlugin,
   EnvironmentPlugin,
@@ -8,6 +9,7 @@ const {
 } = require('webpack')
 const merge = require('webpack-merge')
 const UglifyPlugin = require('uglifyjs-webpack-plugin')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const { config } = require('./common')
 
@@ -40,6 +42,12 @@ module.exports = merge(config, {
       uglifyOptions: {
         output: { comments: false },
       },
+    }),
+
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: path.resolve(__dirname, '..', 'report.html'),
+      openAnalyzer: false,
     }),
   ],
 })

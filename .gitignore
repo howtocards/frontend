@@ -130,3 +130,4 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/node,windows,linux,macos,cpp
 dist
+report.html

@@ -1,20 +1,24 @@
 {
   "presets": [
     [
-      "env",
+      "@babel/env",
       {
         "modules": false
       }
     ],
-    "react",
-    "stage-1"
+    "@babel/react"
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal-class-properties", { "loose": false }],
+    "@babel/proposal-export-namespace-from",
+    "@babel/syntax-dynamic-import",
+    "@babel/plugin-proposal-json-strings"
   ],
   "env": {
     "production": {
       "plugins": [
-        "transform-react-constant-elements",
-        "transform-react-inline-elements",
-        "transform-react-pure-class-to-function",
+        "@babel/transform-react-constant-elements",
+        "@babel/transform-react-inline-elements",
         [
           "transform-react-remove-prop-types",
           {
@@ -30,7 +34,7 @@
       ]
     },
     "test": {
-      "presets": [["env"], "react"]
+      "presets": [["@babel/env"], "@babel/react"]
     }
   }
 }
