@@ -1,13 +1,12 @@
 import { validate } from '../middlewares/validate'
-import { authenticated } from '../middlewares/auth'
-import { checkExistUser } from '../middlewares/check-exist-user'
+import { authenticated, authenticatedOptional } from '../middlewares/auth'
 import { createCardScheme } from '../schemes/card'
 import { cardPresent, cardWithFlagCanEdit } from '../presenters/card'
 import { cardCreate, cardsGet, cardRead } from '../../commands/card'
 
 
 export const cardsApi = (cards) => {
-  cards.get(checkExistUser(), list)
+  cards.get(authenticatedOptional(), list)
   cards.post(authenticated(), create)
   cards.scope(':cardId', (card) => {
     card.get(cardRead)

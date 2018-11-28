@@ -1,5 +1,5 @@
 import Future from 'fluture'
-import { EmptyResultError, InternalServerError } from '../errors'
+import { EmptyResultError, InternalServerError, CustomError } from '../errors'
 
 
 const STATUS_OK = 200
@@ -38,9 +38,12 @@ const resolveMiddlewareToFuture = async (ctx, next) => {
     return Future.resolve(await next())
   }
   catch (error) {
+    if (error instanceof CustomError) {
+      return Future.reject(error)
+    }
     // eslint-disable-next-line no-console
-    console.error('error', error)
-    ctx.app.emit('error', error, ctx)
+    // console.error('error', error)
+    // ctx.app.emit('error', error, ctx)
     return Future.reject(new InternalServerError(error))
   }
 }
