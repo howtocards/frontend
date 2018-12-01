@@ -56,7 +56,7 @@ export const SidebarTemplate = ({ sidebar, children, footer }) => (
 SidebarTemplate.propTypes = {
   sidebar: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired,
-  footer: PropTypes.number,
+  footer: PropTypes.string,
 }
 
 SidebarTemplate.defaultProps = {

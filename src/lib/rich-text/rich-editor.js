@@ -2,11 +2,9 @@ import React from 'react'
 import { Editor } from 'slate-react'
 import { Value } from 'slate'
 import { isKeyHotkey } from 'is-hotkey'
-import Prism from 'prismjs'
+import PropTypes from 'prop-types'
 import { defaultValue } from './default-value'
-import { decorateNode, renderNode, renderMark } from './helpers'
-
-// import 'prismjs/themes/prism.css'
+import { renderNode, renderMark } from './helpers'
 
 
 const DEFAULT_NODE = 'paragraph'
@@ -20,6 +18,7 @@ export class RichEditor extends React.Component {
   state = {
     value: Value.fromJSON(defaultValue),
   }
+
 
   hasMark = (type) => {
     const { value } = this.state
@@ -35,33 +34,35 @@ export class RichEditor extends React.Component {
   }
 
 
-  renderBlockButton = (type, cb) => {
+  renderButton = (type, cb) => {
     const markLists = ['bold', 'italic', 'underlined']
     let isActive = false
-    let onClick = () => { }
+    let onClickButton = () => { }
 
     if (markLists.includes(type)) {
       isActive = this.hasMark(type)
-      onClick = this.onClickMark
+      onClickButton = this.onClickMark
     }
     else if (['numbered-list', 'bulleted-list'].includes(type)) {
       const { value } = this.state
       const parent = value.document.getParent(value.blocks.first().key)
 
       isActive = this.hasBlock('list-item') && parent && parent.type === type
-      onClick = this.onClickBlock
+      onClickButton = this.onClickBlock
     }
     else {
       isActive = this.hasBlock(type)
-      onClick = this.onClickBlock
+      onClickButton = this.onClickBlock
     }
 
-    return cb({ isActive, onMouseDown: (event) => onClick(event, type) })
+    return cb({ isActive, onClick: (event) => onClickButton(event, type) })
   }
 
 
   onChange = ({ value }) => {
-    this.setState({ value })
+    const { onChange } = this.props
+
+    this.setState({ value }, () => onChange(JSON.stringify(value.toJSON())))
   }
 
   // eslint-disable-next-line consistent-return
@@ -153,7 +154,7 @@ export class RichEditor extends React.Component {
     return (
 
       <div>
-        {renderToolbar && renderToolbar(this.renderBlockButton)}
+        {renderToolbar(this.renderButton)}
         <Editor
           style={{ margin: '20px 0' }}
           spellCheck
@@ -164,10 +165,14 @@ export class RichEditor extends React.Component {
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           renderNode={renderNode}
-          decorateNode={decorateNode}
           renderMark={renderMark}
         />
       </div>
     )
   }
+}
+
+RichEditor.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  renderToolbar: PropTypes.func.isRequired,
 }

@@ -1,10 +1,10 @@
 import React from 'react'
+import Highlight, { defaultProps } from 'prism-react-renderer'
 
 
 export const renderNode = (props, editor, next) => {
   const { attributes, children, node } = props
-
-  console.log(node.type === 'code', children)
+  let texts
 
   switch (node.type) {
     case 'block-quote':
@@ -25,10 +25,25 @@ export const renderNode = (props, editor, next) => {
         </blockquote>
       )
     case 'code':
+      texts = node.getTexts().toArray().map((t) => t.text).join('\n')
+
       return (
-        <pre>
-          <code {...attributes}>{children}</code>
-        </pre>
+        /* be careful, it is not working correctly
+        * https://github.com/ianstormtaylor/slate/issues/2093
+        */
+        <Highlight {...defaultProps} code={texts} language="javascript">
+          {({ className, style, tokens, getLineProps, getTokenProps }) => (
+            <pre className={className} style={style}>
+              {tokens.map((line, i) => (
+                <div {...getLineProps({ line, key: i })}>
+                  {line.map((token, key) => (
+                    <span {...getTokenProps({ token, key })} {...attributes} />
+                  ))}
+                </div>
+              ))}
+            </pre>
+          )}
+        </Highlight>
       )
     case 'bulleted-list':
       return <ul {...attributes}>{children}</ul>

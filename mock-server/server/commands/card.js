@@ -9,6 +9,7 @@ import { models } from '../models'
 export function cardCreate(cardData) {
   const { title, content, authorId } = cardData
 
+
   const card = models.Cards.insert({ title, content, authorId })
 
   return Future.of(card)
