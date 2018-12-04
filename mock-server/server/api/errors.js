@@ -1,11 +1,14 @@
-export class EmptyResultError extends Error {
+
+export class CustomError extends Error {}
+
+export class EmptyResultError extends CustomError {
   constructor() {
     super('empty_result')
     this.httpStatus = 204
   }
 }
 
-export class InternalServerError extends Error {
+export class InternalServerError extends CustomError {
   constructor(error) {
     super('internal_server_error')
     this.message = error
@@ -13,7 +16,7 @@ export class InternalServerError extends Error {
   }
 }
 
-export class ValidationError extends Error {
+export class ValidationError extends CustomError {
   constructor(formErrors) {
     super('validation_error')
     this.message = formErrors
@@ -21,14 +24,14 @@ export class ValidationError extends Error {
   }
 }
 
-export class AuthorizationError extends Error {
-  constructor() {
-    super('invalid_authorization')
+export class AuthorizationError extends CustomError {
+  constructor(text = 'invalid_authorization') {
+    super(text)
     this.httpStatus = 401
   }
 }
 
-export class NotFoundError extends Error {
+export class NotFoundError extends CustomError {
   constructor(type = 'not_found') {
     super(type)
     this.httpStatus = 404

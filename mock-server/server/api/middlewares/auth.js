@@ -13,6 +13,9 @@ export const authenticated = () => {
 
       if (word === 'bearer' && token && token.length > MIN_TOKEN_LENGTH) {
         return userGet(token)
+          .mapRej((error) => typeof error === 'string'
+            ? new AuthorizationError(error)
+            : error)
           .map((user) => {
             ctx.user = user
             ctx.auth = { token }
@@ -26,6 +29,19 @@ export const authenticated = () => {
   }
 
   middleware.displayName = '`authenticated'
+
+  return middleware
+}
+
+export const authenticatedOptional = () => {
+  const authMiddleware = authenticated()
+  const middleware = (ctx, next) => authMiddleware(ctx, next)
+    .chainRej((error) => error instanceof AuthorizationError
+      ? Future.resolve()
+      : error)
+    .map(next)
+
+  middleware.displayName = '`authenticatedOptional'
 
   return middleware
 }

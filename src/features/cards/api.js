@@ -12,4 +12,9 @@ export const cardsApi = {
    * @return {Promise<{ result: Array<{content: string, created: number, author_id: string, title: string}> }>}
    */
   getLatest: () => api.get('/cards/'),
+
+  /**
+ * @return {Promise<{result: Array<{id: number, content: string, created: number, author_id: string, title: string}>}>}
+   */
+  getById: (id) => api.get(`/cards/${id}/`),
 }

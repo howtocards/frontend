@@ -42,7 +42,9 @@ module.exports = merge(config, {
     new NamedModulesPlugin(),
     new HotModuleReplacementPlugin(),
 
-    new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+    }),
   ],
 
   stats: false,
