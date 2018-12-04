@@ -54,7 +54,7 @@ export class CardItem extends Component {
             </Row>
           </Row>
         </Col>
-        <CardContent innerRef={this.contentRef}>
+        <CardContent ref={this.contentRef}>
           <Markdown source={content} />
         </CardContent>
       </Card>
@@ -66,8 +66,11 @@ export class CardItem extends Component {
 CardItem.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  // author_id: PropTypes.number.isRequired,
   createdAt: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
-  canEdit: PropTypes.bool.isRequired,
+  canEdit: PropTypes.bool,
+}
+
+CardItem.defaultProps = {
+  canEdit: false,
 }

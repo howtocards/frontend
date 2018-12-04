@@ -51,7 +51,6 @@ const formik = {
     return errors
   },
   handleSubmit: async (values, { props, setSubmitting }) => {
-    console.log(values)
     await props.onCreate(values)
 
     setSubmitting(false)
