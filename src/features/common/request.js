@@ -23,16 +23,18 @@ export const request = (method, url, options = {}) => (
       body: options.body ? JSON.stringify(options.body) : undefined,
     }
 
-    if (localStorage.getItem('api-debug')) {
-      /* eslint-disable no-console */
-      const group = `API >> ${method} ${url}`
+    if (process.env.NODE_ENV === 'development') {
+      if (localStorage.getItem('api-debug')) {
+        /* eslint-disable no-console */
+        const group = `API >> ${method} ${url}`
 
-      console.groupCollapsed(group)
-      console.log('options:', options)
-      console.log('fullOptions:', fullOptions)
-      console.log('token:', token)
-      console.groupEnd(group)
-      /* eslint-enable no-console */
+        console.groupCollapsed(group)
+        console.log('options:', options)
+        console.log('fullOptions:', fullOptions)
+        console.log('token:', token)
+        console.groupEnd(group)
+        /* eslint-enable no-console */
+      }
     }
 
     return fetch(`${baseUri}${url}`, fullOptions)

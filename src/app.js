@@ -1,5 +1,5 @@
 import React from 'react'
-import { hot } from 'react-hot-loader'
+// import { hot } from 'react-hot-loader'
 
 import { AccountLoader } from '@features/common'
 
@@ -10,10 +10,12 @@ import { darkTheme } from '@ui/themes/dark'
 import { rootRoutes } from './routes'
 
 
-export const App = hot(module)(() => (
+export const App = () => (
   <ToggleThemeProvider light={lightTheme} dark={darkTheme}>
     <AccountLoader>
       {rootRoutes()}
     </AccountLoader>
   </ToggleThemeProvider>
-))
+)
+
+// export const App = hot(module)(AppRaw)

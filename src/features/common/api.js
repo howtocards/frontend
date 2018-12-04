@@ -30,7 +30,7 @@ export const commonApi = {
      * https://github.com/howtocards/frontend/tree/master/mock-server/server#get-account-user-account-status
      * @return {Promise<{ user: { email: string } }>}
      */
-    getCurrent: () => get('/account/session'),
+    getCurrent: () => get('/account/session/'),
     // getCurrent: () => rpc.send('account::get_current'),
   },
 }

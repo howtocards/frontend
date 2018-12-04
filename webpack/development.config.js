@@ -13,7 +13,7 @@ require('dotenv').config()
 const { config, DIST } = require('./common')
 
 
-const DEFAULT_PORT = 3000
+const DEFAULT_PORT = 9000
 
 module.exports = merge(config, {
   profile: true,
