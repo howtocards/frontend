@@ -7,6 +7,7 @@
     "test": "npm run test:eslint && npm run test:code",
     "test:code": "jest",
     "test:eslint": "eslint .",
+    "prettier": "prettier './**/**/**.{json,js,eslintrc}' --write",
     "build:prod": "NODE_ENV=production webpack-cli",
     "dev": "webpack-dev-server"
   },
