@@ -35,9 +35,10 @@ export const cardRead = (id) =>
       const { ok, result, error } = await dispatch(cardsApi.getById, id)
 
       if (ok) {
-        dispatch(cardActions.set(result))
-      } else {
-        throw new Error("[X] - An error occurred while getting the data", error)
+        dispatch(cardActions.set(result.card))
+      }
+      else {
+        throw new Error('[X] - An error occurred while getting the data', error)
       }
     },
   })
