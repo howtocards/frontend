@@ -3,10 +3,7 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "moduleDirectory": [
-          "../node_modules",
-          "./"
-        ]
+        "moduleDirectory": ["../node_modules", "./"]
       }
     }
   },
@@ -14,9 +11,12 @@
     "react/sort-comp": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "max-len": ["warn", 140],
-    "import/newline-after-import": ["error", {
-      "count": 1
-    }],
+    "import/newline-after-import": [
+      "error",
+      {
+        "count": 1
+      }
+    ],
     "quotes": "off"
   }
 }
