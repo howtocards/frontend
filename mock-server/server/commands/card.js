@@ -1,6 +1,5 @@
-import Future from 'fluture'
-import { models } from '../models'
-
+import Future from "fluture"
+import { models } from "../models"
 
 /**
  * @param {{ title: string, content: string, authorId: number }} cardData
@@ -9,12 +8,10 @@ import { models } from '../models'
 export function cardCreate(cardData) {
   const { title, content, authorId } = cardData
 
-
   const card = models.Cards.insert({ title, content, authorId })
 
   return Future.of(card)
 }
-
 
 const mapCard = ({ $loki, content, title, meta, authorId }) => ({
   $loki,

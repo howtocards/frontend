@@ -1,10 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import React from "react"
+import PropTypes from "prop-types"
+import styled, { css } from "styled-components"
 
 // TODO remove layout
-import { Col } from '@lib/styled-components-layout'
-
+import { Col } from "@lib/styled-components-layout"
 
 const InputNative = styled.input`
   border: 1px solid;
@@ -30,10 +29,12 @@ const InputNative = styled.input`
     background-color: rgba(80, 80, 80, .1);
   }
 
-  ${(p) => p.error && css`
-    box-shadow: 0 0 0 1px red;
-    border-color: red;
-  `}
+  ${(p) =>
+    p.error &&
+    css`
+      box-shadow: 0 0 0 1px red;
+      border-color: red;
+    `}
 `
 
 const InputLabel = styled.label`
@@ -101,5 +102,5 @@ Input.defaultProps = {
   name: undefined,
   onBlur: undefined,
   onChange: undefined,
-  type: 'text',
+  type: "text",
 }

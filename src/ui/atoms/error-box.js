@@ -1,5 +1,4 @@
-import styled from 'styled-components'
-
+import styled from "styled-components"
 
 export const ErrorBox = styled.div`
   display: block;

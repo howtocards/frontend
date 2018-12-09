@@ -1,8 +1,11 @@
 // import React from 'react'
-import { connect } from 'react-redux'
+import { connect } from "react-redux"
 
-import { accountFetchingSelector, accountSelector, accountIdSelector } from '../selectors'
-
+import {
+  accountFetchingSelector,
+  accountSelector,
+  accountIdSelector,
+} from "../selectors"
 
 const mapStateToProps = (state) => ({
   fetching: accountFetchingSelector(state),
@@ -12,7 +15,14 @@ const mapStateToProps = (state) => ({
 
 const enhance = connect(mapStateToProps)
 
-const passProps = ({ render, renderExists, renderEmpty, fetching, account, accountId }) => {
+const passProps = ({
+  render,
+  renderExists,
+  renderEmpty,
+  fetching,
+  account,
+  accountId,
+}) => {
   if (account && renderExists) {
     return renderExists({ fetching, account, accountId })
   }

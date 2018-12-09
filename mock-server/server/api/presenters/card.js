@@ -10,7 +10,14 @@ export const cardRepresent = ({ id, content, title }) => ({
 /**
  * From server to client
  */
-export const cardPresent = ({ $loki, content, title, authorId, meta, canEdit }) => ({
+export const cardPresent = ({
+  $loki,
+  content,
+  title,
+  authorId,
+  meta,
+  canEdit,
+}) => ({
   id: $loki,
   content,
   title,
@@ -19,6 +26,7 @@ export const cardPresent = ({ $loki, content, title, authorId, meta, canEdit }) 
   canEdit,
 })
 
-
-export const cardWithFlagCanEdit =
-  (authorId) => (card) => ({ ...card, canEdit: authorId === card.authorId })
+export const cardWithFlagCanEdit = (authorId) => (card) => ({
+  ...card,
+  canEdit: authorId === card.authorId,
+})

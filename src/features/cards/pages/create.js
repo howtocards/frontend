@@ -1,14 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { compose } from 'recompose'
-import { withFormik } from 'formik'
-import styled from 'styled-components'
-import { Col } from '@lib/styled-components-layout'
-import { Authenticated } from '@features/common'
-import { Card, Button, Input } from '@ui/atoms'
-import { TextArea } from '@ui/molecules'
-import { RichEditor } from '@lib/rich-text'
+import React from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { compose } from "recompose"
+import { withFormik } from "formik"
+import styled from "styled-components"
+import { Col } from "@lib/styled-components-layout"
+import { Authenticated } from "@features/common"
+import { Card, Button, Input } from "@ui/atoms"
+import { TextArea } from "@ui/molecules"
+import { RichEditor } from "@lib/rich-text"
 import {
   FormatBold,
   FormatItalic,
@@ -17,12 +17,10 @@ import {
   FormatQuote,
   FormatListBulleted,
   FormatListNumbered,
-} from '@material-ui/icons'
+} from "@material-ui/icons"
 
-
-import { CardsCommonTemplate } from '../templates/common'
-import { letterCreate } from '../effects'
-
+import { CardsCommonTemplate } from "../templates/common"
+import { letterCreate } from "../effects"
 
 const CONTENT_MIN_LENGTH = 3
 
@@ -33,8 +31,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const initialForm = {
   richEditor: false,
-  title: '',
-  content: '',
+  title: "",
+  content: "",
 }
 
 const formik = {
@@ -43,10 +41,9 @@ const formik = {
     const errors = {}
 
     if (values.title.trim().length < CONTENT_MIN_LENGTH) {
-      errors.title = 'Please, fill title'
-    }
-    else if (values.content.trim().length < CONTENT_MIN_LENGTH) {
-      errors.content = 'Please, fill card content'
+      errors.title = "Please, fill title"
+    } else if (values.content.trim().length < CONTENT_MIN_LENGTH) {
+      errors.content = "Please, fill card content"
     }
     return errors
   },
@@ -59,7 +56,10 @@ const formik = {
 }
 
 const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   withFormik(formik),
 )
 
@@ -79,7 +79,9 @@ export const Toolbar = styled.div`
 
 const ToolBarButton = styled.div`
   cursor: pointer;
-  ${({ theme, isActive }) => isActive && `
+  ${({ theme, isActive }) =>
+    isActive &&
+    `
     svg {
       fill: ${theme.palette.primary.initial.background};
     }
@@ -97,98 +99,98 @@ export const CardCreateView = ({
   touched,
   values,
 }) => (
-    <CardsCommonTemplate>
-      <Authenticated
-        render={() => (
-          <Col grow={1}>
-            <Card style={{ margin: '2rem 0' }}>
-              <form onSubmit={handleSubmit}>
-                <Col gap="1rem">
-                  <Input
-                    name="title"
-                    autoComplete="title"
-                    placeholder="Card title"
+  <CardsCommonTemplate>
+    <Authenticated
+      render={() => (
+        <Col grow={1}>
+          <Card style={{ margin: "2rem 0" }}>
+            <form onSubmit={handleSubmit}>
+              <Col gap="1rem">
+                <Input
+                  name="title"
+                  autoComplete="title"
+                  placeholder="Card title"
+                  disabled={isSubmitting}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.title}
+                  failed={touched.title && Boolean(errors.title)}
+                />
+                <label htmlFor="richEditor">
+                  <input
+                    id="richEditor"
+                    name="richEditor"
+                    type="checkbox"
+                    onChange={handleChange}
+                    checked={values.richEditor}
+                  />
+                  show editor
+                </label>
+
+                {values.richEditor ? (
+                  <RichEditor
+                    onChange={(content) => setFieldValue("content", content)}
+                    renderToolbar={(renderButton) => (
+                      <Toolbar>
+                        {renderButton("bold", (props) => (
+                          <ToolBarButton {...props}>
+                            <FormatBold />
+                          </ToolBarButton>
+                        ))}
+                        {renderButton("italic", (props) => (
+                          <ToolBarButton {...props}>
+                            <FormatItalic />
+                          </ToolBarButton>
+                        ))}
+                        {renderButton("underlined", (props) => (
+                          <ToolBarButton {...props}>
+                            <FormatUnderlined />
+                          </ToolBarButton>
+                        ))}
+                        {renderButton("code", (props) => (
+                          <ToolBarButton {...props}>
+                            <FormatCode />
+                          </ToolBarButton>
+                        ))}
+                        {renderButton("block-quote", (props) => (
+                          <ToolBarButton {...props}>
+                            <FormatQuote />
+                          </ToolBarButton>
+                        ))}
+                        {renderButton("numbered-list", (props) => (
+                          <ToolBarButton {...props}>
+                            <FormatListNumbered />
+                          </ToolBarButton>
+                        ))}
+                        {renderButton("bulleted-list", (props) => (
+                          <ToolBarButton {...props}>
+                            <FormatListBulleted />
+                          </ToolBarButton>
+                        ))}
+                      </Toolbar>
+                    )}
+                  />
+                ) : (
+                  <TextArea
+                    name="content"
+                    autoComplete="content"
+                    placeholder="Type your solution"
+                    rows={20}
                     disabled={isSubmitting}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.title}
-                    failed={touched.title && Boolean(errors.title)}
+                    value={values.content}
+                    failed={touched.content && Boolean(errors.content)}
                   />
-                  <label htmlFor='richEditor'>
-                    <input
-                      id="richEditor"
-                      name="richEditor"
-                      type="checkbox"
-                      onChange={handleChange}
-                      checked={values.richEditor}
-                    />
-                    show editor
-                  </label>
-
-                  {values.richEditor ? (
-                    <RichEditor
-                      onChange={(content) => setFieldValue('content', content)}
-                      renderToolbar={((renderButton) => (
-                        <Toolbar>
-                          {renderButton('bold', (props) => (
-                            <ToolBarButton {...props}>
-                              <FormatBold />
-                            </ToolBarButton>
-                          ))}
-                          {renderButton('italic', (props) => (
-                            <ToolBarButton {...props}>
-                              <FormatItalic />
-                            </ToolBarButton>
-                          ))}
-                          {renderButton('underlined', (props) => (
-                            <ToolBarButton {...props}>
-                              <FormatUnderlined />
-                            </ToolBarButton>
-                          ))}
-                          {renderButton('code', (props) => (
-                            <ToolBarButton {...props}>
-                              <FormatCode />
-                            </ToolBarButton>
-                          ))}
-                          {renderButton('block-quote', (props) => (
-                            <ToolBarButton {...props}>
-                              <FormatQuote />
-                            </ToolBarButton>
-                          ))}
-                          {renderButton('numbered-list', (props) => (
-                            <ToolBarButton {...props}>
-                              <FormatListNumbered />
-                            </ToolBarButton>
-                          ))}
-                          {renderButton('bulleted-list', (props) => (
-                            <ToolBarButton {...props}>
-                              <FormatListBulleted />
-                            </ToolBarButton>
-                          ))}
-                        </Toolbar>
-                      ))}
-                    />
-                  ) : (
-                      <TextArea
-                        name="content"
-                        autoComplete="content"
-                        placeholder="Type your solution"
-                        rows={20}
-                        disabled={isSubmitting}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.content}
-                        failed={touched.content && Boolean(errors.content)}
-                      />
-                  )}
-                  <Button.Primary type="submit">Create</Button.Primary>
-                </Col>
-              </form>
-            </Card>
-          </Col>
-        )}
-      />
-    </CardsCommonTemplate>
+                )}
+                <Button.Primary type="submit">Create</Button.Primary>
+              </Col>
+            </form>
+          </Card>
+        </Col>
+      )}
+    />
+  </CardsCommonTemplate>
 )
 
 CardCreateView.propTypes = {

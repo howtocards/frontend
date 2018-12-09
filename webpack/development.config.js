@@ -1,28 +1,27 @@
-const { resolve } = require('path')
+const { resolve } = require("path")
 const {
   LoaderOptionsPlugin,
   EnvironmentPlugin,
   HotModuleReplacementPlugin,
   NamedModulesPlugin,
-} = require('webpack')
-const merge = require('webpack-merge')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+} = require("webpack")
+const merge = require("webpack-merge")
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
 
-require('dotenv').config()
+require("dotenv").config()
 
-const { config, DIST } = require('./common')
-
+const { config, DIST } = require("./common")
 
 const DEFAULT_PORT = 9000
 
 module.exports = merge(config, {
   profile: true,
-  devtool: 'cheap-module-eval-source-map',
-  mode: 'development',
+  devtool: "cheap-module-eval-source-map",
+  mode: "development",
 
   output: {
-    filename: '[name].js',
-    publicPath: '/',
+    filename: "[name].js",
+    publicPath: "/",
     path: DIST,
     pathinfo: true,
   },
@@ -36,7 +35,7 @@ module.exports = merge(config, {
     }),
 
     new EnvironmentPlugin({
-      NODE_ENV: 'development',
+      NODE_ENV: "development",
     }),
 
     new NamedModulesPlugin(),
@@ -50,13 +49,13 @@ module.exports = merge(config, {
   stats: false,
 
   devServer: {
-    contentBase: resolve(__dirname, '..', 'public'),
+    contentBase: resolve(__dirname, "..", "public"),
     port: 3001,
     hot: true,
-    stats: 'minimal',
+    stats: "minimal",
     historyApiFallback: true,
     proxy: {
-      '/api': `http://localhost:${process.env.BACKEND_PORT || DEFAULT_PORT}`,
+      "/api": `http://localhost:${process.env.BACKEND_PORT || DEFAULT_PORT}`,
     },
   },
 })

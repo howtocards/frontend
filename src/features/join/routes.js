@@ -1,21 +1,20 @@
-import { LoginPage } from './pages/login'
-import { LogoutPage } from './pages/logout'
-import { RegistrationPage } from './pages/registration'
-
+import { LoginPage } from "./pages/login"
+import { LogoutPage } from "./pages/logout"
+import { RegistrationPage } from "./pages/registration"
 
 export const joinRoutes = () => [
   {
-    path: '/join',
+    path: "/join",
     exact: true,
     component: LoginPage,
   },
   {
-    path: '/join/registration',
+    path: "/join/registration",
     exact: true,
     component: RegistrationPage,
   },
   {
-    path: '/logout',
+    path: "/logout",
     exact: true,
     component: LogoutPage,
   },

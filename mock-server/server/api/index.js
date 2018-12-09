@@ -1,12 +1,11 @@
-import Koa from 'koa'
-import bodyParser from 'koa-bodyparser'
-import { printRoutes as printRestRoutes, createRest } from 'createrest'
-import { createKoaRouter } from 'createrest-koa'
+import Koa from "koa"
+import bodyParser from "koa-bodyparser"
+import { printRoutes as printRestRoutes, createRest } from "createrest"
+import { createKoaRouter } from "createrest-koa"
 
-import { apiWrapper } from './middlewares/api-wrapper'
-import { rootApi } from './routes'
-import './rpc'
-
+import { apiWrapper } from "./middlewares/api-wrapper"
+import { rootApi } from "./routes"
+import "./rpc"
 
 export const api = new Koa()
 

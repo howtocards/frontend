@@ -1,1 +1,1 @@
-export { joinRoutes } from './routes'
+export { joinRoutes } from "./routes"

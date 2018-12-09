@@ -1,8 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { above } from 'styled-breakpoints'
-
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { above } from "styled-breakpoints"
 
 const SidebarContainer = styled.div`
   display: grid;
@@ -18,13 +17,12 @@ const SidebarContainer = styled.div`
     "main"
     "footer";
 
-  ${above('tablet')} {
+  ${above("tablet")} {
     grid-template-rows: 1fr auto;
     grid-template-columns: auto 30%;
     grid-template-areas:
       "main sidebar"
-      "footer footer"
-      ;
+      "footer footer";
   }
 `
 
@@ -45,9 +43,7 @@ const ScrollableFooter = styled.footer`
 
 export const SidebarTemplate = ({ sidebar, children, footer }) => (
   <SidebarContainer>
-    <Main>
-      {children}
-    </Main>
+    <Main>{children}</Main>
     <Sidebar>{sidebar}</Sidebar>
     {footer && <ScrollableFooter>{footer}</ScrollableFooter>}
   </SidebarContainer>

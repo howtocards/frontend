@@ -1,6 +1,5 @@
-import Future from 'fluture'
-import { EmptyResultError, InternalServerError, CustomError } from '../errors'
-
+import Future from "fluture"
+import { EmptyResultError, InternalServerError, CustomError } from "../errors"
 
 const STATUS_OK = 200
 // const STATUS_NO_CONTENT = 204
@@ -21,7 +20,10 @@ export const apiWrapper = () => async (ctx, next) => {
     .mapRej((error) => ({
       ok: false,
       error: error.message || error.name || error,
-      status: statusDefaultOr(ctx.status, error.httpStatus || STATUS_BAD_REQUEST),
+      status: statusDefaultOr(
+        ctx.status,
+        error.httpStatus || STATUS_BAD_REQUEST,
+      ),
     }))
     .chainRej(Future.of)
 
@@ -36,8 +38,7 @@ export const apiWrapper = () => async (ctx, next) => {
 const resolveMiddlewareToFuture = async (ctx, next) => {
   try {
     return Future.resolve(await next())
-  }
-  catch (error) {
+  } catch (error) {
     if (error instanceof CustomError) {
       return Future.reject(error)
     }
@@ -49,14 +50,11 @@ const resolveMiddlewareToFuture = async (ctx, next) => {
 }
 
 const emptyToError = (result) => {
-  if (typeof result === 'undefined' || result === null) {
+  if (typeof result === "undefined" || result === null) {
     return Future.reject(new EmptyResultError())
   }
   return result
 }
 
-const statusDefaultOr = (currentStatus, defaultStatus) => (
-  currentStatus === STATUS_NOT_IMPLEMENTED
-    ? defaultStatus
-    : currentStatus
-)
+const statusDefaultOr = (currentStatus, defaultStatus) =>
+  currentStatus === STATUS_NOT_IMPLEMENTED ? defaultStatus : currentStatus

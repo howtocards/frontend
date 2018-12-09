@@ -1,9 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
 
-import { ConditionalList } from '@ui/organisms'
-
+import { ConditionalList } from "@ui/organisms"
 
 const CardsItemsList = styled.div`
   display: flex;
@@ -19,16 +18,12 @@ export const CardsList = ({ cards, renderCard }) => (
   <ConditionalList
     list={cards}
     renderExists={(list) => (
-      <CardsItemsList>
-        {list.map(renderCard)}
-      </CardsItemsList>
+      <CardsItemsList>{list.map(renderCard)}</CardsItemsList>
     )}
   />
 )
 
 CardsList.propTypes = {
-  cards: PropTypes.arrayOf(
-    PropTypes.shape({}),
-  ).isRequired,
+  cards: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   renderCard: PropTypes.func.isRequired,
 }

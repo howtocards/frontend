@@ -1,8 +1,7 @@
-import Ajv from 'ajv'
-import Future from 'fluture'
+import Ajv from "ajv"
+import Future from "fluture"
 
-import { ValidationError } from '../errors'
-
+import { ValidationError } from "../errors"
 
 export const ajv = new Ajv()
 
@@ -18,7 +17,7 @@ export const validate = (schema) => {
     return next()
   }
 
-  middleware.displayName = '`validate'
+  middleware.displayName = "`validate"
 
   return middleware
 }

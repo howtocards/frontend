@@ -1,27 +1,23 @@
-process.title = 'howtocards:webpack'
+process.title = "howtocards:webpack"
 
-const { cpus } = require('os')
-const { resolve } = require('path')
-const {
-  NoEmitOnErrorsPlugin,
-  EnvironmentPlugin,
-} = require('webpack')
-const HappyPack = require('happypack')
+const { cpus } = require("os")
+const { resolve } = require("path")
+const { NoEmitOnErrorsPlugin, EnvironmentPlugin } = require("webpack")
+const HappyPack = require("happypack")
 // const AssetsPlugin = require('assets-webpack-plugin')
-const HtmlPlugin = require('html-webpack-plugin')
-
+const HtmlPlugin = require("html-webpack-plugin")
 
 const { NODE_ENV } = process.env
-const IS_PROD = NODE_ENV === 'production'
-const IS_DEV = NODE_ENV === 'development'
-const IS_TEST = NODE_ENV === 'test'
+const IS_PROD = NODE_ENV === "production"
+const IS_DEV = NODE_ENV === "development"
+const IS_TEST = NODE_ENV === "test"
 
-const DIST = resolve(__dirname, '..', 'dist')
-const SRC = resolve(__dirname, '..', 'src')
+const DIST = resolve(__dirname, "..", "dist")
+const SRC = resolve(__dirname, "..", "src")
 
 const config = {
   context: SRC,
-  target: 'web',
+  target: "web",
 
   entry: {
     polyfill: [
@@ -39,25 +35,23 @@ const config = {
       // 'core-js/modules/es7.array.includes',
       // 'core-js/modules/es7.object.entries',
       // 'core-js/modules/es7.object.values',
-      'core-js/modules/es7.promise.finally',
-      'core-js/modules/es7.promise.try',
-      'core-js/modules/es7.set.from',
+      "core-js/modules/es7.promise.finally",
+      "core-js/modules/es7.promise.try",
+      "core-js/modules/es7.set.from",
       // 'core-js/modules/es7.set.of',
       // 'core-js/modules/es7.string.at',
-      'whatwg-fetch',
+      "whatwg-fetch",
     ],
-    index: ['./index'],
+    index: ["./index"],
   },
 
   resolve: {
-    extensions: ['.js'],
-    modules: [
-      'node_modules',
-    ],
+    extensions: [".js"],
+    modules: ["node_modules"],
     alias: {
-      '@features': resolve(SRC, 'features'),
-      '@lib': resolve(SRC, 'lib'),
-      '@ui': resolve(SRC, 'ui'),
+      "@features": resolve(SRC, "features"),
+      "@lib": resolve(SRC, "lib"),
+      "@ui": resolve(SRC, "ui"),
     },
   },
 
@@ -70,13 +64,11 @@ const config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: [
-          'happypack/loader',
-        ],
+        use: ["happypack/loader"],
       },
       {
         test: /\.svg$/,
-        use: 'react-svg-loader',
+        use: "react-svg-loader",
       },
     ],
   },
@@ -87,21 +79,20 @@ const config = {
     new NoEmitOnErrorsPlugin(),
     new HappyPack({
       threads: cpus().length,
-      loaders: ['babel-loader'],
+      loaders: ["babel-loader"],
     }),
     new EnvironmentPlugin({
-      NODE_ENV: process.env.NODE_ENV || 'development',
+      NODE_ENV: process.env.NODE_ENV || "development",
     }),
 
     new HtmlPlugin({
-      title: 'HowToCards',
-      template: resolve(__dirname, '..', 'src', 'index.tpl.html'),
+      title: "HowToCards",
+      template: resolve(__dirname, "..", "src", "index.tpl.html"),
     }),
   ],
 
-  stats: 'errors-only',
+  stats: "errors-only",
 }
-
 
 module.exports = {
   config,

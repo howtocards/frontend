@@ -1,6 +1,5 @@
-import { createSymbiote } from 'redux-symbiote'
-import { initialFetching, createFetching } from 'symbiote-fetching'
-
+import { createSymbiote } from "redux-symbiote"
+import { initialFetching, createFetching } from "symbiote-fetching"
 
 const initialState = {
   card: null,
@@ -8,11 +7,15 @@ const initialState = {
 }
 
 const symbiotes = {
-  fetch: createFetching('fetching'),
+  fetch: createFetching("fetching"),
   set: (state, card) => ({
     ...state,
     card,
   }),
 }
 
-export const { actions, reducer } = createSymbiote(initialState, symbiotes, 'card')
+export const { actions, reducer } = createSymbiote(
+  initialState,
+  symbiotes,
+  "card",
+)

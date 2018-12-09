@@ -1,5 +1,5 @@
-import Future from 'fluture'
-import Loki from 'lokijs'
+import Future from "fluture"
+import Loki from "lokijs"
 
 /**
  * @type {Loki.Collection<{ email: string, password: string }>}
@@ -40,16 +40,16 @@ const makeCollection = (name, options) => {
 const databaseInitialize = (reject, resolve) => (error) => {
   if (error) reject(error)
   else {
-    models.Users = makeCollection('users', { unique: ['email'] })
-    models.Tokens = makeCollection('tokens', { unique: ['email'] })
-    models.Cards = makeCollection('cards', {})
+    models.Users = makeCollection("users", { unique: ["email"] })
+    models.Tokens = makeCollection("tokens", { unique: ["email"] })
+    models.Cards = makeCollection("cards", {})
     resolve()
   }
 }
 
 export function createDatabase() {
   return Future((reject, resolve) => {
-    db = new Loki('/tmp/howtocards.db', {
+    db = new Loki("/tmp/howtocards.db", {
       verbose: true,
       autoload: true,
       autoloadCallback: databaseInitialize(reject, resolve),

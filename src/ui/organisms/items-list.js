@@ -1,7 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-
+import React from "react"
+import styled from "styled-components"
+import PropTypes from "prop-types"
 
 const Items = styled.div`
   display: flex;
@@ -11,9 +10,7 @@ const Items = styled.div`
 `
 
 export const ItemsList = ({ items, render }) => (
-  <Items>
-    {items.map((item) => render(item))}
-  </Items>
+  <Items>{items.map((item) => render(item))}</Items>
 )
 
 ItemsList.propTypes = {

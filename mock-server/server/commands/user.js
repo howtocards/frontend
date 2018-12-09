@@ -1,8 +1,8 @@
-import Future from 'fluture'
-import { models } from '../models'
+import Future from "fluture"
+import { models } from "../models"
 
 // eslint-disable-next-line no-magic-numbers
-const createToken = (iterations = 3, sep = '') => {
+const createToken = (iterations = 3, sep = "") => {
   let cnt = 0
   const result = []
 
@@ -25,7 +25,7 @@ export const userRegister = (registerData) => {
   })
 
   if (usersWithEmail.count() > 0) {
-    return Future.reject('email_already_exists')
+    return Future.reject("email_already_exists")
   }
 
   const createdUser = models.Users.insert({
@@ -43,14 +43,14 @@ export const userLogin = (loginData) => {
   const foundUser = models.Users.findOne({ email: loginData.email })
 
   if (!foundUser) {
-    return Future.reject('not_found')
+    return Future.reject("not_found")
   }
   if (loginData.password !== foundUser.password) {
-    return Future.reject('bad_credentials')
+    return Future.reject("bad_credentials")
   }
   const createdToken = models.Tokens.insert({
     userId: foundUser.$loki,
-    token: createToken(USER_TOKEN_SIZE, '%'),
+    token: createToken(USER_TOKEN_SIZE, "%"),
   })
 
   return Future.of({ token: createdToken.token })
@@ -63,13 +63,13 @@ export const userGet = (token) => {
   const foundToken = models.Tokens.findOne({ token })
 
   if (!foundToken) {
-    return Future.reject('invalid_token')
+    return Future.reject("invalid_token")
   }
 
   const foundUser = models.Users.findOne({ $loki: foundToken.userId })
 
   if (!foundUser) {
-    return Future.reject('invalid_token')
+    return Future.reject("invalid_token")
   }
 
   return Future.of(foundUser)
@@ -82,8 +82,7 @@ export const userGet = (token) => {
 export const userSessionDrop = (user, token) => {
   if (token) {
     models.Tokens.findAndRemove({ token, userId: user.$loki })
-  }
-  else {
+  } else {
     models.Tokens.findAndRemove({ userId: user.$loki })
   }
 

@@ -1,9 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
-import { CommonContentTemplate } from '@features/common'
-import { Container } from '@ui/templates'
-
+import { CommonContentTemplate } from "@features/common"
+import { Container } from "@ui/templates"
 
 const NotFoundContainer = styled.div`
   display: flex;
@@ -16,9 +15,7 @@ const NotFoundContainer = styled.div`
 export const NotFoundPage = () => (
   <CommonContentTemplate>
     <Container>
-      <NotFoundContainer>
-        Page not found! =(
-      </NotFoundContainer>
+      <NotFoundContainer>Page not found! =(</NotFoundContainer>
     </Container>
   </CommonContentTemplate>
 )

@@ -1,8 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 
-import { Link } from '../atoms'
-
+import { Link } from "../atoms"
 
 const FooterBlock = styled.footer`
   display: flex;

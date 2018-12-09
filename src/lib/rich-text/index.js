@@ -1,1 +1,1 @@
-export { RichEditor } from './rich-editor'
+export { RichEditor } from "./rich-editor"

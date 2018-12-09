@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-
+import React, { Fragment } from "react"
+import PropTypes from "prop-types"
 
 export const ConditionalList = ({ list, renderExists, renderEmpty }) => (
-  <Fragment>{list && list.length > 0 ? renderExists(list) : renderEmpty()}</Fragment>
+  <Fragment>
+    {list && list.length > 0 ? renderExists(list) : renderEmpty()}
+  </Fragment>
 )
 
 ConditionalList.propTypes = {

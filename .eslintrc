@@ -1,9 +1,10 @@
 {
   "parser": "babel-eslint",
   "plugins": [
-    "jest"
+    "jest",
+    "prettier"
   ],
-  "extends": ["plugin:jest/recommended", "@atomix/eslint-config"],
+  "extends": ["plugin:jest/recommended", "@atomix/eslint-config", "plugin:prettier/recommended"],
   "env": {
     "browser": true,
     "es6": true
@@ -13,6 +14,8 @@
       "functions": false,
       "classes": true,
       "variables": true
-    }]
+    }],
+    "import/newline-after-import": ["error", { "count": 1 }],
+    "quotes": "off"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "extends": "@atomix/react",
+  "extends": ["@atomix/react", "plugin:prettier/recommended"],
   "settings": {
     "import/resolver": {
       "node": {
@@ -13,6 +13,10 @@
   "rules": {
     "react/sort-comp": "off",
     "jsx-a11y/anchor-is-valid": "off",
-    "max-len": ["error", 120]
+    "max-len": ["warn", 140],
+    "import/newline-after-import": ["error", {
+      "count": 1
+    }],
+    "quotes": "off"
   }
 }

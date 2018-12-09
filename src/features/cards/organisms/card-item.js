@@ -1,13 +1,12 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-import { format } from 'date-fns'
-import Markdown from 'react-markdown'
-import highlight from 'highlightjs'
+import React, { Component } from "react"
+import styled from "styled-components"
+import PropTypes from "prop-types"
+import { format } from "date-fns"
+import Markdown from "react-markdown"
+import highlight from "highlightjs"
 
-import { Col, Row } from '@lib/styled-components-layout'
-import { Card, H3, Text, Link } from '@ui/atoms'
-
+import { Col, Row } from "@lib/styled-components-layout"
+import { Card, H3, Text, Link } from "@ui/atoms"
 
 const CardContent = styled(Text)`
   font-size: 1.4rem;
@@ -21,10 +20,12 @@ export class CardItem extends Component {
 
   highlightBlocks() {
     if (this.contentRef.current) {
-      const list = [...this.contentRef.current.querySelectorAll('code').values()]
+      const list = [
+        ...this.contentRef.current.querySelectorAll("code").values(),
+      ]
 
       list
-        .filter((node) => node.className.indexOf('language') > -1)
+        .filter((node) => node.className.indexOf("language") > -1)
         .forEach((node) => highlight.highlightBlock(node))
     }
   }
@@ -47,10 +48,8 @@ export class CardItem extends Component {
             <H3 narrow>{title}</H3>
             <Row basis="25%" justify="space-between">
               <Link to={`/open/${id}`}>Open</Link>
-              {canEdit && (
-                <Link to="/edit">Edit</Link>
-              )}
-              <i>{format(new Date(createdAt), 'HH:MM MM/DD/YYYY')}</i>
+              {canEdit && <Link to="/edit">Edit</Link>}
+              <i>{format(new Date(createdAt), "HH:MM MM/DD/YYYY")}</i>
             </Row>
           </Row>
         </Col>
@@ -58,7 +57,6 @@ export class CardItem extends Component {
           <Markdown source={content} />
         </CardContent>
       </Card>
-
     )
   }
 }

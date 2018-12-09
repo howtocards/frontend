@@ -1,12 +1,11 @@
-import flatten from 'flat'
-import Koa from 'koa'
-import compose from 'koa-compose'
-import Router from 'koa-router'
-import bodyParser from 'koa-bodyparser'
+import flatten from "flat"
+import Koa from "koa"
+import compose from "koa-compose"
+import Router from "koa-router"
+import bodyParser from "koa-bodyparser"
 
-import { validate } from './middlewares/validate'
-import { authScheme } from './schemes/account'
-
+import { validate } from "./middlewares/validate"
+import { authScheme } from "./schemes/account"
 
 function createRpc(scheme) {
   const rpc = new Koa()
@@ -24,21 +23,22 @@ function createRpcRouter(scheme) {
   const handler = createRpcHandler(methods)
 
   // router.post('/', handler)
-  router.post('/', handler)
+  router.post("/", handler)
 
   return router
 }
 
 function createMethods(scheme) {
-  const flatScheme = flatten(scheme, { delimiter: '::', safe: true })
+  const flatScheme = flatten(scheme, { delimiter: "::", safe: true })
 
-  return Object
-    .entries(flatScheme)
-    .reduce((methods, [methodName, middlewares]) => {
+  return Object.entries(flatScheme).reduce(
+    (methods, [methodName, middlewares]) => {
       // eslint-disable-next-line no-param-reassign
       methods[methodName] = compose(middlewares)
       return methods
-    }, {})
+    },
+    {},
+  )
 }
 
 function createRpcHandler(methods) {
@@ -54,29 +54,31 @@ function createRpcHandler(methods) {
 
       ctx.body = result
       // console.log({ result })
-    }
-    else if (isBatchRpc(ctx)) {
+    } else if (isBatchRpc(ctx)) {
       const results = await Promise.all(ctx.request.body.map(callMethod))
 
       ctx.body = results
       // console.log({ results })
-    }
-    else {
+    } else {
       ctx.body = ctx.request.body
     }
   }
 }
 
 function isSimpleRpc(ctx) {
-  return ctx.request.body && ctx.request.body.jsonrpc === '2.0'
+  return ctx.request.body && ctx.request.body.jsonrpc === "2.0"
 }
 
 function isBatchRpc(ctx) {
-  return ctx.request.body && Array.isArray(ctx.request.body) && ctx.request.body[0] && ctx.request.body[0].jsonrpc === '2.0'
+  return (
+    ctx.request.body &&
+    Array.isArray(ctx.request.body) &&
+    ctx.request.body[0] &&
+    ctx.request.body[0].jsonrpc === "2.0"
+  )
 }
 
-
-const register = () => 'EXAMPLE'
+const register = () => "EXAMPLE"
 
 const rpcScheme = {
   account: {

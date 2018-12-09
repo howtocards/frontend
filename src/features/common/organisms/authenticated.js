@@ -1,9 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { fetchStatus } from 'symbiote-fetching'
+import React from "react"
+import PropTypes from "prop-types"
+import { fetchStatus } from "symbiote-fetching"
 
-import { WithAccount } from './with-account'
-
+import { WithAccount } from "./with-account"
 
 export const Authenticated = ({ render }) => (
   <WithAccount
@@ -12,7 +11,7 @@ export const Authenticated = ({ render }) => (
       switch (fetching.status) {
         case fetchStatus.initial:
         case fetchStatus.failed:
-          return (<div>Authenticated only</div>)
+          return <div>Authenticated only</div>
 
         default:
           return <div>Loading...</div>

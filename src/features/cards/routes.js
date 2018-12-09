@@ -1,21 +1,20 @@
-import { CardCreatePage } from './pages/create'
-import { CardsListPage } from './pages/cards-list-page'
-import { CardPage } from './pages/card-view-page'
-
+import { CardCreatePage } from "./pages/create"
+import { CardsListPage } from "./pages/cards-list-page"
+import { CardPage } from "./pages/card-view-page"
 
 export const cardsRoutes = () => [
   {
-    path: '/',
+    path: "/",
     exact: true,
     component: CardsListPage,
   },
   {
-    path: '/new',
+    path: "/new",
     exact: true,
     component: CardCreatePage,
   },
   {
-    path: '/open/:cardId',
+    path: "/open/:cardId",
     exact: true,
     component: CardPage,
   },

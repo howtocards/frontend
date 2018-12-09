@@ -1,12 +1,11 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { compose, lifecycle } from 'recompose'
+import React from "react"
+import { connect } from "react-redux"
+import { compose, lifecycle } from "recompose"
 
-import { getAllCards } from '../effects'
-import { CardsCommonTemplate } from '../templates/common'
-import { cardsSelector, cardsFetchingSelector } from '../selectors'
-import { CardsList, CardItem } from '../organisms'
-
+import { getAllCards } from "../effects"
+import { CardsCommonTemplate } from "../templates/common"
+import { cardsSelector, cardsFetchingSelector } from "../selectors"
+import { CardsList, CardItem } from "../organisms"
 
 const mapStateToProps = (state) => ({
   fetching: cardsFetchingSelector(state),
@@ -18,7 +17,10 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   lifecycle({
     componentDidMount() {
       this.props.onGetAllCards()

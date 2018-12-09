@@ -1,10 +1,9 @@
 // import React from 'react'
-import { compose, withPropsOnChange } from 'recompose'
-import { connect } from 'react-redux'
+import { compose, withPropsOnChange } from "recompose"
+import { connect } from "react-redux"
 
-import { accountFetch, tokenGet } from '../effects'
-import { accountFetchingSelector, accountIdSelector } from '../selectors'
-
+import { accountFetch, tokenGet } from "../effects"
+import { accountFetchingSelector, accountIdSelector } from "../selectors"
 
 const mapStateToProps = (state) => ({
   fetching: accountFetchingSelector(state),
@@ -17,7 +16,10 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const enhance = compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   withPropsOnChange(
     (props, nextProps) => props.accountId !== nextProps.accountId,
     ({ accountId, getToken, onFetch }) => {
