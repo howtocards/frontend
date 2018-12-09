@@ -1,16 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import ReactQuill from 'react-quill'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { modules, formats } from './config'
-
+import React from "react"
+import ReactDOM from "react-dom"
+import ReactQuill from "react-quill"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { modules, formats } from "./config"
 
 const WrapperRichEditor = styled.div`
- .ql-editor {
+  .ql-editor {
     border-radius: 4px;
     box-shadow: 0 0 0 2px ${(p) => p.theme.palette.decoration.borders};
- }
+  }
 `
 
 export class RichEditor extends React.Component {
@@ -43,7 +42,6 @@ export class RichEditor extends React.Component {
           formats={formats}
         />
       </WrapperRichEditor>
-
     )
   }
 }

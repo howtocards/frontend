@@ -20,7 +20,7 @@ export const cardsRoutes = () => [
   },
   // допилить редакторивание
   {
-    path: '/edit/:cardId',
+    path: "/edit/:cardId",
     exact: true,
     component: CardPage,
   },

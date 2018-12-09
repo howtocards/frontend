@@ -12,7 +12,6 @@ import { api, printRoutes } from "./api"
 import { createDatabase } from "./models"
 // import { rpc } from './api/rpc'
 
-
 const DEFAULT_PORT = 9000
 
 export async function main() {

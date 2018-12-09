@@ -1,14 +1,8 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { compose, lifecycle } from 'recompose'
-import { format } from 'date-fns'
-import { RichViewer } from '@lib/rich-text'
-import { Col } from '@lib/styled-components-layout'
-import { Card, H3, Text } from '@ui/atoms'
-import { cardRead } from '../effects'
-import { CardsCommonTemplate } from '../templates/common'
-import { cardFetchingSelector, cardSelector } from '../selectors'
-
+import React from "react"
+import { connect } from "react-redux"
+import { compose, lifecycle } from "recompose"
+import { format } from "date-fns"
+import { RichViewer } from "@lib/rich-text"
 import { Col } from "@lib/styled-components-layout"
 import { Card, H3, Text } from "@ui/atoms"
 import { cardRead } from "../effects"
@@ -44,27 +38,26 @@ const enhance = compose(
 
 export const CardPage = enhance(({ card }) => (
   <CardsCommonTemplate>
-    {card
-      ? (
-        <Col grow={1}>
-          <Card>
-            <H3>
-              title:
-              {card.title}
-            </H3>
-            <H3>
-              author_id:
-              {card.authorId}
-            </H3>
-            <Text>
-              time:
-              {format(new Date(card.updatedAt), 'HH:MM MM/DD/YYYY')}
-            </Text>
-            <RichViewer content={card.content} />
-          </Card>
-        </Col>
-      )
-      : <p>Loading</p>
-    }
-  </CardsCommonTemplate >
+    {card ? (
+      <Col grow={1}>
+        <Card>
+          <H3>
+            title:
+            {card.title}
+          </H3>
+          <H3>
+            author_id:
+            {card.authorId}
+          </H3>
+          <Text>
+            time:
+            {format(new Date(card.updatedAt), "HH:MM MM/DD/YYYY")}
+          </Text>
+          <RichViewer content={card.content} />
+        </Card>
+      </Col>
+    ) : (
+      <p>Loading</p>
+    )}
+  </CardsCommonTemplate>
 ))

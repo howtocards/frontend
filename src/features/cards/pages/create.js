@@ -1,15 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { compose } from 'recompose'
-import { withFormik } from 'formik'
-import { Col } from '@lib/styled-components-layout'
-import { Authenticated } from '@features/common'
-import { Card, Button, Input } from '@ui/atoms'
-import { RichEditor } from '@lib/rich-text'
-import { CardsCommonTemplate } from '../templates/common'
-import { letterCreate } from '../effects'
-
+import React from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { compose } from "recompose"
+import { withFormik } from "formik"
+import { Col } from "@lib/styled-components-layout"
+import { Authenticated } from "@features/common"
+import { Card, Button, Input } from "@ui/atoms"
+import { RichEditor } from "@lib/rich-text"
 import { CardsCommonTemplate } from "../templates/common"
 import { letterCreate } from "../effects"
 
@@ -21,8 +18,8 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const initialForm = {
-  title: '',
-  content: '',
+  title: "",
+  content: "",
 }
 
 const formik = {
@@ -53,7 +50,6 @@ const enhance = compose(
   withFormik(formik),
 )
 
-
 /* eslint-disable react/jsx-indent */
 export const CardCreateView = ({
   errors,
@@ -65,34 +61,36 @@ export const CardCreateView = ({
   touched,
   values,
 }) => (
-    <CardsCommonTemplate>
-      <Authenticated
-        render={() => (
-          <Col grow={1}>
-            <Card style={{ marginBottom: '2rem' }}>
-              <form onSubmit={handleSubmit}>
-                <Col gap="1rem">
-                  <Input
-                    name="title"
-                    autoComplete="title"
-                    placeholder="Card title"
-                    disabled={isSubmitting}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.content}
-                    failed={touched.content && Boolean(errors.content)}
-                  />
-
-                  <RichEditor content={values.content} onChange={(content) => setFieldValue('content', content)} />
-                  <Button.Primary type="submit">Create</Button.Primary>
-                </Col>
-              </form>
-            </Card>
-          </Col>
-        )}
-      />
-    </CardsCommonTemplate>
-  )
+  <CardsCommonTemplate>
+    <Authenticated
+      render={() => (
+        <Col grow={1}>
+          <Card style={{ marginBottom: "2rem" }}>
+            <form onSubmit={handleSubmit}>
+              <Col gap="1rem">
+                <Input
+                  name="title"
+                  autoComplete="title"
+                  placeholder="Card title"
+                  disabled={isSubmitting}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.content}
+                  failed={touched.content && Boolean(errors.content)}
+                />
+                <RichEditor
+                  content={values.content}
+                  onChange={(content) => setFieldValue("content", content)}
+                />
+                <Button.Primary type="submit">Create</Button.Primary>
+              </Col>
+            </form>
+          </Card>
+        </Col>
+      )}
+    />
+  </CardsCommonTemplate>
+)
 
 CardCreateView.propTypes = {
   errors: PropTypes.shape({}).isRequired,

@@ -36,9 +36,8 @@ export const cardRead = (id) =>
 
       if (ok) {
         dispatch(cardActions.set(result.card))
-      }
-      else {
-        throw new Error('[X] - An error occurred while getting the data', error)
+      } else {
+        throw new Error("[X] - An error occurred while getting the data", error)
       }
     },
   })

@@ -1,13 +1,10 @@
 process.title = "howtocards:webpack"
 
-const { cpus } = require('os')
-const { resolve } = require('path')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const {
-  NoEmitOnErrorsPlugin,
-  EnvironmentPlugin,
-} = require('webpack')
-const HappyPack = require('happypack')
+const { cpus } = require("os")
+const { resolve } = require("path")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const { NoEmitOnErrorsPlugin, EnvironmentPlugin } = require("webpack")
+const HappyPack = require("happypack")
 // const AssetsPlugin = require('assets-webpack-plugin')
 const HtmlPlugin = require("html-webpack-plugin")
 
@@ -71,7 +68,7 @@ const config = {
           {
             loader: MiniCssExtractPlugin.loader,
           },
-          'css-loader',
+          "css-loader",
         ],
       },
       {
@@ -103,8 +100,8 @@ const config = {
       template: resolve(__dirname, "..", "src", "index.tpl.html"),
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
+      filename: "[name].css",
+      chunkFilename: "[id].css",
     }),
   ],
 
