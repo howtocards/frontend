@@ -1,10 +1,16 @@
 import React from "react"
+import styled from "styled-components"
 
 import PropTypes from "prop-types"
 import { format } from "date-fns"
 import { RichViewer } from "@lib/rich-text"
 import { Col, Row } from "@lib/styled-components-layout"
 import { Card, H3, Link } from "@ui/atoms"
+
+const CardBox = styled(Card)`
+  max-height: 24rem;
+  overflow-y: hidden;
+`
 
 export const CardItem = ({
   id,
@@ -13,9 +19,9 @@ export const CardItem = ({
   content,
   canEdit = false,
 }) => (
-  <Card>
+  <CardBox>
     <Col>
-      <Row justify="space-between">
+      <Row shrink="0" justify="space-between">
         <H3 narrow>{title}</H3>
         <Row basis="25%" justify="space-between">
           <Link to={`/open/${id}`}>Open</Link>
@@ -25,7 +31,7 @@ export const CardItem = ({
       </Row>
       <RichViewer content={content} />
     </Col>
-  </Card>
+  </CardBox>
 )
 
 CardItem.propTypes = {
