@@ -33,7 +33,15 @@ module.exports = {
     development: {
       plugins: [
         // 'react-hot-loader/babel',
-        "styled-name",
+        // "styled-name",
+        [
+          "styled-components",
+          {
+            displayName: true,
+            fileName: false,
+            pure: true,
+          },
+        ],
       ],
     },
     test: {

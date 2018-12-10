@@ -53,6 +53,8 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
+    "babel-plugin-macros": "^2.4.2",
+    "babel-plugin-styled-components": "^1.9.3",
     "babel-plugin-styled-name": "^2.0.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.21",
     "cross-env": "^5.2.0",
