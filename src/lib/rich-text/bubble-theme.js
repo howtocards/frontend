@@ -639,8 +639,8 @@ export const bubbleTheme = css`
     padding: 2px 4px;
   }
   .ql-bubble .ql-editor pre.ql-syntax {
-    background-color: #23241f;
-    color: #f8f8f2;
+    background-color: #f8f8f8;
+    color: #333;
     overflow: visible;
   }
   .ql-bubble .ql-editor img {
