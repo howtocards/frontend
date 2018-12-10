@@ -1,5 +1,11 @@
+import hljs from "highlight.js"
+
+/* eslint-disable no-magic-numbers */
+
 export const modules = {
-  syntax: true,
+  syntax: {
+    highlight: (text) => hljs.highlightAuto(text).value,
+  },
   toolbar: [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
     ["bold", "italic", "underline", "blockquote"],

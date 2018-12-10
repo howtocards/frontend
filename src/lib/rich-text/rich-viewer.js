@@ -1,5 +1,4 @@
 import React from "react"
-import ReactDOM from "react-dom"
 import ReactQuill from "react-quill"
 import PropTypes from "prop-types"
 import styled from "styled-components"

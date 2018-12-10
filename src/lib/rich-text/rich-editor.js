@@ -1,8 +1,8 @@
 import React from "react"
-import ReactDOM from "react-dom"
 import ReactQuill from "react-quill"
 import PropTypes from "prop-types"
 import styled from "styled-components"
+
 import { modules, formats } from "./config"
 
 const WrapperRichEditor = styled.div`
@@ -13,20 +13,15 @@ const WrapperRichEditor = styled.div`
 `
 
 export class RichEditor extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      text: props.content,
-    }
-    this.handleChange = this.handleChange.bind(this)
+  state = {
+    // eslint-disable-next-line react/destructuring-assignment
+    text: this.props.content,
   }
 
-  handleChange(value) {
+  handleChange = (value) => {
     const { onChange } = this.props
 
-    this.setState({ text: value }, () => {
-      onChange(value)
-    })
+    this.setState({ text: value }, () => onChange(value))
   }
 
   render() {
