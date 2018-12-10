@@ -2,8 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { compose, lifecycle } from "recompose"
 import { format } from "date-fns"
-import Markdown from "react-markdown"
-
+import { RichViewer } from "@lib/rich-text"
 import { Col } from "@lib/styled-components-layout"
 import { Card, H3, Text } from "@ui/atoms"
 import { cardRead } from "../effects"
@@ -52,9 +51,9 @@ export const CardPage = enhance(({ card }) => (
           </H3>
           <Text>
             time:
-            {format(new Date(card.meta.created), "HH:MM MM/DD/YYYY")}
+            {format(new Date(card.updatedAt), "HH:MM MM/DD/YYYY")}
           </Text>
-          <Markdown source={card.content} />
+          <RichViewer content={card.content} />
         </Card>
       </Col>
     ) : (

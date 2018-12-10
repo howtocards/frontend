@@ -61,7 +61,7 @@ module.exports = {
   scopes: [].concat(
     "app",
     globMap("src/*/", (path) => path.replace(/src\//, "")).filter(
-      exclude(["features", "ui"]),
+      exclude(["features", "ui", "lib"]),
     ),
     "features",
     globMap("src/features/*/", (path) => path.replace("src/", "")),
@@ -70,6 +70,8 @@ module.exports = {
     ),
     "ui",
     globMap("src/ui/*/", (path) => path.replace(/^src\//, "")),
+    "lib",
+    globMap("src/lib/*/", (path) => path.replace(/^src\//, "")),
     "server",
     globMap("mock-server/server/*/**/", (path) =>
       path.replace(/mock\-server\//, ""),

@@ -18,4 +18,10 @@ export const cardsRoutes = () => [
     exact: true,
     component: CardPage,
   },
+  // допилить редакторивание
+  {
+    path: "/edit/:cardId",
+    exact: true,
+    component: CardPage,
+  },
 ]
