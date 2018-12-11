@@ -7,11 +7,6 @@ import { RichViewer } from "@lib/rich-text"
 import { Col, Row } from "@lib/styled-components-layout"
 import { Card, H3, Link } from "@ui/atoms"
 
-const CardBox = styled(Card)`
-  max-height: 24rem;
-  overflow-y: hidden;
-`
-
 export const CardItem = ({
   id,
   title,
@@ -45,3 +40,8 @@ CardItem.propTypes = {
 CardItem.defaultProps = {
   canEdit: false,
 }
+
+const CardBox = styled(Card)`
+  max-height: 24rem;
+  overflow-y: hidden;
+`

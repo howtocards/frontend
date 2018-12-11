@@ -4,16 +4,6 @@ import styled from "styled-components"
 
 import { ConditionalList } from "@ui/organisms"
 
-const CardsItemsList = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  width: 100%;
-
-  & > * + * {
-    margin-top: 2rem;
-  }
-`
-
 export const CardsList = ({ cards, renderCard }) => (
   <ConditionalList
     list={cards}
@@ -27,3 +17,13 @@ CardsList.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   renderCard: PropTypes.func.isRequired,
 }
+
+const CardsItemsList = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+
+  & > * + * {
+    margin-top: 2rem;
+  }
+`

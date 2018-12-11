@@ -1,4 +1,3 @@
-import React from "react"
 import { renderRoutes } from "react-router-config"
 
 import { NotFoundPage } from "@features/common"
