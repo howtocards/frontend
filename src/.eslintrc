@@ -17,6 +17,15 @@
         "count": 1
       }
     ],
-    "quotes": "off"
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": false,
+        "classes": true,
+        "variables": false
+      }
+    ],
+    "quotes": "off",
+    "react/jsx-one-expression-per-line": "off"
   }
 }

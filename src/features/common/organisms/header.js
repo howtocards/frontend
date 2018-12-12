@@ -9,6 +9,47 @@ import { WithAccount } from "./with-account"
 
 // https://codepen.io/anon/pen/PebeaL
 
+export const Header = () => (
+  <HeaderBox>
+    <Container>
+      <NavLink to="/">HowToCards</NavLink>
+      <SearchBox>
+        <SearchInput
+          placeholder="Search..."
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
+        />
+      </SearchBox>
+      <Navigation />
+      <ToggleThemeButton />
+    </Container>
+  </HeaderBox>
+)
+
+const Navigation = () => (
+  <WithAccount renderExists={linksForUser} renderEmpty={linksForAnonym} />
+)
+
+const linksForUser = ({ account }) => (
+  <>
+    <NavLink to="/new">+ New</NavLink>
+    <NavLink to={`/user/${account.user.id}`}>{account.user.email}</NavLink>
+    <NavLink to="/logout">Logout</NavLink>
+  </>
+)
+
+const linksForAnonym = () => <NavLink to="/join">Join</NavLink>
+
+const ToggleThemeButton = () => (
+  <ToggleThemeConsumer>
+    {({ toggleDark, dark }) => (
+      <NavItem onClick={toggleDark}>{dark ? "🌔" : "☀️"}</NavItem>
+    )}
+  </ToggleThemeConsumer>
+)
+
 const HeaderBox = styled.header`
   display: flex;
   height: 7rem;
@@ -69,37 +110,3 @@ const NavItem = styled.a`
 `
 
 const NavLink = NavItem.withComponent(Link)
-
-export const Header = () => (
-  <HeaderBox>
-    <Container>
-      <NavLink to="/">HowToCards</NavLink>
-      <SearchBox>
-        <SearchInput
-          placeholder="Search..."
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck="false"
-        />
-      </SearchBox>
-      <WithAccount renderExists={() => <NavLink to="/new">+ New</NavLink>} />
-      {/* <NavLink to="/feed">Feed</NavLink> */}
-      {/* <NavItem href="https://github.com/howtocards/frontend" target="_blank">Contribute</NavItem> */}
-      <WithAccount
-        renderExists={({ account }) => (
-          <React.Fragment>
-            <NavLink to={`/@${account.id}`}>{account.email}</NavLink>
-            <NavLink to="/logout">Logout</NavLink>
-          </React.Fragment>
-        )}
-        renderEmpty={() => <NavLink to="/join">Join</NavLink>}
-      />
-      <ToggleThemeConsumer>
-        {({ toggleDark, dark }) => (
-          <NavItem onClick={toggleDark}>{dark ? "🌔" : "☀️"}</NavItem>
-        )}
-      </ToggleThemeConsumer>
-    </Container>
-  </HeaderBox>
-)

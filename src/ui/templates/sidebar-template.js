@@ -3,6 +3,24 @@ import PropTypes from "prop-types"
 import styled from "styled-components"
 import { above } from "styled-breakpoints"
 
+export const SidebarTemplate = ({ sidebar, children, footer }) => (
+  <SidebarContainer>
+    <Main>{children}</Main>
+    <Sidebar>{sidebar}</Sidebar>
+    {footer && <ScrollableFooter>{footer}</ScrollableFooter>}
+  </SidebarContainer>
+)
+
+SidebarTemplate.propTypes = {
+  sidebar: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
+  footer: PropTypes.node,
+}
+
+SidebarTemplate.defaultProps = {
+  footer: null,
+}
+
 const SidebarContainer = styled.div`
   display: grid;
   grid-column-gap: 2rem;
@@ -40,21 +58,3 @@ const ScrollableFooter = styled.footer`
   display: block;
   height: 4rem;
 `
-
-export const SidebarTemplate = ({ sidebar, children, footer }) => (
-  <SidebarContainer>
-    <Main>{children}</Main>
-    <Sidebar>{sidebar}</Sidebar>
-    {footer && <ScrollableFooter>{footer}</ScrollableFooter>}
-  </SidebarContainer>
-)
-
-SidebarTemplate.propTypes = {
-  sidebar: PropTypes.node.isRequired,
-  children: PropTypes.node.isRequired,
-  footer: PropTypes.string,
-}
-
-SidebarTemplate.defaultProps = {
-  footer: null,
-}

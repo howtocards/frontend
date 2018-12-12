@@ -5,7 +5,7 @@ import { compose } from "recompose"
 import { withFormik } from "formik"
 import { Col } from "@lib/styled-components-layout"
 import { Authenticated } from "@features/common"
-import { Card, Button, Input } from "@ui/atoms"
+import { Card, ButtonPrimary, Input } from "@ui/atoms"
 import { RichEditor } from "@lib/rich-text"
 import { CardsCommonTemplate } from "../templates/common"
 import { letterCreate } from "../effects"
@@ -82,7 +82,7 @@ export const CardCreateView = ({
                   content={values.content}
                   onChange={(content) => setFieldValue("content", content)}
                 />
-                <Button.Primary type="submit">Create</Button.Primary>
+                <ButtonPrimary type="submit">Create</ButtonPrimary>
               </Col>
             </form>
           </Card>
