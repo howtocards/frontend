@@ -11,3 +11,8 @@ export const Card = styled.div`
 
   ${({ theme }) => theme.embed.card}
 `
+
+export const CardSticky = styled(Card)`
+  position: sticky;
+  top: 2rem;
+`

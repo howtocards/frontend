@@ -1,6 +1,7 @@
 export { Button, ButtonPrimary } from "./button"
-export { Card } from "./card"
+export { Card, CardSticky } from "./card"
 export { ErrorBox } from "./error-box"
+export { footerText } from "./footer-text"
 export { H1, H2, H3 } from "./heading"
 export { Input } from "./input"
 export { Link } from "./link"

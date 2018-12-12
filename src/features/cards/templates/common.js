@@ -1,17 +1,17 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "styled-components"
 
 import { CommonContentTemplate } from "@features/common"
+import { footerText } from "@ui/atoms"
+import { Sidebar } from "@ui/molecules"
 import { Container, SidebarTemplate } from "@ui/templates"
-import { Card } from "@ui/atoms"
 
-export const CardsCommonTemplate = ({ children }) => (
+export const CardsCommonTemplate = ({ children, sidebar }) => (
   <CommonContentTemplate>
     <Container>
       <SidebarTemplate
-        sidebar={<Sidebar />}
-        footer="&copy; 2018 HowTo.cards Team"
+        sidebar={<Sidebar>{sidebar}</Sidebar>}
+        footer={footerText}
       >
         {children}
       </SidebarTemplate>
@@ -21,11 +21,9 @@ export const CardsCommonTemplate = ({ children }) => (
 
 CardsCommonTemplate.propTypes = {
   children: PropTypes.node.isRequired,
+  sidebar: PropTypes.node,
 }
 
-const Sidebar = () => <StickyCard>Sidebar placeholder</StickyCard>
-
-const StickyCard = styled(Card)`
-  position: sticky;
-  top: 2rem;
-`
+CardsCommonTemplate.defaultProps = {
+  sidebar: "Sidebar placeholder",
+}
