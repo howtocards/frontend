@@ -1,9 +1,18 @@
 import { request, TOKEN_ID } from "./request"
-import { get, post, put, patch, destroy } from "./api"
+import { get, post, put, patch, destroy, okToPromise } from "./api"
 import * as rpc from "./rpc"
 
 // TODO remove old api. Use rpc
-export const api = { request, get, post, put, patch, destroy, TOKEN_ID }
+export const api = {
+  request,
+  get,
+  post,
+  put,
+  patch,
+  destroy,
+  okToPromise,
+  TOKEN_ID,
+}
 
 export { rpc }
 export { NotFoundPage } from "./pages/not-found"

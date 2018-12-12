@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import { CommonContentTemplate } from "@features/common"
-import { footerText } from "@ui/atoms"
+import { FooterContent } from "@ui/atoms"
 import { Sidebar } from "@ui/molecules"
 import { Container, SidebarTemplate } from "@ui/templates"
 
@@ -11,7 +11,7 @@ export const CardsCommonTemplate = ({ children, sidebar }) => (
     <Container>
       <SidebarTemplate
         sidebar={<Sidebar>{sidebar}</Sidebar>}
-        footer={footerText}
+        footer={FooterContent}
       >
         {children}
       </SidebarTemplate>
