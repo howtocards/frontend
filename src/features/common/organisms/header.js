@@ -22,25 +22,32 @@ export const Header = () => (
           spellCheck="false"
         />
       </SearchBox>
-      <WithAccount renderExists={() => <NavLink to="/new">+ New</NavLink>} />
-      {/* <NavLink to="/feed">Feed</NavLink> */}
-      {/* <NavItem href="https://github.com/howtocards/frontend" target="_blank">Contribute</NavItem> */}
-      <WithAccount
-        renderExists={({ account }) => (
-          <>
-            <NavLink to={`/@${account.id}`}>{account.email}</NavLink>
-            <NavLink to="/logout">Logout</NavLink>
-          </>
-        )}
-        renderEmpty={() => <NavLink to="/join">Join</NavLink>}
-      />
-      <ToggleThemeConsumer>
-        {({ toggleDark, dark }) => (
-          <NavItem onClick={toggleDark}>{dark ? "🌔" : "☀️"}</NavItem>
-        )}
-      </ToggleThemeConsumer>
+      <Navigation />
+      <ToggleThemeButton />
     </Container>
   </HeaderBox>
+)
+
+const Navigation = () => (
+  <WithAccount renderExists={linksForUser} renderEmpty={linksForAnonym} />
+)
+
+const linksForUser = ({ account }) => (
+  <>
+    <NavLink to="/new">+ New</NavLink>
+    <NavLink to={`/@${account.id}`}>{account.email}</NavLink>
+    <NavLink to="/logout">Logout</NavLink>
+  </>
+)
+
+const linksForAnonym = () => <NavLink to="/join">Join</NavLink>
+
+const ToggleThemeButton = () => (
+  <ToggleThemeConsumer>
+    {({ toggleDark, dark }) => (
+      <NavItem onClick={toggleDark}>{dark ? "🌔" : "☀️"}</NavItem>
+    )}
+  </ToggleThemeConsumer>
 )
 
 const HeaderBox = styled.header`
