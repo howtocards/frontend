@@ -10,7 +10,7 @@ export const UsersCommonTemplate = ({ children, sidebar }) => (
   <CommonContentTemplate>
     <Container>
       <SidebarTemplate
-        sidebar={sidebar && <Sidebar>{sidebar}</Sidebar>}
+        sidebar={sidebar ? <Sidebar>{sidebar}</Sidebar> : ""}
         footer={FooterContent}
       >
         {children}

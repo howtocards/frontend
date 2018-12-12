@@ -4,6 +4,7 @@ import { fetchStatus } from "symbiote-fetching"
 import { compose, withPropsOnChange, branch, renderComponent } from "recompose"
 import { connect } from "react-redux"
 
+import { Col, Row } from "@lib/styled-components-layout"
 import { UsersCommonTemplate } from "../templates/common"
 import * as selectors from "../selectors"
 import { getUserWithCards } from "../effects"
@@ -36,8 +37,42 @@ const enhance = compose(
 const isLoading = (fetching) =>
   [fetchStatus.loading, fetchStatus.initial].includes(fetching.status)
 
-export const UserView = (props) => (
-  <UsersCommonTemplate sidebar={<div>Yep</div>}>Hello</UsersCommonTemplate>
+export const UserView = ({ user }) => (
+  <UsersCommonTemplate sidebar={<UserInfo user={user} />}>
+    Hello
+  </UsersCommonTemplate>
 )
 
+UserView.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    email: PropTypes.string,
+    displayName: PropTypes.string,
+  }).isRequired,
+}
+
 export const UserPage = enhance(UserView)
+
+const UserInfo = ({ user }) => (
+  <Col gap="1rem">
+    <Row>
+      <b>{user.displayName || user.id}</b>
+    </Row>
+    <CurrentUserInfo user={user} />
+  </Col>
+)
+
+UserInfo.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    email: PropTypes.string,
+    displayName: PropTypes.string,
+  }).isRequired,
+}
+
+const CurrentUserInfo = ({ user }) =>
+  user.email ? <Row>You: {user.email}</Row> : null
+
+CurrentUserInfo.propTypes = {
+  user: PropTypes.shape({ email: PropTypes.string }).isRequired,
+}

@@ -25,6 +25,7 @@
         "variables": false
       }
     ],
-    "quotes": "off"
+    "quotes": "off",
+    "react/jsx-one-expression-per-line": "off"
   }
 }
