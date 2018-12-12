@@ -5,6 +5,7 @@ import { compose, withPropsOnChange, branch, renderComponent } from "recompose"
 import { connect } from "react-redux"
 
 import { Col, Row } from "@lib/styled-components-layout"
+import { H3 } from "@ui/atoms"
 import { UsersCommonTemplate } from "../templates/common"
 import * as selectors from "../selectors"
 import { getUserWithCards } from "../effects"
@@ -60,7 +61,7 @@ const isFailed = (fetching) => fetching.status === fetchStatus.failed
 const UserInfo = ({ user }) => (
   <Col gap="1rem">
     <Row>
-      <b>{user.displayName || user.id}</b>
+      <H3 narrow>{user.displayName || user.id}</H3>
     </Row>
     <CurrentUserInfo user={user} />
   </Col>
