@@ -9,6 +9,7 @@ import { actions as currentActions } from "./symbiotes/current"
  */
 export const getUserWithCards = (userId) =>
   handleFetching(currentActions.fetch, {
+    noThrow: true,
     async run(dispatch) {
       const { user } = await dispatch(getUser, userId)
       const [{ cards: useful }, { cards: created }] = await dispatch(

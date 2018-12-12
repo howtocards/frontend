@@ -9,6 +9,7 @@ import { UsersCommonTemplate } from "../templates/common"
 import * as selectors from "../selectors"
 import { getUserWithCards } from "../effects"
 import { LoadingView } from "../organisms/loading"
+import { ErrorView } from "../organisms/error"
 
 const mapStateToProps = (state, props) => ({
   user: selectors.currentUser(state, props),
@@ -32,10 +33,8 @@ const enhance = compose(
     (props) => props.fetch(props.userId),
   ),
   branch((props) => isLoading(props.fetching), renderComponent(LoadingView)),
+  branch((props) => isFailed(props.fetching), renderComponent(ErrorView)),
 )
-
-const isLoading = (fetching) =>
-  [fetchStatus.loading, fetchStatus.initial].includes(fetching.status)
 
 export const UserView = ({ user }) => (
   <UsersCommonTemplate sidebar={<UserInfo user={user} />}>
@@ -52,6 +51,11 @@ UserView.propTypes = {
 }
 
 export const UserPage = enhance(UserView)
+
+const isLoading = (fetching) =>
+  [fetchStatus.loading, fetchStatus.initial].includes(fetching.status)
+
+const isFailed = (fetching) => fetching.status === fetchStatus.failed
 
 const UserInfo = ({ user }) => (
   <Col gap="1rem">
