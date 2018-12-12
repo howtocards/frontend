@@ -1,6 +1,4 @@
-import React from "react"
-
-const UserPage = () => <div>Example user page</div>
+import { UserPage } from "./pages/user"
 
 export const usersRoutes = () => [
   {
