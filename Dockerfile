@@ -9,7 +9,7 @@ RUN npm set progress=false && npm config set depth 0
 RUN npm install
 COPY . .
 RUN npm run build:prod
-RUN ls -al
+
 #
 # ---- Release ----
 FROM nginx:alpine
