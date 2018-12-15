@@ -2,8 +2,8 @@
 # ---- Build ----
 FROM node:dubnium-alpine as base
 WORKDIR /root/build
-# copy project file
-# install node packages
+
+# install and cache node packages
 COPY package.json package-lock.json ./
 RUN npm set progress=false && npm config set depth 0
 RUN npm install
