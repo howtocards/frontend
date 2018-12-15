@@ -16,7 +16,7 @@ export const CardItem = ({
 }) => (
   <CardBox>
     <Col>
-      <Row shrink="0" justify="space-between">
+      <Row shrink={0} justify="space-between">
         <H3 narrow>{title}</H3>
         <Row basis="25%" justify="space-between">
           <Link to={`/open/${id}`}>Open</Link>
