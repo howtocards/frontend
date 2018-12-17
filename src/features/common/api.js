@@ -16,6 +16,9 @@ export const patch = (url, body, options = {}) => (dispatch) =>
 export const destroy = (url, options = {}) => (dispatch) =>
   dispatch(request, "DELETE", url, options)
 
+export const okToPromise = ({ ok, result, error }) =>
+  ok ? Promise.resolve(result) : Promise.reject(error)
+
 export const commonApi = {
   account: {
     /**

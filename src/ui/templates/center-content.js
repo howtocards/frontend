@@ -2,17 +2,6 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 
-export const CenterContent = styled.main`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  overflow-y: auto;
-  flex-direction: column;
-  width: 100%;
-  ${({ theme }) => theme.embed.canvas}
-`
-
 export const CenterContentTemplate = ({ children, footer }) => (
   <CenterContent>
     {children}
@@ -28,3 +17,14 @@ CenterContentTemplate.propTypes = {
 CenterContentTemplate.defaultProps = {
   footer: null,
 }
+
+export const CenterContent = styled.main`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  overflow-y: auto;
+  flex-direction: column;
+  width: 100%;
+  ${({ theme }) => theme.embed.canvas}
+`

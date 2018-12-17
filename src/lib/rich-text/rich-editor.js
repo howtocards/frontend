@@ -4,8 +4,10 @@ import PropTypes from "prop-types"
 import styled from "styled-components"
 
 import { modules, formats } from "./config"
+import { bubbleTheme } from "./bubble-theme"
 
 const WrapperRichEditor = styled.div`
+  ${bubbleTheme}
   .ql-editor {
     border-radius: 4px;
     box-shadow: 0 0 0 2px ${(p) => p.theme.palette.decoration.borders};

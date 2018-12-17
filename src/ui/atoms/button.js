@@ -22,7 +22,7 @@ export const Button = styled.button`
   }
 `
 
-Button.Primary = styled(Button)`
+export const ButtonPrimary = styled(Button)`
   ${({ theme }) => css`
     border: none
     background-color: ${theme.palette.primary.initial.background};
@@ -40,5 +40,3 @@ Button.Primary = styled(Button)`
     }
   `}
 `
-
-export const ButtonPrimary = Button.Primary

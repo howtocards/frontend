@@ -20,8 +20,8 @@ module.exports = {
   env: {
     production: {
       plugins: [
-        "@babel/transform-react-constant-elements",
-        "@babel/transform-react-inline-elements",
+        // "@babel/transform-react-constant-elements",
+        // "@babel/transform-react-inline-elements",
         [
           "transform-react-remove-prop-types",
           {
@@ -31,7 +31,16 @@ module.exports = {
       ],
     },
     development: {
-      plugins: ["react-hot-loader/babel", "styled-name"],
+      plugins: [
+        "react-hot-loader/babel",
+        [
+          "styled-components",
+          {
+            displayName: true,
+            fileName: false,
+          },
+        ],
+      ],
     },
     test: {
       presets: [["@babel/env"], "@babel/react"],
