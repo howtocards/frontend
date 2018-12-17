@@ -5,7 +5,9 @@ import { compose, withPropsOnChange, branch, renderComponent } from "recompose"
 import { connect } from "react-redux"
 
 import { Col, Row } from "@lib/styled-components-layout"
-import { H3 } from "@ui/atoms"
+import { H3, H1 } from "@ui/atoms"
+import { CardsList, CardItem } from "@features/cards"
+
 import { UsersCommonTemplate } from "../templates/common"
 import * as selectors from "../selectors"
 import { getUserWithCards } from "../effects"
@@ -37,9 +39,10 @@ const enhance = compose(
   branch((props) => isFailed(props.fetching), renderComponent(ErrorView)),
 )
 
-export const UserView = ({ user }) => (
+export const UserView = ({ user, created, useful }) => (
   <UsersCommonTemplate sidebar={<UserInfo user={user} />}>
-    Hello
+    <CardsCreatedBy user={user} cards={created} />
+    <CardsUsefulFor user={user} cards={useful} />
   </UsersCommonTemplate>
 )
 
@@ -49,6 +52,11 @@ UserView.propTypes = {
     email: PropTypes.string,
     displayName: PropTypes.string,
   }).isRequired,
+  created: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
 }
 
 export const UserPage = enhance(UserView)
@@ -80,4 +88,30 @@ const CurrentUserInfo = ({ user }) =>
 
 CurrentUserInfo.propTypes = {
   user: PropTypes.shape({ email: PropTypes.string }).isRequired,
+}
+
+const displayName = (user) => user.displayName || "user"
+
+const CardsCreatedBy = ({ user, cards }) => {
+  if (cards && cards.length !== 0) {
+    return (
+      <>
+        <H1>Cards created by {displayName(user)}</H1>
+        <CardsList cards={cards} renderCard={CardItem} />
+      </>
+    )
+  }
+  return null
+}
+
+const CardsUsefulFor = ({ user, cards }) => {
+  if (cards && cards.length !== 0) {
+    return (
+      <>
+        <H1>Useful cards for {displayName(user)}</H1>
+        <CardsList cards={cards} renderCard={CardItem} />
+      </>
+    )
+  }
+  return null
 }
