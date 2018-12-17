@@ -31,10 +31,7 @@ module.exports = {
       ],
     },
     development: {
-      plugins: [
-        // 'react-hot-loader/babel',
-        "styled-name",
-      ],
+      plugins: ["react-hot-loader/babel", "styled-name"],
     },
     test: {
       presets: [["@babel/env"], "@babel/react"],

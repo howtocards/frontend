@@ -75,8 +75,8 @@ export const CardCreateView = ({
                   disabled={isSubmitting}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.content}
-                  failed={touched.content && Boolean(errors.content)}
+                  value={values.title}
+                  failed={touched.title && Boolean(errors.title)}
                 />
                 <RichEditor
                   content={values.content}
