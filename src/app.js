@@ -1,5 +1,5 @@
 import React from "react"
-// import { hot } from 'react-hot-loader'
+import { hot } from "react-hot-loader"
 
 import { Normalize } from "styled-normalize"
 import { AccountLoader } from "@features/common"
@@ -11,7 +11,7 @@ import { darkTheme } from "@ui/themes/dark"
 import { rootRoutes } from "./routes"
 import { GlobalStyles } from "./global-styles"
 
-export const App = () => (
+export const App = hot(module)(() => (
   <ToggleThemeProvider light={lightTheme} dark={darkTheme}>
     <>
       <Normalize />
@@ -19,6 +19,4 @@ export const App = () => (
       <AccountLoader>{rootRoutes()}</AccountLoader>
     </>
   </ToggleThemeProvider>
-)
-
-// export const App = hot(module)(AppRaw)
+))
