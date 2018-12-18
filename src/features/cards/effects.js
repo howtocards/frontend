@@ -16,13 +16,24 @@ export const letterCreate = ({ title, content }) => async (dispatch) => {
   }
 }
 
+const mergeUsefulToCard = (card) => ({ ok, result }) => ({
+  ...card,
+  isUsefult: ok ? result.isUseful : false,
+})
+
 export const getAllCards = () =>
   handleFetching(cardsActions.fetch, {
     async run(dispatch) {
       const { ok, result, error } = await dispatch(cardsApi.getLatest)
 
       if (ok) {
-        dispatch(cardsActions.set(result))
+        const list = await Promise.all(
+          result.map((card) =>
+            dispatch(cardsApi.isUseful, card.id).then(mergeUsefulToCard(card)),
+          ),
+        )
+
+        dispatch(cardsActions.set(list))
       } else {
         throw new Error("[X] - An error occurred while getting the data", error)
       }
