@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { compose, lifecycle } from "recompose"
 
-import { getAllCards } from "../effects"
+import { getAllCards, markUsefulAndUpdate } from "../effects"
 import { CardsCommonTemplate } from "../templates/common"
 import { cardsSelector, cardsFetchingSelector } from "../selectors"
 import { CardsList, CardItem } from "../organisms"
@@ -14,6 +14,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onGetAllCards: (card) => dispatch(getAllCards, card),
+  onUsefulClick: (cardId, useful) =>
+    dispatch(markUsefulAndUpdate, cardId, useful),
 })
 
 const enhance = compose(
@@ -28,11 +30,17 @@ const enhance = compose(
   }),
 )
 
-export const CardsListPage = enhance(({ cards }) => (
+export const CardsListPage = enhance(({ cards, onUsefulClick }) => (
   <CardsCommonTemplate>
     <CardsList
       cards={cards || []}
-      renderCard={(item) => <CardItem {...item} key={item.id} />}
+      renderCard={(card) => (
+        <CardItem
+          {...card}
+          onClickUseful={() => onUsefulClick(card.id, !card.isUseful)}
+          key={card.id}
+        />
+      )}
     />
   </CardsCommonTemplate>
 ))

@@ -97,7 +97,12 @@ const CardsCreatedBy = ({ user, cards }) => {
     return (
       <>
         <H1>Cards created by {displayName(user)}</H1>
-        <CardsList cards={cards} renderCard={CardItem} />
+        <CardsList
+          cards={cards}
+          renderCard={(card) =>
+            React.createElement(CardItem, { ...card, key: card.id })
+          }
+        />
       </>
     )
   }
@@ -109,7 +114,12 @@ const CardsUsefulFor = ({ user, cards }) => {
     return (
       <>
         <H1>Useful cards for {displayName(user)}</H1>
-        <CardsList cards={cards} renderCard={CardItem} />
+        <CardsList
+          cards={cards}
+          renderCard={(card) =>
+            React.createElement(CardItem, { ...card, key: card.id })
+          }
+        />
       </>
     )
   }

@@ -16,9 +16,9 @@ export const letterCreate = ({ title, content }) => async (dispatch) => {
   }
 }
 
-const mergeUsefulToCard = (card) => ({ ok, result }) => ({
+const mergeUsefulToCard = (card) => ({ ok, result, error }) => ({
   ...card,
-  isUsefult: ok ? result.isUseful : false,
+  isUseful: ok ? result.isUseful : false,
 })
 
 export const getAllCards = () =>
@@ -52,3 +52,20 @@ export const cardRead = (id) =>
       }
     },
   })
+
+export const markUsefulAndUpdate = (cardId, isUseful) => async (dispatch) => {
+  const prom = dispatch(cardsApi.markUseful, cardId, isUseful)
+
+  dispatch(cardsActions.setUseful({ cardId, isUseful }))
+
+  try {
+    const { ok } = await prom
+
+    if (!ok) {
+      throw new Error("Cant set useful")
+    }
+  } catch (error) {
+    // Rollback
+    dispatch(cardsActions.setUseful({ cardId, isUseful: !isUseful }))
+  }
+}
