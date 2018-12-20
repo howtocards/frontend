@@ -1,9 +1,0 @@
-{
-  "env": {
-    "node": true,
-    "browser": false
-  },
-  "rules": {
-    "no-use-before-define": 0
-  }
-}
