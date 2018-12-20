@@ -4,16 +4,19 @@ import { compose, lifecycle } from "recompose"
 
 import { getAllCards } from "../effects"
 import { CardsCommonTemplate } from "../templates/common"
-import { cardsSelector, cardsFetchingSelector } from "../selectors"
+import {
+  cardsPageFetchingAllSelector,
+  cardsPageCardsIdsSelector,
+} from "../selectors"
 import { CardsList, CardItem } from "../organisms"
 
 const mapStateToProps = (state) => ({
-  fetching: cardsFetchingSelector(state),
-  cards: cardsSelector(state),
+  fetching: cardsPageFetchingAllSelector(state),
+  ids: cardsPageCardsIdsSelector(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onGetAllCards: (card) => dispatch(getAllCards, card),
+  onFetch: (card) => dispatch(getAllCards, card),
 })
 
 const enhance = compose(
@@ -23,16 +26,24 @@ const enhance = compose(
   ),
   lifecycle({
     componentDidMount() {
-      this.props.onGetAllCards()
+      this.props.onFetch()
     },
   }),
 )
 
-export const CardsListPage = enhance(({ cards }) => (
+export const CardsHomeView = ({ ids }) => (
   <CardsCommonTemplate>
     <CardsList
-      cards={cards || []}
-      renderCard={(item) => <CardItem {...item} key={item.id} />}
+      ids={ids}
+      renderCard={({ card, onUsefulClick }) =>
+        React.createElement(CardItem, {
+          card,
+          key: card.id,
+          onUsefulClick,
+        })
+      }
     />
   </CardsCommonTemplate>
-))
+)
+
+export const CardsHomePage = enhance(CardsHomeView)

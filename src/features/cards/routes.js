@@ -1,12 +1,12 @@
 import { CardCreatePage } from "./pages/create"
-import { CardsListPage } from "./pages/cards-list-page"
-import { CardPage } from "./pages/card-view-page"
+import { CardsHomePage } from "./pages/home"
+import { CardViewPage } from "./pages/view"
 
 export const cardsRoutes = () => [
   {
     path: "/",
     exact: true,
-    component: CardsListPage,
+    component: CardsHomePage,
   },
   {
     path: "/new",
@@ -16,12 +16,11 @@ export const cardsRoutes = () => [
   {
     path: "/open/:cardId",
     exact: true,
-    component: CardPage,
+    component: CardViewPage,
   },
-  // допилить редакторивание
   {
     path: "/edit/:cardId",
     exact: true,
-    component: CardPage,
+    component: CardViewPage,
   },
 ]

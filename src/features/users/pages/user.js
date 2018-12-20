@@ -15,10 +15,10 @@ import { LoadingView } from "../organisms/loading"
 import { ErrorView } from "../organisms/error"
 
 const mapStateToProps = (state, props) => ({
-  user: selectors.currentUser(state, props),
-  fetching: selectors.userFetching(state, props),
-  useful: selectors.usefulCards(state, props),
-  created: selectors.createdCards(state, props),
+  user: selectors.currentUser(state),
+  fetching: selectors.userFetching(state),
+  useful: selectors.usefulCards(state),
+  created: selectors.createdCards(state),
   userId: props.match.params.userId,
 })
 
@@ -41,8 +41,14 @@ const enhance = compose(
 
 export const UserView = ({ user, created, useful }) => (
   <UsersCommonTemplate sidebar={<UserInfo user={user} />}>
-    <CardsCreatedBy user={user} cards={created} />
-    <CardsUsefulFor user={user} cards={useful} />
+    <NamedCardsList
+      title={`Cards created by ${displayName(user)}`}
+      cards={created}
+    />
+    <NamedCardsList
+      title={`Useful cards for ${displayName(user)}`}
+      cards={useful}
+    />
   </UsersCommonTemplate>
 )
 
@@ -52,11 +58,8 @@ UserView.propTypes = {
     email: PropTypes.string,
     displayName: PropTypes.string,
   }).isRequired,
-  created: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    }),
-  ).isRequired,
+  created: PropTypes.arrayOf(PropTypes.number).isRequired,
+  useful: PropTypes.arrayOf(PropTypes.number).isRequired,
 }
 
 export const UserPage = enhance(UserView)
@@ -92,24 +95,21 @@ CurrentUserInfo.propTypes = {
 
 const displayName = (user) => user.displayName || "user"
 
-const CardsCreatedBy = ({ user, cards }) => {
+const NamedCardsList = ({ cards, title }) => {
   if (cards && cards.length !== 0) {
     return (
       <>
-        <H1>Cards created by {displayName(user)}</H1>
-        <CardsList cards={cards} renderCard={CardItem} />
-      </>
-    )
-  }
-  return null
-}
-
-const CardsUsefulFor = ({ user, cards }) => {
-  if (cards && cards.length !== 0) {
-    return (
-      <>
-        <H1>Useful cards for {displayName(user)}</H1>
-        <CardsList cards={cards} renderCard={CardItem} />
+        <H1>{title}</H1>
+        <CardsList
+          ids={cards}
+          renderCard={({ card, onUsefulClick }) =>
+            React.createElement(CardItem, {
+              card,
+              key: card.id,
+              onUsefulClick,
+            })
+          }
+        />
       </>
     )
   }

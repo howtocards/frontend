@@ -1,21 +1,30 @@
 import React from "react"
+import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { compose, lifecycle } from "recompose"
 import { format } from "date-fns"
 import { RichViewer } from "@lib/rich-text"
 import { Col } from "@lib/styled-components-layout"
 import { Card, H3, Text } from "@ui/atoms"
-import { cardRead } from "../effects"
+import { fetchFullCard } from "../effects"
 import { CardsCommonTemplate } from "../templates/common"
-import { cardFetchingSelector, cardSelector } from "../selectors"
+import {
+  cardsPageFetchingOneSelector,
+  cardsRegistrySelector,
+} from "../selectors"
 
-const mapStateToProps = (state) => ({
-  fetching: cardFetchingSelector(state),
-  card: cardSelector(state),
-})
+const mapStateToProps = (state, props) => {
+  const { cardId } = props.match.params
+
+  return {
+    cardId,
+    fetching: cardsPageFetchingOneSelector(state),
+    card: cardsRegistrySelector(state)[cardId],
+  }
+}
 
 const mapDispatchToProps = (dispatch) => ({
-  onCardRead: (id) => dispatch(cardRead, id),
+  onCardRead: (id) => dispatch(fetchFullCard, id),
 })
 
 const enhance = compose(
@@ -25,18 +34,14 @@ const enhance = compose(
   ),
   lifecycle({
     componentDidMount() {
-      const {
-        match: {
-          params: { cardId },
-        },
-      } = this.props
+      const { cardId } = this.props
 
       this.props.onCardRead(cardId)
     },
   }),
 )
 
-export const CardPage = enhance(({ card }) => (
+export const CardView = ({ card }) => (
   <CardsCommonTemplate>
     {card ? (
       <Col grow={1}>
@@ -60,4 +65,15 @@ export const CardPage = enhance(({ card }) => (
       <p>Loading</p>
     )}
   </CardsCommonTemplate>
-))
+)
+
+CardView.propTypes = {
+  card: PropTypes.shape({
+    title: PropTypes.string,
+    authorId: PropTypes.number,
+    updatedAt: PropTypes.string,
+    content: PropTypes.string,
+  }).isRequired,
+}
+
+export const CardViewPage = enhance(CardView)
