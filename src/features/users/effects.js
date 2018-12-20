@@ -45,14 +45,12 @@ const getCardsFor = (userId) => (dispatch) => {
   return Promise.all([usefulCardsP, createdCardsP])
 }
 
-const getUsefulFor = (cards) => (dispatch) => {
-  console.log({ cards })
-  return Promise.all(
+const getUsefulFor = (cards) => (dispatch) =>
+  Promise.all(
     cards.map((card) =>
       dispatch(getUsefulMark, card.id).then(mergeUsefulToCard(card)),
     ),
   )
-}
 
 export const getUser = (userId) => (dispatch) =>
   dispatch(usersApi.getInfo, userId).then(api.okToPromise)
