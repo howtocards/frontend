@@ -9,8 +9,12 @@ const messageFromError = (fetching) => {
     case "user_not_found":
       return "Sorry! User not found"
 
-    default:
+    default: {
+      if (process.env.NODE_ENV === "development") {
+        return `ERROR: ${fetching.error}`
+      }
       return "Unexpected error..."
+    }
   }
 }
 

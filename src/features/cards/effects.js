@@ -1,7 +1,10 @@
 import { handleFetching } from "symbiote-fetching"
 import { cardsApi } from "./api"
-import { actions as cardsActions } from "./symbiotes/cards"
-import { actions as cardActions } from "./symbiotes/card"
+// import { actions as cardsActions } from "./symbiotes/cards"
+// import { actions as cardActions } from "./symbiotes/card"
+import { actions as page } from "./symbiotes/page"
+import { actions as registry } from "./symbiotes/registry"
+import { cardsRegistrySelector } from "./selectors"
 
 export const letterCreate = ({ title, content }) => async (dispatch) => {
   try {
@@ -16,56 +19,65 @@ export const letterCreate = ({ title, content }) => async (dispatch) => {
   }
 }
 
-const mergeUsefulToCard = (card) => ({ ok, result, error }) => ({
+export const mergeUsefulToCard = (card) => ({ ok, result }) => ({
   ...card,
   isUseful: ok ? result.isUseful : false,
 })
 
 export const getAllCards = () =>
-  handleFetching(cardsActions.fetch, {
+  handleFetching(page.fetchAll, {
+    noThrow: true,
     async run(dispatch) {
       const { ok, result, error } = await dispatch(cardsApi.getLatest)
 
       if (ok) {
         const list = await Promise.all(
           result.map((card) =>
-            dispatch(cardsApi.isUseful, card.id).then(mergeUsefulToCard(card)),
+            dispatch(getUsefulMark, card.id).then(mergeUsefulToCard(card)),
           ),
         )
 
-        dispatch(cardsActions.set(list))
-      } else {
-        throw new Error("[X] - An error occurred while getting the data", error)
+        dispatch(registry.mergeById(list))
+        dispatch(page.setCardsIds(list.map((i) => i.id)))
       }
+
+      throw new Error(error)
     },
   })
 
-export const cardRead = (id) =>
-  handleFetching(cardActions.fetch, {
+export const fetchFullCard = (id) =>
+  handleFetching(page.fetchOne, {
+    noThrow: true,
     async run(dispatch) {
       const { ok, result, error } = await dispatch(cardsApi.getById, id)
 
       if (ok) {
-        dispatch(cardActions.set(result.card))
-      } else {
-        throw new Error("[X] - An error occurred while getting the data", error)
+        dispatch(registry.setCard(result.card))
       }
+
+      throw new Error(error)
     },
   })
 
-export const markUsefulAndUpdate = (cardId, isUseful) => async (dispatch) => {
+export const setUsefulMark = (cardId) => async (dispatch, getState) => {
+  const card = cardsRegistrySelector(getState())[cardId]
+  const isUseful = !card.isUseful
   const prom = dispatch(cardsApi.markUseful, cardId, isUseful)
 
-  dispatch(cardsActions.setUseful({ cardId, isUseful }))
+  dispatch(registry.setUsefulMark({ cardId, isUseful }))
 
   try {
-    const { ok } = await prom
+    const { ok, error, result } = await prom
 
     if (!ok) {
-      throw new Error("Cant set useful")
+      throw new Error(error)
     }
+    dispatch(registry.setCard(result.card))
   } catch (error) {
     // Rollback
-    dispatch(cardsActions.setUseful({ cardId, isUseful: !isUseful }))
+    dispatch(registry.setUseful({ cardId, isUseful: !isUseful }))
   }
 }
+
+export const getUsefulMark = (cardId) => (dispatch) =>
+  dispatch(cardsApi.isUseful, cardId)

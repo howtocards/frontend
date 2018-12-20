@@ -1,24 +1,56 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { connect } from "react-redux"
 import styled from "styled-components"
+import { compose, pure } from "recompose"
 
 import { ConditionalList } from "@ui/organisms"
+import { cardsRegistrySelector } from "../selectors"
+import { setUsefulMark } from "../effects"
 
-export const CardsList = ({ cards, renderCard }) => (
+const mapStateToProps = (state, props) => {
+  const registry = cardsRegistrySelector(state)
+
+  return { cards: props.ids.map((id) => registry[id]) }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  onUsefulClick: (cardId) => dispatch(setUsefulMark, cardId),
+})
+
+const enhance = compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+)
+
+export const CardsListView = ({ cards, renderCard, onUsefulClick }) => (
   <ConditionalList
     list={cards}
     renderExists={(list) => (
-      <CardsItemsList>{list.map(renderCard)}</CardsItemsList>
+      <CardsItemsBlock>
+        {list.map((card) =>
+          renderCard({ card, onUsefulClick: () => onUsefulClick(card.id) }),
+        )}
+      </CardsItemsBlock>
     )}
   />
 )
 
-CardsList.propTypes = {
+CardsListView.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   renderCard: PropTypes.func.isRequired,
+  onUsefulClick: PropTypes.func.isRequired,
 }
 
-const CardsItemsList = styled.div`
+export const CardsList = enhance(CardsListView)
+
+CardsList.propTypes = {
+  ids: PropTypes.arrayOf(PropTypes.number).isRequired,
+}
+
+export const CardsItemsBlock = styled.div`
   display: flex;
   flex-flow: column nowrap;
   width: 100%;

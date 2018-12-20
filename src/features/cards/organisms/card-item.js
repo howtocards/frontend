@@ -7,43 +7,27 @@ import { RichViewer } from "@lib/rich-text"
 import { Col, Row } from "@lib/styled-components-layout"
 import { Card, H3, Link, Button, ButtonPrimary } from "@ui/atoms"
 
-export const CardItem = ({
-  canEdit = false,
-  content,
-  createdAt,
-  id,
-  isUseful,
-  onClickUseful,
-  title,
-}) => (
+export const CardItem = ({ onUsefulClick, card }) => (
   <CardBox>
     <Col>
-      <CardHeading
-        card={{ id, title, canEdit, createdAt, isUseful }}
-        onClickUseful={onClickUseful}
-      />
-      <RichViewer content={content} />
+      <CardHeading card={card} onUsefulClick={onUsefulClick} />
+      <RichViewer content={card.content} />
     </Col>
   </CardBox>
 )
 
 CardItem.propTypes = {
-  id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  canEdit: PropTypes.bool,
-  isUseful: PropTypes.bool,
-  onClickUseful: PropTypes.func,
+  card: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    canEdit: PropTypes.bool,
+    isUseful: PropTypes.bool,
+  }).isRequired,
+  onUsefulClick: PropTypes.func.isRequired,
 }
 
-CardItem.defaultProps = {
-  canEdit: false,
-  isUseful: false,
-  onClickUseful: () => {},
-}
-
-const CardHeading = ({ card, onClickUseful }) => (
+const CardHeading = ({ card, onUsefulClick }) => (
   <HeadingLine>
     <Link to={`/open/${card.id}`}>
       <H3 narrow>{card.title}</H3>
@@ -51,14 +35,15 @@ const CardHeading = ({ card, onClickUseful }) => (
     <Row basis="25%" justify="space-between">
       {card.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
       {card.isUseful ? (
-        <ButtonPrimary small title="Remove from saved" onClick={onClickUseful}>
+        <ButtonPrimary small title="Remove from saved" onClick={onUsefulClick}>
           Saved
         </ButtonPrimary>
       ) : (
-        <Button small title="Add to saved" onClick={onClickUseful}>
+        <Button small title="Add to saved" onClick={onUsefulClick}>
           Save
         </Button>
       )}
+      {card.usefulFor > 0 && <div>{card.usefulFor}</div>}
       <i>{format(new Date(card.createdAt), "HH:MM MM/DD/YYYY")}</i>
     </Row>
   </HeadingLine>
@@ -72,7 +57,7 @@ CardHeading.propTypes = {
     canEdit: PropTypes.bool,
     isUseful: PropTypes.bool,
   }).isRequired,
-  onClickUseful: PropTypes.func.isRequired,
+  onUsefulClick: PropTypes.func.isRequired,
 }
 
 const HeadingLine = styled.div`
