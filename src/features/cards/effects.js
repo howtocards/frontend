@@ -24,18 +24,24 @@ export const mergeUsefulToCard = (card) => ({ ok, result }) => ({
   isUseful: ok ? result.isUseful : false,
 })
 
+export const mergeCanEditToCard = (accountId) => (card) => ({
+  ...card,
+  canEdit: accountId === card.authorId,
+})
+
 export const getAllCards = () =>
   handleFetching(page.fetchAll, {
     noThrow: true,
-    async run(dispatch) {
+    async run(dispatch, getState) {
       const { ok, result, error } = await dispatch(cardsApi.getLatest)
+      const accountId = getState().common.account.user.id
 
       if (ok) {
         const list = await Promise.all(
           result.map((card) =>
             dispatch(getUsefulMark, card.id).then(mergeUsefulToCard(card)),
           ),
-        )
+        ).then((cards) => cards.map(mergeCanEditToCard(accountId)))
 
         dispatch(registry.mergeById(list))
         dispatch(page.setCardsIds(list.map((i) => i.id)))

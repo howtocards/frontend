@@ -10,18 +10,13 @@ export const commonApiSelector = createSelector(
   (common) => common,
 )
 
-export const accountRootSelector = createSelector(
-  commonRootSelector,
-  (account) => account,
-)
-
 export const accountSelector = createSelector(
-  accountRootSelector,
+  commonRootSelector,
   (account) => account.account,
 )
 
 export const accountFetchingSelector = createSelector(
-  accountRootSelector,
+  commonRootSelector,
   (account) => account.fetching,
 )
 

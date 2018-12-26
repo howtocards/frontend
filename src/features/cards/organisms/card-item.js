@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-
 import PropTypes from "prop-types"
 import { format } from "date-fns"
 import { RichViewer } from "@lib/rich-text"
@@ -33,7 +32,6 @@ const CardHeading = ({ card, onUsefulClick }) => (
       <H3 narrow>{card.title}</H3>
     </Link>
     <Row basis="25%" justify="space-between">
-      {card.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
       {card.isUseful ? (
         <ButtonPrimary small title="Remove from saved" onClick={onUsefulClick}>
           Saved
@@ -43,6 +41,7 @@ const CardHeading = ({ card, onUsefulClick }) => (
           Save
         </Button>
       )}
+      {card.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
       {card.usefulFor > 0 && <div>{card.usefulFor}</div>}
       <i>{format(new Date(card.createdAt), "HH:MM MM/DD/YYYY")}</i>
     </Row>
