@@ -19,6 +19,16 @@ export const letterCreate = ({ title, content }) => async (dispatch) => {
   }
 }
 
+export const letterEdit = (cardId, card) => async (dispatch) => {
+  try {
+    const { result, ok, error } = await dispatch(cardsApi.edit, cardId, card)
+
+    return { ok, error, result }
+  } catch (error) {
+    return { ok: false, error: String(error) }
+  }
+}
+
 export const mergeUsefulToCard = (card) => ({ ok, result }) => ({
   ...card,
   isUseful: ok ? result.isUseful : false,

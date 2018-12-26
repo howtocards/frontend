@@ -2,19 +2,18 @@ import React from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { compose } from "recompose"
-import { withFormik } from "formik"
 import { Col } from "@lib/styled-components-layout"
 import { Authenticated } from "@features/common"
 import { Card, ButtonPrimary, Input } from "@ui/atoms"
 import { RichEditor } from "@lib/rich-text"
+import { Formik } from "formik"
 import { CardsCommonTemplate } from "../templates/common"
 import { letterCreate } from "../effects"
-
-const CONTENT_MIN_LENGTH = 3
+import { formikSettings } from "../formik-settings"
 
 const mapStateToProps = null
 const mapDispatchToProps = (dispatch) => ({
-  onCreate: (card) => dispatch(letterCreate, card),
+  onSubmit: (card) => dispatch(letterCreate, card),
 })
 
 const initialForm = {
@@ -22,74 +21,59 @@ const initialForm = {
   content: "",
 }
 
-const formik = {
-  mapPropsToValues: () => initialForm,
-  validate: (values) => {
-    const errors = {}
-
-    if (values.title.trim().length < CONTENT_MIN_LENGTH) {
-      errors.title = "Please, fill title"
-    } else if (values.content.trim().length < CONTENT_MIN_LENGTH) {
-      errors.content = "Please, fill card content"
-    }
-    return errors
-  },
-  handleSubmit: async (values, { props, setSubmitting }) => {
-    await props.onCreate(values)
-
-    setSubmitting(false)
-    // ...
-  },
-}
-
 const enhance = compose(
   connect(
     mapStateToProps,
     mapDispatchToProps,
   ),
-  withFormik(formik),
 )
 
 /* eslint-disable react/jsx-indent */
-export const CardCreateView = ({
-  errors,
-  handleBlur,
-  handleChange,
-  handleSubmit,
-  setFieldValue,
-  isSubmitting,
-  touched,
-  values,
-}) => (
-  <CardsCommonTemplate>
-    <Authenticated
-      render={() => (
-        <Col grow={1}>
-          <Card style={{ marginBottom: "2rem" }}>
-            <form onSubmit={handleSubmit}>
-              <Col gap="1rem">
-                <Input
-                  name="title"
-                  autoComplete="title"
-                  placeholder="Card title"
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.title}
-                  failed={touched.title && Boolean(errors.title)}
-                />
-                <RichEditor
-                  content={values.content}
-                  onChange={(content) => setFieldValue("content", content)}
-                />
-                <ButtonPrimary type="submit">Create</ButtonPrimary>
-              </Col>
-            </form>
-          </Card>
-        </Col>
-      )}
-    />
-  </CardsCommonTemplate>
+const CardCreateView = ({ onSubmit }) => (
+  <Formik
+    {...formikSettings(initialForm)}
+    onSubmit={onSubmit}
+    render={({
+      errors,
+      handleBlur,
+      handleChange,
+      handleSubmit,
+      setFieldValue,
+      isSubmitting,
+      touched,
+      values,
+    }) => (
+      <CardsCommonTemplate>
+        <Authenticated
+          render={() => (
+            <Col grow={1}>
+              <Card style={{ marginBottom: "2rem" }}>
+                <form onSubmit={handleSubmit}>
+                  <Col gap="1rem">
+                    <Input
+                      name="title"
+                      autoComplete="title"
+                      placeholder="Card title"
+                      disabled={isSubmitting}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.title}
+                      failed={touched.title && Boolean(errors.title)}
+                    />
+                    <RichEditor
+                      content={values.content}
+                      onChange={(content) => setFieldValue("content", content)}
+                    />
+                    <ButtonPrimary type="submit">Create</ButtonPrimary>
+                  </Col>
+                </form>
+              </Card>
+            </Col>
+          )}
+        />
+      </CardsCommonTemplate>
+    )}
+  />
 )
 
 CardCreateView.propTypes = {

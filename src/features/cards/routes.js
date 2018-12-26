@@ -1,6 +1,7 @@
 import { CardCreatePage } from "./pages/create"
 import { CardsHomePage } from "./pages/home"
 import { CardViewPage } from "./pages/view"
+import { CardEditPage } from "./pages/edit"
 
 export const cardsRoutes = () => [
   {
@@ -21,6 +22,6 @@ export const cardsRoutes = () => [
   {
     path: "/edit/:cardId",
     exact: true,
-    component: CardViewPage,
+    component: CardEditPage,
   },
 ]
