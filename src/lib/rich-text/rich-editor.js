@@ -2,7 +2,6 @@ import React from "react"
 import ReactQuill from "react-quill"
 import PropTypes from "prop-types"
 import styled from "styled-components"
-import { commonApiSelector } from "@features/common"
 import { modules, formats } from "./config"
 
 const WrapperRichEditor = styled.div`

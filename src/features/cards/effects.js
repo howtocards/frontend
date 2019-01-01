@@ -1,5 +1,4 @@
 import { handleFetching } from "symbiote-fetching"
-import { compose } from "recompose"
 import { cardsApi } from "./api"
 import { actions as page } from "./symbiotes/page"
 import { actions as registry } from "./symbiotes/registry"
@@ -65,9 +64,8 @@ export const getAllCards = () =>
 export const fetchFullCard = (id) =>
   handleFetching(page.fetchOne, {
     noThrow: true,
-    async run(dispatch, getState) {
+    async run(dispatch) {
       const { ok, result, error } = await dispatch(cardsApi.getById, id)
-      const accountId = getState().common.account.user.id
 
       if (ok) {
         dispatch(registry.setCard(result.card))
