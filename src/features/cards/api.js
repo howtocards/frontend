@@ -10,7 +10,7 @@ export const cardsApi = {
   /**
    * @param {{ title: string, content: string }} cardData
    */
-  edit: (id, cardData) => api.put(`/cards/${id}/`, cardData),
+  edit: (card) => api.put(`/cards/${card.id}/`, card),
 
   /**
    * @return {Promise<{ result: Array<{content: string, created: number, author_id: string, title: string}> }>}

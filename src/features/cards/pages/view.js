@@ -34,9 +34,11 @@ const enhance = compose(
   ),
   lifecycle({
     componentDidMount() {
-      const { cardId } = this.props
+      const { card, cardId } = this.props
 
-      this.props.onCardRead(cardId)
+      if (!card) {
+        this.props.onCardRead(cardId)
+      }
     },
   }),
 )

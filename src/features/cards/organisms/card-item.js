@@ -41,8 +41,8 @@ const CardHeading = ({ card, onUsefulClick }) => (
           Save
         </Button>
       )}
-      {card.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
       {card.usefulFor > 0 && <div>{card.usefulFor}</div>}
+      {card.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
       <i>{format(new Date(card.createdAt), "HH:MM MM/DD/YYYY")}</i>
     </Row>
   </HeadingLine>

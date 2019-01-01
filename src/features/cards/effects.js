@@ -1,7 +1,6 @@
 import { handleFetching } from "symbiote-fetching"
+import { compose } from "recompose"
 import { cardsApi } from "./api"
-// import { actions as cardsActions } from "./symbiotes/cards"
-// import { actions as cardActions } from "./symbiotes/card"
 import { actions as page } from "./symbiotes/page"
 import { actions as registry } from "./symbiotes/registry"
 import { cardsRegistrySelector } from "./selectors"
@@ -19,9 +18,9 @@ export const letterCreate = ({ title, content }) => async (dispatch) => {
   }
 }
 
-export const letterEdit = (cardId, card) => async (dispatch) => {
+export const letterEdit = (card) => async (dispatch) => {
   try {
-    const { result, ok, error } = await dispatch(cardsApi.edit, cardId, card)
+    const { result, ok, error } = await dispatch(cardsApi.edit, card)
 
     return { ok, error, result }
   } catch (error) {
@@ -49,9 +48,11 @@ export const getAllCards = () =>
       if (ok) {
         const list = await Promise.all(
           result.map((card) =>
-            dispatch(getUsefulMark, card.id).then(mergeUsefulToCard(card)),
+            dispatch(getUsefulMark, card.id)
+              .then(mergeUsefulToCard(card))
+              .then(mergeCanEditToCard(accountId)),
           ),
-        ).then((cards) => cards.map(mergeCanEditToCard(accountId)))
+        )
 
         dispatch(registry.mergeById(list))
         dispatch(page.setCardsIds(list.map((i) => i.id)))
@@ -64,8 +65,9 @@ export const getAllCards = () =>
 export const fetchFullCard = (id) =>
   handleFetching(page.fetchOne, {
     noThrow: true,
-    async run(dispatch) {
+    async run(dispatch, getState) {
       const { ok, result, error } = await dispatch(cardsApi.getById, id)
+      const accountId = getState().common.account.user.id
 
       if (ok) {
         dispatch(registry.setCard(result.card))

@@ -2,6 +2,7 @@ import React from "react"
 import ReactQuill from "react-quill"
 import PropTypes from "prop-types"
 import styled from "styled-components"
+import { commonApiSelector } from "@features/common"
 import { modules, formats } from "./config"
 
 const WrapperRichEditor = styled.div`
@@ -11,29 +12,23 @@ const WrapperRichEditor = styled.div`
   }
 `
 
-export class RichEditor extends React.Component {
-  state = {
-    // eslint-disable-next-line react/destructuring-assignment
-    text: this.props.content,
-  }
-
-  handleChange = (value) => {
-    const { onChange } = this.props
-
-    this.setState({ text: value }, () => onChange(value))
+export class RichEditor extends React.PureComponent {
+  static defaultProps = {
+    disabled: false,
   }
 
   render() {
-    const { text } = this.state
+    const { disabled, content, onChange } = this.props
 
     return (
       <WrapperRichEditor>
         <ReactQuill
-          value={text}
-          onChange={this.handleChange}
+          value={content}
+          onChange={onChange}
           theme="bubble"
           modules={modules}
           formats={formats}
+          readOnly={disabled}
         />
       </WrapperRichEditor>
     )
@@ -41,6 +36,7 @@ export class RichEditor extends React.Component {
 }
 
 RichEditor.propTypes = {
+  disabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   content: PropTypes.string.isRequired,
 }

@@ -1,7 +1,17 @@
 const CONTENT_MIN_LENGTH = 3
 
-export const formikSettings = (initialValues) => ({
-  initialValues,
+export const setupFormikForCreateEdit = {
+  enableReinitialize: true,
+  mapPropsToValues: (props) => {
+    const initialValues = {
+      title: "",
+      content: "",
+    }
+
+    const values = props.card
+
+    return values || initialValues
+  },
   validate: (values) => {
     const errors = {}
 
@@ -14,7 +24,7 @@ export const formikSettings = (initialValues) => ({
   },
   handleSubmit: async (values, { props, setSubmitting }) => {
     await props.onSubmit(values)
-
+    props.history.push("/")
     setSubmitting(false)
   },
-})
+}

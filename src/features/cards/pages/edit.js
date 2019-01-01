@@ -1,15 +1,15 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
+import { withFormik } from "formik"
 import { compose, lifecycle } from "recompose"
 import { Col } from "@lib/styled-components-layout"
 import { Authenticated } from "@features/common"
 import { Card, ButtonPrimary, Input } from "@ui/atoms"
 import { RichEditor } from "@lib/rich-text"
-import { Formik } from "formik"
 import { CardsCommonTemplate } from "../templates/common"
 import { fetchFullCard, letterEdit } from "../effects"
-import { formikSettings } from "../formik-settings"
+import { setupFormikForCreateEdit } from "../setup-formik-for-create-edit"
 import { cardsRegistrySelector } from "../selectors"
 
 const mapStateToProps = (state, props) => {
@@ -21,14 +21,11 @@ const mapStateToProps = (state, props) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  const { cardId } = ownProps.match.params
+const mapDispatchToProps = (dispatch) => ({
+  onCardRead: (id) => dispatch(fetchFullCard, id),
+  onSubmit: (card) => dispatch(letterEdit, card),
+})
 
-  return {
-    onCardRead: (id) => dispatch(fetchFullCard, id),
-    onSubmit: (card) => dispatch(letterEdit, cardId, card),
-  }
-}
 const enhance = compose(
   connect(
     mapStateToProps,
@@ -36,64 +33,71 @@ const enhance = compose(
   ),
   lifecycle({
     componentDidMount() {
-      const { cardId } = this.props
+      const { card, cardId } = this.props
 
-      this.props.onCardRead(cardId)
+      if (!card) {
+        this.props.onCardRead(cardId)
+      }
     },
   }),
+  withFormik(setupFormikForCreateEdit),
 )
 
-const CardEditView = ({ card, onSubmit }) => (
+const CardEditView = ({
+  card,
+  errors,
+  handleBlur,
+  handleChange,
+  handleSubmit,
+  setFieldValue,
+  isSubmitting,
+  touched,
+  values,
+}) => (
   <>
     {card && (
-      <Formik
-        {...formikSettings(card)}
-        onSubmit={onSubmit}
-        render={({
-          errors,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-          setFieldValue,
-          isSubmitting,
-          touched,
-          values,
-        }) => (
-          <CardsCommonTemplate>
-            <Authenticated
-              render={() => (
-                <Col grow={1}>
-                  <Card style={{ marginBottom: "2rem" }}>
-                    <form onSubmit={handleSubmit}>
-                      <Col gap="1rem">
-                        <Input
-                          name="title"
-                          autoComplete="title"
-                          placeholder="Card title"
-                          disabled={isSubmitting}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.title}
-                          failed={touched.title && Boolean(errors.title)}
-                        />
-                        <RichEditor
-                          content={values.content}
-                          onChange={(content) =>
-                            setFieldValue("content", content)
-                          }
-                        />
-                        <ButtonPrimary type="submit">Edit</ButtonPrimary>
-                      </Col>
-                    </form>
-                  </Card>
-                </Col>
-              )}
-            />
-          </CardsCommonTemplate>
-        )}
-      />
+      <CardsCommonTemplate>
+        <Authenticated
+          render={() => (
+            <Col grow={1}>
+              <Card style={{ marginBottom: "2rem" }}>
+                <form onSubmit={handleSubmit}>
+                  <Col gap="1rem">
+                    <Input
+                      name="title"
+                      autoComplete="title"
+                      placeholder="Card title"
+                      disabled={isSubmitting}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.title}
+                      failed={touched.title && Boolean(errors.title)}
+                    />
+                    <RichEditor
+                      disabled={isSubmitting}
+                      content={values.content}
+                      onChange={(content) => setFieldValue("content", content)}
+                    />
+                    <ButtonPrimary type="submit" disabled={isSubmitting}>
+                      Edit
+                    </ButtonPrimary>
+                  </Col>
+                </form>
+              </Card>
+            </Col>
+          )}
+        />
+      </CardsCommonTemplate>
     )}
   </>
 )
+
+CardEditView.propTypes = {
+  card: PropTypes.shape({
+    title: PropTypes.string,
+    id: PropTypes.number,
+    content: PropTypes.string,
+  }),
+}
 
 export const CardEditPage = enhance(CardEditView)
