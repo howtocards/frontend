@@ -24,7 +24,6 @@ export const setupFormikForCreateEdit = {
   },
   handleSubmit: async (values, { props, setSubmitting }) => {
     await props.onSubmit(values)
-    props.history.push("/")
     setSubmitting(false)
   },
 }

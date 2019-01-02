@@ -8,7 +8,7 @@ export const cardsApi = {
   create: (cardData) => api.post("/cards/", cardData),
 
   /**
-   * @param {{ title: string, content: string }} cardData
+   * @param {{ id: number, title: string, content: string }} cardData
    */
   edit: (card) => api.put(`/cards/${card.id}/`, card),
 

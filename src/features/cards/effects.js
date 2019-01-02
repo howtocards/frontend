@@ -1,4 +1,5 @@
 import { handleFetching } from "symbiote-fetching"
+import { push } from "connected-react-router"
 import { cardsApi } from "./api"
 import { actions as page } from "./symbiotes/page"
 import { actions as registry } from "./symbiotes/registry"
@@ -11,16 +12,22 @@ export const letterCreate = ({ title, content }) => async (dispatch) => {
       content,
     })
 
+    dispatch(push("/"))
     return { ok, error, result }
   } catch (error) {
     return { ok: false, error: String(error) }
   }
 }
 
-export const letterEdit = (card) => async (dispatch) => {
+export const letterEdit = ({ id, title, content }) => async (dispatch) => {
   try {
-    const { result, ok, error } = await dispatch(cardsApi.edit, card)
+    const { result, ok, error } = await dispatch(cardsApi.edit, {
+      id,
+      title,
+      content,
+    })
 
+    dispatch(push("/"))
     return { ok, error, result }
   } catch (error) {
     return { ok: false, error: String(error) }
