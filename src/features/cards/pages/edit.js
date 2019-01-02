@@ -59,32 +59,30 @@ const CardEditView = ({
       <CardsCommonTemplate>
         <Authenticated
           render={() => (
-            <Col grow={1}>
-              <Card style={{ marginBottom: "2rem" }}>
-                <form onSubmit={handleSubmit}>
-                  <Col gap="1rem">
-                    <Input
-                      name="title"
-                      autoComplete="title"
-                      placeholder="Card title"
-                      disabled={isSubmitting}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.title}
-                      failed={touched.title && Boolean(errors.title)}
-                    />
-                    <RichEditor
-                      disabled={isSubmitting}
-                      content={values.content}
-                      onChange={(content) => setFieldValue("content", content)}
-                    />
-                    <ButtonPrimary type="submit" disabled={isSubmitting}>
-                      Edit
-                    </ButtonPrimary>
-                  </Col>
-                </form>
-              </Card>
-            </Col>
+            <Card style={{ marginBottom: "2rem" }}>
+              <form onSubmit={handleSubmit}>
+                <Col gap="1rem">
+                  <Input
+                    name="title"
+                    autoComplete="title"
+                    placeholder="Card title"
+                    disabled={isSubmitting}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.title}
+                    failed={touched.title && Boolean(errors.title)}
+                  />
+                  <RichEditor
+                    disabled={isSubmitting}
+                    content={values.content}
+                    onChange={(content) => setFieldValue("content", content)}
+                  />
+                  <ButtonPrimary type="submit" disabled={isSubmitting}>
+                    Edit
+                  </ButtonPrimary>
+                </Col>
+              </form>
+            </Card>
           )}
         />
       </CardsCommonTemplate>

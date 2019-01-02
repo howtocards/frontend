@@ -38,32 +38,30 @@ const CardCreateView = ({
   <CardsCommonTemplate>
     <Authenticated
       render={() => (
-        <Col grow={1}>
-          <Card style={{ marginBottom: "2rem" }}>
-            <form onSubmit={handleSubmit}>
-              <Col gap="1rem">
-                <Input
-                  name="title"
-                  autoComplete="title"
-                  placeholder="Card title"
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.title}
-                  failed={touched.title && Boolean(errors.title)}
-                />
-                <RichEditor
-                  content={values.content}
-                  disabled={isSubmitting}
-                  onChange={(content) => setFieldValue("content", content)}
-                />
-                <ButtonPrimary type="submit" disabled={isSubmitting}>
-                  Create
-                </ButtonPrimary>
-              </Col>
-            </form>
-          </Card>
-        </Col>
+        <Card style={{ marginBottom: "2rem" }}>
+          <form onSubmit={handleSubmit}>
+            <Col gap="1rem">
+              <Input
+                name="title"
+                autoComplete="title"
+                placeholder="Card title"
+                disabled={isSubmitting}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.title}
+                failed={touched.title && Boolean(errors.title)}
+              />
+              <RichEditor
+                content={values.content}
+                disabled={isSubmitting}
+                onChange={(content) => setFieldValue("content", content)}
+              />
+              <ButtonPrimary type="submit" disabled={isSubmitting}>
+                Create
+              </ButtonPrimary>
+            </Col>
+          </form>
+        </Card>
       )}
     />
   </CardsCommonTemplate>
