@@ -2,7 +2,40 @@ import React from "react"
 import ReactQuill from "react-quill"
 import PropTypes from "prop-types"
 import styled from "styled-components"
-import { modules, formats } from "./config"
+import hljs from "highlight.js"
+
+const modules = {
+  syntax: {
+    highlight: (text) => hljs.highlightAuto(text).value,
+  },
+  toolbar: [
+    /* eslint-disable-next-line no-magic-numbers */
+    [{ header: [2, 3, 4, 5, 6, false] }],
+    ["bold", "italic", "underline", "blockquote"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link", "image", "video"],
+    ["code-block"],
+  ],
+  clipboard: {
+    matchVisual: false,
+  },
+}
+
+const formats = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "video",
+  "code-block",
+]
 
 const WrapperRichEditor = styled.div`
   .ql-editor {
@@ -12,8 +45,14 @@ const WrapperRichEditor = styled.div`
 `
 
 export class RichEditor extends React.PureComponent {
+  editorRef = React.createRef()
+
   static defaultProps = {
     disabled: false,
+  }
+
+  componentWillUnmount() {
+    this.editorRef.current.blur()
   }
 
   render() {
@@ -22,6 +61,7 @@ export class RichEditor extends React.PureComponent {
     return (
       <WrapperRichEditor>
         <ReactQuill
+          ref={this.editorRef}
           value={content}
           onChange={onChange}
           theme="bubble"

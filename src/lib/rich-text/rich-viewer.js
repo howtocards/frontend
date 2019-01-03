@@ -1,9 +1,7 @@
-import React, { PureComponent } from "react"
+import React from "react"
 import ReactQuill from "react-quill"
 import PropTypes from "prop-types"
 import styled from "styled-components"
-
-import { modules, formats } from "./config"
 
 const WrapperRichViewer = styled.div`
   .ql-editor {
@@ -11,22 +9,19 @@ const WrapperRichViewer = styled.div`
   }
 `
 
-export class RichViewer extends PureComponent {
-  static propTypes = { content: PropTypes.string.isRequired }
-
-  render() {
-    const { content } = this.props
-
-    return (
-      <WrapperRichViewer>
-        <ReactQuill
-          value={content}
-          theme="bubble"
-          modules={modules}
-          formats={formats}
-          readOnly
+export const RichViewer = ({ content }) => (
+  <WrapperRichViewer>
+    <div className="quill">
+      <div className="ql-container ql-bubble">
+        <div
+          className="ql-editor"
+          dangerouslySetInnerHTML={{ __html: content }}
         />
-      </WrapperRichViewer>
-    )
-  }
+      </div>
+    </div>
+  </WrapperRichViewer>
+)
+
+RichViewer.propTypes = {
+  content: PropTypes.string.isRequired,
 }
