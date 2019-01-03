@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import styled from "styled-components"
-import { compose, pure } from "recompose"
+import { compose } from "recompose"
 
 import { ConditionalList } from "@ui/organisms"
 import { cardsRegistrySelector } from "../selectors"

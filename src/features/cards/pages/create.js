@@ -1,57 +1,33 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import { compose } from "recompose"
 import { withFormik } from "formik"
+import { compose } from "recompose"
+
 import { Col } from "@lib/styled-components-layout"
+import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
 import { Card, ButtonPrimary, Input } from "@ui/atoms"
-import { RichEditor } from "@lib/rich-text"
-import { CardsCommonTemplate } from "../templates/common"
-import { letterCreate } from "../effects"
 
-const CONTENT_MIN_LENGTH = 3
+import { CardsCommonTemplate } from "../templates/common"
+import { cardCreate } from "../effects"
+import { setupFormikForCreateEdit } from "../setup-formik-for-create-edit"
 
 const mapStateToProps = null
 const mapDispatchToProps = (dispatch) => ({
-  onCreate: (card) => dispatch(letterCreate, card),
+  onSubmit: (card) => dispatch(cardCreate, card),
 })
-
-const initialForm = {
-  title: "",
-  content: "",
-}
-
-const formik = {
-  mapPropsToValues: () => initialForm,
-  validate: (values) => {
-    const errors = {}
-
-    if (values.title.trim().length < CONTENT_MIN_LENGTH) {
-      errors.title = "Please, fill title"
-    } else if (values.content.trim().length < CONTENT_MIN_LENGTH) {
-      errors.content = "Please, fill card content"
-    }
-    return errors
-  },
-  handleSubmit: async (values, { props, setSubmitting }) => {
-    await props.onCreate(values)
-
-    setSubmitting(false)
-    // ...
-  },
-}
 
 const enhance = compose(
   connect(
     mapStateToProps,
     mapDispatchToProps,
   ),
-  withFormik(formik),
+  withFormik(setupFormikForCreateEdit),
 )
 
 /* eslint-disable react/jsx-indent */
-export const CardCreateView = ({
+const CardCreateView = ({
   errors,
   handleBlur,
   handleChange,
@@ -64,29 +40,30 @@ export const CardCreateView = ({
   <CardsCommonTemplate>
     <Authenticated
       render={() => (
-        <Col grow={1}>
-          <Card style={{ marginBottom: "2rem" }}>
-            <form onSubmit={handleSubmit}>
-              <Col gap="1rem">
-                <Input
-                  name="title"
-                  autoComplete="title"
-                  placeholder="Card title"
-                  disabled={isSubmitting}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.title}
-                  failed={touched.title && Boolean(errors.title)}
-                />
-                <RichEditor
-                  content={values.content}
-                  onChange={(content) => setFieldValue("content", content)}
-                />
-                <ButtonPrimary type="submit">Create</ButtonPrimary>
-              </Col>
-            </form>
-          </Card>
-        </Col>
+        <Card style={{ marginBottom: "2rem" }}>
+          <form onSubmit={handleSubmit}>
+            <Col gap="1rem">
+              <Input
+                name="title"
+                autoComplete="title"
+                placeholder="Card title"
+                disabled={isSubmitting}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.title}
+                failed={touched.title && Boolean(errors.title)}
+              />
+              <RichEditor
+                content={values.content}
+                disabled={isSubmitting}
+                onChange={(content) => setFieldValue("content", content)}
+              />
+              <ButtonPrimary type="submit" disabled={isSubmitting}>
+                Create
+              </ButtonPrimary>
+            </Col>
+          </form>
+        </Card>
       )}
     />
   </CardsCommonTemplate>
@@ -95,11 +72,11 @@ export const CardCreateView = ({
 CardCreateView.propTypes = {
   errors: PropTypes.shape({}).isRequired,
   handleBlur: PropTypes.func.isRequired,
-  setFieldValue: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
-  touched: PropTypes.bool.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+  touched: PropTypes.shape({}).isRequired,
   values: PropTypes.shape({}).isRequired,
 }
 

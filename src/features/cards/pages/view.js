@@ -24,7 +24,7 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onCardRead: (id) => dispatch(fetchFullCard, id),
+  onFetch: (id) => dispatch(fetchFullCard, id),
 })
 
 const enhance = compose(
@@ -34,9 +34,11 @@ const enhance = compose(
   ),
   lifecycle({
     componentDidMount() {
-      const { cardId } = this.props
+      const { card, cardId } = this.props
 
-      this.props.onCardRead(cardId)
+      if (!card) {
+        this.props.onFetch(cardId)
+      }
     },
   }),
 )

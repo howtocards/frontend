@@ -8,6 +8,11 @@ export const cardsApi = {
   create: (cardData) => api.post("/cards/", cardData),
 
   /**
+   * @param {{ id: number, title: string, content: string }} cardData
+   */
+  edit: (card) => api.put(`/cards/${card.id}/`, card),
+
+  /**
    * @return {Promise<{ result: Array<{content: string, created: number, author_id: string, title: string}> }>}
    */
   getLatest: () => api.get("/cards/"),
