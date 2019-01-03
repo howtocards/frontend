@@ -1,11 +1,12 @@
 import { handleFetching } from "symbiote-fetching"
 import { push } from "connected-react-router"
+import { accountIdSelector } from "@features/common"
 import { cardsApi } from "./api"
 import { actions as page } from "./symbiotes/page"
 import { actions as registry } from "./symbiotes/registry"
 import { cardsRegistrySelector } from "./selectors"
 
-export const letterCreate = ({ title, content }) => async (dispatch) => {
+export const cardCreate = ({ title, content }) => async (dispatch) => {
   try {
     const { result, ok, error } = await dispatch(cardsApi.create, {
       title,
@@ -19,7 +20,7 @@ export const letterCreate = ({ title, content }) => async (dispatch) => {
   }
 }
 
-export const letterEdit = ({ id, title, content }) => async (dispatch) => {
+export const cardEdit = ({ id, title, content }) => async (dispatch) => {
   try {
     const { result, ok, error } = await dispatch(cardsApi.edit, {
       id,
@@ -49,7 +50,7 @@ export const getAllCards = () =>
     noThrow: true,
     async run(dispatch, getState) {
       const { ok, result, error } = await dispatch(cardsApi.getLatest)
-      const accountId = getState().common.account.user.id
+      const accountId = accountIdSelector(getState())
 
       if (ok) {
         const list = await Promise.all(

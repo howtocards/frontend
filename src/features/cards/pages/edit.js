@@ -2,13 +2,15 @@ import React from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { withFormik } from "formik"
-import { compose, lifecycle } from "recompose"
+import { compose, withPropsOnChange } from "recompose"
+
 import { Col } from "@lib/styled-components-layout"
+import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
 import { Card, ButtonPrimary, Input } from "@ui/atoms"
-import { RichEditor } from "@lib/rich-text"
+
 import { CardsCommonTemplate } from "../templates/common"
-import { fetchFullCard, letterEdit } from "../effects"
+import { fetchFullCard, cardEdit } from "../effects"
 import { setupFormikForCreateEdit } from "../setup-formik-for-create-edit"
 import { cardsRegistrySelector } from "../selectors"
 
@@ -23,7 +25,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => ({
   onFetch: (id) => dispatch(fetchFullCard, id),
-  onSubmit: (card) => dispatch(letterEdit, card),
+  onSubmit: (card) => dispatch(cardEdit, card),
 })
 
 const enhance = compose(
@@ -31,15 +33,10 @@ const enhance = compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
-  lifecycle({
-    componentDidMount() {
-      const { card, cardId } = this.props
-
-      if (!card) {
-        this.props.onFetch(cardId)
-      }
-    },
-  }),
+  withPropsOnChange(
+    (props, nextProps) => props.cardId !== nextProps.cardId,
+    (props) => props.onFetch(props.cardId),
+  ),
   withFormik(setupFormikForCreateEdit),
 )
 

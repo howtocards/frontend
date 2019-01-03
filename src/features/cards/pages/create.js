@@ -3,17 +3,19 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { withFormik } from "formik"
 import { compose } from "recompose"
+
 import { Col } from "@lib/styled-components-layout"
+import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
 import { Card, ButtonPrimary, Input } from "@ui/atoms"
-import { RichEditor } from "@lib/rich-text"
+
 import { CardsCommonTemplate } from "../templates/common"
-import { letterCreate } from "../effects"
+import { cardCreate } from "../effects"
 import { setupFormikForCreateEdit } from "../setup-formik-for-create-edit"
 
 const mapStateToProps = null
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (card) => dispatch(letterCreate, card),
+  onSubmit: (card) => dispatch(cardCreate, card),
 })
 
 const enhance = compose(
@@ -70,10 +72,11 @@ const CardCreateView = ({
 CardCreateView.propTypes = {
   errors: PropTypes.shape({}).isRequired,
   handleBlur: PropTypes.func.isRequired,
-  setFieldValue: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+  touched: PropTypes.shape({}).isRequired,
   values: PropTypes.shape({}).isRequired,
 }
 

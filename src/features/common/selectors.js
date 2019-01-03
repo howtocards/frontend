@@ -20,7 +20,12 @@ export const accountFetchingSelector = createSelector(
   (account) => account.fetching,
 )
 
+export const accountUserSelector = createSelector(
+  accountSelector,
+  (account) => account.user,
+)
+
 export const accountIdSelector = createSelector(
   accountSelector,
-  (account) => account && account.id,
+  (account) => account && account.user && account.user.id,
 )
