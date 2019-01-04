@@ -1,11 +1,8 @@
 import { handleFetching } from "symbiote-fetching"
 
 import { api } from "@features/common"
-import {
-  registryActions,
-  getUsefulMark,
-  mergeUsefulToCard,
-} from "@features/cards"
+import { registryActions } from "@features/cards"
+
 import { usersApi } from "./api"
 import { actions as currentActions } from "./symbiotes/current"
 
@@ -35,22 +32,15 @@ export const getUserWithCards = (userId) =>
 const getCardsFor = (userId) => (dispatch) => {
   const usefulCardsP = dispatch(usersApi.getUsefulCardsFor, userId)
     .then(api.okToPromise)
-    .then(({ cards }) => dispatch(getUsefulFor, cards))
+    .then(({ cards }) => cards)
     .catch(() => [])
   const createdCardsP = dispatch(usersApi.getCardsCreatedBy, userId)
     .then(api.okToPromise)
-    .then(({ cards }) => dispatch(getUsefulFor, cards))
+    .then(({ cards }) => cards)
     .catch(() => [])
 
   return Promise.all([usefulCardsP, createdCardsP])
 }
-
-const getUsefulFor = (cards) => (dispatch) =>
-  Promise.all(
-    cards.map((card) =>
-      dispatch(getUsefulMark, card.id).then(mergeUsefulToCard(card)),
-    ),
-  )
 
 export const getUser = (userId) => (dispatch) =>
   dispatch(usersApi.getInfo, userId).then(api.okToPromise)
