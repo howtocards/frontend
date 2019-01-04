@@ -22,7 +22,7 @@ const symbiotes = {
   }),
   setUsefulMark: (state, { cardId, isUseful }) => ({
     ...state,
-    [cardId]: { ...state[cardId], isUseful },
+    [cardId]: { ...state[cardId], meta: { ...state[cardId].meta, isUseful } },
   }),
   delete: (state, cardId) => ({
     ...state,

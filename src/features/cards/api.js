@@ -22,11 +22,6 @@ export const cardsApi = {
    */
   getById: (id) => api.get(`/cards/${id}/`),
 
-  /**
-   * @return {Promise<{ result: { isUseful: boolean } }>}
-   */
-  isUseful: (cardId) => api.get(`/cards/${cardId}/useful/`),
-
   markUseful: (cardId, isUseful) =>
     api.post(`/cards/${cardId}/useful/`, { isUseful }),
 }

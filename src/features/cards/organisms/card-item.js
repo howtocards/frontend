@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import PropTypes from "prop-types"
 import { format } from "date-fns"
+
 import { RichViewer } from "@lib/rich-text"
 import { Col, Row } from "@lib/styled-components-layout"
 import { Card, H3, Link, Button, ButtonPrimary } from "@ui/atoms"
@@ -20,8 +21,10 @@ CardItem.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
-    canEdit: PropTypes.bool,
-    isUseful: PropTypes.bool,
+    meta: PropTypes.shape({
+      canEdit: PropTypes.bool,
+      isUseful: PropTypes.bool,
+    }).isRequired,
   }).isRequired,
   onUsefulClick: PropTypes.func.isRequired,
 }
@@ -32,7 +35,7 @@ const CardHeading = ({ card, onUsefulClick }) => (
       <H3 narrow>{card.title}</H3>
     </Link>
     <Row basis="25%" justify="space-between">
-      {card.isUseful ? (
+      {card.meta.isUseful ? (
         <ButtonPrimary small title="Remove from saved" onClick={onUsefulClick}>
           Saved
         </ButtonPrimary>
@@ -42,7 +45,7 @@ const CardHeading = ({ card, onUsefulClick }) => (
         </Button>
       )}
       {card.usefulFor > 0 && <div>{card.usefulFor}</div>}
-      {card.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
+      {card.meta.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
       <i>{format(new Date(card.createdAt), "HH:MM MM/DD/YYYY")}</i>
     </Row>
   </HeadingLine>
@@ -53,8 +56,10 @@ CardHeading.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
-    canEdit: PropTypes.bool,
-    isUseful: PropTypes.bool,
+    meta: PropTypes.shape({
+      canEdit: PropTypes.bool,
+      isUseful: PropTypes.bool,
+    }).isRequired,
   }).isRequired,
   onUsefulClick: PropTypes.func.isRequired,
 }

@@ -1,6 +1,6 @@
 import { handleFetching } from "symbiote-fetching"
 import { push } from "connected-react-router"
-import { accountIdSelector } from "@features/common"
+
 import { cardsApi } from "./api"
 import { actions as page } from "./symbiotes/page"
 import { actions as registry } from "./symbiotes/registry"
@@ -35,34 +35,15 @@ export const cardEdit = ({ id, title, content }) => async (dispatch) => {
   }
 }
 
-export const mergeUsefulToCard = (card) => ({ ok, result }) => ({
-  ...card,
-  isUseful: ok ? result.isUseful : false,
-})
-
-export const mergeCanEditToCard = (accountId) => (card) => ({
-  ...card,
-  canEdit: accountId === card.authorId,
-})
-
 export const getAllCards = () =>
   handleFetching(page.fetchAll, {
     noThrow: true,
-    async run(dispatch, getState) {
+    async run(dispatch) {
       const { ok, result, error } = await dispatch(cardsApi.getLatest)
-      const accountId = accountIdSelector(getState())
 
       if (ok) {
-        const list = await Promise.all(
-          result.map((card) =>
-            dispatch(getUsefulMark, card.id)
-              .then(mergeUsefulToCard(card))
-              .then(mergeCanEditToCard(accountId)),
-          ),
-        )
-
-        dispatch(registry.mergeById(list))
-        dispatch(page.setCardsIds(list.map((i) => i.id)))
+        dispatch(registry.mergeById(result))
+        dispatch(page.setCardsIds(result.map((i) => i.id)))
       }
 
       throw new Error(error)
@@ -85,7 +66,7 @@ export const fetchFullCard = (id) =>
 
 export const setUsefulMark = (cardId) => async (dispatch, getState) => {
   const card = cardsRegistrySelector(getState())[cardId]
-  const isUseful = !card.isUseful
+  const isUseful = !card.meta.isUseful
   const prom = dispatch(cardsApi.markUseful, cardId, isUseful)
 
   dispatch(registry.setUsefulMark({ cardId, isUseful }))
@@ -102,6 +83,3 @@ export const setUsefulMark = (cardId) => async (dispatch, getState) => {
     dispatch(registry.setUseful({ cardId, isUseful: !isUseful }))
   }
 }
-
-export const getUsefulMark = (cardId) => (dispatch) =>
-  dispatch(cardsApi.isUseful, cardId)
