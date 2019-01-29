@@ -1,7 +1,7 @@
 import { createSymbiote } from "redux-symbiote"
 import { initialFetching, createFetching } from "symbiote-fetching"
 
-const initialState = {
+export const initialState = {
   fetchingAll: initialFetching,
   fetchingOne: initialFetching,
   cardsIds: [],

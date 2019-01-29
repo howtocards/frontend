@@ -10,24 +10,34 @@ const symbiotes = {
   }),
   mergeById: (state, cards) => ({
     ...state,
-    ...cards.reduce((p, card) => {
+    ...cards.reduce((accum, card) => {
       // eslint-disable-next-line no-param-reassign
-      p[card.id] = card
-      return p
+      accum[card.id] = card
+      return accum
     }, {}),
   }),
   setCard: (state, card) => ({
     ...state,
     [card.id]: { ...state[card.id], ...card },
   }),
-  setUsefulMark: (state, { cardId, isUseful }) => ({
-    ...state,
-    [cardId]: { ...state[cardId], meta: { ...state[cardId].meta, isUseful } },
-  }),
-  delete: (state, cardId) => ({
-    ...state,
-    [cardId]: undefined,
-  }),
+  setUsefulMark: (state, { cardId, isUseful }) =>
+    state[cardId]
+      ? {
+          ...state,
+          [cardId]: {
+            id: cardId,
+            ...state[cardId],
+            meta: { ...state[cardId].meta, isUseful },
+          },
+        }
+      : state,
+  delete: (state, cardId) =>
+    state[cardId]
+      ? {
+          ...state,
+          [cardId]: undefined,
+        }
+      : state,
 }
 
 export const { actions, reducer } = createSymbiote(
