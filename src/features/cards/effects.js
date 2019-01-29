@@ -80,6 +80,6 @@ export const setUsefulMark = (cardId) => async (dispatch, getState) => {
     dispatch(registry.setCard(result.card))
   } catch (error) {
     // Rollback
-    dispatch(registry.setUseful({ cardId, isUseful: !isUseful }))
+    dispatch(registry.setUsefulMark({ cardId, isUseful: !isUseful }))
   }
 }

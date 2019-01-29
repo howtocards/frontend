@@ -44,7 +44,7 @@ const CardHeading = ({ card, onUsefulClick }) => (
           Save
         </Button>
       )}
-      {card.usefulFor > 0 && <div>{card.usefulFor}</div>}
+      {card.usefulFor > 0 ? <div>{card.usefulFor}</div> : <div>&nbsp;</div>}
       {card.meta.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
       <i>{format(new Date(card.createdAt), "HH:MM MM/DD/YYYY")}</i>
     </Row>
