@@ -129,8 +129,7 @@ export class HoverMenu extends React.Component {
         {this.renderMarkButton("bold")}
         {this.renderMarkButton("italic")}
         {this.renderMarkButton("underlined")}
-        {this.renderBlockButton("code_block")}
-        {this.renderMarkButton("code")}
+        {this.renderBlockButton("code")}
         {this.renderBlockButton("block-quote")}
         {this.renderBlockButton("numbered-list")}
         {this.renderBlockButton("bulleted-list")}

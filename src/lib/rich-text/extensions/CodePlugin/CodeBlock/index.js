@@ -1,18 +1,24 @@
 import React from "react"
+import PrismComponents from "prismjs/components"
 
-const languages = {
-  js: "javascript",
-  jsx: "jsx",
-  css: "css",
-  html: "html",
-  rust: "rust",
-  php: "php",
-  java: "java",
+const exlude = {
+  meta: true,
+  markup: true,
 }
+
+const languages = Object.entries(PrismComponents.languages).reduce(
+  (acc, [key]) => {
+    if (!exlude[key]) {
+      acc[key] = key
+    }
+    return acc
+  },
+  {},
+)
 
 export class CodeBlock extends React.Component {
   componentDidMount() {
-    this.onChange(Object.keys(languages)[0])
+    this.onChange("javascript")
   }
 
   onChange = (value) => {
@@ -22,12 +28,12 @@ export class CodeBlock extends React.Component {
   }
 
   render() {
-    const { node, attributes, children } = this.props
+    const { className, node, attributes, children } = this.props
     const language = node.data.get("language")
 
     return (
-      <div style={{ position: "relative" }}>
-        <pre style={{ padding: "2rem 1rem", backgroundColor: "#263238" }}>
+      <div className={className} style={{ position: "relative" }}>
+        <pre style={{ padding: "4rem 2rem", backgroundColor: "#263238" }}>
           <code {...attributes}>{children}</code>
         </pre>
         <div

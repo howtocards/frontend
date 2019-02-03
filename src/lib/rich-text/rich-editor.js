@@ -5,12 +5,7 @@ import { HoverMenu } from "./extensions/HoverMenu"
 import { CodePlugin } from "./extensions/CodePlugin"
 import { RichEditorStyle } from "./styles"
 
-const plugins = [
-  CodePlugin({
-    block: "code_block",
-    line: "code_line",
-  }),
-]
+const plugins = [CodePlugin()]
 
 export class RichEditor extends React.Component {
   state = {
@@ -78,23 +73,9 @@ export class RichEditor extends React.Component {
         return <em {...attributes}>{children}</em>
       case "underlined":
         return <u {...attributes}>{children}</u>
-      case "code":
-        return <code {...attributes}>{children}</code>
       default:
         return next()
     }
-  }
-
-  onKeyDown = (event, editor, next) => {
-    const { value } = editor
-    const { startBlock } = value
-
-    if (event.key === "Enter" && startBlock.type === "code") {
-      editor.insertText("\n")
-      return
-    }
-
-    next()
   }
 
   onChange = ({ value }) => {
@@ -130,7 +111,6 @@ export class RichEditor extends React.Component {
           renderEditor={this.renderEditor}
           renderMark={this.renderMark}
           renderNode={this.renderNode}
-          onKeyDown={this.onKeyDown}
           plugins={plugins}
         />
       </RichEditorStyle>

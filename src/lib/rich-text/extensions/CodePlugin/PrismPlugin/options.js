@@ -6,8 +6,7 @@ import { TOKEN_MARK } from "./constant"
 /**
  * Default filter for code blocks
  */
-const defaultOnlyIn = (node) =>
-  node.object === "block" && node.type === "code_block"
+const defaultOnlyIn = (node) => node.object === "block" && node.type === "code"
 
 /**
  * Default getter for syntax

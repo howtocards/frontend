@@ -1,57 +1,23 @@
 import React from "react"
-import { KeyMap } from "./KeyMap"
 import { PrismPlugin } from "./PrismPlugin"
 import { CodeBlock } from "./CodeBlock"
 
+import { Options } from "./options"
+import { onKeyDown, onPaste } from "./handlers"
+import { core } from "./core"
+
 export const CodePlugin = (options = {}) => {
-  const config = {
-    block: "code_block",
+  const config = new Options({
+    block: "code",
     line: "code_line",
     ...options,
-  }
+  })
 
-  const isCodeLine = (editor) => editor.value.startBlock.type === config.line
+  const corePlugin = core(config)
 
-  const onEnter = (event, editor) => {
-    event.preventDefault()
-    editor.splitBlock().setBlocks(config.line)
-  }
-
-  const onTab = (event, editor) => {
-    event.preventDefault()
-    editor.insertText("  ")
-  }
-
-  const onSelectAll = (event, editor) => {
-    event.preventDefault()
-    const {
-      value: { startBlock },
-    } = editor
-    const {
-      value: { document },
-    } = editor
-    const parent = document.getParent(startBlock.key)
-
-    editor.moveToRangeOfNode(parent)
-  }
-
-  const schema = {
-    blocks: {
-      code: {
-        nodes: [
-          {
-            match: { type: config.line },
-          },
-        ],
-      },
-      code_line: {
-        nodes: [
-          {
-            match: { object: "text" },
-          },
-        ],
-      },
-    },
+  const keys = {
+    onKeyDown: onKeyDown.bind(null, config),
+    onPaste: onPaste.bind(null, config),
   }
 
   return [
@@ -76,26 +42,23 @@ export const CodePlugin = (options = {}) => {
 
         switch (node.type) {
           case config.block:
-            return <CodeBlock {...props} />
+            return <CodeBlock className={config.block} {...props} />
           case config.line:
-            return <div {...attributes}>{children}</div>
+            return (
+              <div className={config.line} {...attributes}>
+                {children}
+              </div>
+            )
           default:
             return next()
         }
       },
-      schema,
+      ...corePlugin,
     },
     PrismPlugin({
       onlyIn: (node) => node.type === config.block,
       getSyntax: (node) => node.data.get("language"),
     }),
-    KeyMap(
-      {
-        "mod+a": onSelectAll,
-        tab: onTab,
-        enter: onEnter,
-      },
-      { if: isCodeLine },
-    ),
+    keys,
   ]
 }
