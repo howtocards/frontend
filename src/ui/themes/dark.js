@@ -1,5 +1,6 @@
 import { css } from "styled-components"
 import { material, createEmbed } from "@lib/material-colors"
+import { prismcssDark } from "./prismcss"
 
 const palette = {
   primary: {
@@ -32,4 +33,5 @@ const embed = {
 export const darkTheme = {
   palette,
   embed,
+  prismcss: prismcssDark,
 }

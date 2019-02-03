@@ -10,14 +10,7 @@ const WrapperRichViewer = styled.div`
 
 export const RichViewer = ({ content }) => (
   <WrapperRichViewer>
-    <div className="quill">
-      <div className="ql-container ql-bubble">
-        <div
-          className="ql-editor"
-          dangerouslySetInnerHTML={{ __html: content }}
-        />
-      </div>
-    </div>
+    <div className="ql-editor" dangerouslySetInnerHTML={{ __html: content }} />
   </WrapperRichViewer>
 )
 
