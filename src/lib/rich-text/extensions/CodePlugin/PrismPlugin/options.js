@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Record } from "immutable"
 
-import { TOKEN_MARK } from "../../constant"
+import { TOKEN_MARK } from "./constant"
 
 /**
  * Default filter for code blocks

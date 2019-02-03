@@ -1,7 +1,7 @@
 import { Point } from "slate"
 import Prism from "prismjs"
 
-import { TOKEN_MARK } from "../../constant"
+import { TOKEN_MARK } from "./constant"
 import { Options } from "./options"
 
 /**

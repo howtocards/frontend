@@ -2,6 +2,7 @@ import React from "react"
 
 const languages = {
   js: "javascript",
+  jsx: "jsx",
   css: "css",
   html: "html",
   rust: "rust",
@@ -38,7 +39,9 @@ export class CodeBlock extends React.Component {
             onChange={(event) => this.onChange(event.target.value)}
           >
             {Object.entries(languages).map(([key, value]) => (
-              <option value={key}>{value}</option>
+              <option value={key} key={key}>
+                {value}
+              </option>
             ))}
           </select>
         </div>

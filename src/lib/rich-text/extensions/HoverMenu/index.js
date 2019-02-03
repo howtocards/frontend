@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { DEFAULT_NODE, ICONS_LIST } from "../../constant"
+import { DEFAULT_NODE, ICONS_LIST } from "./constant"
 import { StyledMenu, Button } from "./styles"
 
 const getIconComponent = (type) => ICONS_LIST[type] || "span"
@@ -129,10 +129,9 @@ export class HoverMenu extends React.Component {
         {this.renderMarkButton("bold")}
         {this.renderMarkButton("italic")}
         {this.renderMarkButton("underlined")}
-        {this.renderMarkButton("code")}
-
-        {this.renderBlockButton("block-quote")}
         {this.renderBlockButton("code_block")}
+        {this.renderMarkButton("code")}
+        {this.renderBlockButton("block-quote")}
         {this.renderBlockButton("numbered-list")}
         {this.renderBlockButton("bulleted-list")}
       </StyledMenu>,

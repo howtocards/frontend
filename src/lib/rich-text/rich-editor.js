@@ -1,15 +1,14 @@
 import React from "react"
 import { Editor } from "slate-react"
 import { defaultValue } from "./default-value"
-import { HoverMenu } from "./plugins/HoverMenu"
-import { CodeBlock } from "./plugins/CodeBlock"
+import { HoverMenu } from "./extensions/HoverMenu"
+import { CodePlugin } from "./extensions/CodePlugin"
 import { RichEditorStyle } from "./styles"
-import { PrismPlugin } from "./plugins/Prismjs"
 
 const plugins = [
-  PrismPlugin({
-    onlyIn: (node) => node.type === "code_block",
-    getSyntax: (node) => node.data.get("language"),
+  CodePlugin({
+    block: "code_block",
+    line: "code_line",
   }),
 ]
 
@@ -64,10 +63,6 @@ export class RichEditor extends React.Component {
         return <li {...attributes}>{children}</li>
       case "numbered-list":
         return <ol {...attributes}>{children}</ol>
-      case "code_block":
-        return <CodeBlock {...props} />
-      case "code_line":
-        return <div {...attributes}>{children}</div>
       default:
         return next()
     }
@@ -85,30 +80,6 @@ export class RichEditor extends React.Component {
         return <u {...attributes}>{children}</u>
       case "code":
         return <code {...attributes}>{children}</code>
-      case "comment":
-        return (
-          <span {...attributes} style={{ opacity: "0.33" }}>
-            {children}
-          </span>
-        )
-      case "keyword":
-        return (
-          <span {...attributes} style={{ fontWeight: "bold" }}>
-            {children}
-          </span>
-        )
-      case "tag":
-        return (
-          <span {...attributes} style={{ fontWeight: "bold" }}>
-            {children}
-          </span>
-        )
-      case "punctuation":
-        return (
-          <span {...attributes} style={{ opacity: "0.75" }}>
-            {children}
-          </span>
-        )
       default:
         return next()
     }
@@ -118,13 +89,6 @@ export class RichEditor extends React.Component {
     const { value } = editor
     const { startBlock } = value
 
-    if (
-      event.key === "Backspace" &&
-      startBlock.type === "code-highlighting" &&
-      startBlock.text === ""
-    ) {
-      // удалить блок
-    }
     if (event.key === "Enter" && startBlock.type === "code") {
       editor.insertText("\n")
       return
