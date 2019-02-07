@@ -1,30 +1,41 @@
 import React from "react"
 import PrismComponents from "prismjs/components"
 
-const exlude = {
+const exclude = {
   meta: true,
   markup: true,
 }
 
+const filterObject = (acc, [key]) =>
+  exclude[key]
+    ? acc
+    : {
+        ...acc,
+        [key]: {
+          name: key,
+          isLoaded: false,
+        },
+      }
+
 const languages = Object.entries(PrismComponents.languages).reduce(
-  (acc, [key]) => {
-    if (!exlude[key]) {
-      acc[key] = key
-    }
-    return acc
-  },
+  filterObject,
   {},
 )
 
 export class CodeBlock extends React.Component {
-  componentDidMount() {
-    this.onChange("javascript")
-  }
-
   onChange = (value) => {
     const { editor, node } = this.props
 
-    editor.setNodeByKey(node.key, { data: { language: value } })
+    if (languages[value]) {
+      if (languages[value].isLoaded) {
+        editor.setNodeByKey(node.key, { data: { language: value } })
+      } else {
+        import(`prismjs/components/prism-${value}.min`).then(() => {
+          languages[value].isLoaded = true
+          editor.setNodeByKey(node.key, { data: { language: value } })
+        })
+      }
+    }
   }
 
   render() {
@@ -46,7 +57,7 @@ export class CodeBlock extends React.Component {
           >
             {Object.entries(languages).map(([key, value]) => (
               <option value={key} key={key}>
-                {value}
+                {key}
               </option>
             ))}
           </select>

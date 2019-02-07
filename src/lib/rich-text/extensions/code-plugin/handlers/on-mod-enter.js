@@ -5,13 +5,11 @@ import { Block, Text } from "slate"
  */
 
 export function onModEnter(opts, event, change, editor) {
-  const {
-    value: {
-      selection: { isCollapsed },
-    },
-  } = change
+  const { value } = change
 
-  if (!isCollapsed) {
+  const { selection } = value
+
+  if (!selection.isCollapsed) {
     return editor()
   }
 
@@ -26,7 +24,7 @@ export function onModEnter(opts, event, change, editor) {
   })
 
   change.deleteAtRange(range, { normalize: false })
-  change.insertBlockAtRange(change.value.selection, exitBlock, {
+  change.insertBlockAtRange(selection, exitBlock, {
     normalize: false,
   })
   // Exit the code block

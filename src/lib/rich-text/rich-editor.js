@@ -1,15 +1,24 @@
 import React from "react"
 import { Editor } from "slate-react"
-import { defaultValue } from "./default-value"
-import { HoverMenu } from "./extensions/HoverMenu"
-import { CodePlugin } from "./extensions/CodePlugin"
+import Html from "slate-html-serializer"
+import { HoverMenu, CodePlugin } from "./extensions"
 import { RichEditorStyle } from "./styles"
+import { NODES_COMPONENTS, MARKS_COMPONENTS, DISPLAY_RULES } from "./rules"
 
-const plugins = [CodePlugin()]
+const plugins = [
+  CodePlugin({
+    block: "code",
+    line: "code_line",
+  }),
+]
+
+const html = new Html({ rules: DISPLAY_RULES })
+const getInitialValue = (value) => value || "<p></p>"
 
 export class RichEditor extends React.Component {
   state = {
-    value: defaultValue,
+    // eslint-disable-next-line react/destructuring-assignment
+    value: html.deserialize(getInitialValue(this.props.content)),
   }
 
   componentDidMount = () => {
@@ -22,11 +31,10 @@ export class RichEditor extends React.Component {
 
   updateMenu = () => {
     const { menu } = this
-
-    if (!menu) return
-
     const { value } = this.state
     const { fragment, selection } = value
+
+    if (!menu) return
 
     if (selection.isBlurred || selection.isCollapsed || fragment.text === "") {
       menu.removeAttribute("style")
@@ -40,46 +48,38 @@ export class RichEditor extends React.Component {
     menu.style.opacity = 1
     menu.style.top = `${rect.top + window.pageYOffset - menu.offsetHeight}px`
 
-    menu.style.left = `${rect.left +
+    const leftPosition = `${rect.left +
       window.pageXOffset -
       menu.offsetWidth / 2 +
       rect.width / 2}px`
+
+    menu.style.left = leftPosition
   }
 
   renderNode = (props, editor, next) => {
     const { attributes, children, node } = props
 
-    switch (node.type) {
-      case "block-quote":
-        return <blockquote {...attributes}>{children}</blockquote>
-      case "bulleted-list":
-        return <ul {...attributes}>{children}</ul>
-      case "list-item":
-        return <li {...attributes}>{children}</li>
-      case "numbered-list":
-        return <ol {...attributes}>{children}</ol>
-      default:
-        return next()
-    }
+    const Type = NODES_COMPONENTS[node.type]
+
+    return Type ? <Type {...attributes}>{children}</Type> : next()
   }
 
   renderMark = (props, editor, next) => {
     const { children, mark, attributes } = props
 
-    switch (mark.type) {
-      case "bold":
-        return <strong {...attributes}>{children}</strong>
-      case "italic":
-        return <em {...attributes}>{children}</em>
-      case "underlined":
-        return <u {...attributes}>{children}</u>
-      default:
-        return next()
-    }
+    const Type = MARKS_COMPONENTS[mark.type]
+
+    return Type ? <Type {...attributes}>{children}</Type> : next()
   }
 
   onChange = ({ value }) => {
-    this.setState({ value })
+    const { onChange } = this.props
+
+    this.setState({ value }, () => {
+      const string = html.serialize(value)
+
+      onChange(string)
+    })
   }
 
   renderEditor = (props, editor, next) => {
@@ -99,21 +99,28 @@ export class RichEditor extends React.Component {
 
   render() {
     const { value } = this.state
+    const { content } = this.props
 
     return (
-      <RichEditorStyle>
-        <Editor
-          style={{
-            minHeight: "300px",
-          }}
-          value={value}
-          onChange={this.onChange}
-          renderEditor={this.renderEditor}
-          renderMark={this.renderMark}
-          renderNode={this.renderNode}
-          plugins={plugins}
+      <>
+        <RichEditorStyle>
+          <Editor
+            style={{
+              minHeight: "300px",
+            }}
+            value={value}
+            onChange={this.onChange}
+            renderEditor={this.renderEditor}
+            renderMark={this.renderMark}
+            renderNode={this.renderNode}
+            plugins={plugins}
+          />
+        </RichEditorStyle>
+        <div
+          className="ql-editor"
+          dangerouslySetInnerHTML={{ __html: content }}
         />
-      </RichEditorStyle>
+      </>
     )
   }
 }

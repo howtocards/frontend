@@ -51,19 +51,19 @@ const decorateNode = (opts, block) => {
 
     let offset = 0
 
-    function processToken(token, accu) {
+    function processToken(token, accumulator) {
       // eslint-disable-next-line no-param-reassign
-      accu = accu || ""
+      accumulator = accumulator || ""
 
       if (typeof token === "string") {
-        if (accu) {
+        if (accumulator) {
           const decoration = createDecoration({
             text,
             textStart,
             textEnd,
             start: offset,
             end: offset + token.length,
-            className: `prism-token token ${accu}`,
+            className: `prism-token token ${accumulator}`,
           })
 
           if (decoration) {
@@ -73,7 +73,7 @@ const decorateNode = (opts, block) => {
         offset += token.length
       } else {
         // eslint-disable-next-line no-param-reassign
-        accu = `${accu} ${token.type} ${token.alias || ""}`
+        accumulator = `${accumulator} ${token.type} ${token.alias || ""}`
 
         if (typeof token.content === "string") {
           const decoration = createDecoration({
@@ -82,7 +82,7 @@ const decorateNode = (opts, block) => {
             textEnd,
             start: offset,
             end: offset + token.content.length,
-            className: `prism-token token ${accu}`,
+            className: `prism-token token ${accumulator}`,
           })
 
           if (decoration) {
@@ -93,7 +93,7 @@ const decorateNode = (opts, block) => {
         } else {
           // When using token.content instead of token.matchedStr, token can be deep
           for (let count = 0; count < token.content.length; count += 1) {
-            processToken(token.content[count], accu)
+            processToken(token.content[count], accumulator)
           }
         }
       }

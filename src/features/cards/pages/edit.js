@@ -88,6 +88,7 @@ const CardEditView = ({
 )
 
 CardEditView.propTypes = {
+  // eslint-disable-next-line react/require-default-props
   card: PropTypes.shape({
     title: PropTypes.string,
     id: PropTypes.number,

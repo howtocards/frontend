@@ -1,8 +1,8 @@
 import { Record } from "immutable"
 
 const DEFAULTS = {
-  block: "code",
-  line: "code_line",
+  block: "",
+  line: "",
   exitBlockType: "paragraph",
   selectAll: true,
   allowMarks: false,

@@ -6,9 +6,55 @@ import { StyledMenu, Button } from "./styles"
 const getIconComponent = (type) => ICONS_LIST[type] || "span"
 
 export class HoverMenu extends React.Component {
-  onClickBlock = (event, type) => {
-    event.preventDefault()
+  handleCode = (type) => {
+    const { editor } = this.props
+    const { value } = editor
+    const { document } = value
 
+    // Handle everything but list buttons.
+    if (type !== "code") {
+      const isActive = this.hasBlock(type)
+      const isCodeLine = this.hasBlock("code_line")
+
+      if (isCodeLine) {
+        editor
+          .setBlocks(isActive ? DEFAULT_NODE : type)
+          .unwrapBlock("bulleted-list")
+          .unwrapBlock("numbered-list")
+      }
+    }
+
+    if (type === "code") {
+      // Handle the extra wrapping required for list buttons.
+      const isCodeLine = this.hasBlock("code_line")
+      const isType = value.blocks.some((block) =>
+        Boolean(
+          document.getClosest(block.key, (parent) => parent.type === type),
+        ),
+      )
+
+      if (isCodeLine && isType) {
+        editor
+          .setBlocks(DEFAULT_NODE)
+          .unwrapBlock(type)
+          .unwrapBlock("bulleted-list")
+          .unwrapBlock("numbered-list")
+      } else if (isCodeLine) {
+        editor
+          .unwrapBlock("bulleted-list")
+          .unwrapBlock("numbered-list")
+          .wrapBlock(type)
+      } else {
+        editor
+          .setBlocks("code_line")
+          .unwrapBlock("bulleted-list")
+          .unwrapBlock("numbered-list")
+          .wrapBlock(type)
+      }
+    }
+  }
+
+  handleLists = (type) => {
     const { editor } = this.props
     const { value } = editor
     const { document } = value
@@ -23,15 +69,16 @@ export class HoverMenu extends React.Component {
           .setBlocks(isActive ? DEFAULT_NODE : type)
           .unwrapBlock("bulleted-list")
           .unwrapBlock("numbered-list")
-      } else {
-        editor.setBlocks(isActive ? DEFAULT_NODE : type)
       }
-    } else {
+    }
+
+    if (type === "bulleted-list" || type === "numbered-list") {
       // Handle the extra wrapping required for list buttons.
       const isList = this.hasBlock("list-item")
-      const isType = value.blocks.some(
-        (block) =>
-          !!document.getClosest(block.key, (parent) => parent.type === type),
+      const isType = value.blocks.some((block) =>
+        Boolean(
+          document.getClosest(block.key, (parent) => parent.type === type),
+        ),
       )
 
       if (isList && isType) {
@@ -48,6 +95,26 @@ export class HoverMenu extends React.Component {
       } else {
         editor.setBlocks("list-item").wrapBlock(type)
       }
+    }
+  }
+
+  onClickBlock = (event, type) => {
+    event.preventDefault()
+    const { editor } = this.props
+    const { value } = editor
+    const { document } = value
+
+    this.handleLists(type)
+    this.handleCode(type)
+
+    if (
+      type !== "bulleted-list" &&
+      type !== "numbered-list" &&
+      type !== "code"
+    ) {
+      const isActive = this.hasBlock(type)
+
+      editor.setBlocks(isActive ? DEFAULT_NODE : type)
     }
   }
 
