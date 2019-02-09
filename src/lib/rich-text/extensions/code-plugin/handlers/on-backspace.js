@@ -1,4 +1,3 @@
-import endsWith from "ends-with"
 import { getCurrentIndent, getCurrentCode } from "../utils"
 
 /**
@@ -15,31 +14,26 @@ export function onBackspace(opts, event, change, editor) {
     return editor()
   }
 
-  const {
-    selection: {
-      start: { offset },
-    },
-    startText,
-  } = value
+  const { selection, startText } = value
 
   const currentLine = value.startBlock
 
   // Detect and remove indentation at cursor
   const indent = getCurrentIndent(opts, value)
-  const beforeSelection = currentLine.text.slice(0, offset)
+  const beforeSelection = currentLine.text.slice(0, selection.start.offset)
 
   // If the line before selection ending with the indentation?
-  if (endsWith(beforeSelection, indent)) {
+  if (beforeSelection.endsWith(indent)) {
     // Remove indent
     event.preventDefault()
 
     return change.deleteBackward(indent.length).focus()
-    // eslint-disable-next-line no-else-return
-  } else if (opts.exitBlockType) {
+  }
+  if (opts.exitBlockType) {
     // Otherwise check if we are in an empty code container...
     const currentCode = getCurrentCode(opts, value)
     const isStartOfCode =
-      offset === 0 && currentCode.getFirstText() === startText
+      selection.start.offset === 0 && currentCode.getFirstText() === startText
     // PERF: avoid checking for whole currentCode.text
     const isEmpty =
       currentCode.nodes.size === 1 && currentLine.text.length === 0

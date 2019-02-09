@@ -10,6 +10,7 @@ import { onSelectAll } from "./on-select-all"
 const isModA = isKeyHotkey("mod+a")
 const isShiftTab = isKeyHotkey("shift+tab")
 const isTab = isKeyHotkey("tab")
+const isModZ = isKeyHotkey("mod+z")
 const isModEnter = isKeyHotkey("mod+enter")
 const isEnter = isKeyHotkey("enter")
 const isBackspace = isKeyHotkey("backspace")
@@ -54,6 +55,9 @@ export function onKeyDown(opts, event, change, editor) {
   if (isBackspace(event)) {
     // User is pressing Backspace
     return onBackspace(...args)
+  }
+  if (isModZ(event)) {
+    return editor()
   }
   return undefined
 }

@@ -5,11 +5,9 @@
 export function onEnter(opts, event, change, editor) {
   const { value } = change
 
-  const {
-    selection: { isCollapsed },
-  } = value
+  const { selection } = value
 
-  if (!isCollapsed) {
+  if (!selection.isCollapsed) {
     return editor()
   }
 

@@ -1,9 +1,9 @@
 import React from "react"
+import { Value } from "slate"
 import { Editor } from "slate-react"
-import Html from "slate-html-serializer"
+import Plain from "slate-plain-serializer"
 import { HoverMenu, CodePlugin } from "./extensions"
 import { RichEditorStyle } from "./styles"
-import { NODES_COMPONENTS, MARKS_COMPONENTS, DISPLAY_RULES } from "./rules"
 
 const plugins = [
   CodePlugin({
@@ -12,13 +12,26 @@ const plugins = [
   }),
 ]
 
-const html = new Html({ rules: DISPLAY_RULES })
-const getInitialValue = (value) => value || "<p></p>"
+export const NODES_COMPONENTS = {
+  "block-quote": "blockquote",
+  "bulleted-list": "ul",
+  "list-item": "li",
+  "numbered-list": "ol",
+}
+
+export const MARKS_COMPONENTS = {
+  bold: "strong",
+  italic: "em",
+  underlined: "u",
+}
 
 export class RichEditor extends React.Component {
   state = {
     // eslint-disable-next-line react/destructuring-assignment
-    value: html.deserialize(getInitialValue(this.props.content)),
+    value: this.props.content
+      ? // eslint-disable-next-line react/destructuring-assignment
+        Value.fromJSON(JSON.parse(this.props.content))
+      : Plain.deserialize(""),
   }
 
   componentDidMount = () => {
@@ -76,9 +89,9 @@ export class RichEditor extends React.Component {
     const { onChange } = this.props
 
     this.setState({ value }, () => {
-      const string = html.serialize(value)
-
-      onChange(string)
+      if (typeof onChange === "function") {
+        onChange(JSON.stringify(value))
+      }
     })
   }
 
@@ -99,12 +112,13 @@ export class RichEditor extends React.Component {
 
   render() {
     const { value } = this.state
-    const { content } = this.props
+    const { content, readOnly } = this.props
 
     return (
       <>
         <RichEditorStyle>
           <Editor
+            readOnly={readOnly}
             style={{
               minHeight: "300px",
             }}
@@ -116,10 +130,6 @@ export class RichEditor extends React.Component {
             plugins={plugins}
           />
         </RichEditorStyle>
-        <div
-          className="ql-editor"
-          dangerouslySetInnerHTML={{ __html: content }}
-        />
       </>
     )
   }

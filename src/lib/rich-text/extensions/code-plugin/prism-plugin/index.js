@@ -39,6 +39,7 @@ const decorateNode = (opts, block) => {
   // Tokenize the whole block text
   const texts = block.getTexts()
   const blockText = texts.map((t) => t.text).join("\n")
+
   const tokens = Prism.tokenize(blockText, grammar)
 
   // The list of decorations to return

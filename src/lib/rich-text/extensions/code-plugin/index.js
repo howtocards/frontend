@@ -8,8 +8,6 @@ import { core } from "./core"
 
 export const CodePlugin = (options = {}) => {
   const config = new Options({
-    block: "",
-    line: "",
     ...options,
   })
 
