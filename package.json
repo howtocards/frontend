@@ -117,7 +117,6 @@
     "slate": "^0.44.10",
     "slate-plain-serializer": "^0.6.34",
     "slate-react": "^0.21.16",
-    "slate-schema-violations": "^0.1.39",
     "styled-breakpoints": "^4.0.3",
     "styled-components": "^4.1.1",
     "styled-icons": "^6.10.0",
