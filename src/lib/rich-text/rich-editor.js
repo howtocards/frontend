@@ -1,81 +1,136 @@
 import React from "react"
-import ReactQuill from "react-quill"
-import PropTypes from "prop-types"
-import styled from "styled-components"
-import hljs from "highlight.js"
+import { Value } from "slate"
+import { Editor } from "slate-react"
+import Plain from "slate-plain-serializer"
+import { HoverMenu, CodePlugin } from "./extensions"
+import { RichEditorStyle } from "./styles"
 
-const modules = {
-  syntax: {
-    highlight: (text) => hljs.highlightAuto(text).value,
-  },
-  toolbar: [
-    /* eslint-disable-next-line no-magic-numbers */
-    [{ header: [2, 3, 4, 5, 6, false] }],
-    ["bold", "italic", "underline", "blockquote"],
-    [{ list: "ordered" }, { list: "bullet" }],
-    ["link", "image", "video"],
-    ["code-block"],
-  ],
-  clipboard: {
-    matchVisual: false,
-  },
-}
-
-const formats = [
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-  "video",
-  "code-block",
+const plugins = [
+  CodePlugin({
+    block: "code",
+    line: "code_line",
+  }),
 ]
 
-const WrapperRichEditor = styled.div`
-  .ql-editor {
-    border-radius: 4px;
-    box-shadow: 0 0 0 2px ${(p) => p.theme.palette.decoration.borders};
+export const NODES_COMPONENTS = {
+  "block-quote": "blockquote",
+  "bulleted-list": "ul",
+  "list-item": "li",
+  "numbered-list": "ol",
+}
+
+export const MARKS_COMPONENTS = {
+  bold: "strong",
+  italic: "em",
+  underlined: "u",
+}
+
+export class RichEditor extends React.Component {
+  state = {
+    // eslint-disable-next-line react/destructuring-assignment
+    value: this.props.content
+      ? // eslint-disable-next-line react/destructuring-assignment
+        Value.fromJSON(JSON.parse(this.props.content))
+      : Plain.deserialize(""),
   }
-`
 
-export class RichEditor extends React.PureComponent {
-  editorRef = React.createRef()
-
-  static defaultProps = {
-    disabled: false,
+  componentDidMount = () => {
+    this.updateMenu()
   }
 
-  componentWillUnmount() {
-    this.editorRef.current.blur()
+  componentDidUpdate = () => {
+    this.updateMenu()
+  }
+
+  updateMenu = () => {
+    const { menu } = this
+    const { value } = this.state
+    const { fragment, selection } = value
+
+    if (!menu) return
+
+    if (selection.isBlurred || selection.isCollapsed || fragment.text === "") {
+      menu.removeAttribute("style")
+      return
+    }
+
+    const native = window.getSelection()
+    const range = native.getRangeAt(0)
+    const rect = range.getBoundingClientRect()
+
+    menu.style.opacity = 1
+    menu.style.top = `${rect.top + window.pageYOffset - menu.offsetHeight}px`
+
+    const leftPosition = `${rect.left +
+      window.pageXOffset -
+      menu.offsetWidth / 2 +
+      rect.width / 2}px`
+
+    menu.style.left = leftPosition
+  }
+
+  renderNode = (props, editor, next) => {
+    const { attributes, children, node } = props
+
+    const Type = NODES_COMPONENTS[node.type]
+
+    return Type ? <Type {...attributes}>{children}</Type> : next()
+  }
+
+  renderMark = (props, editor, next) => {
+    const { children, mark, attributes } = props
+
+    const Type = MARKS_COMPONENTS[mark.type]
+
+    return Type ? <Type {...attributes}>{children}</Type> : next()
+  }
+
+  onChange = ({ value }) => {
+    const { onChange } = this.props
+
+    this.setState({ value }, () => {
+      if (typeof onChange === "function") {
+        onChange(JSON.stringify(value))
+      }
+    })
+  }
+
+  renderEditor = (props, editor, next) => {
+    const children = next()
+
+    return (
+      <React.Fragment>
+        {children}
+        <HoverMenu
+          // eslint-disable-next-line no-return-assign
+          innerRef={(menu) => (this.menu = menu)}
+          editor={editor}
+        />
+      </React.Fragment>
+    )
   }
 
   render() {
-    const { disabled, content, onChange } = this.props
+    const { value } = this.state
+    const { content, readOnly } = this.props
 
     return (
-      <WrapperRichEditor>
-        <ReactQuill
-          ref={this.editorRef}
-          value={content}
-          onChange={onChange}
-          theme="bubble"
-          modules={modules}
-          formats={formats}
-          readOnly={disabled}
-        />
-      </WrapperRichEditor>
+      <>
+        <RichEditorStyle>
+          <Editor
+            readOnly={readOnly}
+            style={{
+              minHeight: "300px",
+            }}
+            value={value}
+            onChange={this.onChange}
+            renderEditor={this.renderEditor}
+            renderMark={this.renderMark}
+            renderNode={this.renderNode}
+            plugins={plugins}
+          />
+        </RichEditorStyle>
+      </>
     )
   }
-}
-
-RichEditor.propTypes = {
-  disabled: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-  content: PropTypes.string.isRequired,
 }

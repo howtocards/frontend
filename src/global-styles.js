@@ -1,8 +1,6 @@
 import { createGlobalStyle } from "styled-components"
-import { bubbleTheme } from "./bubble-theme"
 
 export const GlobalStyles = createGlobalStyle`
-  ${bubbleTheme};
   html {
     font-size: 10px;
   }

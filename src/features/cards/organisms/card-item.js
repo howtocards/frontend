@@ -3,7 +3,7 @@ import styled from "styled-components"
 import PropTypes from "prop-types"
 import { format } from "date-fns"
 
-import { RichViewer } from "@lib/rich-text"
+import { RichEditor } from "@lib/rich-text"
 import { Col, Row } from "@lib/styled-components-layout"
 import { Card, H3, Link, Button, ButtonPrimary } from "@ui/atoms"
 
@@ -11,7 +11,7 @@ export const CardItem = ({ onUsefulClick, card }) => (
   <CardBox>
     <Col>
       <CardHeading card={card} onUsefulClick={onUsefulClick} />
-      <RichViewer content={card.content} />
+      <RichEditor readOnly content={card.content} />
     </Col>
   </CardBox>
 )

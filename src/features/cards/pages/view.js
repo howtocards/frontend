@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { compose, lifecycle } from "recompose"
 import { format } from "date-fns"
-import { RichViewer } from "@lib/rich-text"
+import { RichEditor } from "@lib/rich-text"
 import { Col } from "@lib/styled-components-layout"
 import { Card, H3, Text } from "@ui/atoms"
 import { fetchFullCard } from "../effects"
@@ -60,7 +60,7 @@ export const CardView = ({ card }) => (
             time:
             {format(new Date(card.updatedAt), "HH:MM MM/DD/YYYY")}
           </Text>
-          <RichViewer content={card.content} />
+          <RichEditor readOnly content={card.content} />
         </Card>
       </Col>
     ) : (
