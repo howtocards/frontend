@@ -119,7 +119,6 @@ export class RichEditor extends React.Component {
       <>
         <RichEditorStyle>
           <Editor
-            config
             readOnly={readOnly}
             style={{
               minHeight: "300px",
