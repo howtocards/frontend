@@ -1,5 +1,4 @@
 export { onTab } from "./on-tab"
-export { onShiftTab } from "./on-shift-tab"
 export { onEnter } from "./on-enter"
 export { onModEnter } from "./on-mod-enter"
 export { onBackspace } from "./on-backspace"

@@ -5,7 +5,6 @@ const DEFAULTS = {
   line: "",
   exitBlockType: "paragraph",
   selectAll: true,
-  allowMarks: false,
   getIndent: null,
 }
 

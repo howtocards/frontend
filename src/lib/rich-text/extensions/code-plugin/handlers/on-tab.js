@@ -5,7 +5,7 @@ import { indentLines } from "../changes"
  * User pressed Tab in an editor:
  * Insert a tab after detecting it from code block content.
  */
-export function onTab(opts, event, change, editor) {
+export function onTab(opts, event, change) {
   const { value } = change
 
   event.preventDefault()

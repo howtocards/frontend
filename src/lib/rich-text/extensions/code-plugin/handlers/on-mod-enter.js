@@ -15,15 +15,11 @@ export function onModEnter(opts, event, change, editor) {
 
   event.preventDefault()
 
-  // Default behavior: insert an exit block
-  const range = change.value.selection
-
   const exitBlock = Block.create({
     type: "paragraph",
     nodes: [Text.create()],
   })
 
-  change.deleteAtRange(range, { normalize: false })
   change.insertBlockAtRange(selection, exitBlock, {
     normalize: false,
   })

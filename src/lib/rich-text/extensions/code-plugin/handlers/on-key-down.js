@@ -1,14 +1,12 @@
 import { isKeyHotkey } from "is-hotkey"
-import { getCurrentCode } from "../utils"
+import { getCurrentCode } from "../../common/utils"
 import { onTab } from "./on-tab"
-import { onShiftTab } from "./on-shift-tab"
 import { onEnter } from "./on-enter"
 import { onModEnter } from "./on-mod-enter"
 import { onBackspace } from "./on-backspace"
 import { onSelectAll } from "./on-select-all"
 
 const isModA = isKeyHotkey("mod+a")
-const isShiftTab = isKeyHotkey("shift+tab")
 const isTab = isKeyHotkey("tab")
 const isModZ = isKeyHotkey("mod+z")
 const isModEnter = isKeyHotkey("mod+enter")
@@ -20,11 +18,11 @@ const isBackspace = isKeyHotkey("backspace")
  */
 export function onKeyDown(opts, event, change, editor) {
   const { value } = change
-  const currentCode = getCurrentCode(opts, value)
+  const codeBlock = getCurrentCode(opts, value)
 
   // Inside code ?
 
-  if (!currentCode) {
+  if (!codeBlock) {
     return editor()
   }
 
@@ -35,10 +33,7 @@ export function onKeyDown(opts, event, change, editor) {
   if (opts.selectAll && isModA(event)) {
     return onSelectAll(...args)
   }
-  if (isShiftTab(event)) {
-    // User is pressing Shift+Tab
-    return onShiftTab(...args)
-  }
+
   if (isTab(event)) {
     // User is pressing Tab
     return onTab(...args)
