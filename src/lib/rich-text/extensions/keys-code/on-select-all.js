@@ -1,9 +1,9 @@
-import { getCurrentCode } from "../../common/utils"
+import { getCurrentCode } from "./helpers"
 
 /**
  * User is Cmd+A to select all text
  */
-export function onSelectAll(opts, event, change) {
+export const onSelectAll = (opts, event, change) => {
   const { value } = change
 
   event.preventDefault()

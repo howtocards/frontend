@@ -2,7 +2,7 @@
  * User pressed Enter in an editor:
  * Insert a new code line and start it with the indentation from previous line
  */
-export function onEnter(opts, event, change, editor) {
+export const onEnter = (opts, event, change, editor) => {
   const { value } = change
 
   const { selection } = value

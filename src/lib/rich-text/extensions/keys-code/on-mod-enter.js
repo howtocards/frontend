@@ -4,7 +4,7 @@ import { Block, Text } from "slate"
  * Exit the current code block
  */
 
-export function onModEnter(opts, event, change, editor) {
+export const onModEnter = (opts, event, change, editor) => {
   const { value } = change
 
   const { selection } = value

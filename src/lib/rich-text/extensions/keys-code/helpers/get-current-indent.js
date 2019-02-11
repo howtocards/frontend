@@ -1,4 +1,4 @@
-import { getCurrentCode } from "../../common/utils"
+import { getCurrentCode } from "./get-current-code"
 import { getIndent } from "./get-indent"
 
 /**
