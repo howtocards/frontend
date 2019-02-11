@@ -1,5 +1,5 @@
+import { getCurrentCode } from "../../common/utils"
 import { getIndent } from "./get-indent"
-import { getCurrentCode } from "./get-current-code"
 
 /**
  * Detect indentation in the current code block

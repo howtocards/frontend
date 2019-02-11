@@ -5,12 +5,12 @@ import Plain from "slate-plain-serializer"
 import { HoverMenu, CodePlugin } from "./extensions"
 import { RichEditorStyle } from "./styles"
 
-const plugins = [
-  CodePlugin({
-    block: "code",
-    line: "code_line",
-  }),
-]
+const configCodeBlock = {
+  block: "code",
+  line: "code_line",
+}
+
+const plugins = [CodePlugin(configCodeBlock)]
 
 export const NODES_COMPONENTS = {
   "block-quote": "blockquote",
@@ -102,6 +102,7 @@ export class RichEditor extends React.Component {
       <React.Fragment>
         {children}
         <HoverMenu
+          configCodeBlock={configCodeBlock}
           // eslint-disable-next-line no-return-assign
           innerRef={(menu) => (this.menu = menu)}
           editor={editor}
@@ -112,7 +113,7 @@ export class RichEditor extends React.Component {
 
   render() {
     const { value } = this.state
-    const { content, readOnly } = this.props
+    const { readOnly } = this.props
 
     return (
       <>

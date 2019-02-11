@@ -1,6 +1,7 @@
 import { Document } from "slate"
 import { getEventTransfer } from "slate-react"
-import { getCurrentCode, deserializeCode } from "../utils"
+import { deserializeCode } from "../utils"
+import { getCurrentCode } from "../../common/utils"
 
 /**
  * User is pasting content, insert it as text
@@ -8,12 +9,12 @@ import { getCurrentCode, deserializeCode } from "../utils"
 export function onPaste(opts, event, change, editor) {
   const { value } = change
   const data = getEventTransfer(event)
-  const currentCode = getCurrentCode(opts, value)
+  const codeBlock = getCurrentCode(opts, value)
 
   // Only handle paste when selection is completely a code block
   const { endBlock } = value
 
-  if (!currentCode || !currentCode.hasDescendant(endBlock.key)) {
+  if (!codeBlock || !codeBlock.hasDescendant(endBlock.key)) {
     return editor()
   }
 

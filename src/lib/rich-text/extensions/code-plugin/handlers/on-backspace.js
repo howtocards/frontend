@@ -1,4 +1,5 @@
-import { getCurrentIndent, getCurrentCode } from "../utils"
+import { getCurrentIndent } from "../utils"
+import { getCurrentCode } from "../../common/utils"
 
 /**
  * User pressed Delete in an editor:
@@ -31,12 +32,11 @@ export function onBackspace(opts, event, change, editor) {
   }
   if (opts.exitBlockType) {
     // Otherwise check if we are in an empty code container...
-    const currentCode = getCurrentCode(opts, value)
+    const codeBlock = getCurrentCode(opts, value)
     const isStartOfCode =
-      selection.start.offset === 0 && currentCode.getFirstText() === startText
-    // PERF: avoid checking for whole currentCode.text
-    const isEmpty =
-      currentCode.nodes.size === 1 && currentLine.text.length === 0
+      selection.start.offset === 0 && codeBlock.getFirstText() === startText
+    // PERF: avoid checking for whole codeBlock.text
+    const isEmpty = codeBlock.nodes.size === 1 && currentLine.text.length === 0
 
     if (isStartOfCode && isEmpty) {
       event.preventDefault()

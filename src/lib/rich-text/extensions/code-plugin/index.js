@@ -1,20 +1,37 @@
 import React from "react"
 import { PrismPlugin } from "./prism-plugin"
 import { CodeBlock } from "./code-block"
-
 import { Options } from "./options"
 import { onKeyDown, onPaste } from "./handlers"
-import { core } from "./core"
 
 export const CodePlugin = (options = {}) => {
   const config = new Options({
     ...options,
   })
 
-  const getCore = core(config)
-
   return [
     {
+      commands: {
+        insertCode(editor, code) {
+          editor.insertBlock({
+            object: "block",
+            type: config.block,
+            nodes: [
+              {
+                object: "block",
+                type: config.line,
+                nodes: [{ object: "text", leaves: [code] }],
+              },
+            ],
+          })
+        },
+      },
+
+      onKeyDown: (event, change, editor) =>
+        onKeyDown(config, event, change, editor),
+
+      onPaste: (event, change, editor) =>
+        onPaste(config, event, change, editor),
       renderNode(props, editor, next) {
         const { node, children, attributes } = props
 
@@ -29,18 +46,10 @@ export const CodePlugin = (options = {}) => {
 
         return Types[node.type] || next()
       },
-      ...getCore,
     },
     PrismPlugin({
       onlyIn: (node) => node.type === config.block,
       getSyntax: (node) => node.data.get("language"),
     }),
-    {
-      onKeyDown: (event, change, editor) =>
-        onKeyDown(config, event, change, editor),
-
-      onPaste: (event, change, editor) =>
-        onPaste(config, event, change, editor),
-    },
   ]
 }

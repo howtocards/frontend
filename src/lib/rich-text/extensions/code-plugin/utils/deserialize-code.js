@@ -7,7 +7,7 @@ const DEFAULT_NEWLINE = "\n"
 /**
  * Deserialize a text into a code block
  */
-export function deserializeCode(opts, text) {
+export const deserializeCode = (opts, text) => {
   const sep = detectNewline(text) || DEFAULT_NEWLINE
 
   const lines = List(text.split(sep)).map((line) =>
