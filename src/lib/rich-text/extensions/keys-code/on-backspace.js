@@ -1,21 +1,16 @@
-import { getCurrentIndent } from "../utils"
-import { getCurrentCode } from "../../common/utils"
+import { getCurrentIndent, getCurrentCode } from "./helpers"
 
 /**
  * User pressed Delete in an editor:
  * Remove last idnentation before cursor
  */
-export function onBackspace(opts, event, change, editor) {
+export const onBackspace = (opts, event, change, editor) => {
   const { value } = change
-  const {
-    selection: { isExpanded },
-  } = value
+  const { selection, startText } = value
 
-  if (isExpanded) {
+  if (selection.isExpanded) {
     return editor()
   }
-
-  const { selection, startText } = value
 
   const currentLine = value.startBlock
 

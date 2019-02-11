@@ -1,5 +1,5 @@
 import { isKeyHotkey } from "is-hotkey"
-import { getCurrentCode } from "../../common/utils"
+import { getCurrentCode } from "./helpers"
 import { onTab } from "./on-tab"
 import { onEnter } from "./on-enter"
 import { onModEnter } from "./on-mod-enter"
@@ -16,7 +16,7 @@ const isBackspace = isKeyHotkey("backspace")
 /**
  * User is pressing a key in the editor
  */
-export function onKeyDown(opts, event, change, editor) {
+export const onKeyDown = (opts, event, change, editor) => {
   const { value } = change
   const codeBlock = getCurrentCode(opts, value)
 

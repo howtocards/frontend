@@ -1,12 +1,11 @@
 import { Document } from "slate"
 import { getEventTransfer } from "slate-react"
-import { deserializeCode } from "../utils"
-import { getCurrentCode } from "../../common/utils"
+import { deserializeCode, getCurrentCode } from "./helpers"
 
 /**
  * User is pasting content, insert it as text
  */
-export function onPaste(opts, event, change, editor) {
+export const onPaste = (opts, event, change, editor) => {
   const { value } = change
   const data = getEventTransfer(event)
   const codeBlock = getCurrentCode(opts, value)
