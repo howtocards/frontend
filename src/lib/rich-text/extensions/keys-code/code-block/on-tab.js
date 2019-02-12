@@ -1,4 +1,4 @@
-import { getCurrentIndent } from "./helpers"
+import { getCurrentIndent } from "../common/helpers"
 
 export const indentLines = (
   opts,
@@ -22,9 +22,9 @@ export const indentLines = (
 
 /**
  * User pressed Tab in an editor:
- * Insert a tab after detecting it from code block content.
+ * Insert a tab after detecting it from block content.
  */
-export const onTab = (opts, event, change) => {
+export const onTab = ({ opts, event, change }) => {
   const { value } = change
 
   event.preventDefault()
@@ -34,7 +34,7 @@ export const onTab = (opts, event, change) => {
     selection: { isCollapsed },
   } = value
 
-  const indent = getCurrentIndent(opts, value)
+  const indent = getCurrentIndent(opts.block, value)
 
   // Selection is collapsed, we just insert an indent at cursor
   if (isCollapsed) {

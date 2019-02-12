@@ -1,6 +1,12 @@
 import { css } from "styled-components"
 
 export const prismcssDark = css`
+  blockquote {
+    background: #343434;
+    border-left: 10px solid #232222;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+  }
   code[class*="language-"],
   pre[class*="language-"] {
     color: white;
@@ -126,6 +132,12 @@ export const prismcssDark = css`
 `
 
 export const prismcssLight = css`
+  blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+  }
   code[class*="language-"],
   pre[class*="language-"] {
     color: white;

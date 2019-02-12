@@ -1,8 +1,8 @@
 /**
  * User pressed Enter in an editor:
- * Insert a new code line and start it with the indentation from previous line
+ * Insert a new block line and start it with the indentation from previous line
  */
-export const onEnter = (opts, event, change, editor) => {
+export const onEnter = ({ event, change, editor }) => {
   const { value } = change
 
   const { selection } = value

@@ -34,41 +34,6 @@ export class RichEditor extends React.Component {
       : Plain.deserialize(""),
   }
 
-  componentDidMount = () => {
-    this.updateMenu()
-  }
-
-  componentDidUpdate = () => {
-    this.updateMenu()
-  }
-
-  updateMenu = () => {
-    const { menu } = this
-    const { value } = this.state
-    const { fragment, selection } = value
-
-    if (!menu) return
-
-    if (selection.isBlurred || selection.isCollapsed || fragment.text === "") {
-      menu.removeAttribute("style")
-      return
-    }
-
-    const native = window.getSelection()
-    const range = native.getRangeAt(0)
-    const rect = range.getBoundingClientRect()
-
-    menu.style.opacity = 1
-    menu.style.top = `${rect.top + window.pageYOffset - menu.offsetHeight}px`
-
-    const leftPosition = `${rect.left +
-      window.pageXOffset -
-      menu.offsetWidth / 2 +
-      rect.width / 2}px`
-
-    menu.style.left = leftPosition
-  }
-
   renderNode = (props, editor, next) => {
     const { attributes, children, node } = props
 
@@ -101,12 +66,7 @@ export class RichEditor extends React.Component {
     return (
       <React.Fragment>
         {children}
-        <HoverMenu
-          configCodePlugin={configCodePlugin}
-          // eslint-disable-next-line no-return-assign
-          innerRef={(menu) => (this.menu = menu)}
-          editor={editor}
-        />
+        <HoverMenu configCodePlugin={configCodePlugin} editor={editor} />
       </React.Fragment>
     )
   }
