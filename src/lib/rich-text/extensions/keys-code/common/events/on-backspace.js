@@ -1,10 +1,10 @@
-import { getCurrentIndent, getCurrentCode } from "./helpers"
+import { getCurrentIndent, getCurrentBlock } from "../helpers"
 
 /**
  * User pressed Delete in an editor:
  * Remove last idnentation before cursor
  */
-export const onBackspace = (opts, event, change, editor) => {
+export const onBackspace = ({ opts, event, change, editor }) => {
   const { value } = change
   const { selection, startText } = value
 
@@ -15,7 +15,7 @@ export const onBackspace = (opts, event, change, editor) => {
   const currentLine = value.startBlock
 
   // Detect and remove indentation at cursor
-  const indent = getCurrentIndent(opts, value)
+  const indent = getCurrentIndent(opts.block, value)
   const beforeSelection = currentLine.text.slice(0, selection.start.offset)
 
   // If the line before selection ending with the indentation?
@@ -26,14 +26,15 @@ export const onBackspace = (opts, event, change, editor) => {
     return change.deleteBackward(indent.length).focus()
   }
   if (opts.exitBlockType) {
-    // Otherwise check if we are in an empty code container...
-    const codeBlock = getCurrentCode(opts, value)
-    const isStartOfCode =
-      selection.start.offset === 0 && codeBlock.getFirstText() === startText
-    // PERF: avoid checking for whole codeBlock.text
-    const isEmpty = codeBlock.nodes.size === 1 && currentLine.text.length === 0
+    // Otherwise check if we are in an empty block container...
+    const parentBlock = getCurrentBlock(opts.block, value, true)
+    const isStartOfText =
+      selection.start.offset === 0 && parentBlock.getFirstText() === startText
+    // PERF: avoid checking for whole Block.text
+    const isEmpty =
+      parentBlock.nodes.size === 1 && currentLine.text.length === 0
 
-    if (isStartOfCode && isEmpty) {
+    if (isStartOfText && isEmpty) {
       event.preventDefault()
       // Convert it to default exit type
       return change

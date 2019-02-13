@@ -6,6 +6,11 @@ import { StyledMenu, Button } from "./styles"
 const getIconComponent = (type) => ICONS_LIST[type] || "span"
 
 export class HoverMenu extends React.Component {
+  menu = React.createRef()
+  state = {
+    isHoverInCodeBlock: false,
+  }
+
   handleCode = (type) => {
     const { editor, configCodePlugin } = this.props
     const { value } = editor
@@ -187,20 +192,80 @@ export class HoverMenu extends React.Component {
     return value.activeMarks.some((mark) => mark.type === type)
   }
 
+  componentDidMount = () => {
+    this.updateMenu()
+  }
+
+  componentDidUpdate = () => {
+    this.updateMenu()
+  }
+
+  updateMenu = () => {
+    const { menu } = this
+    const { isHoverInCodeBlock } = this.state
+    const { editor } = this.props
+    const { value } = editor
+    const { fragment, selection } = value
+
+    if (!menu.current) return
+
+    const isCodeBlock =
+      fragment &&
+      fragment.nodes &&
+      fragment.nodes.first() &&
+      fragment.nodes.first().type === "code"
+
+    if (isCodeBlock !== isHoverInCodeBlock) {
+      this.setState({ isHoverInCodeBlock: isCodeBlock })
+    }
+
+    if (selection.isBlurred || selection.isCollapsed || fragment.text === "") {
+      menu.current.removeAttribute("style")
+      return
+    }
+
+    const native = window.getSelection()
+    const range = native.getRangeAt(0)
+    const rect = range.getBoundingClientRect()
+
+    menu.current.style.opacity = 1
+    menu.current.style.top = `${rect.top +
+      window.pageYOffset -
+      menu.current.offsetHeight}px`
+
+    const leftPosition = `${rect.left +
+      window.pageXOffset -
+      menu.current.offsetWidth / 2 +
+      rect.width / 2}px`
+
+    menu.current.style.left = leftPosition
+  }
+
   render() {
     const { className, innerRef, configCodePlugin } = this.props
-    const root = window.document.getElementById("root")
+    const { isHoverInCodeBlock } = this.state
 
-    return ReactDOM.createPortal(
-      <StyledMenu className={className} ref={innerRef}>
+    const root = window.document.getElementById("root")
+    const codeBlockButton =
+      configCodePlugin.block && this.renderBlockButton(configCodePlugin.block)
+
+    const buttons = isHoverInCodeBlock ? (
+      <>{codeBlockButton}</>
+    ) : (
+      <>
         {this.renderMarkButton("bold")}
         {this.renderMarkButton("italic")}
         {this.renderMarkButton("underlined")}
-        {configCodePlugin.block &&
-          this.renderBlockButton(configCodePlugin.block)}
+        {codeBlockButton}
         {this.renderBlockButton("block-quote")}
         {this.renderBlockButton("numbered-list")}
         {this.renderBlockButton("bulleted-list")}
+      </>
+    )
+
+    return ReactDOM.createPortal(
+      <StyledMenu className={className} ref={this.menu}>
+        {buttons}
       </StyledMenu>,
       root,
     )
