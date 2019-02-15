@@ -1,4 +1,4 @@
-import { getCurrentIndent } from "../common/helpers"
+import { getCurrentIndent } from "../helpers"
 
 export const indentLines = (
   opts,

@@ -1,9 +1,9 @@
-import { onKeyDownCodeBlock, onPasteCodeBlock } from "./code-block"
+import { onPasteCodeBlock } from "./code-block"
 import { onKeyDownLists } from "./lists"
-import { onKeyDownBlockQuote } from "./block-quote"
 import { getCurrentBlock } from "./common/helpers"
+import { onKeyDownCommon } from "./common/events"
 
-export const KeysCode = (config) => {
+export const HotKeys = (config) => {
   const commonOptions = {
     exitBlockType: "paragraph",
     selectAll: true,
@@ -26,12 +26,14 @@ export const KeysCode = (config) => {
   const blockQuoteOptions = {
     ...commonOptions,
     block: "block-quote",
-    line: "",
+    line: "paragraph",
   }
 
   return {
     onKeyDown: (event, change, editor) => {
       const { value } = change
+      const args = { event, change, editor }
+
       const isCodeBlock = getCurrentBlock(commonOptions.block, value, true)
       const isNumberedListBlock = getCurrentBlock(
         numberedListBlockOptions.block,
@@ -43,39 +45,31 @@ export const KeysCode = (config) => {
         value,
         true,
       )
-      const isBlockQuote = getCurrentBlock(blockQuoteOptions.block, value)
+      const isBlockQuote = getCurrentBlock(blockQuoteOptions.block, value, true)
 
       // @TODO: improve in the future (make it more readable)
       if (isCodeBlock) {
-        return onKeyDownCodeBlock({
+        return onKeyDownCommon({
           opts: commonOptions,
-          event,
-          change,
-          editor,
+          ...args,
         })
       }
       if (isNumberedListBlock) {
         return onKeyDownLists({
           opts: numberedListBlockOptions,
-          event,
-          change,
-          editor,
+          ...args,
         })
       }
       if (isBulletedListBlock) {
         return onKeyDownLists({
           opts: bulletedListBlockOptions,
-          event,
-          change,
-          editor,
+          ...args,
         })
       }
       if (isBlockQuote) {
-        return onKeyDownBlockQuote({
+        return onKeyDownCommon({
           opts: blockQuoteOptions,
-          event,
-          change,
-          editor,
+          ...args,
         })
       }
 
@@ -84,14 +78,14 @@ export const KeysCode = (config) => {
     onPaste: (event, change, editor) => {
       const { value } = change
       const { endBlock } = value
+      const args = { event, change, editor }
+
       const codeBlock = getCurrentBlock(commonOptions.block, value, true)
 
       if (codeBlock && codeBlock.hasDescendant(endBlock.key)) {
         return onPasteCodeBlock({
           opts: commonOptions,
-          event,
-          change,
-          editor,
+          ...args,
         })
       }
 

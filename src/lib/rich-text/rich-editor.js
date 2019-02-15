@@ -2,7 +2,7 @@ import React from "react"
 import { Value } from "slate"
 import { Editor } from "slate-react"
 import Plain from "slate-plain-serializer"
-import { HoverMenu, CodePlugin, KeysCode } from "./extensions"
+import { HoverMenu, CodePlugin, HotKeys, PrismPlugin } from "./extensions"
 import { RichEditorStyle } from "./styles"
 
 const configCodePlugin = {
@@ -10,7 +10,13 @@ const configCodePlugin = {
   line: "code_line",
 }
 
-const plugins = [CodePlugin(configCodePlugin)]
+const plugins = [
+  PrismPlugin({
+    onlyIn: (node) => node.type === configCodePlugin.block,
+    getSyntax: (node) => node.data.get("language"),
+  }),
+  CodePlugin(configCodePlugin),
+]
 
 export const NODES_COMPONENTS = {
   "block-quote": "blockquote",
@@ -80,7 +86,7 @@ export class RichEditor extends React.Component {
         <RichEditorStyle>
           <Editor
             readOnly={readOnly}
-            {...KeysCode(configCodePlugin)}
+            {...HotKeys(configCodePlugin)}
             style={{
               minHeight: "300px",
             }}
