@@ -1,5 +1,4 @@
 import React from "react"
-import { PrismPlugin } from "./prism-plugin"
 import { CodeBlock } from "./code-block"
 import { Options } from "./options"
 
@@ -25,9 +24,5 @@ export const CodePlugin = (options = {}) => {
         return Types[node.type] || next()
       },
     },
-    PrismPlugin({
-      onlyIn: (node) => node.type === config.block,
-      getSyntax: (node) => node.data.get("language"),
-    }),
   ]
 }

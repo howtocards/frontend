@@ -1,9 +1,8 @@
-import { onModEnter, onBackspace, onEnter } from "../common/events"
-import { isModA, isTab, isModEnter, isEnter, isBackspace } from "../constant"
-import { onTab } from "./on-tab"
-import { onSelectAll } from "./on-select-all"
+import { isModEnter, isBackspace, isEnter, isModA, isTab } from "../../constant"
+import { onEnter, onBackspace, onModEnter, onSelectAll, onTab } from "."
 
-export const onKeyDownCodeBlock = ({ opts, event, change, editor }) => {
+export const onKeyDownCommon = ({ opts, event, change, editor }) => {
+  const { value } = change
   const args = { opts, event, change, editor }
 
   if (opts.selectAll && isModA(event)) {
@@ -21,6 +20,5 @@ export const onKeyDownCodeBlock = ({ opts, event, change, editor }) => {
   if (isBackspace(event)) {
     return onBackspace(args)
   }
-
   return editor()
 }

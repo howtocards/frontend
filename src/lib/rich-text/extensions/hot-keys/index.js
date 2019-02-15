@@ -1,7 +1,7 @@
-import { onKeyDownCodeBlock, onPasteCodeBlock } from "./code-block"
+import { onPasteCodeBlock } from "./code-block"
 import { onKeyDownLists } from "./lists"
-import { onKeyDownBlockQuote, onPasteBlockQuote } from "./block-quote"
 import { getCurrentBlock } from "./common/helpers"
+import { onKeyDownCommon } from "./common/events"
 
 export const HotKeys = (config) => {
   const commonOptions = {
@@ -26,7 +26,7 @@ export const HotKeys = (config) => {
   const blockQuoteOptions = {
     ...commonOptions,
     block: "block-quote",
-    line: "",
+    line: "paragraph",
   }
 
   return {
@@ -45,11 +45,11 @@ export const HotKeys = (config) => {
         value,
         true,
       )
-      const isBlockQuote = getCurrentBlock(blockQuoteOptions.block, value)
+      const isBlockQuote = getCurrentBlock(blockQuoteOptions.block, value, true)
 
       // @TODO: improve in the future (make it more readable)
       if (isCodeBlock) {
-        return onKeyDownCodeBlock({
+        return onKeyDownCommon({
           opts: commonOptions,
           ...args,
         })
@@ -67,7 +67,7 @@ export const HotKeys = (config) => {
         })
       }
       if (isBlockQuote) {
-        return onKeyDownBlockQuote({
+        return onKeyDownCommon({
           opts: blockQuoteOptions,
           ...args,
         })
@@ -81,14 +81,6 @@ export const HotKeys = (config) => {
       const args = { event, change, editor }
 
       const codeBlock = getCurrentBlock(commonOptions.block, value, true)
-      const blockQuote = getCurrentBlock("block-quote", value, false)
-
-      if (blockQuote) {
-        return onPasteBlockQuote({
-          opts: commonOptions,
-          ...args,
-        })
-      }
 
       if (codeBlock && codeBlock.hasDescendant(endBlock.key)) {
         return onPasteCodeBlock({

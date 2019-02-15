@@ -117,7 +117,7 @@ export class HoverMenu extends React.Component {
     if (type === "block-quote") {
       const isActive = this.hasBlock(type)
 
-      editor.setBlocks(isActive ? DEFAULT_NODE : type)
+      editor.setBlocks(DEFAULT_NODE).wrapBlock(isActive ? DEFAULT_NODE : type)
     }
   }
 
@@ -209,15 +209,11 @@ export class HoverMenu extends React.Component {
     const { isHoverInCodeBlock } = this.state
     const { editor } = this.props
     const { value } = editor
-    const { fragment, selection } = value
+    const { fragment, selection, startBlock } = value
 
-    if (!menu.current) return
-
+    if (!menu.current || !startBlock) return
     const isCodeBlock =
-      fragment &&
-      fragment.nodes &&
-      fragment.nodes.first() &&
-      fragment.nodes.first().type === "code"
+      startBlock.type === "code" || startBlock.type === "code_line"
 
     if (isCodeBlock !== isHoverInCodeBlock) {
       this.setState({ isHoverInCodeBlock: isCodeBlock })
