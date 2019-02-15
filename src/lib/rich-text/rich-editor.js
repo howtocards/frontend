@@ -2,7 +2,7 @@ import React from "react"
 import { Value } from "slate"
 import { Editor } from "slate-react"
 import Plain from "slate-plain-serializer"
-import { HoverMenu, CodePlugin, KeysCode } from "./extensions"
+import { HoverMenu, CodePlugin, HotKeys } from "./extensions"
 import { RichEditorStyle } from "./styles"
 
 const configCodePlugin = {
@@ -80,7 +80,7 @@ export class RichEditor extends React.Component {
         <RichEditorStyle>
           <Editor
             readOnly={readOnly}
-            {...KeysCode(configCodePlugin)}
+            {...HotKeys(configCodePlugin)}
             style={{
               minHeight: "300px",
             }}

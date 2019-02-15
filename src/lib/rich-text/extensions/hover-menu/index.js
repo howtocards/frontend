@@ -36,6 +36,10 @@ export class HoverMenu extends React.Component {
         ),
       )
 
+      document.getMarks().forEach((mark) => {
+        editor.removeMark(mark)
+      })
+
       if (isCodeLine && isType) {
         editor
           .setBlocks(DEFAULT_NODE)
