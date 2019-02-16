@@ -31,6 +31,8 @@ export const MARKS_COMPONENTS = {
   underlined: "u",
 }
 
+let firstUpdate = false
+
 export class RichEditor extends React.Component {
   state = {
     // eslint-disable-next-line react/destructuring-assignment
@@ -46,6 +48,17 @@ export class RichEditor extends React.Component {
     const Type = NODES_COMPONENTS[node.type]
 
     return Type ? <Type {...attributes}>{children}</Type> : next()
+  }
+
+  componentDidUpdate() {
+    const { content } = this.props
+
+    if (!firstUpdate) {
+      firstUpdate = true
+      // @TODO: Fix this fucking thing.
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ value: Value.fromJSON(JSON.parse(content)) })
+    }
   }
 
   renderMark = (props, editor, next) => {
@@ -82,23 +95,21 @@ export class RichEditor extends React.Component {
     const { readOnly } = this.props
 
     return (
-      <>
-        <RichEditorStyle>
-          <Editor
-            readOnly={readOnly}
-            {...HotKeys(configCodePlugin)}
-            style={{
-              minHeight: "300px",
-            }}
-            value={value}
-            onChange={this.onChange}
-            renderEditor={this.renderEditor}
-            renderMark={this.renderMark}
-            renderNode={this.renderNode}
-            plugins={plugins}
-          />
-        </RichEditorStyle>
-      </>
+      <RichEditorStyle>
+        <Editor
+          readOnly={readOnly}
+          {...HotKeys(configCodePlugin)}
+          style={{
+            minHeight: "300px",
+          }}
+          value={value}
+          onChange={this.onChange}
+          renderEditor={this.renderEditor}
+          renderMark={this.renderMark}
+          renderNode={this.renderNode}
+          plugins={plugins}
+        />
+      </RichEditorStyle>
     )
   }
 }

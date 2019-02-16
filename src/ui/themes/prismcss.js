@@ -2,7 +2,9 @@ import { css } from "styled-components"
 
 export const prismcssDark = css`
   blockquote {
-    background: #343434;
+    padding: 4rem 2rem;
+    border: 1px solid ${(p) => p.theme.palette.decoration.borders};
+    ${({ theme }) => theme.embed.canvas}
     border-left: 10px solid #232222;
     margin: 1.5em 10px;
     padding: 0.5em 10px;
@@ -11,7 +13,6 @@ export const prismcssDark = css`
   pre[class*="language-"] {
     color: white;
     background: none;
-    text-shadow: 0 -0.1em 0.2em black;
     font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
     text-align: left;
     white-space: pre;
@@ -39,7 +40,7 @@ export const prismcssDark = css`
 
   pre[class*="language-"],
   :not(pre) > code[class*="language-"] {
-    background: hsl(30, 20%, 25%);
+    /* background: hsl(30, 20%, 25%); */
   }
 
   /* Code blocks */
@@ -47,16 +48,23 @@ export const prismcssDark = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
-    border: 0.3em solid hsl(30, 20%, 40%);
+    padding: 4rem 2rem;
+    border: 1px solid ${(p) => p.theme.palette.decoration.borders};
+    ${({ theme }) =>
+      theme.embed
+        .canvas} /* border: 0.3em solid hsl(30, 20%, 40%);
     border-radius: 0.5em;
-    box-shadow: 1px 1px 0.5em black inset;
+    box-shadow: 1px 1px 0.5em black inset; */
   }
 
   /* Inline code */
   :not(pre) > code[class*="language-"] {
     padding: 0.15em 0.2em 0.05em;
-    border-radius: 0.3em;
-    border: 0.13em solid hsl(30, 20%, 40%);
+    padding: 4rem 2rem;
+    border: 1px solid ${(p) => p.theme.palette.decoration.borders};
+    ${({ theme }) => theme.embed.canvas}
+    /* border-radius: 0.3em;
+    border: 0.13em solid hsl(30, 20%, 40%); */
     box-shadow: 1px 1px 0.3em -0.1em black inset;
     white-space: normal;
   }
@@ -128,21 +136,25 @@ export const prismcssDark = css`
 
   .token.deleted {
     color: red;
+  }
+  .token.function-variable.function,
+  .token.class-name {
+    color: #2f75fa;
   }
 `
 
 export const prismcssLight = css`
   blockquote {
-    background: #f9f9f9;
-    border-left: 10px solid #ccc;
+    padding: 4rem 2rem;
+    border: 1px solid ${(p) => p.theme.palette.decoration.borders};
+    ${({ theme }) => theme.embed.canvas}
     margin: 1.5em 10px;
     padding: 0.5em 10px;
   }
   code[class*="language-"],
   pre[class*="language-"] {
-    color: white;
+    color: black;
     background: none;
-    text-shadow: 0 -0.1em 0.2em black;
     font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
     text-align: left;
     white-space: pre;
@@ -170,7 +182,7 @@ export const prismcssLight = css`
 
   pre[class*="language-"],
   :not(pre) > code[class*="language-"] {
-    background: hsl(30, 20%, 25%);
+    /* background: hsl(30, 20%, 25%); */
   }
 
   /* Code blocks */
@@ -178,16 +190,19 @@ export const prismcssLight = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
-    border: 0.3em solid hsl(30, 20%, 40%);
+    /* border: 0.3em solid hsl(30, 20%, 40%);
     border-radius: 0.5em;
-    box-shadow: 1px 1px 0.5em black inset;
+    box-shadow: 1px 1px 0.5em black inset; */
+    padding: 4rem 2rem;
+    border: 1px solid ${(p) => p.theme.palette.decoration.borders};
+    ${({ theme }) => theme.embed.canvas}
   }
 
   /* Inline code */
   :not(pre) > code[class*="language-"] {
     padding: 0.15em 0.2em 0.05em;
-    border-radius: 0.3em;
-    border: 0.13em solid hsl(30, 20%, 40%);
+    /* border-radius: 0.3em;
+    border: 0.13em solid hsl(30, 20%, 40%); */
     box-shadow: 1px 1px 0.3em -0.1em black inset;
     white-space: normal;
   }
@@ -213,7 +228,7 @@ export const prismcssLight = css`
   .token.number,
   .token.constant,
   .token.symbol {
-    color: hsl(350, 40%, 70%);
+    color: #c034b4;
   }
 
   .token.selector,
@@ -222,7 +237,7 @@ export const prismcssLight = css`
   .token.char,
   .token.builtin,
   .token.inserted {
-    color: hsl(75, 70%, 60%);
+    color: #42ad55;
   }
 
   .token.operator,
@@ -237,7 +252,7 @@ export const prismcssLight = css`
   .token.atrule,
   .token.attr-value,
   .token.keyword {
-    color: hsl(350, 40%, 70%);
+    color: #c034b4;
   }
 
   .token.regex,
@@ -259,5 +274,10 @@ export const prismcssLight = css`
 
   .token.deleted {
     color: red;
+  }
+
+  .token.function-variable.function,
+  .token.class-name {
+    color: #2f75fa;
   }
 `
