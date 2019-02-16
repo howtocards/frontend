@@ -1,3 +1,5 @@
+import { getIndent } from "../helpers"
+
 /**
  * User pressed Enter in an editor:
  * Insert a new block line and start it with the indentation from previous line
@@ -10,8 +12,14 @@ export const onEnter = ({ event, change, editor }) => {
   if (!selection.isCollapsed) {
     return editor()
   }
-
   event.preventDefault()
 
-  return change.insertText("\n").focus()
+  const { startBlock } = value
+  const currentLineText = startBlock.text
+  const indent = getIndent(currentLineText, "")
+
+  return change
+    .splitBlock()
+    .insertText(indent)
+    .focus()
 }
