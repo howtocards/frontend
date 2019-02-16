@@ -12,11 +12,7 @@ export function handleQuote(type) {
 
     if (isLine) {
       unWrapBlocks(editor, ["bulleted-list", "numbered-list", "code"])
-
-      editor
-        .setBlocks(isActive ? DEFAULT_NODE : type)
-        .unwrapBlock("bulleted-list")
-        .unwrapBlock("numbered-list")
+      editor.setBlocks(isActive ? DEFAULT_NODE : type)
     }
   }
 

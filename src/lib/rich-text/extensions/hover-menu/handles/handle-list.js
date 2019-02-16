@@ -43,7 +43,6 @@ export function handleList(type) {
         .unwrapBlock(
           type === "bulleted-list" ? "numbered-list" : "bulleted-list",
         )
-
         .wrapBlock(type)
     } else {
       unWrapBlocks(editor, [
