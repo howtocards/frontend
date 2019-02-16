@@ -31,34 +31,16 @@ export const MARKS_COMPONENTS = {
   underlined: "u",
 }
 
-let firstUpdate = false
+const fromJsonToValue = (content) =>
+  content ? Value.fromJSON(content) : Plain.deserialize("")
 
 export class RichEditor extends React.Component {
-  state = {
-    // eslint-disable-next-line react/destructuring-assignment
-    value: this.props.content
-      ? // eslint-disable-next-line react/destructuring-assignment
-        Value.fromJSON(JSON.parse(this.props.content))
-      : Plain.deserialize(""),
-  }
-
   renderNode = (props, editor, next) => {
     const { attributes, children, node } = props
 
     const Type = NODES_COMPONENTS[node.type]
 
     return Type ? <Type {...attributes}>{children}</Type> : next()
-  }
-
-  componentDidUpdate() {
-    const { content } = this.props
-
-    if (!firstUpdate) {
-      firstUpdate = true
-      // @TODO: Fix this fucking thing.
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ value: Value.fromJSON(JSON.parse(content)) })
-    }
   }
 
   renderMark = (props, editor, next) => {
@@ -72,11 +54,9 @@ export class RichEditor extends React.Component {
   onChange = ({ value }) => {
     const { onChange } = this.props
 
-    this.setState({ value }, () => {
-      if (typeof onChange === "function") {
-        onChange(JSON.stringify(value))
-      }
-    })
+    if (typeof onChange === "function") {
+      onChange(value)
+    }
   }
 
   renderEditor = (props, editor, next) => {
@@ -91,18 +71,17 @@ export class RichEditor extends React.Component {
   }
 
   render() {
-    const { value } = this.state
-    const { readOnly } = this.props
+    const { content, readOnly } = this.props
 
     return (
       <RichEditorStyle>
         <Editor
+          value={fromJsonToValue(content)}
           readOnly={readOnly}
           {...HotKeys(configCodePlugin)}
           style={{
             minHeight: "300px",
           }}
-          value={value}
           onChange={this.onChange}
           renderEditor={this.renderEditor}
           renderMark={this.renderMark}

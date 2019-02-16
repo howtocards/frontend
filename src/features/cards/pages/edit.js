@@ -92,7 +92,7 @@ CardEditView.propTypes = {
   card: PropTypes.shape({
     title: PropTypes.string,
     id: PropTypes.number,
-    content: PropTypes.string,
+    content: PropTypes.shape({}),
   }),
 }
 
