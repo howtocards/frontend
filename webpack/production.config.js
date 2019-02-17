@@ -17,7 +17,7 @@ module.exports = merge(config, {
 
   output: {
     filename: "[name].[chunkhash].js",
-    chunkFilename: "chunk-[name].[cchunkhash].js",
+    chunkFilename: "chunk-[name].[chunkhash].js",
     crossOriginLoading: "anonymous",
   },
 
