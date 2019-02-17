@@ -1,6 +1,6 @@
 workflow "New workflow" {
   resolves = ["GitHub Action for npm"]
-  on = "check_run"
+  on = "label"
 }
 
 action "GitHub Action for npm" {
