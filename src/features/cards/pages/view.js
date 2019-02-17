@@ -74,7 +74,7 @@ CardView.propTypes = {
     title: PropTypes.string,
     authorId: PropTypes.number,
     updatedAt: PropTypes.string,
-    content: PropTypes.string,
+    content: PropTypes.shape({}),
   }).isRequired,
 }
 
