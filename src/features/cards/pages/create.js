@@ -1,8 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
+import Plain from "slate-plain-serializer"
+
 import { connect } from "react-redux"
 import { withFormik } from "formik"
-import { compose } from "recompose"
+import { compose, withProps } from "recompose"
 
 import { Col } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
@@ -23,6 +25,12 @@ const enhance = compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
+  withProps({
+    card: {
+      title: "",
+      content: Plain.deserialize("").toJS(),
+    },
+  }),
   withFormik(setupFormikForCreateEdit),
 )
 

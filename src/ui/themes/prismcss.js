@@ -50,9 +50,8 @@ export const prismcssDark = css`
     overflow: auto;
     padding: 4rem 2rem;
     border: 1px solid ${(p) => p.theme.palette.decoration.borders};
-    ${({ theme }) =>
-      theme.embed
-        .canvas} /* border: 0.3em solid hsl(30, 20%, 40%);
+    ${({ theme }) => theme.embed.canvas};
+    background-color: #171717; /* border: 0.3em solid hsl(30, 20%, 40%);
     border-radius: 0.5em;
     box-shadow: 1px 1px 0.5em black inset; */
   }
@@ -85,21 +84,27 @@ export const prismcssDark = css`
   }
 
   .token.property,
-  .token.tag,
   .token.boolean,
   .token.number,
-  .token.constant,
+  .token.tag,
   .token.symbol {
     color: hsl(350, 40%, 70%);
   }
 
+  .token.tag.script {
+    color: #4096ae;
+  }
+
   .token.selector,
   .token.attr-name,
-  .token.string,
   .token.char,
   .token.builtin,
   .token.inserted {
-    color: hsl(75, 70%, 60%);
+    color: #4096ae;
+  }
+
+  .token.string {
+    color: #bb7b66;
   }
 
   .token.operator,
@@ -138,8 +143,21 @@ export const prismcssDark = css`
     color: red;
   }
   .token.function-variable.function,
-  .token.class-name {
-    color: #2f75fa;
+  .token.function {
+    color: #c0c28f;
+  }
+
+  .token.class-name,
+  .token.tag {
+    color: #00a78f;
+  }
+  .token.tag.spread.attr-value,
+  .token.tag.spread.punctuation,
+  .token.tag.attr-name,
+  .token.tag.script.language-javascript.script-punctuation.punctuation,
+  .token.tag.script.language-javascript,
+  .token.tag.script.language-javascript.punctuation {
+    color: white;
   }
 `
 
@@ -226,9 +244,12 @@ export const prismcssLight = css`
   .token.tag,
   .token.boolean,
   .token.number,
-  .token.constant,
   .token.symbol {
     color: #c034b4;
+  }
+
+  .token.tag.script {
+    color: #4096ae;
   }
 
   .token.selector,
@@ -277,7 +298,16 @@ export const prismcssLight = css`
   }
 
   .token.function-variable.function,
-  .token.class-name {
+  .token.class-name,
+  .token.function {
     color: #2f75fa;
+  }
+  .token.tag.spread.attr-value,
+  .token.tag.spread.punctuation,
+  .token.tag.attr-name,
+  .token.tag.script.language-javascript.script-punctuation.punctuation,
+  .token.tag.script.language-javascript,
+  .token.tag.script.language-javascript.punctuation {
+    color: black;
   }
 `

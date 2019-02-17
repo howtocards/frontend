@@ -1,5 +1,6 @@
 import React from "react"
-import { Value } from "slate"
+import PropTypes from "prop-types"
+import { Value, Document } from "slate"
 import { Editor } from "slate-react"
 import Plain from "slate-plain-serializer"
 import { HoverMenu, CodePlugin, HotKeys, PrismPlugin } from "./extensions"
@@ -18,28 +19,29 @@ const plugins = [
   CodePlugin(configCodePlugin),
 ]
 
-export const NODES_COMPONENTS = {
+const NODES_COMPONENTS = {
   "block-quote": "blockquote",
   "bulleted-list": "ul",
   "list-item": "li",
   "numbered-list": "ol",
 }
 
-export const MARKS_COMPONENTS = {
+const MARKS_COMPONENTS = {
   bold: "strong",
   italic: "em",
   underlined: "u",
 }
 
-let firstUpdate = false
-
 export class RichEditor extends React.Component {
+  static propTypes = {
+    content: PropTypes.shape({
+      document: PropTypes.shape({}).isRequired,
+    }).isRequired,
+  }
+
   state = {
-    // eslint-disable-next-line react/destructuring-assignment
-    value: this.props.content
-      ? // eslint-disable-next-line react/destructuring-assignment
-        Value.fromJSON(JSON.parse(this.props.content))
-      : Plain.deserialize(""),
+    // eslint-disable-next-line react/no-unused-state, react/destructuring-assignment
+    value: Value.fromJS(this.props.content),
   }
 
   renderNode = (props, editor, next) => {
@@ -50,33 +52,12 @@ export class RichEditor extends React.Component {
     return Type ? <Type {...attributes}>{children}</Type> : next()
   }
 
-  componentDidUpdate() {
-    const { content } = this.props
-
-    if (!firstUpdate) {
-      firstUpdate = true
-      // @TODO: Fix this fucking thing.
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ value: Value.fromJSON(JSON.parse(content)) })
-    }
-  }
-
   renderMark = (props, editor, next) => {
     const { children, mark, attributes } = props
 
     const Type = MARKS_COMPONENTS[mark.type]
 
     return Type ? <Type {...attributes}>{children}</Type> : next()
-  }
-
-  onChange = ({ value }) => {
-    const { onChange } = this.props
-
-    this.setState({ value }, () => {
-      if (typeof onChange === "function") {
-        onChange(JSON.stringify(value))
-      }
-    })
   }
 
   renderEditor = (props, editor, next) => {
@@ -90,13 +71,25 @@ export class RichEditor extends React.Component {
     )
   }
 
+  onChange = ({ value }) => {
+    const { onChange, readOnly } = this.props
+    const toJS = value.toJS()
+
+    this.setState({ value }, () => {
+      if (!readOnly && typeof onChange === "function") {
+        onChange(toJS)
+      }
+    })
+  }
+
   render() {
-    const { value } = this.state
     const { readOnly } = this.props
+    const { value } = this.state
 
     return (
       <RichEditorStyle>
         <Editor
+          id="foo1"
           readOnly={readOnly}
           {...HotKeys(configCodePlugin)}
           style={{

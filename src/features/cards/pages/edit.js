@@ -1,14 +1,22 @@
 import React from "react"
 import PropTypes from "prop-types"
+import Plain from "slate-plain-serializer"
 import { connect } from "react-redux"
 import { withFormik } from "formik"
-import { compose, withPropsOnChange } from "recompose"
+import {
+  compose,
+  withPropsOnChange,
+  lifecycle,
+  mapProps,
+  withState,
+} from "recompose"
 
 import { Col } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
 import { Card, ButtonPrimary, Input } from "@ui/atoms"
 
+import { PlaneDimensions } from "styled-icons/fa-solid/Plane"
 import { CardsCommonTemplate } from "../templates/common"
 import { fetchFullCard, cardEdit } from "../effects"
 import { setupFormikForCreateEdit } from "../setup-formik-for-create-edit"
@@ -52,7 +60,7 @@ const CardEditView = ({
   values,
 }) => (
   <>
-    {card && (
+    {values.content && (
       <CardsCommonTemplate>
         <Authenticated
           render={() => (
@@ -70,6 +78,7 @@ const CardEditView = ({
                     failed={touched.title && Boolean(errors.title)}
                   />
                   <RichEditor
+                    key={card.id}
                     disabled={isSubmitting}
                     content={values.content}
                     onChange={(content) => setFieldValue("content", content)}
@@ -92,7 +101,7 @@ CardEditView.propTypes = {
   card: PropTypes.shape({
     title: PropTypes.string,
     id: PropTypes.number,
-    content: PropTypes.string,
+    content: PropTypes.shape({}),
   }),
 }
 

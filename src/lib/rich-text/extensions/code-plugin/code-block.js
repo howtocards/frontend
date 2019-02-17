@@ -59,7 +59,7 @@ export class CodeBlock extends React.Component {
           editor.setNodeByKey(node.key, { data: { language: codeLanguage } })
         })
         .catch((error) => {
-          console.error(`[@code-block/prismjs]: ${error.message}`)
+          console.warn(`[@code-plugin/code-block:onChange]: ${error.message}`)
         })
     }
   }
@@ -79,7 +79,7 @@ export class CodeBlock extends React.Component {
             })
           })
           .catch((error) => {
-            console.error(`[@code-block/prismjs]: ${error.message}`)
+            console.warn(`[@code-plugin/code-block:onChange] ${error.message}`)
           })
       }
     }
