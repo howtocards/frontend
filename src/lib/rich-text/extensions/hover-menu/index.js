@@ -82,6 +82,7 @@ export class HoverMenu extends React.Component {
     const { editor } = this.props
 
     event.preventDefault()
+    // eslint-disable-next-line no-alert
     const src = window.prompt("Enter the URL of the image:")
 
     if (!src) return

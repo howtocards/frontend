@@ -33,29 +33,29 @@ export const onDropOrPaste = (event, editor, next) => {
   if (!target && event.type === "drop") return next()
 
   const transfer = getEventTransfer(event)
-  const { type, text, files } = transfer
+  const { type, text } = transfer
 
-  if (type === "files") {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const file of files) {
-      const reader = new FileReader()
-      const [mime] = file.type.split("/")
+  // const { type, text, files } = transfer
+  // if (type === "files") {
+  //   // eslint-disable-next-line no-restricted-syntax
+  //   for (const file of files) {
+  //     const reader = new FileReader()
+  //     const [mime] = file.type.split("/")
 
-      // eslint-disable-next-line no-continue
-      if (mime !== "image") continue
+  //     // eslint-disable-next-line no-continue
+  //     if (mime !== "image") continue
 
-      // eslint-disable-next-line no-loop-func
-      reader.addEventListener("load", () => {
-        editor.command(insertImage, reader.result, target)
-      })
+  //     // eslint-disable-next-line no-loop-func
+  //     reader.addEventListener("load", () => {
+  //       editor.command(insertImage, reader.result, target)
+  //     })
 
-      reader.readAsDataURL(file)
-    }
-    return next()
-  }
+  //     reader.readAsDataURL(file)
+  //   }
+  //   return next()
+  // }
 
   if (type === "text") {
-    console.log("not", isImage(text))
     if (!isUrl(text)) return next()
     if (!isImage(text)) return next()
     editor.command(insertImage, text, target)

@@ -17,7 +17,7 @@ const configCodePlugin = {
 }
 
 const plugins = [
-  ...ImagePlugin(),
+  ImagePlugin(),
   PrismPlugin({
     onlyIn: (node) => node.type === configCodePlugin.block,
     getSyntax: (node) => node.data.get("language"),
