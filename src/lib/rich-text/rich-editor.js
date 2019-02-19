@@ -1,8 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Value, Document } from "slate"
+import { Value } from "slate"
 import { Editor } from "slate-react"
-import Plain from "slate-plain-serializer"
 import { HoverMenu, CodePlugin, HotKeys, PrismPlugin } from "./extensions"
 import { RichEditorStyle } from "./styles"
 
@@ -33,7 +32,14 @@ const MARKS_COMPONENTS = {
 }
 
 export class RichEditor extends React.Component {
+  static defaultProps = {
+    onChange: () => {},
+    readOnly: false,
+  }
+
   static propTypes = {
+    readOnly: PropTypes.bool,
+    onChange: PropTypes.func,
     content: PropTypes.shape({
       document: PropTypes.shape({}).isRequired,
     }).isRequired,

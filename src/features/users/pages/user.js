@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 import { fetchStatus } from "symbiote-fetching"
 import { compose, withPropsOnChange, branch, renderComponent } from "recompose"
 import { connect } from "react-redux"
-
 import { Col, Row } from "@lib/styled-components-layout"
 import { H3, H1 } from "@ui/atoms"
 import { CardsList, CardItem } from "@features/cards"

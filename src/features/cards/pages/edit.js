@@ -1,22 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Plain from "slate-plain-serializer"
 import { connect } from "react-redux"
 import { withFormik } from "formik"
-import {
-  compose,
-  withPropsOnChange,
-  lifecycle,
-  mapProps,
-  withState,
-} from "recompose"
+import { compose, withPropsOnChange } from "recompose"
 
 import { Col } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
 import { Card, ButtonPrimary, Input } from "@ui/atoms"
-
-import { PlaneDimensions } from "styled-icons/fa-solid/Plane"
 import { CardsCommonTemplate } from "../templates/common"
 import { fetchFullCard, cardEdit } from "../effects"
 import { setupFormikForCreateEdit } from "../setup-formik-for-create-edit"
@@ -103,6 +94,14 @@ CardEditView.propTypes = {
     id: PropTypes.number,
     content: PropTypes.shape({}),
   }),
+  errors: PropTypes.shape({}).isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+  touched: PropTypes.shape({}).isRequired,
+  values: PropTypes.shape({}).isRequired,
 }
 
 export const CardEditPage = enhance(CardEditView)

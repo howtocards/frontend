@@ -1,32 +1,22 @@
 import { DEFAULT_NODE } from "../constant"
 import { unWrapBlocks } from "../unwrap-blocks"
+import { hasBlock } from "../has-block"
 
-export function handleQuote(type) {
-  const { editor } = this.props
+export const handleQuote = (type, editor) => {
   const { value } = editor
   const { document } = value
 
-  if (type !== "block-quote") {
-    const isActive = this.hasBlock(type)
-    const isLine = this.hasBlock(DEFAULT_NODE)
-
-    if (isLine) {
-      unWrapBlocks(editor, ["bulleted-list", "numbered-list", "code"])
-      editor.setBlocks(isActive ? DEFAULT_NODE : type)
-    }
-  }
-
   if (type === "block-quote") {
-    const isBlockQoute = this.hasBlock(DEFAULT_NODE)
+    const isLine = hasBlock(DEFAULT_NODE, editor)
     const isType = value.blocks.some((block) =>
       Boolean(document.getClosest(block.key, (parent) => parent.type === type)),
     )
 
     unWrapBlocks(editor, ["bulleted-list", "numbered-list", "code"])
 
-    if (isBlockQoute && isType) {
+    if (isLine && isType) {
       editor.setBlocks(DEFAULT_NODE).unwrapBlock(type)
-    } else if (isBlockQoute) {
+    } else if (isLine) {
       editor.wrapBlock(type)
     } else {
       editor.setBlocks(DEFAULT_NODE).wrapBlock(type)

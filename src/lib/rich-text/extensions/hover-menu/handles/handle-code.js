@@ -1,31 +1,21 @@
 import { DEFAULT_NODE } from "../constant"
 import { unWrapBlocks } from "../unwrap-blocks"
+import { hasBlock } from "../has-block"
 
-export function handleCode(type) {
-  const { editor, configCodePlugin } = this.props
+export const handleCode = (type, editor, configCodePlugin) => {
   const { value } = editor
   const { document } = value
 
-  if (type !== configCodePlugin.block) {
-    const isActive = this.hasBlock(type)
-    const isCodeLine = this.hasBlock("code_line")
-
-    if (isCodeLine) {
-      unWrapBlocks(editor, ["bulleted-list", "numbered-list", "block-quote"])
-
-      editor.setBlocks(isActive ? DEFAULT_NODE : type)
-    }
-  }
-
   if (type === configCodePlugin.block) {
-    const isCodeLine = this.hasBlock(configCodePlugin.line)
+    const isCodeLine = hasBlock(configCodePlugin.line, editor)
     const isType = value.blocks.some((block) =>
       Boolean(document.getClosest(block.key, (parent) => parent.type === type)),
     )
 
-    // @TODO: To delete all marks, not just selected
-    document.getMarks().forEach((mark) => {
-      editor.removeMark(mark)
+    value.document.nodes.forEach((block) => {
+      block.getMarksAsArray().forEach((mark) => {
+        editor.removeMark(mark)
+      })
     })
 
     unWrapBlocks(editor, ["bulleted-list", "numbered-list", "block-quote"])

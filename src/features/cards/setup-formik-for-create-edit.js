@@ -1,5 +1,3 @@
-import Plain from "slate-plain-serializer"
-
 const CONTENT_MIN_LENGTH = 3
 
 export const setupFormikForCreateEdit = {
