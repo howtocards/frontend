@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { compose, lifecycle } from "recompose"
-
+import PropTypes from "prop-types"
 import { getAllCards } from "../effects"
 import { CardsCommonTemplate } from "../templates/common"
 import {
@@ -45,5 +45,9 @@ export const CardsHomeView = ({ ids }) => (
     />
   </CardsCommonTemplate>
 )
+
+CardsHomeView.propTypes = {
+  ids: PropTypes.arrayOf(PropTypes.number).isRequired,
+}
 
 export const CardsHomePage = enhance(CardsHomeView)

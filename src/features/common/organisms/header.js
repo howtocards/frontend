@@ -1,8 +1,7 @@
 import React from "react"
-// import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
-
 import { ToggleThemeConsumer } from "@lib/theme-context"
 import { Container } from "@ui/templates"
 import { WithAccount } from "./with-account"
@@ -39,6 +38,15 @@ const linksForUser = ({ account }) => (
     <NavLink to="/logout">Logout</NavLink>
   </>
 )
+
+linksForUser.propTypes = {
+  account: PropTypes.shape({
+    user: PropTypes.shape({
+      id: PropTypes.number,
+      email: PropTypes.string,
+    }),
+  }).isRequired,
+}
 
 const linksForAnonym = () => <NavLink to="/join">Join</NavLink>
 

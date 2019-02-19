@@ -1,30 +1,14 @@
 import { DEFAULT_NODE } from "../constant"
 import { unWrapBlocks } from "../unwrap-blocks"
+import { hasBlock } from "../has-block"
 
-export function handleList(type) {
-  const { editor } = this.props
+export const handleList = (type, editor) => {
   const { value } = editor
   const { document } = value
 
-  // Handle everything but list buttons.
-  if (type !== "bulleted-list" && type !== "numbered-list") {
-    const isActive = this.hasBlock(type)
-    const isList = this.hasBlock("list-item")
-
-    if (isList) {
-      unWrapBlocks(editor, [
-        "bulleted-list",
-        "numbered-list",
-        "block-quote",
-        "code",
-      ])
-      editor.setBlocks(isActive ? DEFAULT_NODE : type)
-    }
-  }
-
   if (type === "bulleted-list" || type === "numbered-list") {
     // Handle the extra wrapping required for list buttons.
-    const isList = this.hasBlock("list-item")
+    const isList = hasBlock("list-item", editor)
     const isType = value.blocks.some((block) =>
       Boolean(document.getClosest(block.key, (parent) => parent.type === type)),
     )

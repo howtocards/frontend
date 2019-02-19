@@ -1,47 +1,94 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import PropTypes from "prop-types"
+import { hasMark } from "./has-mark"
+import { hasBlock } from "./has-block"
 import { DEFAULT_NODE, ICONS_LIST } from "./constant"
 import { StyledMenu, Button } from "./styles"
-import { updateMenu, handleQuote, handleCode, handleList } from "./handles"
+import { handleQuote, handleCode, handleList } from "./handles"
 
 const getIconComponent = (type) => ICONS_LIST[type] || "span"
 
 export class HoverMenu extends React.Component {
+  static defaultProps = {
+    className: "",
+  }
+
+  static propTypes = {
+    editor: PropTypes.shape({}).isRequired,
+    configCodePlugin: PropTypes.shape({
+      block: PropTypes.string,
+      line: PropTypes.string,
+    }).isRequired,
+    className: PropTypes.string,
+  }
+
   menu = React.createRef()
-  constructor(props) {
-    super(props)
-    this.state = {
-      isHoverInCodeBlock: false,
+  state = {
+    isHoverInCodeBlock: false,
+  }
+
+  updateMenu() {
+    const { menu } = this
+    const { isHoverInCodeBlock } = this.state
+    const { editor, configCodePlugin } = this.props
+    const { value } = editor
+    const { fragment, selection, startBlock } = value
+
+    if (!menu.current || !startBlock) return
+    const isCodeBlock =
+      startBlock.type === configCodePlugin.block ||
+      startBlock.type === configCodePlugin.line
+
+    if (isCodeBlock !== isHoverInCodeBlock) {
+      this.setState({ isHoverInCodeBlock: isCodeBlock })
     }
-    // @TODO: fucking shit code! It needs to be reworked.
-    this.updateMenu = updateMenu.bind(this)
-    this.handleCode = handleCode.bind(this)
-    this.handleList = handleList.bind(this)
-    this.handleQuote = handleQuote.bind(this)
+
+    if (selection.isBlurred || selection.isCollapsed || fragment.text === "") {
+      menu.current.removeAttribute("style")
+      return
+    }
+
+    const native = window.getSelection()
+    const range = native.getRangeAt(0)
+    const rect = range.getBoundingClientRect()
+    const pair = 2
+
+    menu.current.style.opacity = 1
+    menu.current.style.top = `${rect.top +
+      window.pageYOffset -
+      menu.current.offsetHeight}px`
+
+    const leftPosition = `${rect.left +
+      window.pageXOffset -
+      menu.current.offsetWidth / pair +
+      rect.width / pair}px`
+
+    menu.current.style.left = leftPosition
   }
 
   onClickBlock = (event, type) => {
     event.preventDefault()
     const { editor, configCodePlugin } = this.props
 
-    this.handleList(type)
-    this.handleQuote(type)
+    handleList(type, editor)
+    handleQuote(type, editor)
     if (configCodePlugin.block && configCodePlugin.line) {
-      this.handleCode(type)
+      handleCode(type, editor, configCodePlugin)
     }
   }
 
   renderBlockButton = (type) => {
-    let isActive = this.hasBlock(type)
     const { editor, configCodePlugin } = this.props
     const { value } = editor
+    let isActive = hasBlock(type, editor)
 
     const checkisActiveBlockButton = (blocks, list) => {
       if (blocks.includes(type)) {
         if (value.blocks.size > 0) {
           const parent = value.document.getParent(value.blocks.first().key)
 
-          isActive = this.hasBlock(list) && parent && parent.type === type
+          isActive = hasBlock(list, editor) && parent && parent.type === type
         }
       }
     }
@@ -67,7 +114,8 @@ export class HoverMenu extends React.Component {
   }
 
   renderMarkButton = (type) => {
-    const isActive = this.hasMark(type)
+    const { editor } = this.props
+    const isActive = hasMark(type, editor)
 
     const IconComponent = getIconComponent(type)
 
@@ -89,20 +137,6 @@ export class HoverMenu extends React.Component {
     editor.toggleMark(type)
   }
 
-  hasBlock = (type) => {
-    const { editor } = this.props
-    const { value } = editor
-
-    return value.blocks.some((node) => node.type === type)
-  }
-
-  hasMark = (type) => {
-    const { editor } = this.props
-    const { value } = editor
-
-    return value.activeMarks.some((mark) => mark.type === type)
-  }
-
   componentDidMount = () => {
     this.updateMenu()
   }
@@ -112,7 +146,7 @@ export class HoverMenu extends React.Component {
   }
 
   render() {
-    const { className, innerRef, configCodePlugin } = this.props
+    const { className, configCodePlugin } = this.props
     const { isHoverInCodeBlock } = this.state
 
     const root = window.document.getElementById("root")

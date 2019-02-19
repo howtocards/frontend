@@ -2,7 +2,6 @@ import { isModEnter, isBackspace, isEnter, isModA, isTab } from "../../constant"
 import { onEnter, onBackspace, onModEnter, onSelectAll, onTab } from "."
 
 export const onKeyDownCommon = ({ opts, event, change, editor }) => {
-  const { value } = change
   const args = { opts, event, change, editor }
 
   if (opts.selectAll && isModA(event)) {

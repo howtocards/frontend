@@ -2,6 +2,7 @@ import React from "react"
 import PrismComponents from "prismjs/components"
 import ReactSelect from "react-select"
 import styled from "styled-components"
+import PropTypes from "prop-types"
 
 const MultiSelect = styled(ReactSelect)`
   color: black;
@@ -47,8 +48,19 @@ const optionsForSelect = Object.entries(languages)
   })
 
 export class CodeBlock extends React.Component {
+  static propTypes = {
+    editor: PropTypes.shape({}).isRequired,
+    node: PropTypes.shape({}).isRequired,
+    className: PropTypes.string.isRequired,
+    attributes: PropTypes.shape({}).isRequired,
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node,
+    ]).isRequired,
+  }
+
   componentDidMount() {
-    const { editor, className, node, attributes, children } = this.props
+    const { editor, node } = this.props
 
     const codeLanguage = node.data.get("language")
 
@@ -59,6 +71,7 @@ export class CodeBlock extends React.Component {
           editor.setNodeByKey(node.key, { data: { language: codeLanguage } })
         })
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.warn(`[@code-plugin/code-block:onChange]: ${error.message}`)
         })
     }
@@ -79,6 +92,7 @@ export class CodeBlock extends React.Component {
             })
           })
           .catch((error) => {
+            // eslint-disable-next-line no-console
             console.warn(`[@code-plugin/code-block:onChange] ${error.message}`)
           })
       }

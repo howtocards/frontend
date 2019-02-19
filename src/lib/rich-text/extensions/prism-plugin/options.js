@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Record } from "immutable"
-
+import PropTypes from "prop-types"
 import { TOKEN_MARK } from "./constant"
 
 /**
@@ -25,6 +25,16 @@ const defaultRenderMark = (props) => {
   const className = mark.data.get("className")
 
   return <span className={className}>{children}</span>
+}
+
+defaultRenderMark.propTypes = {
+  mark: PropTypes.shape({
+    type: PropTypes.string,
+  }).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 }
 
 /**
