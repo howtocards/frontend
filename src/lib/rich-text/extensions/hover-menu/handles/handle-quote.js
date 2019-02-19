@@ -2,7 +2,7 @@ import { DEFAULT_NODE } from "../constant"
 import { unWrapBlocks } from "../unwrap-blocks"
 import { hasBlock } from "../has-block"
 
-export const handleQuote = (type, editor) => {
+export const handleQuote = (type, editor, configCodePlugin) => {
   const { value } = editor
   const { document } = value
 
@@ -12,7 +12,11 @@ export const handleQuote = (type, editor) => {
       Boolean(document.getClosest(block.key, (parent) => parent.type === type)),
     )
 
-    unWrapBlocks(editor, ["bulleted-list", "numbered-list", "code"])
+    unWrapBlocks(editor, [
+      "bulleted-list",
+      "numbered-list",
+      configCodePlugin.block,
+    ])
 
     if (isLine && isType) {
       editor.setBlocks(DEFAULT_NODE).unwrapBlock(type)

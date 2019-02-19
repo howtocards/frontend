@@ -2,15 +2,22 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Value } from "slate"
 import { Editor } from "slate-react"
-import { HoverMenu, CodePlugin, HotKeys, PrismPlugin } from "./extensions"
+import {
+  HoverMenu,
+  CodePlugin,
+  HotKeys,
+  PrismPlugin,
+  ImagePlugin,
+} from "./extensions"
 import { RichEditorStyle } from "./styles"
 
 const configCodePlugin = {
-  block: "code",
+  block: "code_block",
   line: "code_line",
 }
 
 const plugins = [
+  ImagePlugin(),
   PrismPlugin({
     onlyIn: (node) => node.type === configCodePlugin.block,
     getSyntax: (node) => node.data.get("language"),
@@ -29,6 +36,7 @@ const MARKS_COMPONENTS = {
   bold: "strong",
   italic: "em",
   underlined: "u",
+  code: "code",
 }
 
 export class RichEditor extends React.Component {
@@ -63,7 +71,15 @@ export class RichEditor extends React.Component {
 
     const Type = MARKS_COMPONENTS[mark.type]
 
-    return Type ? <Type {...attributes}>{children}</Type> : next()
+    const className = mark.type === "code" ? { className: "code_inline" } : {}
+
+    return Type ? (
+      <Type {...attributes} {...className}>
+        {children}
+      </Type>
+    ) : (
+      next()
+    )
   }
 
   renderEditor = (props, editor, next) => {
@@ -95,7 +111,8 @@ export class RichEditor extends React.Component {
     return (
       <RichEditorStyle>
         <Editor
-          id="foo1"
+          tabIndex={0}
+          spellcheck={false}
           readOnly={readOnly}
           {...HotKeys(configCodePlugin)}
           style={{
