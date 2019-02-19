@@ -2,7 +2,7 @@ import { DEFAULT_NODE } from "../constant"
 import { unWrapBlocks } from "../unwrap-blocks"
 import { hasBlock } from "../has-block"
 
-export const handleList = (type, editor) => {
+export const handleList = (type, editor, configCodePlugin) => {
   const { value } = editor
   const { document } = value
 
@@ -18,11 +18,11 @@ export const handleList = (type, editor) => {
         "bulleted-list",
         "numbered-list",
         "block-quote",
-        "code",
+        configCodePlugin.block,
       ])
       editor.setBlocks(DEFAULT_NODE)
     } else if (isList) {
-      unWrapBlocks(editor, ["block-quote", "code"])
+      unWrapBlocks(editor, ["block-quote", configCodePlugin.block])
       editor
         .unwrapBlock(
           type === "bulleted-list" ? "numbered-list" : "bulleted-list",
@@ -33,7 +33,7 @@ export const handleList = (type, editor) => {
         "bulleted-list",
         "numbered-list",
         "block-quote",
-        "code",
+        configCodePlugin.block,
       ])
       editor.setBlocks("list-item").wrapBlock(type)
     }

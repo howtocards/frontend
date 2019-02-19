@@ -1,6 +1,16 @@
 import { css } from "styled-components"
 
 export const prismcssDark = css`
+  /* это надо убрать отсюда потом, ибо эт не подсветка для кода */
+  .image_inline {
+    max-height: 320px;
+    max-width: 100%;
+  }
+  /* это надо убрать отсюда потом, ибо эт не подсветка для кода */
+  .code_inline {
+    background-color: #000;
+    padding: 3px;
+  }
   blockquote {
     padding: 4rem 2rem;
     border: 1px solid ${(p) => p.theme.palette.decoration.borders};
@@ -162,6 +172,16 @@ export const prismcssDark = css`
 `
 
 export const prismcssLight = css`
+  /* это надо убрать отсюда потом, ибо эт не подсветка для кода */
+  .image_inline {
+    max-height: 320px;
+    max-width: 100%;
+  }
+  /* это надо убрать отсюда потом, ибо эт не подсветка для кода */
+  .code_inline {
+    background-color: #eee;
+    padding: 3px;
+  }
   blockquote {
     padding: 4rem 2rem;
     border: 1px solid ${(p) => p.theme.palette.decoration.borders};
