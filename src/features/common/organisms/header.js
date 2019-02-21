@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 import { ToggleThemeConsumer } from "@lib/theme-context"
-import { Container } from "@ui/templates"
+import { Container } from "@ui"
 import { WithAccount } from "./with-account"
 
 // https://codepen.io/anon/pen/PebeaL
