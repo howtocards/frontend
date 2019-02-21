@@ -8,7 +8,20 @@ export const usersApi = {
    * Get info about user
    */
   getInfo: (userId) => api.get(`/users/${userId}/`),
-
+  /**
+   * Update user info
+   */
+  updateInfo: (userId, { displayName }) =>
+    api.put(`/users/${userId}/`, { displayName }),
+  /**
+   * Update user email
+   */
+  updateEmail: (userId, email) => api.put(`/users/${userId}/email/`, { email }),
+  /**
+   * Change user password
+   */
+  changePassword: (userId, { oldPassword, newPassword }) =>
+    api.put(`/users/${userId}/password/`, { oldPassword, newPassword }),
   /**
    * Get useful cards for user
    */

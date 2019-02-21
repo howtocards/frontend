@@ -44,3 +44,13 @@ const getCardsFor = (userId) => (dispatch) => {
 
 export const getUser = (userId) => (dispatch) =>
   dispatch(usersApi.getInfo, userId).then(api.okToPromise)
+
+// /**
+//  * @param {number} userId
+//  * @param {object} body: { displayName }
+//  */
+// export const updateUserInfo = (userId, body) =>
+//   handleFetching(currentActions.fetch, {
+//     noThrow: true,
+//     async run(dispatch) {},
+//   })
