@@ -12,13 +12,13 @@ export const handleCode = (type, editor, configCodePlugin) => {
       Boolean(document.getClosest(block.key, (parent) => parent.type === type)),
     )
 
-    const types = value.marks.toArray().reduce((acc, mark) => {
+    const allMarks = value.marks.toArray().reduce((acc, mark) => {
       acc[mark.type] = true
       return acc
     }, {})
 
     value.texts.toArray().forEach((text) => {
-      Object.keys(types).forEach((typeMark) =>
+      Object.keys(allMarks).forEach((typeMark) =>
         editor.removeMarkByKey(text.key, 0, text.text.length, typeMark),
       )
     })
