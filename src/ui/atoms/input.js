@@ -10,6 +10,7 @@ import { Col } from "@lib/styled-components-layout"
  */
 export const Input = ({
   autoComplete,
+  placeholder,
   disabled,
   error,
   label,
@@ -23,6 +24,7 @@ export const Input = ({
     {label && <InputLabel>{label}</InputLabel>}
     <InputNative
       autoComplete={autoComplete}
+      placeholder={placeholder}
       disabled={disabled}
       error={Boolean(error)}
       name={name}
@@ -37,6 +39,7 @@ export const Input = ({
 
 Input.propTypes = {
   autoComplete: PropTypes.string,
+  placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   error: PropTypes.string,
   label: PropTypes.string,
@@ -49,6 +52,7 @@ Input.propTypes = {
 
 Input.defaultProps = {
   autoComplete: undefined,
+  placeholder: undefined,
   disabled: false,
   error: undefined,
   label: undefined,
