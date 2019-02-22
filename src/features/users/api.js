@@ -11,17 +11,16 @@ export const usersApi = {
   /**
    * Update user info
    */
-  updateInfo: (userId, { displayName }) =>
-    api.put(`/users/${userId}/`, { displayName }),
+  updateInfo: ({ displayName }) => api.put(`/users/`, { displayName }),
   /**
    * Update user email
    */
-  updateEmail: (userId, email) => api.put(`/users/${userId}/email/`, { email }),
+  updateEmail: (email) => api.put(`/users/email/`, { email }),
   /**
    * Change user password
    */
-  changePassword: (userId, { oldPassword, newPassword }) =>
-    api.put(`/users/${userId}/password/`, { oldPassword, newPassword }),
+  changePassword: ({ oldPassword, newPassword }) =>
+    api.put(`/users/password/`, { oldPassword, newPassword }),
   /**
    * Get useful cards for user
    */

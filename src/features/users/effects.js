@@ -5,6 +5,7 @@ import { registryActions } from "@features/cards"
 
 import { usersApi } from "./api"
 import { actions as currentActions } from "./symbiotes/current"
+import { actions as settingsActions } from "./symbiotes/settings"
 
 /**
  * @param {number} userId
@@ -45,12 +46,17 @@ const getCardsFor = (userId) => (dispatch) => {
 export const getUser = (userId) => (dispatch) =>
   dispatch(usersApi.getInfo, userId).then(api.okToPromise)
 
-// /**
-//  * @param {number} userId
-//  * @param {object} body: { displayName }
-//  */
-// export const updateUserInfo = (userId, body) =>
-//   handleFetching(currentActions.fetch, {
-//     noThrow: true,
-//     async run(dispatch) {},
-//   })
+/**
+ * @param {object} body: { displayName }
+ */
+export const updateUserInfo = (body = { displayName: "" }) =>
+  handleFetching(currentActions.fetch, {
+    noThrow: true,
+    async run(dispatch) {
+      const { user } = await dispatch(usersApi.updateInfo, body)
+
+      dispatch(settingsActions.setUserInfo({ user }))
+
+      return { user }
+    },
+  })
