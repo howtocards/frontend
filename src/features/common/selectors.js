@@ -22,7 +22,7 @@ export const accountFetchingSelector = createSelector(
 
 export const accountUserSelector = createSelector(
   accountSelector,
-  (account) => account.user,
+  (account) => (account ? account.user : null),
 )
 
 export const accountIdSelector = createSelector(

@@ -6,15 +6,15 @@ import { connect } from "react-redux"
 import { Col, Row } from "@lib/styled-components-layout"
 import { Button, Input, H1, H3 } from "@ui/atoms"
 
+import * as commonSelectors from "@features/common"
 import { UsersCommonTemplate } from "../templates/common"
 import * as selectors from "../selectors"
-import * as commonSelectors from "../../common"
 import { updateUserInfo } from "../effects"
 import { LoadingView } from "../organisms/loading"
 import { ErrorView } from "../organisms/error"
 
 const mapStateToProps = (state, props) => ({
-  user: commonSelectors.accountSelector(state),
+  user: commonSelectors.accountUserSelector(state),
   fetching: commonSelectors.accountFetchingSelector(state),
 })
 
@@ -39,7 +39,7 @@ export const SettingsView = ({ user }) => (
       <Input
         type="text"
         placeholder="Display name"
-        value={user.displayName}
+        value={user.displayName || ""}
         onChange={() => {}}
       />
     </Row>
@@ -88,7 +88,6 @@ export const SettingsView = ({ user }) => (
     </Row>
   </UsersCommonTemplate>
 )
-
 SettingsView.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number,
