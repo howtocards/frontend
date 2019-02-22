@@ -21,7 +21,7 @@ export const request = (method, url, options = {}) => (dispatch, getState) => {
 
   const defaultBaseUrl = `${document.location.origin}${baseUri}`
 
-  const uri = new URL(url, options.baseUri || defaultBaseUrl)
+  const uri = `${options.baseUri || defaultBaseUrl}${url}`
 
   const config = new Request(uri, {
     method,
