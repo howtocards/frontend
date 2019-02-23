@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import styled from "styled-components"
 import { compose } from "recompose"
 
-import { ConditionalList } from "@ui/organisms"
+import { ConditionalList } from "@ui"
 import { cardsRegistrySelector } from "../selectors"
 import { setUsefulMark } from "../effects"
 

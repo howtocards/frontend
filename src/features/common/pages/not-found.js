@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 import { CommonContentTemplate } from "@features/common"
-import { Container } from "@ui/templates"
+import { Container } from "@ui"
 
 export const NotFoundPage = () => (
   <CommonContentTemplate>

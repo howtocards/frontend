@@ -9,7 +9,7 @@ import { compose, withProps } from "recompose"
 import { Col } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
-import { Card, ButtonPrimary, Input } from "@ui/atoms"
+import { Card, ButtonPrimary, Input } from "@ui"
 
 import { CardsCommonTemplate } from "../templates/common"
 import { cardCreate } from "../effects"

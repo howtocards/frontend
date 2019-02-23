@@ -5,7 +5,7 @@ import { compose, lifecycle } from "recompose"
 import { format } from "date-fns"
 import { RichEditor } from "@lib/rich-text"
 import { Col } from "@lib/styled-components-layout"
-import { Card, H3, Text } from "@ui/atoms"
+import { Card, H3, Text } from "@ui"
 import { fetchFullCard } from "../effects"
 import { CardsCommonTemplate } from "../templates/common"
 import {

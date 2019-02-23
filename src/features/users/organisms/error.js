@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Card } from "@ui/atoms"
+import { Card } from "@ui"
 import { UsersCommonTemplate } from "../templates/common"
 
 const messageFromError = (fetching) => {

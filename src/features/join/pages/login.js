@@ -4,11 +4,19 @@ import { connect } from "react-redux"
 import { compose } from "recompose"
 import { withFormik } from "formik"
 
-import { Card, Input, H2, ButtonPrimary, Link, ErrorBox } from "@ui/atoms"
-import { PrimitiveFooter } from "@ui/organisms"
-import { Container, CenterContentTemplate } from "@ui/templates"
-import { Col, Row } from "@lib/styled-components-layout"
+import {
+  Card,
+  Input,
+  H2,
+  ButtonPrimary,
+  Link,
+  ErrorBox,
+  PrimitiveFooter,
+  Container,
+  CenterContentTemplate,
+} from "@ui"
 
+import { Col, Row } from "@lib/styled-components-layout"
 import { userLogin } from "../effects/join"
 
 const mapServerToClientError = (error) => {
