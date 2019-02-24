@@ -4,7 +4,7 @@ import { fetchStatus } from "symbiote-fetching"
 import { compose, withPropsOnChange, branch, renderComponent } from "recompose"
 import { connect } from "react-redux"
 import { Col, Row } from "@lib/styled-components-layout"
-import { H3, H1 } from "@ui"
+import { H3, H1 } from "@howtocards/ui"
 import { CardsList, CardItem } from "@features/cards"
 
 import { UsersCommonTemplate } from "../templates/common"

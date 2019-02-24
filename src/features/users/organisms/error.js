@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { Card } from "@ui"
+import { Card } from "@howtocards/ui"
 import { UsersCommonTemplate } from "../templates/common"
 
 const messageFromError = (fetching) => {

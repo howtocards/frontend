@@ -6,7 +6,7 @@
     "lib": ["es2015", "es2016", "dom"],
     "paths": {
       "@features/*": ["./features/*"],
-      "@ui/*": ["./ui/*"],
+      "@howtocards/ui/*": ["./ui/*"],
       "@lib/*": ["./lib/*"]
     }
   },

@@ -52,7 +52,7 @@ const config = {
     alias: {
       "@features": resolve(SRC, "features"),
       "@lib": resolve(SRC, "lib"),
-      "@ui": resolve(SRC, "ui"),
+      "@howtocards/ui": resolve(SRC, "ui"),
     },
   },
 
