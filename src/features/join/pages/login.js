@@ -14,7 +14,7 @@ import {
   PrimitiveFooter,
   Container,
   CenterContentTemplate,
-} from "@ui"
+} from "@howtocards/ui"
 
 import { Col, Row } from "@lib/styled-components-layout"
 import { userLogin } from "../effects/join"

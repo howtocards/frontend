@@ -5,7 +5,7 @@ import { format } from "date-fns"
 
 import { RichEditor } from "@lib/rich-text"
 import { Col, Row } from "@lib/styled-components-layout"
-import { Card, H3, Link, Button, ButtonPrimary } from "@ui"
+import { Card, H3, Link, Button, ButtonPrimary } from "@howtocards/ui"
 
 export const CardItem = ({ onUsefulClick, card }) => (
   <CardBox>

@@ -6,9 +6,9 @@ import { compose, withHandlers, withState } from "recompose"
 import { Col, Row } from "@lib/styled-components-layout"
 import { accountReset } from "@features/common"
 
-import { Card, ButtonPrimary, Button } from "@ui/atoms"
-import { PrimitiveFooter } from "@ui/organisms"
-import { Container, CenterContentTemplate } from "@ui/templates"
+import { Card, ButtonPrimary, Button } from "@howtocards/ui/atoms"
+import { PrimitiveFooter } from "@howtocards/ui/organisms"
+import { Container, CenterContentTemplate } from "@howtocards/ui/templates"
 
 const TIMEOUT_RESET = 500
 const TIMEOUT_REDIRECT = 150

@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Card } from "@ui/atoms"
+import { Card } from "@howtocards/ui/atoms"
 import { UsersCommonTemplate } from "../templates/common"
 
 export const LoadingView = () => (
