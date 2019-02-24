@@ -4,9 +4,16 @@ import { connect } from "react-redux"
 import { compose } from "recompose"
 import { withFormik } from "formik"
 
-import { Card, Input, H2, ButtonPrimary, Link, ErrorBox } from "@ui/atoms"
-import { PrimitiveFooter } from "@ui/organisms"
-import { Container, CenterContentTemplate } from "@ui/templates"
+import {
+  Card,
+  Input,
+  H2,
+  ButtonPrimary,
+  Link,
+  ErrorBox,
+} from "@howtocards/ui/atoms"
+import { PrimitiveFooter } from "@howtocards/ui/organisms"
+import { Container, CenterContentTemplate } from "@howtocards/ui/templates"
 import { Col, Row } from "@lib/styled-components-layout"
 
 import { userLogin } from "../effects/join"

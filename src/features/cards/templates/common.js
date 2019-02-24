@@ -2,9 +2,9 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import { CommonContentTemplate } from "@features/common"
-import { FooterContent } from "@ui/atoms"
-import { Sidebar } from "@ui/molecules"
-import { Container, SidebarTemplate } from "@ui/templates"
+import { FooterContent } from "@howtocards/ui/atoms"
+import { Sidebar } from "@howtocards/ui/molecules"
+import { Container, SidebarTemplate } from "@howtocards/ui/templates"
 
 export const CardsCommonTemplate = ({ children, sidebar }) => (
   <CommonContentTemplate>

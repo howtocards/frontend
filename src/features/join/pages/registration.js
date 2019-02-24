@@ -5,9 +5,16 @@ import { compose } from "recompose"
 import { withFormik } from "formik"
 
 import { Col, Row } from "@lib/styled-components-layout"
-import { Card, Input, H2, ButtonPrimary, Link, ErrorBox } from "@ui/atoms"
-import { PrimitiveFooter } from "@ui/organisms"
-import { Container, CenterContentTemplate } from "@ui/templates"
+import {
+  Card,
+  Input,
+  H2,
+  ButtonPrimary,
+  Link,
+  ErrorBox,
+} from "@howtocards/ui/atoms"
+import { PrimitiveFooter } from "@howtocards/ui/organisms"
+import { Container, CenterContentTemplate } from "@howtocards/ui/templates"
 
 import { userRegister } from "../effects/registration"
 import { userLogin } from "../effects/join"
