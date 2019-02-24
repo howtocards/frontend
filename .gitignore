@@ -23,6 +23,9 @@
 .AppleDouble
 .LSOverride
 
+# WebStorm .idea
+.idea
+
 # Icon must end with two \r
 Icon
 
