@@ -72,10 +72,6 @@ module.exports = {
     globMap("src/ui/*/", (path) => path.replace(/^src\//, "")),
     "lib",
     globMap("src/lib/*/", (path) => path.replace(/^src\//, "")),
-    "server",
-    globMap("mock-server/server/*/**/", (path) =>
-      path.replace(/mock\-server\//, ""),
-    ),
   ),
   allowCustomScopes: true,
   allowBreakingChanges: ["feat", "fix", "revert"],

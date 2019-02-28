@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from "redux"
 import { connectRouter, routerMiddleware } from "connected-react-router"
 import { createLogger } from "redux-logger"
-import { createExecue } from "redux-execue"
+import { createExecute } from "redux-execute"
 
 import { required } from "@lib/dev"
 import { rootReducer } from "./reducers"
@@ -18,7 +18,7 @@ export function configureStore(
 ) {
   const connectedRouter = connectRouter(history)
   const middlewares = [
-    createExecue({ log: true }),
+    createExecute({ log: true }),
     createLogger(loggerOptions),
     routerMiddleware(history),
   ]

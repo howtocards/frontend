@@ -7,7 +7,7 @@ import { createBrowserHistory } from "history"
 import { App } from "./app"
 import { configureStore } from "./store"
 
-const root = document.getElementById("root")
+const root = document.querySelector("#root")
 const history = createBrowserHistory()
 const store = configureStore({ history })
 

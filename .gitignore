@@ -1,7 +1,6 @@
 
-# Created by https://www.gitignore.io/api/node,windows,linux,macos,cpp
-
-#!! ERROR: cpp is undefined. Use list command to see defined gitignore types !!#
+# Created by https://www.gitignore.io/api/node,windows,linux,macos
+# Edit at https://www.gitignore.io/?templates=node,windows,linux,macos
 
 ### Linux ###
 *~
@@ -19,12 +18,10 @@
 .nfs*
 
 ### macOS ###
-*.DS_Store
+# General
+.DS_Store
 .AppleDouble
 .LSOverride
-
-# WebStorm .idea
-.idea
 
 # Icon must end with two \r
 Icon
@@ -71,7 +68,7 @@ coverage
 # nyc test coverage
 .nyc_output
 
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
+# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
 # Bower dependency directory (https://bower.io/)
@@ -80,14 +77,14 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
+# Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
 # Dependency directories
 node_modules/
 jspm_packages/
 
-# Typescript v1 declaration files
+# TypeScript v1 declaration files
 typings/
 
 # Optional npm cache directory
@@ -107,7 +104,28 @@ typings/
 
 # dotenv environment variables file
 .env
+.env.test
 
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+
+# next.js build output
+.next
+
+# nuxt.js build output
+.nuxt
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -115,8 +133,11 @@ Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
 
+# Dump file
+*.stackdump
+
 # Folder config file
-Desktop.ini
+[Dd]esktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
@@ -124,13 +145,34 @@ $RECYCLE.BIN/
 # Windows Installer files
 *.cab
 *.msi
+*.msix
 *.msm
 *.msp
 
 # Windows shortcuts
 *.lnk
 
+# End of https://www.gitignore.io/api/node,windows,linux,macos
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# End of https://www.gitignore.io/api/node,windows,linux,macos,cpp
-dist
-report.html
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
