@@ -1,6 +1,6 @@
 module.exports = {
-  clearMocks: true,
-  coverageDirectory: "coverage",
+  // clearMocks: true,
+  // coverageDirectory: "coverage",
 
   collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts"],
   resolver: "jest-pnp-resolver",

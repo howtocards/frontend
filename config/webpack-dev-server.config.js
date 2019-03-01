@@ -81,7 +81,7 @@ module.exports = (proxy, allowedHost) => ({
   public: allowedHost,
   proxy: {
     ...proxy,
-    "/api": "http://localhost:9000",
+    "/api": "http://localhost:9000/",
   },
   before(app, server) {
     if (fs.existsSync(paths.proxySetup)) {

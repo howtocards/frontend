@@ -72,6 +72,7 @@ module.exports = {
     globMap("src/ui/*/", (path) => path.replace(/^src\//, "")),
     "lib",
     globMap("src/lib/*/", (path) => path.replace(/^src\//, "")),
+    "docz",
   ),
   allowCustomScopes: true,
   allowBreakingChanges: ["feat", "fix", "revert"],

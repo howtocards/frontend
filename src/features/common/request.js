@@ -42,7 +42,8 @@ export const request = (method, url, options = {}) => (dispatch, getState) => {
     if (options.parse === "noparse") {
       return response
     }
-    if (response.headers.get("Content-Type").includes("json")) {
+    const contentType = response.headers.get("Content-Type")
+    if (contentType && contentType.includes("json")) {
       return response.json()
     }
     throw new TypeError("Unexpected content-type")

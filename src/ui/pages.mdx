@@ -1,0 +1,46 @@
+---
+name: Pages
+route: /pages
+order: 10
+---
+
+# Pages
+
+![](http://atomicdesign.bradfrost.com/images/content/atomic-design-pages.png)
+
+**Pages are specific instances of templates that show what a UI looks like with real representative content in place**.
+Building on our previous example, we can take the homepage template and pour representative text, images, and media into the template to show real content in action.
+
+![The page stage replaces placeholder content with real representative content to bring the design system to life.](http://atomicdesign.bradfrost.com/images/content/page.png)
+
+> The page stage replaces placeholder content with real representative content to bring the design system to life.
+
+The page stage is the most concrete stage of atomic design, and it’s important for some rather obvious reasons.
+After all, this is what users will see and interact with when they visit your experience.
+This is what your stakeholders will sign off. And this is where you see all those components coming together to form a beautiful and functional user interface.
+
+In addition to demonstrating the final interface as your users will see it,
+**pages are essential for testing the effectiveness of the underlying design system**.
+It is at the page stage that we’re able to take a look at how all those patterns hold up when real content is applied to the design system.
+Does everything look great and function as it should? If the answer is no, then we can loop back and modify our molecules, organisms, and templates to better address our content’s needs.
+
+When we pour real representative content into Time Inc.’s homepage template, we’re able to see how all those underlying design patterns hold up.
+
+![](http://atomicdesign.bradfrost.com/images/content/page-timeinc-homepage.png)
+
+> At the page stage, we're able to see what Time Inc.'s homepage looks like with real representative content in place.
+> With actual content in place, we're able to see if the UI components making up the page properly serve the content being poured into them.
+
+We must create systems that establish reusable design patterns and also accurately reflect the reality of the content we’re putting inside of those patterns.
+
+Pages also provide a place to articulate variations in templates, which is crucial for establishing robust and reliant design systems.
+Here are just a few examples of template variations:
+
+- A user has one item in their shopping cart and another user has ten items in their cart.
+- A web app’s dashboard typically shows recent activity, but that section is suppressed for first-time users.
+- One article headline might be 40 characters long, while another article headline might be 340 characters long.
+- Users with administrative privileges might see additional buttons and options on their dashboard compared to users who aren’t admins.
+
+In all of these examples, the underlying templates are the same, but the user interfaces change to reflect the dynamic nature of the content.
+These variations directly influence how the underlying molecules, organisms, and templates are constructed.
+Therefore, creating pages that account for these variations helps us create more resilient design systems.

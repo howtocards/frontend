@@ -1,10 +1,9 @@
 import { createStore, applyMiddleware, compose } from "redux"
-import { connectRouter, routerMiddleware } from "connected-react-router"
+import { routerMiddleware } from "connected-react-router"
 import { createLogger } from "redux-logger"
 import { createExecute } from "redux-execute"
 
-import { required } from "@lib/dev"
-import { rootReducer } from "./reducers"
+import { createReducer } from "./reducers"
 
 const loggerOptions = {
   predicate: (getState, action) => !action.type.startsWith("@@router/"),
@@ -13,10 +12,7 @@ const loggerOptions = {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose // eslint-disable-line no-underscore-dangle, max-len
 
-export function configureStore(
-  { history, initialState = {} } = required("configureStoreOptions"),
-) {
-  const connectedRouter = connectRouter(history)
+export function configureStore({ history, initialState = {} } = {}) {
   const middlewares = [
     createExecute({ log: true }),
     createLogger(loggerOptions),
@@ -24,7 +20,7 @@ export function configureStore(
   ]
 
   const store = createStore(
-    connectedRouter(rootReducer),
+    createReducer(history),
     initialState,
     composeEnhancers(applyMiddleware(...middlewares)),
   )
@@ -34,7 +30,7 @@ export function configureStore(
       // eslint-disable-next-line global-require
       const next = require("./reducers")
 
-      store.replaceReducer(connectedRouter(next.rootReducer))
+      store.replaceReducer(next.createReducer(history))
     })
   }
 
