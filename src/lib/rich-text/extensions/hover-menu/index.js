@@ -171,7 +171,7 @@ export class HoverMenu extends React.Component {
     const { className, configCodePlugin } = this.props
     const { isHoverInCodeBlock } = this.state
 
-    const root = window.document.getElementById("root")
+    const root = document.querySelector("#root")
     const codeBlockButton =
       configCodePlugin.block && this.renderBlockButton(configCodePlugin.block)
 

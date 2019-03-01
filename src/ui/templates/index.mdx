@@ -1,0 +1,92 @@
+---
+name: Templates
+route: /templates
+order: 11
+---
+
+# Templates
+
+![](http://atomicdesign.bradfrost.com/images/content/atomic-design-templates.png)
+
+Now, friends, it’s time to say goodbye to our chemistry analogy.
+The language of atoms, molecules, and organisms carries with it a helpful hierarchy for us to deliberately construct the components of our design systems.
+But ultimately we must step into language that is more appropriate for our final output and makes more sense to our clients, bosses, and colleagues.
+Trying to carry the chemistry analogy too far might confuse your stakeholders and cause them to think you’re a bit crazy.
+
+**Templates are page-level objects that place components into a layout and articulate the design’s underlying content structure**.
+To build on our previous example, we can take the header organism and apply it to a homepage template.
+
+![The homepage template consists of organisms and molecules applied to a layout.](http://atomicdesign.bradfrost.com/images/content/template.png)
+
+> The homepage template consists of organisms and molecules applied to a layout.
+
+This homepage template displays all the necessary page components functioning together,
+which **provides context for these relatively abstract molecules and organisms**.
+When crafting an effective design system, it’s critical to demonstrate how components look
+and function together in the context of a layout to prove the parts add up to a well-functioning whole.
+
+Another important characteristic of templates is that they **focus on the page’s underlying content structure** rather than the page’s final content.
+Design systems must account for the dynamic nature of content,
+so it’s very helpful to articulate important properties of components like image sizes and character lengths for headings and text passages.
+
+Mark Boulton discusses the importance of defining the underlying content structure of a page:
+
+> You can create good experiences without knowing the content. What you can’t do is create good experiences without knowing your content structure. What is your content made from, not what your content is.
+>
+> —Mark Boulton
+
+By defining a page’s skeleton we’re able to create a system that can account for a variety of dynamic content,
+all while providing needed guardrails for the types of content that populate certain design patterns.
+For example, the homepage template for Time Inc. shows a few key components in action
+while also demonstrating content structure regarding image sizes and character lengths:
+
+![Time Inc.'s homepage template demonstrates the content's underlying structure.](http://atomicdesign.bradfrost.com/images/content/template-timeinc-homepage.png)
+
+> Time Inc.'s homepage template demonstrates the content's underlying structure.
+
+Now that we’ve established our pages’ skeletal system, let’s put some meat on them bones!
+
+## React
+
+Each template should be placed in `src/ui/templates` and with name without `-template`.<br/>
+But export should be named with `Template` suffix.<br/>
+
+For example:
+
+```js
+// src/ui/templates/split-layout.js
+import React from "react"
+import styled from "styled-components"
+import PropTypes from "prop-types"
+
+const SplitContainer = styled.div`
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "left middle right";
+`
+
+const SplitLeft = styled.div`
+  grid-area: left;
+`
+const SplitMiddle = styled.div`
+  grid-area: middle;
+`
+const SplitRight = styled.div`
+  grid-area: right;
+`
+
+export const SplitLayoutTemplate = ({ left, right, children }) => (
+  <SplitContainer>
+    <SplitLeft>{left}</SplitLeft>
+    <SplitMiddle>{children}</SplitMiddle>
+    <SplitRight>{right}</SplitRight>
+  </SplitContainer>
+)
+
+SplitLayoutTemplate.propTypes = {
+  left: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
+  right: PropTypes.node.isRequired,
+}
+```

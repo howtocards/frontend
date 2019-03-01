@@ -1,11 +1,10 @@
-import React from "react"
 import styled from "styled-components"
 
-export const Button = styled("span")`
+export const Button = styled.span`
   cursor: pointer;
 `
 
-export const Menu = styled("div")`
+export const Menu = styled.div`
   & > * {
     display: inline-block;
   }

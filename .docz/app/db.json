@@ -1,0 +1,139 @@
+{
+  "config": {
+    "title": "Frontend",
+    "description": "Save and share your solutions",
+    "menu": [],
+    "ordering": "descending",
+    "version": "0.4.0",
+    "repository": "https://github.com/howtocards/frontend",
+    "native": false,
+    "codeSandbox": true,
+    "themeConfig": {},
+    "typescript": false,
+    "debug": true
+  },
+  "entries": {
+    "src/ui/index.mdx": {
+      "name": "Getting Started",
+      "route": "/",
+      "order": 100,
+      "id": "5848e85ed08d5738f4e563190ff8a48c",
+      "filepath": "src/ui/index.mdx",
+      "link": "https://github.com/howtocards/frontend/edit/master/src/ui/index.mdx",
+      "slug": "src-ui-index",
+      "menu": null,
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "getting-started",
+          "value": "Getting Started"
+        },
+        {
+          "depth": 2,
+          "slug": "consistency",
+          "value": "Consistency"
+        },
+        {
+          "depth": 2,
+          "slug": "atomic-design",
+          "value": "Atomic Design"
+        }
+      ]
+    },
+    "src/ui/pages.mdx": {
+      "name": "Pages",
+      "route": "/pages",
+      "order": 10,
+      "id": "113a44c619470fd04eab698f044992af",
+      "filepath": "src/ui/pages.mdx",
+      "link": "https://github.com/howtocards/frontend/edit/master/src/ui/pages.mdx",
+      "slug": "src-ui-pages",
+      "menu": null,
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "pages",
+          "value": "Pages"
+        }
+      ]
+    },
+    "src/ui/atoms/index.mdx": {
+      "name": "Atoms",
+      "route": "/atoms",
+      "order": 14,
+      "id": "e4e5cae7cae22656d5081db4a72853d4",
+      "filepath": "src/ui/atoms/index.mdx",
+      "link": "https://github.com/howtocards/frontend/edit/master/src/ui/atoms/index.mdx",
+      "slug": "src-ui-atoms-index",
+      "menu": null,
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "atoms",
+          "value": "Atoms"
+        },
+        {
+          "depth": 2,
+          "slug": "react",
+          "value": "React"
+        }
+      ]
+    },
+    "src/ui/molecules/index.mdx": {
+      "name": "Molecules",
+      "route": "/molecules",
+      "order": 13,
+      "id": "7c4f92e25e065169ff491cb634543fcb",
+      "filepath": "src/ui/molecules/index.mdx",
+      "link": "https://github.com/howtocards/frontend/edit/master/src/ui/molecules/index.mdx",
+      "slug": "src-ui-molecules-index",
+      "menu": null,
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "molecules",
+          "value": "Molecules"
+        }
+      ]
+    },
+    "src/ui/organisms/index.mdx": {
+      "name": "Organisms",
+      "route": "/organisms",
+      "order": 12,
+      "id": "89857e29ebea22e0497e8ac6ebed1cf7",
+      "filepath": "src/ui/organisms/index.mdx",
+      "link": "https://github.com/howtocards/frontend/edit/master/src/ui/organisms/index.mdx",
+      "slug": "src-ui-organisms-index",
+      "menu": null,
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "organisms",
+          "value": "Organisms"
+        }
+      ]
+    },
+    "src/ui/templates/index.mdx": {
+      "name": "Templates",
+      "route": "/templates",
+      "order": 11,
+      "id": "dc6a9455dacbeeae30c2a9e6edbdbfaf",
+      "filepath": "src/ui/templates/index.mdx",
+      "link": "https://github.com/howtocards/frontend/edit/master/src/ui/templates/index.mdx",
+      "slug": "src-ui-templates-index",
+      "menu": null,
+      "headings": [
+        {
+          "depth": 1,
+          "slug": "templates",
+          "value": "Templates"
+        },
+        {
+          "depth": 2,
+          "slug": "react",
+          "value": "React"
+        }
+      ]
+    }
+  }
+}
