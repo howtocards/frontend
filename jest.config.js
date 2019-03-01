@@ -38,7 +38,7 @@ module.exports = {
     "node",
   ],
   watchPlugins: [
-    "/Users/sergeysova/Projects/howtocards/new-frontend/node_modules/jest-watch-typeahead/filename.js",
-    "/Users/sergeysova/Projects/howtocards/new-frontend/node_modules/jest-watch-typeahead/testname.js",
+    "./node_modules/jest-watch-typeahead/filename.js",
+    "./node_modules/jest-watch-typeahead/testname.js",
   ],
 }
