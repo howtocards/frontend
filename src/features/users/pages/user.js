@@ -114,3 +114,8 @@ const NamedCardsList = ({ cards, title }) => {
   }
   return null
 }
+
+NamedCardsList.propTypes = {
+  cards: PropTypes.arrayOf(PropTypes.number).isRequired,
+  title: PropTypes.string.isRequired,
+}
