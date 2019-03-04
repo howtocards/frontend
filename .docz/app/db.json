@@ -10,7 +10,7 @@
     "codeSandbox": true,
     "themeConfig": {},
     "typescript": false,
-    "debug": true
+    "debug": false
   },
   "entries": {
     "src/ui/index.mdx": {

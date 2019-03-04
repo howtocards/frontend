@@ -53,12 +53,14 @@
     "url": "https://github.com/howtocards/frontend/issues"
   },
   "dependencies": {
+    "@atomix/eslint-config-react": "^7.0.0-next.1",
     "@babel/core": "7.2.2",
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
     "@emotion/serialize": "^0.11.4",
     "@hot-loader/react-dom": "^16.8.3",
     "@svgr/webpack": "4.1.0",
+    "acorn": "^6.1.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
@@ -80,17 +82,17 @@
     "docz-theme-default": "^0.13.7",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
-    "eslint": "5.12.0",
+    "eslint": "^5.15.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-config-react-app": "^3.0.7",
     "eslint-loader": "2.1.1",
     "eslint-plugin-flowtype": "2.50.1",
-    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jest": "^22.3.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-react": "7.12.4",
+    "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-unicorn": "^7.1.0",
     "file-loader": "2.0.0",
     "fork-ts-checker-webpack-plugin-alt": "0.4.14",
@@ -151,15 +153,12 @@
     "styled-normalize": "^8.0.6",
     "symbiote-fetching": "^0.7.0",
     "terser-webpack-plugin": "1.2.2",
+    "typescript": "^3.3.3333",
     "url-loader": "1.1.2",
     "webpack": "4.28.3",
     "webpack-dev-server": "3.1.14",
     "webpack-manifest-plugin": "2.0.4",
     "webpackbar": "^3.1.5",
     "workbox-webpack-plugin": "3.6.3"
-  },
-  "devDependencies": {
-    "acorn": "^6.1.1",
-    "typescript": "^3.3.3333"
   }
 }
