@@ -30,4 +30,7 @@ const enhance = compose(
   ),
 )
 
-export const AccountLoader = enhance(({ children }) => children)
+export const AccountLoader = enhance(({ children, accountId, getToken }) => {
+  if (getToken() && !accountId) return null
+  return children
+})
