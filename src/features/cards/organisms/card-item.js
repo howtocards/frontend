@@ -5,7 +5,15 @@ import { format } from "date-fns"
 
 import { RichEditor } from "@lib/rich-text"
 import { Col, Row } from "@lib/styled-components-layout"
-import { Card, H3, Link, Button, ButtonPrimary } from "@howtocards/ui"
+import {
+  Card,
+  PopUpButton,
+  H2,
+  H3,
+  Link,
+  Button,
+  ButtonPrimary,
+} from "@howtocards/ui"
 
 export const CardItem = ({ onUsefulClick, card }) => (
   <CardBox>
@@ -34,7 +42,14 @@ const CardHeading = ({ card, onUsefulClick }) => (
     <Link to={`/open/${card.id}`}>
       <H3 narrow>{card.title}</H3>
     </Link>
-    <Row basis="25%" justify="space-between">
+    <Row basis="30%" justify="space-between">
+      <PopUpButton>
+        <H2>Pop Up Heading</H2>
+        <p>
+          You can close the dialog by clicking on the button or the area around
+          the dialog box
+        </p>
+      </PopUpButton>
       {card.meta.isUseful ? (
         <ButtonPrimary small title="Remove from saved" onClick={onUsefulClick}>
           Saved
