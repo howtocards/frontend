@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import PropTypes from "prop-types"
 import { Box, Button } from "@howtocards/ui"
 
@@ -27,7 +27,9 @@ export const PopUp = ({ children, onClose }) => {
 
   return (
     <Box popup>
-      <Button onClick={() => onClose()}>CLOSE</Button>
+      <Button small onClick={() => onClose()}>
+        CLOSE (should be x icon in the corner)
+      </Button>
       {children}
     </Box>
   )
@@ -36,39 +38,4 @@ export const PopUp = ({ children, onClose }) => {
 PopUp.propTypes = {
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
-}
-
-export const PopUpButton = ({ children }) => {
-  const [popup, setPopup] = useState(false)
-
-  const OpenBtn = () => (
-    <Button
-      small
-      onClick={() => {
-        setPopup(() => !popup)
-      }}
-    >
-      PopUp
-    </Button>
-  )
-  return (
-    <div>
-      <OpenBtn />
-      {!!popup && (
-        <div>
-          <PopUp
-            onClose={() => {
-              setPopup(() => false)
-            }}
-          >
-            {children}
-          </PopUp>
-        </div>
-      )}
-    </div>
-  )
-}
-
-PopUpButton.propTypes = {
-  children: PropTypes.node.isRequired,
 }

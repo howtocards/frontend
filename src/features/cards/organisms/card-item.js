@@ -1,19 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import PropTypes from "prop-types"
 import { format } from "date-fns"
 
 import { RichEditor } from "@lib/rich-text"
 import { Col, Row } from "@lib/styled-components-layout"
-import {
-  Card,
-  PopUpButton,
-  H2,
-  H3,
-  Link,
-  Button,
-  ButtonPrimary,
-} from "@howtocards/ui"
+import { Card, PopUp, H3, Link, Button, ButtonPrimary } from "@howtocards/ui"
 
 export const CardItem = ({ onUsefulClick, card }) => (
   <CardBox>
@@ -43,13 +35,8 @@ const CardHeading = ({ card, onUsefulClick }) => (
       <H3 narrow>{card.title}</H3>
     </Link>
     <Row basis="30%" justify="space-between">
-      <PopUpButton>
-        <H2>Pop Up Heading</H2>
-        <p>
-          You can close the dialog by clicking on the button or the area around
-          the dialog box
-        </p>
-      </PopUpButton>
+      <PopUpButton />
+
       {card.meta.isUseful ? (
         <ButtonPrimary small title="Remove from saved" onClick={onUsefulClick}>
           Saved
@@ -91,3 +78,37 @@ const CardBox = styled(Card)`
   max-height: 24rem;
   overflow-y: hidden;
 `
+
+const PopUpButton = () => {
+  const [popup, setPopup] = useState(false)
+
+  return (
+    <div>
+      <Button
+        small
+        onClick={() => {
+          setPopup(() => !popup)
+        }}
+      >
+        PopUp
+      </Button>
+      {!!popup && (
+        <div>
+          <PopUp
+            onClose={() => {
+              setPopup(() => false)
+            }}
+          >
+            <H3>Do you want to delete?</H3>
+            <p>
+              Do you absolutely sure you want to delete? Just kidding we are
+              archiving them anyway.
+            </p>
+            <Button>Yes</Button>
+            <Button>No</Button>
+          </PopUp>
+        </div>
+      )}
+    </div>
+  )
+}
