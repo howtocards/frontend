@@ -3,10 +3,10 @@ import PropTypes from "prop-types"
 import { Box, Button } from "@howtocards/ui"
 
 export const PopUp = ({ children, onClose }) => {
-  const myRef = React.createRef()
+  const ref = React.createRef()
   const onDocumentClick = (event) => {
     let pointer = event.target
-    const element = myRef.current
+    const element = ref.current
     while (pointer !== document && pointer) {
       if (pointer === element) {
         return
@@ -25,14 +25,7 @@ export const PopUp = ({ children, onClose }) => {
     }
   }, [])
 
-  return (
-    <Box popup>
-      <Button small onClick={() => onClose()}>
-        CLOSE (should be x icon in the corner)
-      </Button>
-      {children}
-    </Box>
-  )
+  return <div>{children}</div>
 }
 
 PopUp.propTypes = {

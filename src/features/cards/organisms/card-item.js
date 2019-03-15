@@ -5,7 +5,15 @@ import { format } from "date-fns"
 
 import { RichEditor } from "@lib/rich-text"
 import { Col, Row } from "@lib/styled-components-layout"
-import { Card, PopUp, H3, Link, Button, ButtonPrimary } from "@howtocards/ui"
+import {
+  Card,
+  PopUp,
+  H3,
+  Box,
+  Link,
+  Button,
+  ButtonPrimary,
+} from "@howtocards/ui"
 
 export const CardItem = ({ onUsefulClick, card }) => (
   <CardBox>
@@ -99,13 +107,24 @@ const PopUpButton = () => {
               setPopup(() => false)
             }}
           >
-            <H3>Do you want to delete?</H3>
-            <p>
-              Do you absolutely sure you want to delete? Just kidding we are
-              archiving them anyway.
-            </p>
-            <Button>Yes</Button>
-            <Button>No</Button>
+            <Box popup>
+              <Button
+                small
+                onClick={() => {
+                  setPopup(() => false)
+                }}
+              >
+                CLOSE (should be x icon in the corner)
+              </Button>
+
+              <H3>Do you want to delete?</H3>
+              <p>
+                Do you absolutely sure you want to delete? Just kidding we are
+                archiving them anyway.
+              </p>
+              <Button>Yes</Button>
+              <Button>No</Button>
+            </Box>
           </PopUp>
         </div>
       )}
