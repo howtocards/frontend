@@ -1,8 +1,8 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import PropTypes from "prop-types"
 
 export const PopUp = ({ children, onClose }) => {
-  const ref = React.createRef()
+  const ref = useRef(null)
   const onDocumentClick = (event) => {
     let pointer = event.target
     const element = ref.current
@@ -24,7 +24,7 @@ export const PopUp = ({ children, onClose }) => {
     }
   }, [])
 
-  return <div>{children}</div>
+  return <div ref={ref}>{children}</div>
 }
 
 PopUp.propTypes = {

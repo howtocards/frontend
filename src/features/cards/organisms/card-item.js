@@ -122,8 +122,8 @@ const PopUpButton = () => {
                 Do you absolutely sure you want to delete? Just kidding we are
                 archiving them anyway.
               </p>
-              <Button>Yes</Button>
-              <Button>No</Button>
+              <Button onClick={() => true}>Yes</Button>
+              <Button onClick={() => true}>No</Button>
             </Box>
           </PopUp>
         </div>
