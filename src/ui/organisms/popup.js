@@ -1,6 +1,5 @@
 import React, { useEffect } from "react"
 import PropTypes from "prop-types"
-import { Box, Button } from "@howtocards/ui"
 
 export const PopUp = ({ children, onClose }) => {
   const ref = React.createRef()
