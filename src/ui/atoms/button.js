@@ -10,12 +10,18 @@ export const Button = styled.button`
   transition: box-shadow 120ms;
   user-select: none;
 
+  &:hover {
+    background: #3a7bd5;
+    color: white;
+  }
+
   ${({ small }) =>
     small &&
     css`
       padding: 0.5rem;
       font-size: 1rem;
     `}
+
 
   ${({ theme }) => theme.embed.button.primary}
   ${({ grow }) =>

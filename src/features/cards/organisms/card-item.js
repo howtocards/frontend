@@ -1,11 +1,11 @@
-import React from "react"
-import styled from "styled-components"
+import React, { useState } from "react"
+import styled, { css } from "styled-components"
 import PropTypes from "prop-types"
 import { format } from "date-fns"
 
 import { RichEditor } from "@lib/rich-text"
 import { Row } from "@lib/styled-components-layout"
-import { Link, H2, Icon, Text } from "@howtocards/ui"
+import { Link, H2, H3, Icon, Text, Button, Box, PopUp } from "@howtocards/ui"
 
 const CardBox = styled.div`
   margin: 0.5rem;
@@ -35,7 +35,6 @@ const GridCard = styled.div`
     "flag info"
     "flag content"
     "flag footer";
-  //grid-template-rows: 20px 15px 200px 30px;
   grid-template-rows: 2rem 2rem 10rem 3rem;
   grid-template-columns: 50px 1fr;
   grid-gap: 8px;
@@ -130,7 +129,7 @@ const CardHeader = ({ card }) => (
     </Link>
     <Row basis="25%" justify="flex-end" gap="1.4em" align="center">
       {card.meta.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
-      <Icon name="trash" height="1.6rem" />
+      <PopUpDelete title={card.title} />
       <Icon name="dots-v" height="1.6rem" />
     </Row>
   </HeadingLine>
@@ -179,53 +178,18 @@ const CellCardFooter = styled.div`
 `
 
 const CellCardFlag = styled.div`
-  display: grid;
   grid-area: flag;
 `
 const CellCardHeader = styled.div`
-  display: grid;
   grid-area: header;
 `
 const CellCardInfo = styled.div`
-  display: grid;
   grid-area: info;
 `
 const CellCardContent = styled.div`
-  display: grid;
   grid-area: content;
   overflow-y: hidden;
 `
-
-// export const CardItem = ({ onUsefulClick, card }) => (
-//   <CardBox>
-//     <Col>
-//       <CardHeading card={card} onUsefulClick={onUsefulClick} />
-//       <RichEditor readOnly content={card.content} />
-//     </Col>
-//   </CardBox>
-// )
-
-// const CardHeading = ({ card, onUsefulClick }) => (
-//   <HeadingLine>
-//     <Link to={`/open/${card.id}`}>
-//       <H3 narrow>{card.title}</H3>
-//     </Link>
-//     <Row basis="25%" justify="space-between">
-//       {card.meta.isUseful ? (
-//         <ButtonPrimary small title="Remove from saved" onClick={onUsefulClick}>
-//           Saved
-//         </ButtonPrimary>
-//       ) : (
-//         <Button small title="Add to saved" onClick={onUsefulClick}>
-//           Save
-//         </Button>
-//       )}
-//       {card.usefulFor > 0 ? <div>{card.usefulFor}</div> : <div>&nbsp;</div>}
-//       {card.meta.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
-//       <i>{format(new Date(card.createdAt), "HH:MM MM/DD/YYYY")}</i>
-//     </Row>
-//   </HeadingLine>
-// )
 
 CardHeader.propTypes = {
   card: PropTypes.shape({
@@ -238,3 +202,106 @@ CardHeader.propTypes = {
     }).isRequired,
   }).isRequired,
 }
+
+const PopUpDelete = ({ title }) => {
+  const [popup, setPopup] = useState(false)
+
+  return (
+    <div>
+      <div
+        onClick={() => {
+          setPopup(() => !popup)
+        }}
+        onKeyDown={() => !popup}
+        role="button"
+        tabIndex={0}
+      >
+        <Icon name="trash" height="1.6rem" />
+      </div>
+
+      {!!popup && (
+        <PopUp
+          onClose={() => {
+            setPopup(() => false)
+          }}
+        >
+          <Box popup>
+            <GridPopUp>
+              <CellPopUpHeading>
+                <H3>Do you want to delete?</H3>
+              </CellPopUpHeading>
+
+              <CellPopUpClose>
+                <Row
+                  basis="25%"
+                  justify="flex-end"
+                  align-items="center"
+                  gap="1.4em"
+                  align="center"
+                >
+                  <Button
+                    small
+                    onClick={() => {
+                      setPopup(() => false)
+                    }}
+                  >
+                    Close
+                    <Icon name="x" fill="grey" id="close" />
+                  </Button>
+                </Row>
+              </CellPopUpClose>
+
+              <CellPopUpContent>
+                <Text>
+                  Do you absolutely sure you want to delete article about{" "}
+                  <b>
+                    &#8220;
+                    {title} &#8221;
+                  </b>
+                  ? Just kidding we are archiving them anyway.
+                </Text>
+              </CellPopUpContent>
+              <CellPopUpButtonYes>
+                <Button onClick={() => true}>Yes, delete</Button>
+              </CellPopUpButtonYes>
+
+              <CellPopUpButtonNo>
+                <Button onClick={() => true}>No, please cancel</Button>
+              </CellPopUpButtonNo>
+            </GridPopUp>
+          </Box>
+        </PopUp>
+      )}
+    </div>
+  )
+}
+
+PopUpDelete.propTypes = {
+  title: PropTypes.string.isRequired,
+}
+
+const GridPopUp = styled.div`
+  display: grid;
+  grid-template-areas:
+    "popupHeading popupClose"
+    "popupContent popupContent"
+    "popupButtonYes popupButtonNo";
+  grid-template-rows: 5rem 1fr 3rem;
+  grid-template-columns: 50% 50%;
+  grid-gap: 8px;
+`
+const CellPopUpHeading = styled.div`
+  grid-area: popupHeading;
+`
+const CellPopUpClose = styled.div`
+  grid-area: popupClose;
+`
+const CellPopUpContent = styled.div`
+  grid-area: popupContent;
+`
+const CellPopUpButtonYes = styled.div`
+  grid-area: popupButtonYes;
+`
+const CellPopUpButtonNo = styled.div`
+  grid-area: popupButtonNo;
+`
