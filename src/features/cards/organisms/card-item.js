@@ -130,7 +130,6 @@ const CardHeader = ({ card }) => (
 const CardInfo = (card) => (
   <Row>
     <Text small>
-      {" "}
       {format(new Date(card.createdAt), "HH:MM MM/DD/YYYY")} by Author
     </Text>
   </Row>
@@ -145,11 +144,11 @@ const HeadingLine = styled.div`
 `
 const IconWrapper = styled.div`
   padding: 0 0.6rem;
-  }
+
   &:disabled {
     opacity: 0.3;
   }
-  
+
   & #icon:hover {
     fill: green;
     cursor: pointer;
@@ -197,27 +196,18 @@ CardHeader.propTypes = {
 }
 
 const CardDeletePopUpButton = ({ card }) => {
-  const [popup, setPopup] = useState(false)
+  const [opened, setOpened] = useState(false)
+  const close = () => setOpened(() => false)
+  const toggle = () => setOpened((isOpen) => !isOpen)
 
   return (
     <div>
-      <div
-        onClick={() => {
-          setPopup(() => !popup)
-        }}
-        onKeyDown={() => !popup}
-        role="button"
-        tabIndex={0}
-      >
+      <div onClick={toggle} onKeyDown={toggle} role="button" tabIndex={0}>
         <Icon name="trash" height="1.6rem" />
       </div>
 
-      {!!popup && (
-        <PopUp
-          onClose={() => {
-            setPopup(() => false)
-          }}
-        >
+      {!!opened && (
+        <PopUp onClose={close} opened={opened}>
           <Box popup>
             <GridPopUp>
               <CellPopUpHeading>
@@ -232,12 +222,7 @@ const CardDeletePopUpButton = ({ card }) => {
                   gap="1.4em"
                   align="center"
                 >
-                  <Button
-                    small
-                    onClick={() => {
-                      setPopup(() => false)
-                    }}
-                  >
+                  <Button small onClick={close}>
                     Close
                     <Icon name="x" fill="grey" id="close" />
                   </Button>
@@ -246,7 +231,7 @@ const CardDeletePopUpButton = ({ card }) => {
 
               <CellPopUpContent>
                 <Text>
-                  Do you absolutely sure you want to delete article about{" "}
+                  Do you absolutely sure you want to delete article about
                   <b>
                     &#8220;
                     {card.title} &#8221;
