@@ -99,15 +99,8 @@ CardFlagWithNumber.propTypes = {
 }
 
 const FlagToggler = ({ isUseful, onUsefulClick }) => {
-  // const [isUseful, setIsUseful] = useState(usefulFor)
-
   return (
-    <IconWrapper
-      onClick={() => {
-        // setIsUseful(!isUseful)
-        onUsefulClick()
-      }}
-    >
+    <IconWrapper onClick={onUsefulClick}>
       {isUseful ? (
         <Icon name="bookmark-solid" fill="red" />
       ) : (
@@ -129,7 +122,7 @@ const CardHeader = ({ card }) => (
     </Link>
     <Row basis="25%" justify="flex-end" gap="1.4em" align="center">
       {card.meta.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
-      <PopUpDelete title={card.title} />
+      <CardDeletePopUpButton card={card} />
       <Icon name="dots-v" height="1.6rem" />
     </Row>
   </HeadingLine>
@@ -203,7 +196,7 @@ CardHeader.propTypes = {
   }).isRequired,
 }
 
-const PopUpDelete = ({ title }) => {
+const CardDeletePopUpButton = ({ card }) => {
   const [popup, setPopup] = useState(false)
 
   return (
@@ -256,7 +249,7 @@ const PopUpDelete = ({ title }) => {
                   Do you absolutely sure you want to delete article about{" "}
                   <b>
                     &#8220;
-                    {title} &#8221;
+                    {card.title} &#8221;
                   </b>
                   ? Just kidding we are archiving them anyway.
                 </Text>
@@ -276,8 +269,10 @@ const PopUpDelete = ({ title }) => {
   )
 }
 
-PopUpDelete.propTypes = {
-  title: PropTypes.string.isRequired,
+CardDeletePopUpButton.propTypes = {
+  card: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 const GridPopUp = styled.div`
