@@ -5,7 +5,7 @@ import { format } from "date-fns"
 
 import { RichEditor } from "@lib/rich-text"
 import { Row } from "@lib/styled-components-layout"
-import { Link, H2, H3, Icon, Text, Button, Box, PopUp } from "@howtocards/ui"
+import { Link, H2, Icon, Text, Modal } from "@howtocards/ui"
 
 const CardBox = styled.div`
   margin: 0.5rem;
@@ -122,7 +122,7 @@ const CardHeader = ({ card }) => (
     </Link>
     <Row basis="25%" justify="flex-end" gap="1.4em" align="center">
       {card.meta.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
-      <CardDeletePopUpButton card={card} />
+      <CardDeleteModalButton card={card} />
       <Icon name="dots-v" height="1.6rem" />
     </Row>
   </HeadingLine>
@@ -195,7 +195,7 @@ CardHeader.propTypes = {
   }).isRequired,
 }
 
-const CardDeletePopUpButton = ({ card, onDeleteClick }) => {
+const CardDeleteModalButton = ({ card }) => {
   const [opened, setOpened] = useState(false)
   const close = () => setOpened(() => false)
   const toggle = () => setOpened((isOpen) => !isOpen)
@@ -207,86 +207,21 @@ const CardDeletePopUpButton = ({ card, onDeleteClick }) => {
       </div>
 
       {opened && (
-        <PopUp close={close}>
-          <Box popup>
-            <GridPopUp>
-              <CellPopUpHeading>
-                <H3>Do you want to delete?</H3>
-              </CellPopUpHeading>
-
-              <CellPopUpClose>
-                <Row
-                  basis="25%"
-                  justify="flex-end"
-                  align-items="center"
-                  gap="1.4em"
-                  align="center"
-                >
-                  <Button small onClick={close}>
-                    Close
-                    <Icon name="x" fill="grey" id="close" />
-                  </Button>
-                </Row>
-              </CellPopUpClose>
-
-              <CellPopUpContent>
-                <Text>
-                  Do you absolutely sure you want to delete article about
-                  <b>
-                    &#8220;
-                    {card.title} &#8221;
-                  </b>
-                  ? Just kidding we are archiving them anyway.
-                </Text>
-              </CellPopUpContent>
-              <CellPopUpButtonYes>
-                <Button onClick={onDeleteClick}>Yes, delete</Button>
-              </CellPopUpButtonYes>
-
-              <CellPopUpButtonNo>
-                <Button onClick={close}>No, please cancel</Button>
-              </CellPopUpButtonNo>
-            </GridPopUp>
-          </Box>
-        </PopUp>
+        <Modal close={close}>
+          Do you absolutely sure you want to delete article about
+          <b>
+            &#8220;
+            {card.title} &#8221;
+          </b>
+          ? Just kidding we are archiving them anyway.
+        </Modal>
       )}
     </div>
   )
 }
 
-CardDeletePopUpButton.defaultProps = {
-  onDeleteClick: () => {},
-}
-
-CardDeletePopUpButton.propTypes = {
+CardDeleteModalButton.propTypes = {
   card: PropTypes.shape({
     title: PropTypes.string.isRequired,
   }).isRequired,
-  onDeleteClick: PropTypes.func,
 }
-
-const GridPopUp = styled.div`
-  display: grid;
-  grid-template-areas:
-    "popupHeading popupClose"
-    "popupContent popupContent"
-    "popupButtonYes popupButtonNo";
-  grid-template-rows: 5rem 1fr 3rem;
-  grid-template-columns: 50% 50%;
-  grid-gap: 8px;
-`
-const CellPopUpHeading = styled.div`
-  grid-area: popupHeading;
-`
-const CellPopUpClose = styled.div`
-  grid-area: popupClose;
-`
-const CellPopUpContent = styled.div`
-  grid-area: popupContent;
-`
-const CellPopUpButtonYes = styled.div`
-  grid-area: popupButtonYes;
-`
-const CellPopUpButtonNo = styled.div`
-  grid-area: popupButtonNo;
-`
