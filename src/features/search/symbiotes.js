@@ -1,15 +1,15 @@
 import { createSymbiote } from "redux-symbiote"
 import { initialFetching, createFetching } from "symbiote-fetching"
 
-export const initialState = {
-  fetchingAll: initialFetching,
-  fetchingOne: initialFetching,
+const initialState = {
+  searchString: "",
+  fetchingSearch: initialFetching,
   cardsIds: [],
 }
 
 const symbiotes = {
-  fetchAll: createFetching("fetchingAll"),
-  fetchOne: createFetching("fetchingOne"),
+  setSearchString: (state, searchString) => ({ ...state, searchString }),
+  fetchSearch: createFetching("fetchingSearch"),
   setCardsIds: (state, cardsIds) => ({
     ...state,
     cardsIds,
@@ -19,5 +19,5 @@ const symbiotes = {
 export const { actions, reducer } = createSymbiote(
   initialState,
   symbiotes,
-  "cards/page",
+  "search",
 )
