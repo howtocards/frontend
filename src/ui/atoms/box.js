@@ -38,17 +38,8 @@ export const Box = styled.div`
   ${({ popup }) =>
     popup &&
     css`
+      width: 450px;
       position: fixed;
       z-index: 9;
-      top: 2rem;
-      &: hover {
-        display: flex;
-        flex-flow: column;
-        flex-shrink: 0;
-        border-radius: 4px;
-        padding: 2rem;
-        box-sizing: border-box;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
-      }
     `}
 `
