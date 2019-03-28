@@ -207,7 +207,7 @@ const CardDeletePopUpButton = ({ card, onDeleteClick }) => {
       </div>
 
       {opened && (
-        <PopUp onClose={close} opened={opened}>
+        <PopUp close={close}>
           <Box popup>
             <GridPopUp>
               <CellPopUpHeading>
