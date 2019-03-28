@@ -26,7 +26,7 @@ export const PopUp = ({ children, onClose, opened }) => {
     return () => {
       document.removeEventListener("click", onDocumentClick)
     }
-  }, [])
+  }, [opened])
 
   return <div ref={ref}>{children}</div>
 }

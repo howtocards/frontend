@@ -85,7 +85,7 @@ CardItem.propTypes = {
 
 const CardFlagWithNumber = ({ usefulFor, isUseful, onUsefulClick }) => (
   <div>
-    <FlagToggler onUsefulClick={onUsefulClick} isUseful={isUseful} />
+    <FavouriteButton onUsefulClick={onUsefulClick} isUseful={isUseful} />
     <CenterHorizontal>
       <Link to="/">{usefulFor}</Link>
     </CenterHorizontal>
@@ -98,7 +98,7 @@ CardFlagWithNumber.propTypes = {
   isUseful: PropTypes.bool.isRequired,
 }
 
-const FlagToggler = ({ isUseful, onUsefulClick }) => {
+const FavouriteButton = ({ isUseful, onUsefulClick }) => {
   return (
     <IconWrapper onClick={onUsefulClick}>
       {isUseful ? (
@@ -110,7 +110,7 @@ const FlagToggler = ({ isUseful, onUsefulClick }) => {
   )
 }
 
-FlagToggler.propTypes = {
+FavouriteButton.propTypes = {
   onUsefulClick: PropTypes.func.isRequired,
   isUseful: PropTypes.bool.isRequired,
 }
@@ -195,7 +195,7 @@ CardHeader.propTypes = {
   }).isRequired,
 }
 
-const CardDeletePopUpButton = ({ card }) => {
+const CardDeletePopUpButton = ({ card, onDeleteClick }) => {
   const [opened, setOpened] = useState(false)
   const close = () => setOpened(() => false)
   const toggle = () => setOpened((isOpen) => !isOpen)
@@ -206,7 +206,7 @@ const CardDeletePopUpButton = ({ card }) => {
         <Icon name="trash" height="1.6rem" />
       </div>
 
-      {!!opened && (
+      {opened && (
         <PopUp onClose={close} opened={opened}>
           <Box popup>
             <GridPopUp>
@@ -240,11 +240,11 @@ const CardDeletePopUpButton = ({ card }) => {
                 </Text>
               </CellPopUpContent>
               <CellPopUpButtonYes>
-                <Button onClick={() => true}>Yes, delete</Button>
+                <Button onClick={onDeleteClick}>Yes, delete</Button>
               </CellPopUpButtonYes>
 
               <CellPopUpButtonNo>
-                <Button onClick={() => true}>No, please cancel</Button>
+                <Button onClick={close}>No, please cancel</Button>
               </CellPopUpButtonNo>
             </GridPopUp>
           </Box>
@@ -254,10 +254,15 @@ const CardDeletePopUpButton = ({ card }) => {
   )
 }
 
+CardDeletePopUpButton.defaultProps = {
+  onDeleteClick: () => {},
+}
+
 CardDeletePopUpButton.propTypes = {
   card: PropTypes.shape({
     title: PropTypes.string.isRequired,
   }).isRequired,
+  onDeleteClick: PropTypes.func,
 }
 
 const GridPopUp = styled.div`
