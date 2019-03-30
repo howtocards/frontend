@@ -202,9 +202,9 @@ const CardDeleteModalButton = ({ card }) => {
 
   return (
     <div>
-      <div onClick={toggle} onKeyDown={toggle} role="button" tabIndex={0}>
+      <ZeroButton onClick={toggle}>
         <Icon name="trash" height="1.6rem" />
-      </div>
+      </ZeroButton>
 
       {opened && (
         <Modal close={close}>
@@ -225,3 +225,8 @@ CardDeleteModalButton.propTypes = {
     title: PropTypes.string.isRequired,
   }).isRequired,
 }
+
+export const ZeroButton = styled.button`
+  background-color: transparent;
+  border: none;
+`
