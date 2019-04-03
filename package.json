@@ -155,6 +155,7 @@
     "terser-webpack-plugin": "1.2.2",
     "typescript": "^3.3.3333",
     "url-loader": "1.1.2",
+    "use-onclickoutside": "^0.3.1",
     "webpack": "4.28.3",
     "webpack-dev-server": "3.1.14",
     "webpack-manifest-plugin": "2.0.4",
