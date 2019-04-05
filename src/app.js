@@ -8,7 +8,7 @@ import { ToggleThemeProvider } from "@lib/theme-context"
 import { lightTheme } from "@howtocards/ui/themes/light"
 import { darkTheme } from "@howtocards/ui/themes/dark"
 
-import { rootRoutes } from "./routes"
+import { Routes } from "./routes"
 import { GlobalStyles } from "./global-styles"
 
 export const App = hot(module)(() => (
@@ -16,7 +16,9 @@ export const App = hot(module)(() => (
     <>
       <Normalize />
       <GlobalStyles />
-      <AccountLoader>{rootRoutes()}</AccountLoader>
+      <AccountLoader>
+        <Routes />
+      </AccountLoader>
     </>
   </ToggleThemeProvider>
 ))

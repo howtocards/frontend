@@ -1,32 +1,26 @@
-import Cookies from "browser-cookies"
-import { commonApiSelector } from "./selectors"
-
-export const TOKEN_ID = "hw-token"
+import { $baseUri } from "../model/config.store"
+import { $token } from "../model/token"
 
 /**
- * @param {string} method
+ * @param {"GET"|"POST"|"PUT"|"DELETE"} method
  * @param {string} url
- * @param {{ baseUri?: string, headers?: {}, body?: {}, parse?: 'text' | 'json' | 'noparse' }} options
+ * @param {{ headers?: {}, body?: {}, parse?: 'text' | 'json' | 'noparse', baseUri?: string }} options
  */
-export const request = (method, url, options = {}) => (dispatch, getState) => {
-  const { baseUri, options: defaultOptions } = commonApiSelector(getState())
-  const token = Cookies.get(TOKEN_ID)
+export const request = (method, url, options = {}) => {
+  const baseUri = $baseUri.getState()
+  const token = $token.getState()
 
   const headers = new Headers({
-    ...defaultOptions.headers,
     ...createContentType(options),
     ...createAuthorization(token),
     ...options.headers,
   })
 
-  const defaultBaseUrl = `${document.location.origin}${baseUri}`
-
-  const uri = `${options.baseUri || defaultBaseUrl}${url}`
+  const uri = `${options.baseUri || baseUri}${url}`
 
   const config = new Request(uri, {
     method,
     headers,
-    ...defaultOptions,
     ...options,
     body: createBody(options, headers),
   })
@@ -44,7 +38,7 @@ export const request = (method, url, options = {}) => (dispatch, getState) => {
     }
     const contentType = response.headers.get("Content-Type")
     if (contentType && contentType.includes("json")) {
-      return response.json()
+      return response.json().then(responseToPromise, responseToPromise)
     }
     throw new TypeError("Unexpected content-type")
   })
@@ -56,13 +50,22 @@ const createContentType = (options) => {
   return header ? { "Content-Type": header } : {}
 }
 
-const contentTypeFromOptions = (options) =>
-  typeof options.body === "object"
-    ? "application/json"
-    : options.headers && options.headers["Content-Type"]
-
 const createAuthorization = (token) =>
   token ? { Authorization: `bearer ${token}` } : {}
+
+const contentTypeFromOptions = (options) => {
+  if (options && options.headers && options.headers["Content-Type"]) {
+    return options.headers["Content-Type"]
+  }
+
+  if (options && options.body && options.body instanceof FormData) {
+    return "multipart/form-data"
+  }
+
+  return typeof options.body === "object"
+    ? "application/json"
+    : (options.headers && options.headers["Content-Type"]) || ""
+}
 
 /**
  * @param {{ body?: {} }} options
@@ -72,7 +75,7 @@ const createBody = (options, headers) => {
   if (options.body && headers.get("content-type").includes("json")) {
     return JSON.stringify(options.body)
   }
-  return undefined
+  return options.body
 }
 
 /**
@@ -89,3 +92,11 @@ const logRequest = (requestConfig) => {
     /* eslint-enable no-console */
   }
 }
+
+const responseToPromise = (response) =>
+  response && typeof response.ok === "boolean"
+    ? okToPromise(response)
+    : response
+
+const okToPromise = ({ ok, result, error }) =>
+  ok ? Promise.resolve(result) : Promise.reject(error)

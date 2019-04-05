@@ -7,7 +7,7 @@ import { Container } from "@howtocards/ui"
 export const NotFoundPage = () => (
   <CommonContentTemplate>
     <Container>
-      <NotFoundContainer>Page not found! =(</NotFoundContainer>
+      <NotFoundContainer>Page not found.</NotFoundContainer>
     </Container>
   </CommonContentTemplate>
 )

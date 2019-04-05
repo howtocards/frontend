@@ -1,9 +1,11 @@
-import { accountFetch, tokenSet } from "@features/common"
+import { tokenChanged as tokenSet } from "@features/common"
 import { sessionApi } from "../api"
+
+const accountFetch = () => () => console.warn("IMPLEMENT ACCOUNT FETCH")
 
 export const userLogin = ({ email, password }) => async (dispatch) => {
   try {
-    const { result, ok, error } = await dispatch(sessionApi.create, {
+    const { result, ok, error } = await dispatch(sessionApi.createSession, {
       email,
       password,
     })

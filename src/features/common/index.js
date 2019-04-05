@@ -1,23 +1,8 @@
-import { request, TOKEN_ID } from "./request"
-import { get, post, put, patch, destroy, okToPromise } from "./api"
-import * as rpc from "./rpc"
+import "./model"
 
-// TODO remove old api. Use rpc
-export const api = {
-  request,
-  get,
-  post,
-  put,
-  patch,
-  destroy,
-  okToPromise,
-  TOKEN_ID,
-}
-
-export { rpc }
-export { NotFoundPage } from "./pages/not-found"
-export { reducer as commonReducer } from "./symbiotes"
-export { commonApiSelector, accountIdSelector } from "./selectors"
+export { $isAuthenticated } from "./model/session.store"
 export { CommonContentTemplate } from "./templates"
-export { tokenSet, accountFetch, accountReset } from "./effects"
 export { Header, AccountLoader, Authenticated } from "./organisms"
+export { NotFoundPage } from "./pages/not-found"
+export { request } from "./lib/request"
+export { tokenChanged, tokenDropped } from "./model/token"

@@ -1,3 +1,4 @@
+import { createBrowserHistory } from "history"
 import React from "react"
 import { Redirect } from "react-router-dom"
 
@@ -7,3 +8,5 @@ export const redirectFrom = (from, to) => ({
   exact: true,
   component: redirectTo(to),
 })
+
+export const history = createBrowserHistory()
