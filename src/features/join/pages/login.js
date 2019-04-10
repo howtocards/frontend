@@ -14,7 +14,6 @@ import {
 } from "@howtocards/ui"
 
 import { Col, Row } from "@lib/styled-components-layout"
-import { userLogin } from "../effects/join"
 import {
   formSubmitted,
   loginFetching,

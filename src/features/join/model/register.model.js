@@ -1,15 +1,15 @@
-import { tokenChanged, $isAuthenticated } from "@features/common"
 import { history } from "@lib/routing"
-import { sessionApi } from "../api"
+import { $isAuthenticated, tokenChanged } from "@features/common"
+import { sessionApi, accountApi } from "../api"
 import {
-  emailChanged,
   formMounted,
-  formSubmitted,
-  formUnmounted,
-  loginProcessing,
+  emailChanged,
   passwordChanged,
-} from "./login.events"
-import { $email, $password, $form, $isSubmitEnabled } from "./login.store"
+  formUnmounted,
+  formSubmitted,
+  registerProcessing,
+} from "./register.events"
+import { $email, $password, $form, $isSubmitEnabled } from "./register.store"
 
 formMounted.watch(() => {
   if ($isAuthenticated.getState()) {
@@ -27,11 +27,13 @@ formSubmitted.watch(() => {
   if (!$isSubmitEnabled.getState()) return
 
   const form = $form.getState()
-  loginProcessing(form)
+  registerProcessing(form)
 })
 
-loginProcessing.use((form) => sessionApi.createSession(form))
-loginProcessing.done.watch(({ result }) => {
+registerProcessing.use((form) =>
+  accountApi.createAccount(form).then(() => sessionApi.createSession(form)),
+)
+registerProcessing.done.watch(({ result }) => {
   tokenChanged(result.token)
   history.push("/")
 })
