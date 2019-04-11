@@ -2,14 +2,14 @@ import { forward } from "effector"
 import { commonApi } from "../api"
 import { tokenDropped } from "./token"
 import { $session } from "./session.store"
-import { sessionFetchProcessing, logoutPressed } from "./session.events"
+import { sessionFetchProcessing, sessionDropped } from "./session.events"
 
 sessionFetchProcessing.use(() => commonApi.getCurrentAccount())
 
 $session
-  .reset(logoutPressed)
+  .reset(sessionDropped)
   .on(sessionFetchProcessing.done, (current, { result }) => result)
   .on(sessionFetchProcessing.fail, () => null)
 
 forward({ from: sessionFetchProcessing.fail, to: tokenDropped })
-forward({ from: logoutPressed, to: tokenDropped })
+forward({ from: sessionDropped, to: tokenDropped })
