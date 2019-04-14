@@ -21,6 +21,10 @@ const getLatest = () => request("GET", "/cards/")
  */
 const getById = (id) => request("GET", `/cards/${id}/`)
 
+/**
+ * @param {number} cardId
+ * @param {boolean} isUseful
+ */
 const markUseful = (cardId, isUseful) =>
   request("POST", `/cards/${cardId}/useful/`, { body: { isUseful } })
 
