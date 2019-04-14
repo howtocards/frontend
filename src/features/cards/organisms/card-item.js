@@ -7,39 +7,6 @@ import { RichEditor } from "@lib/rich-text"
 import { Row } from "@lib/styled-components-layout"
 import { Link, H2, Icon, Text, Modal } from "@howtocards/ui"
 
-const CardBox = styled.div`
-  margin: 0.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  padding: 2rem;
-  max-height: 24rem;
-  box-sizing: border-box;
-  overflow-y: hidden;
-
-  &: hover {
-    display: flex;
-    flex-flow: column;
-    flex-shrink: 0;
-    border-radius: 4px;
-    padding: 2rem;
-    box-sizing: border-box;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
-    //transform: scale(1.001);
-  }
-`
-
-const GridCard = styled.div`
-  display: grid;
-  grid-template-areas:
-    "flag header"
-    "flag info"
-    "flag content"
-    "flag footer";
-  grid-template-rows: 2rem 2rem 10rem 3rem;
-  grid-template-columns: 50px 1fr;
-  grid-gap: 8px;
-`
-
 export const CardItem = ({ onUsefulClick, card }) => (
   <CardBox>
     <GridCard>
@@ -127,6 +94,7 @@ const CardHeader = ({ card }) => (
     </Row>
   </HeadingLine>
 )
+
 const CardInfo = (card) => (
   <Row>
     <Text small>
@@ -134,6 +102,70 @@ const CardInfo = (card) => (
     </Text>
   </Row>
 )
+
+const CardDeleteModalButton = ({ card }) => {
+  const [opened, setOpened] = useState(false)
+  const close = () => setOpened(() => false)
+  const toggle = () => setOpened((isOpen) => !isOpen)
+
+  return (
+    <div>
+      <ZeroButton onClick={toggle}>
+        <Icon name="trash" height="1.6rem" />
+      </ZeroButton>
+
+      {opened && (
+        <Modal close={close}>
+          Do you absolutely sure you want to delete article about
+          <b>
+            &#8220;
+            {card.title} &#8221;
+          </b>
+          ? Just kidding we are archiving them anyway.
+        </Modal>
+      )}
+    </div>
+  )
+}
+
+CardDeleteModalButton.propTypes = {
+  card: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+  }).isRequired,
+}
+
+const CardBox = styled.div`
+  margin: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 2rem;
+  max-height: 24rem;
+  box-sizing: border-box;
+  overflow-y: hidden;
+
+  &: hover {
+    display: flex;
+    flex-flow: column;
+    flex-shrink: 0;
+    border-radius: 4px;
+    padding: 2rem;
+    box-sizing: border-box;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    //transform: scale(1.001);
+  }
+`
+
+const GridCard = styled.div`
+  display: grid;
+  grid-template-areas:
+    "flag header"
+    "flag info"
+    "flag content"
+    "flag footer";
+  grid-template-rows: 2rem 2rem 10rem 3rem;
+  grid-template-columns: 50px 1fr;
+  grid-gap: 8px;
+`
 
 const HeadingLine = styled.div`
   display: flex;
@@ -192,37 +224,6 @@ CardHeader.propTypes = {
       canEdit: PropTypes.bool,
       isUseful: PropTypes.bool,
     }).isRequired,
-  }).isRequired,
-}
-
-const CardDeleteModalButton = ({ card }) => {
-  const [opened, setOpened] = useState(false)
-  const close = () => setOpened(() => false)
-  const toggle = () => setOpened((isOpen) => !isOpen)
-
-  return (
-    <div>
-      <ZeroButton onClick={toggle}>
-        <Icon name="trash" height="1.6rem" />
-      </ZeroButton>
-
-      {opened && (
-        <Modal close={close}>
-          Do you absolutely sure you want to delete article about
-          <b>
-            &#8220;
-            {card.title} &#8221;
-          </b>
-          ? Just kidding we are archiving them anyway.
-        </Modal>
-      )}
-    </div>
-  )
-}
-
-CardDeleteModalButton.propTypes = {
-  card: PropTypes.shape({
-    title: PropTypes.string.isRequired,
   }).isRequired,
 }
 
