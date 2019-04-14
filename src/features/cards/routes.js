@@ -4,11 +4,11 @@ import { CardViewPage } from "./pages/view"
 import { CardEditPage } from "./pages/edit"
 
 export const cardsRoutes = () => [
-  // {
-  //   path: "/",
-  //   exact: true,
-  //   component: CardsHomePage,
-  // },
+  {
+    path: "/",
+    exact: true,
+    component: CardsHomePage,
+  },
   // {
   //   path: "/new",
   //   exact: true,

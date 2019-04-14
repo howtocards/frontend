@@ -1,14 +1,9 @@
 // @flow
 import { cardsApi } from "../api"
-import { mergeCards, clearRegistry, setUsefulMark } from "./registry.events"
+import { clearRegistry, setUsefulMark } from "./registry.events"
 import { $registry } from "./registry.store"
 
 $registry.reset(clearRegistry)
-
-$registry.on(mergeCards, (registry, cards) => {
-  const newPartial = cardsToObject(cards)
-  return { ...registry, ...newPartial }
-})
 
 // Optimistic update
 $registry.on(setUsefulMark, (registry, params) => {
@@ -49,7 +44,7 @@ setUsefulMark.use(({ cardId, isUseful }) =>
   cardsApi.markUseful(cardId, isUseful),
 )
 
-const cardsToObject = (list) =>
+export const cardsToObject = (list) =>
   list.reduce((object, card) => {
     // eslint-disable-next-line no-param-reassign
     object[card.id] = card

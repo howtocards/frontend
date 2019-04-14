@@ -11,11 +11,6 @@ export type Card = {
   },
 }
 
-/**
- * Push new cards to registry and replace exists
- */
-export const mergeCards: Event<Card[]> = createEvent()
-
 export const clearRegistry: Event<void> = createEvent()
 
 export const setUsefulMark: Effect<
