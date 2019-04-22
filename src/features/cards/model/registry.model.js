@@ -1,6 +1,6 @@
 // @flow
 import { cardsApi } from "../api"
-import { clearRegistry, setUsefulMark } from "./registry.events"
+import { clearRegistry, setUsefulMark, type Card } from "./registry.events"
 import { $registry } from "./registry.store"
 
 $registry.reset(clearRegistry)
@@ -44,7 +44,7 @@ setUsefulMark.use(({ cardId, isUseful }) =>
   cardsApi.markUseful(cardId, isUseful),
 )
 
-export const cardsToObject = (list) =>
+export const cardsToObject = (list: Card[]) =>
   list.reduce((object, card) => {
     // eslint-disable-next-line no-param-reassign
     object[card.id] = card
