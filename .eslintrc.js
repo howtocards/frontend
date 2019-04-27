@@ -1,5 +1,6 @@
 module.exports = {
   extends: ["plugin:jest/recommended", "react-app", "@atomix/react"],
+  parser: "babel-eslint",
   globals: {
     grecaptcha: true,
   },
