@@ -52,7 +52,6 @@ const handleSubmit = (event) => {
 }
 
 const LoginForm = () => {
-  const form = useStore($form)
   const formError = useStore(loginFetching.error)
   const isSubmitEnabled = useStore($isSubmitEnabled)
 
