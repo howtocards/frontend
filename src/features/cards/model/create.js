@@ -24,7 +24,7 @@ const $form = createStoreObject({
   content: $content,
 })
 
-const trimEvent = (event) => event.target.value.trim()
+const trimEvent = (event) => event.target.value
 
 $title.on(titleChanged.map(trimEvent), (state, title) => title)
 $content.on(contentChanged, (state, content) => content)

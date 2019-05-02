@@ -9,11 +9,11 @@ export const cardsRoutes = () => [
     exact: true,
     component: CardsHomePage,
   },
-  // {
-  //   path: "/new",
-  //   exact: true,
-  //   component: CardCreatePage,
-  // },
+  {
+    path: "/new/card",
+    exact: true,
+    component: CardCreatePage,
+  },
   // {
   //   path: "/open/:cardId",
   //   exact: true,

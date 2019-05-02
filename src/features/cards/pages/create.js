@@ -16,6 +16,11 @@ import {
 } from "../model/create"
 import { CardsCommonTemplate } from "../templates/common"
 
+const onPressSubmit = (event) => {
+  event.preventDefault()
+  submitButtonPressed()
+}
+
 export const CardCreatePage = () => {
   const title = useStore($title)
   const content = useStore($content)
@@ -26,7 +31,7 @@ export const CardCreatePage = () => {
       <Authenticated
         render={() => (
           <Card style={{ marginBottom: "2rem" }}>
-            <form onSubmit={submitButtonPressed}>
+            <form onSubmit={onPressSubmit}>
               <Col gap="1rem">
                 <Input
                   name="title"

@@ -33,7 +33,7 @@ const Navigation = () => (
 
 const linksForUser = ({ account }) => (
   <>
-    <NavLink to="/new">+ New</NavLink>
+    <NavLink to="/new/card">+ New</NavLink>
     <NavLink to={`/user/${account.user.id}`}>{account.user.email}</NavLink>
     <NavLink to="/logout">Logout</NavLink>
   </>
