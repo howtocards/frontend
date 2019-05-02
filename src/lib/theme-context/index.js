@@ -7,6 +7,12 @@ import { ThemeProvider } from "styled-components"
 const themeToggled = createEvent()
 const $isDark = createStore(localStorage.getItem("theme") === "dark")
 
+$isDark.on(themeToggled, (isDark) => !isDark)
+
+$isDark.watch((isDark) => {
+  localStorage.setItem("theme", isDark ? "dark" : "light")
+})
+
 export const ToggleThemeProvider = ({ dark, light, children }) => {
   const isDark = useStore($isDark)
 
