@@ -23,7 +23,8 @@ export const prismcssDark = css`
   pre[class*="language-"] {
     color: white;
     background: none;
-    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+    font-family: Hasklig, Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
+      monospace;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
@@ -31,9 +32,9 @@ export const prismcssDark = css`
     word-wrap: normal;
     line-height: 1.5;
 
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
+    -moz-tab-size: 2;
+    -o-tab-size: 2;
+    tab-size: 2;
 
     -webkit-hyphens: none;
     -moz-hyphens: none;
@@ -58,22 +59,17 @@ export const prismcssDark = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
-    padding: 4rem 2rem;
-    border: 1px solid ${(p) => p.theme.palette.decoration.borders};
+    padding: 2rem;
     ${({ theme }) => theme.embed.canvas};
-    background-color: #171717; /* border: 0.3em solid hsl(30, 20%, 40%);
-    border-radius: 0.5em;
-    box-shadow: 1px 1px 0.5em black inset; */
+    background-color: #171717;
   }
 
   /* Inline code */
   :not(pre) > code[class*="language-"] {
     padding: 0.15em 0.2em 0.05em;
     padding: 4rem 2rem;
-    border: 1px solid ${(p) => p.theme.palette.decoration.borders};
     ${({ theme }) => theme.embed.canvas}
-    /* border-radius: 0.3em;
-    border: 0.13em solid hsl(30, 20%, 40%); */
+    border-radius: 0.3em;
     box-shadow: 1px 1px 0.3em -0.1em black inset;
     white-space: normal;
   }
@@ -193,7 +189,8 @@ export const prismcssLight = css`
   pre[class*="language-"] {
     color: black;
     background: none;
-    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+    font-family: Hasklig, Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
+      monospace;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
@@ -201,9 +198,9 @@ export const prismcssLight = css`
     word-wrap: normal;
     line-height: 1.5;
 
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
+    -moz-tab-size: 2;
+    -o-tab-size: 2;
+    tab-size: 2;
 
     -webkit-hyphens: none;
     -moz-hyphens: none;
@@ -228,19 +225,14 @@ export const prismcssLight = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
-    /* border: 0.3em solid hsl(30, 20%, 40%);
-    border-radius: 0.5em;
-    box-shadow: 1px 1px 0.5em black inset; */
-    padding: 4rem 2rem;
-    border: 1px solid ${(p) => p.theme.palette.decoration.borders};
+    padding: 2rem;
     ${({ theme }) => theme.embed.canvas}
   }
 
   /* Inline code */
   :not(pre) > code[class*="language-"] {
     padding: 0.15em 0.2em 0.05em;
-    /* border-radius: 0.3em;
-    border: 0.13em solid hsl(30, 20%, 40%); */
+    border-radius: 0.3em;
     box-shadow: 1px 1px 0.3em -0.1em black inset;
     white-space: normal;
   }
