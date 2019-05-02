@@ -20,13 +20,13 @@ $registry.on(setUsefulMark, (registry, params) => {
 })
 
 $registry.on(setUsefulMark.done, (registry, { params, result }) => {
-  if (result.meta.isUseful === params.previousValue) {
+  if (result.card.meta.isUseful === params.previousValue) {
     return registry
   }
 
   return {
     ...registry,
-    [result.id]: result,
+    [result.card.id]: result.card,
   }
 })
 
@@ -57,4 +57,8 @@ const setUseful = (card, isUseful) => ({
     ...card.meta,
     isUseful,
   },
+})
+
+$registry.watch((reg) => {
+  console.log({ reg })
 })

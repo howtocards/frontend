@@ -15,5 +15,5 @@ export const clearRegistry: Event<void> = createEvent()
 
 export const setUsefulMark: Effect<
   { cardId: number, isUseful: boolean, previousValue?: boolean },
-  Card,
+  { card: Card },
 > = createEffect()
