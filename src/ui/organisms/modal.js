@@ -6,17 +6,19 @@ import PropTypes from "prop-types"
 import { H3, Icon, Text, Button, Box } from "@howtocards/ui"
 import { Row } from "@lib/styled-components-layout"
 
-export const Modal = ({ children, close, onDeleteClick }) => {
+export const Modal = ({ children, title, onClose, onDeleteClick }) => {
   const ref = useRef(null)
-  useOnClickOutside(ref, close)
+  useOnClickOutside(ref, onClose)
 
   return (
     <div ref={ref}>
       <Box popup>
         <GridPopUp>
-          <CellPopUpHeading>
-            <H3>Do you want to delete?</H3>
-          </CellPopUpHeading>
+          {title && (
+            <CellPopUpHeading>
+              <H3>{title}</H3>
+            </CellPopUpHeading>
+          )}
 
           <CellPopUpClose>
             <Row
@@ -26,8 +28,7 @@ export const Modal = ({ children, close, onDeleteClick }) => {
               gap="1.4em"
               align="center"
             >
-              <Button small onClick={close}>
-                Close
+              <Button small onClick={onClose}>
                 <Icon name="x" fill="grey" id="close" />
               </Button>
             </Row>
@@ -41,7 +42,7 @@ export const Modal = ({ children, close, onDeleteClick }) => {
           </CellPopUpButtonYes>
 
           <CellPopUpButtonNo>
-            <Button onClick={close}>No, please cancel</Button>
+            <Button onClick={onClose}>No, please cancel</Button>
           </CellPopUpButtonNo>
         </GridPopUp>
       </Box>
@@ -50,12 +51,14 @@ export const Modal = ({ children, close, onDeleteClick }) => {
 }
 
 Modal.propTypes = {
+  title: PropTypes.string,
   children: PropTypes.node.isRequired,
-  close: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func,
 }
 
 Modal.defaultProps = {
+  title: undefined,
   onDeleteClick: () => {},
 }
 
