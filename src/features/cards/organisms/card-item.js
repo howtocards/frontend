@@ -1,73 +1,39 @@
 import React, { useState } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import PropTypes from "prop-types"
 import { format } from "date-fns"
 
 import { RichEditor } from "@lib/rich-text"
 import { Row } from "@lib/styled-components-layout"
-import { Link, H2, Icon, Text, Modal } from "@howtocards/ui"
+import { Link, H2, Icon, Text, Modal, CardNarrow } from "@howtocards/ui"
 
-const CardBox = styled.div`
-  margin: 0.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  padding: 2rem;
-  max-height: 24rem;
-  box-sizing: border-box;
-  overflow-y: hidden;
+export const CardItem = ({ onUsefulClick, card, maximized }) => (
+  <CardNarrow>
+    <CardBox maximized={maximized}>
+      <GridCard maximized={maximized}>
+        <CellCardFlag>
+          <CardFlagWithNumber
+            usefulFor={card.usefulFor}
+            isUseful={card.meta.isUseful}
+            onUsefulClick={onUsefulClick}
+          />
+        </CellCardFlag>
 
-  &: hover {
-    display: flex;
-    flex-flow: column;
-    flex-shrink: 0;
-    border-radius: 4px;
-    padding: 2rem;
-    box-sizing: border-box;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
-    //transform: scale(1.001);
-  }
-`
+        <CellCardHeader>
+          <CardHeader card={card} />
+        </CellCardHeader>
 
-const GridCard = styled.div`
-  display: grid;
-  grid-template-areas:
-    "flag header"
-    "flag info"
-    "flag content"
-    "flag footer";
-  grid-template-rows: 2rem 2rem 10rem 3rem;
-  grid-template-columns: 50px 1fr;
-  grid-gap: 8px;
-`
+        <CellCardContent>
+          <RichEditor readOnly content={card.content} />
+        </CellCardContent>
 
-export const CardItem = ({ onUsefulClick, card }) => (
-  <CardBox>
-    <GridCard>
-      <CellCardFlag>
-        <CardFlagWithNumber
-          usefulFor={card.usefulFor}
-          isUseful={card.meta.isUseful}
-          onUsefulClick={onUsefulClick}
-        />
-      </CellCardFlag>
-
-      <CellCardHeader>
-        <CardHeader card={card} />
-      </CellCardHeader>
-
-      <CellCardInfo>
-        <CardInfo createdAt={card.createdAt} />
-      </CellCardInfo>
-
-      <CellCardContent>
-        <RichEditor readOnly content={card.content} />
-      </CellCardContent>
-
-      <CellCardFooter>
-        <Link to="/">14 Comments</Link>
-      </CellCardFooter>
-    </GridCard>
-  </CardBox>
+        <CellCardFooter>
+          <CardInfo createdAt={card.createdAt} />
+          {/* <Link to="/">14 Comments</Link> */}
+        </CellCardFooter>
+      </GridCard>
+    </CardBox>
+  </CardNarrow>
 )
 
 CardItem.propTypes = {
@@ -81,16 +47,32 @@ CardItem.propTypes = {
     }).isRequired,
   }).isRequired,
   onUsefulClick: PropTypes.func.isRequired,
+  maximized: PropTypes.bool,
+}
+
+CardItem.defaultProps = {
+  maximized: false,
 }
 
 const CardFlagWithNumber = ({ usefulFor, isUseful, onUsefulClick }) => (
   <div>
     <FavouriteButton onUsefulClick={onUsefulClick} isUseful={isUseful} />
-    <CenterHorizontal>
-      <Link to="/">{usefulFor}</Link>
-    </CenterHorizontal>
+    <UsefulForCount>
+      {usefulFor === 0 ? (
+        <BeFirst>Be first</BeFirst>
+      ) : (
+        <Link to="/" title="Users find it useful">
+          {usefulFor}
+        </Link>
+      )}
+    </UsefulForCount>
   </div>
 )
+
+const BeFirst = styled.div`
+  font-size: 0.7em;
+  opacity: 0.5;
+`
 
 CardFlagWithNumber.propTypes = {
   onUsefulClick: PropTypes.func.isRequired,
@@ -98,9 +80,12 @@ CardFlagWithNumber.propTypes = {
   isUseful: PropTypes.bool.isRequired,
 }
 
+const favouriteTitle = (isUseful) =>
+  isUseful ? "No longer useful to me" : "Useful to me"
+
 const FavouriteButton = ({ isUseful, onUsefulClick }) => {
   return (
-    <IconWrapper onClick={onUsefulClick}>
+    <IconWrapper onClick={onUsefulClick} title={favouriteTitle(isUseful)}>
       {isUseful ? (
         <Icon name="bookmark-solid" fill="red" />
       ) : (
@@ -122,18 +107,71 @@ const CardHeader = ({ card }) => (
     </Link>
     <Row basis="25%" justify="flex-end" gap="1.4em" align="center">
       {card.meta.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
-      <CardDeleteModalButton card={card} />
-      <Icon name="dots-v" height="1.6rem" />
+      {card.meta.canEdit && <CardDeleteModalButton card={card} />}
+      {/* <Icon name="dots-v" height="1.6rem" /> */}
     </Row>
   </HeadingLine>
 )
+
 const CardInfo = (card) => (
   <Row>
-    <Text small>
-      {format(new Date(card.createdAt), "HH:MM MM/DD/YYYY")} by Author
-    </Text>
+    <Text small>{format(new Date(card.createdAt), "HH:MM MM.DD.YYYY")}</Text>
   </Row>
 )
+
+const CardDeleteModalButton = ({ card }) => {
+  const [opened, setOpened] = useState(false)
+  const close = () => setOpened(() => false)
+  const toggle = () => setOpened((isOpen) => !isOpen)
+
+  return (
+    <div>
+      <ZeroButton onClick={toggle}>
+        <Icon name="trash" height="1.6rem" />
+      </ZeroButton>
+
+      {opened && (
+        <Modal onClose={close}>
+          <div>Do you absolutely sure you want to delete card</div>
+          <div>
+            <b>&#8220; {card.title} &#8221; </b>?
+          </div>
+          <div>Just kidding we are archiving them anyway.</div>
+        </Modal>
+      )}
+    </div>
+  )
+}
+
+CardDeleteModalButton.propTypes = {
+  card: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+  }).isRequired,
+}
+
+const CardBox = styled.div`
+  box-sizing: border-box;
+  overflow-y: hidden;
+  padding: 2rem;
+  max-height: ${(p) => (p.maximized ? "auto" : "24rem")};
+`
+
+const GridCard = styled.div`
+  display: grid;
+  grid-template-areas:
+    "flag header"
+    "flag content"
+    "flag footer";
+  grid-template-rows: 2rem 10rem 3rem;
+  grid-template-columns: 50px 1fr;
+  grid-gap: 8px;
+
+  ${(p) =>
+    p.maximized &&
+    css`
+      grid-template-rows: 2rem 1fr 3rem;
+    `}
+`
 
 const HeadingLine = styled.div`
   display: flex;
@@ -144,19 +182,14 @@ const HeadingLine = styled.div`
 `
 const IconWrapper = styled.div`
   padding: 0 0.6rem;
+  cursor: pointer;
 
   &:disabled {
     opacity: 0.3;
   }
-
-  & #icon:hover {
-    fill: green;
-    cursor: pointer;
-    transition: fill 0.7s;
-  }
 `
 
-const CenterHorizontal = styled.div`
+const UsefulForCount = styled.div`
   display: flex;
   justify-content: center;
   flex-grow: 1;
@@ -175,9 +208,6 @@ const CellCardFlag = styled.div`
 const CellCardHeader = styled.div`
   grid-area: header;
 `
-const CellCardInfo = styled.div`
-  grid-area: info;
-`
 const CellCardContent = styled.div`
   grid-area: content;
   overflow-y: hidden;
@@ -192,37 +222,6 @@ CardHeader.propTypes = {
       canEdit: PropTypes.bool,
       isUseful: PropTypes.bool,
     }).isRequired,
-  }).isRequired,
-}
-
-const CardDeleteModalButton = ({ card }) => {
-  const [opened, setOpened] = useState(false)
-  const close = () => setOpened(() => false)
-  const toggle = () => setOpened((isOpen) => !isOpen)
-
-  return (
-    <div>
-      <ZeroButton onClick={toggle}>
-        <Icon name="trash" height="1.6rem" />
-      </ZeroButton>
-
-      {opened && (
-        <Modal close={close}>
-          Do you absolutely sure you want to delete article about
-          <b>
-            &#8220;
-            {card.title} &#8221;
-          </b>
-          ? Just kidding we are archiving them anyway.
-        </Modal>
-      )}
-    </div>
-  )
-}
-
-CardDeleteModalButton.propTypes = {
-  card: PropTypes.shape({
-    title: PropTypes.string.isRequired,
   }).isRequired,
 }
 

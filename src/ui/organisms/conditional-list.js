@@ -3,7 +3,9 @@ import PropTypes from "prop-types"
 
 export const ConditionalList = ({ list, renderExists, renderEmpty }) => (
   <Fragment>
-    {list && list.length > 0 ? renderExists(list) : renderEmpty()}
+    {list && list.filter(Boolean).length > 0
+      ? renderExists(list)
+      : renderEmpty()}
   </Fragment>
 )
 

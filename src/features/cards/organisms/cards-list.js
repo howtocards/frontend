@@ -1,53 +1,43 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { connect } from "react-redux"
+import { useStore } from "effector-react"
 import styled from "styled-components"
-import { compose } from "recompose"
 
 import { ConditionalList } from "@howtocards/ui"
-import { cardsRegistrySelector } from "../selectors"
-import { setUsefulMark } from "../effects"
+import { $registry, getCard } from "../model/registry.store"
+import { setUsefulMark } from "../model/registry.events"
 
-const mapStateToProps = (state, props) => {
-  const registry = cardsRegistrySelector(state)
-
-  return { cards: props.ids.map((id) => registry[id]) }
+const onUsefulClick = (cardId) => {
+  const card = getCard(cardId)
+  if (card) {
+    setUsefulMark({ cardId: card.id, isUseful: !card.meta.isUseful })
+  }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  onUsefulClick: (cardId) => dispatch(setUsefulMark, cardId),
-})
+export const CardsList = ({ ids, renderCard }) => {
+  const cards = useStore(
+    $registry.map((registry) => ids.map((id) => registry[id])),
+  )
 
-const enhance = compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  ),
-)
-
-export const CardsListView = ({ cards, renderCard, onUsefulClick }) => (
-  <ConditionalList
-    list={cards}
-    renderExists={(list) => (
-      <CardsItemsBlock>
-        {list.map((card) =>
-          renderCard({ card, onUsefulClick: () => onUsefulClick(card.id) }),
-        )}
-      </CardsItemsBlock>
-    )}
-  />
-)
-
-CardsListView.propTypes = {
-  cards: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  renderCard: PropTypes.func.isRequired,
-  onUsefulClick: PropTypes.func.isRequired,
+  return (
+    <ConditionalList
+      list={cards}
+      renderExists={(list) => (
+        <CardsItemsBlock>
+          {list
+            .filter(Boolean)
+            .map((card) =>
+              renderCard({ card, onUsefulClick: () => onUsefulClick(card.id) }),
+            )}
+        </CardsItemsBlock>
+      )}
+    />
+  )
 }
-
-export const CardsList = enhance(CardsListView)
 
 CardsList.propTypes = {
   ids: PropTypes.arrayOf(PropTypes.number).isRequired,
+  renderCard: PropTypes.func.isRequired,
 }
 
 export const CardsItemsBlock = styled.div`

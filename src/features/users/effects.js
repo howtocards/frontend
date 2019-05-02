@@ -1,6 +1,5 @@
 import { handleFetching } from "symbiote-fetching"
 
-import { api } from "@features/common"
 import { registryActions } from "@features/cards"
 
 import { usersApi } from "./api"
@@ -31,11 +30,9 @@ export const getUserWithCards = (userId) =>
 
 const getCardsFor = (userId) => (dispatch) => {
   const usefulCardsP = dispatch(usersApi.getUsefulCardsFor, userId)
-    .then(api.okToPromise)
     .then(({ cards }) => cards)
     .catch(() => [])
   const createdCardsP = dispatch(usersApi.getCardsCreatedBy, userId)
-    .then(api.okToPromise)
     .then(({ cards }) => cards)
     .catch(() => [])
 
@@ -43,4 +40,4 @@ const getCardsFor = (userId) => (dispatch) => {
 }
 
 export const getUser = (userId) => (dispatch) =>
-  dispatch(usersApi.getInfo, userId).then(api.okToPromise)
+  dispatch(usersApi.getInfo, userId)

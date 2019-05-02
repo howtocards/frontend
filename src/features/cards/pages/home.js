@@ -1,53 +1,24 @@
-import React from "react"
-import { connect } from "react-redux"
-import { compose, lifecycle } from "recompose"
-import PropTypes from "prop-types"
-import { getAllCards } from "../effects"
+import React, { useEffect } from "react"
+import { useStore } from "effector-react"
+
+import { $cardsIds, pageReady } from "../model/home"
 import { CardsCommonTemplate } from "../templates/common"
-import {
-  cardsPageFetchingAllSelector,
-  cardsPageCardsIdsSelector,
-} from "../selectors"
 import { CardsList, CardItem } from "../organisms"
 
-const mapStateToProps = (state) => ({
-  fetching: cardsPageFetchingAllSelector(state),
-  ids: cardsPageCardsIdsSelector(state),
-})
+export const CardsHomePage = () => {
+  const ids = useStore($cardsIds)
+  useEffect(() => {
+    pageReady()
+  }, [])
 
-const mapDispatchToProps = (dispatch) => ({
-  onFetch: () => dispatch(getAllCards),
-})
-
-const enhance = compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  ),
-  lifecycle({
-    componentDidMount() {
-      this.props.onFetch()
-    },
-  }),
-)
-
-export const CardsHomeView = ({ ids }) => (
-  <CardsCommonTemplate>
-    <CardsList
-      ids={ids}
-      renderCard={({ card, onUsefulClick }) =>
-        React.createElement(CardItem, {
-          card,
-          key: card.id,
-          onUsefulClick,
-        })
-      }
-    />
-  </CardsCommonTemplate>
-)
-
-CardsHomeView.propTypes = {
-  ids: PropTypes.arrayOf(PropTypes.number).isRequired,
+  return (
+    <CardsCommonTemplate>
+      <CardsList
+        ids={ids}
+        renderCard={({ card, onUsefulClick }) => (
+          <CardItem key={card.id} card={card} onUsefulClick={onUsefulClick} />
+        )}
+      />
+    </CardsCommonTemplate>
+  )
 }
-
-export const CardsHomePage = enhance(CardsHomeView)

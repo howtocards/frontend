@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
-import { ToggleThemeConsumer } from "@lib/theme-context"
+import { WithThemeToggler } from "@lib/theme-context"
 import { Container } from "@howtocards/ui"
 import { WithAccount } from "./with-account"
 
@@ -33,7 +33,7 @@ const Navigation = () => (
 
 const linksForUser = ({ account }) => (
   <>
-    <NavLink to="/new">+ New</NavLink>
+    <NavLink to="/new/card">+ New</NavLink>
     <NavLink to={`/user/${account.user.id}`}>{account.user.email}</NavLink>
     <NavLink to="/logout">Logout</NavLink>
   </>
@@ -51,11 +51,11 @@ linksForUser.propTypes = {
 const linksForAnonym = () => <NavLink to="/join">Join</NavLink>
 
 const ToggleThemeButton = () => (
-  <ToggleThemeConsumer>
-    {({ toggleDark, dark }) => (
-      <NavItem onClick={toggleDark}>{dark ? "🌔" : "☀️"}</NavItem>
+  <WithThemeToggler
+    render={({ toggle, isDark }) => (
+      <NavItem onClick={toggle}>{isDark ? "🌔" : "☀️"}</NavItem>
     )}
-  </ToggleThemeConsumer>
+  />
 )
 
 const HeaderBox = styled.header`

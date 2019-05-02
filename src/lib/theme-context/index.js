@@ -1,47 +1,37 @@
-import React, { createContext, PureComponent } from "react"
+import React from "react"
+import { createStore, createEvent } from "effector"
+import { useStore } from "effector-react"
 import PropTypes from "prop-types"
 import { ThemeProvider } from "styled-components"
 
-const ThemeContext = createContext({
-  dark: false,
-  toggleDark: () => {},
+const themeToggled = createEvent()
+const $isDark = createStore(localStorage.getItem("theme") === "dark")
+
+$isDark.on(themeToggled, (isDark) => !isDark)
+
+$isDark.watch((isDark) => {
+  localStorage.setItem("theme", isDark ? "dark" : "light")
 })
 
-const getCurrentTheme = () =>
-  String(localStorage.getItem("dark-theme")) === "true"
+export const ToggleThemeProvider = ({ dark, light, children }) => {
+  const isDark = useStore($isDark)
 
-/* eslint-disable react/no-unused-state, react/forbid-prop-types */
-export class ToggleThemeProvider extends PureComponent {
-  static propTypes = {
-    dark: PropTypes.object.isRequired,
-    light: PropTypes.object.isRequired,
-    children: PropTypes.node.isRequired,
-  }
-
-  toggleDark = () => {
-    this.setState((prevState) => {
-      localStorage.setItem("dark-theme", String(!prevState.dark))
-      return { dark: !prevState.dark }
-    })
-  }
-
-  state = {
-    dark: getCurrentTheme(),
-    toggleDark: this.toggleDark,
-  }
-
-  render() {
-    const { dark, light, children } = this.props
-    const { dark: stateDark } = this.state
-
-    return (
-      <ThemeContext.Provider value={this.state}>
-        <ThemeProvider theme={stateDark ? dark : light}>
-          {children}
-        </ThemeProvider>
-      </ThemeContext.Provider>
-    )
-  }
+  return <ThemeProvider theme={isDark ? dark : light}>{children}</ThemeProvider>
 }
 
-export const ToggleThemeConsumer = ThemeContext.Consumer
+ToggleThemeProvider.propTypes = {
+  dark: PropTypes.shape({}).isRequired,
+  light: PropTypes.shape({}).isRequired,
+  children: PropTypes.node.isRequired,
+}
+
+export const WithThemeToggler = ({ render }) => {
+  const isDark = useStore($isDark)
+  const theme = isDark ? "dark" : "light"
+
+  return render({ isDark, theme, toggle: themeToggled })
+}
+
+WithThemeToggler.propTypes = {
+  render: PropTypes.func.isRequired,
+}

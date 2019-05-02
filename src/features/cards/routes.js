@@ -10,7 +10,7 @@ export const cardsRoutes = () => [
     component: CardsHomePage,
   },
   {
-    path: "/new",
+    path: "/new/card",
     exact: true,
     component: CardCreatePage,
   },
@@ -19,9 +19,9 @@ export const cardsRoutes = () => [
     exact: true,
     component: CardViewPage,
   },
-  {
-    path: "/edit/:cardId",
-    exact: true,
-    component: CardEditPage,
-  },
+  // {
+  //   path: "/edit/:cardId",
+  //   exact: true,
+  //   component: CardEditPage,
+  // },
 ]

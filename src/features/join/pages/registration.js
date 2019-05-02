@@ -1,8 +1,5 @@
 import React from "react"
-import PropTypes from "prop-types"
-import { connect } from "react-redux"
-import { compose } from "recompose"
-import { withFormik } from "formik"
+import { useStore } from "effector-react"
 
 import { Col, Row } from "@lib/styled-components-layout"
 import {
@@ -15,144 +12,28 @@ import {
 } from "@howtocards/ui/atoms"
 import { PrimitiveFooter } from "@howtocards/ui/organisms"
 import { Container, CenterContentTemplate } from "@howtocards/ui/templates"
+import {
+  $form,
+  $isSubmitEnabled,
+  $email,
+  $isFormDisabled,
+  $emailError,
+  $password,
+  $passwordError,
+} from "../model/register.store"
+import {
+  registerFetching,
+  formSubmitted,
+  emailChanged,
+  passwordChanged,
+} from "../model/register.events"
 
-import { userRegister } from "../effects/registration"
-import { userLogin } from "../effects/join"
-
-const MINIMUM_PASSWORD_LENGTH = 6
-
-const mapServerToClientError = (error) => {
-  switch (error) {
-    case "email_already_exists":
-      return "That email already exists. Maybe login?"
-
-    default:
-      return "Got an unexpected error. Try again later"
-  }
-}
-
-const mapDispatchToProps = (dispatch) => ({
-  onRegister: (registerData) => dispatch(userRegister, registerData),
-  onLogin: (loginData) => dispatch(userLogin, loginData),
-})
-
-const formik = {
-  mapPropsToValues: () => ({
-    email: "",
-    password: "",
-    passwordRepeat: "",
-  }),
-  validate: (values) => {
-    const errors = {}
-
-    if (!values.email) {
-      errors.email = "Please enter email, it is required"
-    }
-
-    if (!values.password) {
-      errors.password =
-        "Please enter password which you will use later to login"
-    }
-
-    if (values.password && values.password.length < MINIMUM_PASSWORD_LENGTH) {
-      errors.password =
-        "Please enter a valid password that is at least 6 characters"
-    }
-
-    if (values.password !== values.passwordRepeat) {
-      errors.passwordRepeat = "Please check password fields, it should be equal"
-    }
-
-    return errors
-  },
-  handleSubmit: async (values, { props, setSubmitting, setErrors }) => {
-    const registerResult = await props.onRegister(values)
-
-    if (registerResult.ok) {
-      const loginResult = await props.onLogin(values)
-
-      if (loginResult.ok) {
-        props.history.push("/")
-      } else {
-        setErrors({ common: mapServerToClientError(loginResult.error) })
-        setSubmitting(false)
-      }
-    } else {
-      setErrors({ common: mapServerToClientError(registerResult.error) })
-      setSubmitting(false)
-    }
-  },
-}
-
-const enhance = compose(
-  connect(
-    null,
-    mapDispatchToProps,
-  ),
-  withFormik(formik),
-)
-
-const RegisterForm = enhance(
-  ({
-    errors,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    isSubmitting,
-    touched,
-    values,
-  }) => (
-    <form onSubmit={handleSubmit}>
-      <Col gap="1rem">
-        <H2>Registration to HowToCards</H2>
-        {errors.common && <ErrorBox>{errors.common}</ErrorBox>}
-        <Input
-          type="email"
-          name="email"
-          label="Email"
-          autoComplete="emails"
-          disabled={isSubmitting}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.email}
-          error={touched.email && errors.email}
-        />
-        <Input
-          type="password"
-          name="password"
-          label="Password"
-          autoComplete="password"
-          disabled={isSubmitting}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.password}
-          error={touched.password && errors.password}
-        />
-        <Input
-          type="password"
-          name="passwordRepeat"
-          label="Repeat password"
-          autoComplete="password"
-          disabled={isSubmitting}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.passwordRepeat}
-          error={touched.passwordRepeat && errors.passwordRepeat}
-        />
-        <ButtonPrimary type="submit" disabled={isSubmitting}>
-          Create account
-        </ButtonPrimary>
-      </Col>
-    </form>
-  ),
-)
-
-export const RegistrationPage = ({ history }) => (
+export const RegistrationPage = () => (
   <CenterContentTemplate footer={<PrimitiveFooter />}>
     <Container justify="center" align="center">
       <Col align="stretch" width="40rem">
         <Card>
-          <RegisterForm history={history} />
+          <RegisterForm />
         </Card>
         <Row padding="3rem 0 0" gap="0.5rem">
           <span>Already have account?</span>
@@ -163,6 +44,81 @@ export const RegistrationPage = ({ history }) => (
   </CenterContentTemplate>
 )
 
-RegistrationPage.propTypes = {
-  history: PropTypes.shape({}).isRequired,
+const handleSubmit = (event) => {
+  event.preventDefault()
+  formSubmitted()
+}
+
+const RegisterForm = () => {
+  const form = useStore($form)
+  const formError = useStore(registerFetching.error)
+  const isSubmitEnabled = useStore($isSubmitEnabled)
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <Col gap="1rem">
+        <H2>Registration to HowToCards</H2>
+        {formError && (
+          <ErrorBox>{mapServerToClientError(formError.error)}</ErrorBox>
+        )}
+      </Col>
+      <Email />
+      <Password />
+      <ButtonPrimary type="submit" disabled={!isSubmitEnabled}>
+        Create account
+      </ButtonPrimary>
+    </form>
+  )
+}
+
+const Email = () => {
+  const email = useStore($email)
+  const emailError = useStore($emailError)
+  const isFormDisabled = useStore($isFormDisabled)
+
+  return (
+    <Input
+      type="email"
+      name="email"
+      autoComplete="email"
+      label="Email"
+      disabled={isFormDisabled}
+      onChange={emailChanged}
+      value={email}
+      error={email && emailError}
+    />
+  )
+}
+
+const Password = () => {
+  const password = useStore($password)
+  const isFormDisabled = useStore($isFormDisabled)
+  const passwordError = useStore($passwordError)
+
+  return (
+    <Input
+      type="password"
+      name="password"
+      autoComplete="password"
+      label="Password"
+      disabled={isFormDisabled}
+      onChange={passwordChanged}
+      value={password}
+      error={password && passwordError}
+    />
+  )
+}
+
+const mapServerToClientError = (error) => {
+  switch (error) {
+    case "email_already_exists":
+      return (
+        <span>
+          That email already exists. Maybe <Link to="/join">login</Link>?
+        </span>
+      )
+
+    default:
+      return "Got an unexpected error. Try again later"
+  }
 }

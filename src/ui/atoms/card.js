@@ -16,3 +16,7 @@ export const CardSticky = styled(Card)`
   position: sticky;
   top: 2rem;
 `
+
+export const CardNarrow = styled(Card)`
+  padding: 0;
+`

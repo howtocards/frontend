@@ -1,3 +1,4 @@
+import React from "react"
 import { renderRoutes } from "react-router-config"
 
 import { NotFoundPage } from "@features/common"
@@ -12,4 +13,4 @@ const routes = [
   { component: NotFoundPage },
 ]
 
-export const rootRoutes = () => renderRoutes(routes)
+export const Routes = () => <>{renderRoutes(routes)}</>

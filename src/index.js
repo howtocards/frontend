@@ -2,13 +2,12 @@ import React from "react"
 import ReactDom from "react-dom"
 import { Provider } from "react-redux"
 import { ConnectedRouter } from "connected-react-router"
-import { createBrowserHistory } from "history"
 
+import { history } from "@lib/routing"
 import { App } from "./app"
 import { configureStore } from "./store"
 
 const root = document.querySelector("#root")
-const history = createBrowserHistory()
 const store = configureStore({ history })
 
 const render = () => {

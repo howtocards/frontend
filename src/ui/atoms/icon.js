@@ -70,11 +70,20 @@ export const Icon = ({
 )
 
 Icon.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   name: PropTypes.string.isRequired,
-  width: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired,
-  fill: PropTypes.string.isRequired,
-  style: PropTypes.string.isRequired,
-  viewBox: PropTypes.string.isRequired,
+  width: PropTypes.string,
+  height: PropTypes.string,
+  fill: PropTypes.string,
+  style: PropTypes.string,
+  viewBox: PropTypes.string,
+}
+
+Icon.defaultProps = {
+  id: undefined,
+  width: undefined,
+  height: undefined,
+  fill: undefined,
+  style: undefined,
+  viewBox: undefined,
 }
