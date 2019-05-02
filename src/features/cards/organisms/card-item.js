@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import PropTypes from "prop-types"
 import { format } from "date-fns"
 
@@ -7,10 +7,10 @@ import { RichEditor } from "@lib/rich-text"
 import { Row } from "@lib/styled-components-layout"
 import { Link, H2, Icon, Text, Modal, CardNarrow } from "@howtocards/ui"
 
-export const CardItem = ({ onUsefulClick, card }) => (
+export const CardItem = ({ onUsefulClick, card, maximized }) => (
   <CardNarrow>
-    <CardBox>
-      <GridCard>
+    <CardBox maximized={maximized}>
+      <GridCard maximized={maximized}>
         <CellCardFlag>
           <CardFlagWithNumber
             usefulFor={card.usefulFor}
@@ -47,6 +47,11 @@ CardItem.propTypes = {
     }).isRequired,
   }).isRequired,
   onUsefulClick: PropTypes.func.isRequired,
+  maximized: PropTypes.bool,
+}
+
+CardItem.defaultProps = {
+  maximized: false,
 }
 
 const CardFlagWithNumber = ({ usefulFor, isUseful, onUsefulClick }) => (
@@ -146,9 +151,9 @@ CardDeleteModalButton.propTypes = {
 
 const CardBox = styled.div`
   box-sizing: border-box;
-  max-height: 24rem;
   overflow-y: hidden;
   padding: 2rem;
+  max-height: ${(p) => (p.maximized ? "auto" : "24rem")};
 `
 
 const GridCard = styled.div`
@@ -160,6 +165,12 @@ const GridCard = styled.div`
   grid-template-rows: 2rem 10rem 3rem;
   grid-template-columns: 50px 1fr;
   grid-gap: 8px;
+
+  ${(p) =>
+    p.maximized &&
+    css`
+      grid-template-rows: 2rem 1fr 3rem;
+    `}
 `
 
 const HeadingLine = styled.div`

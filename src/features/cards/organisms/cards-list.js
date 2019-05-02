@@ -24,9 +24,11 @@ export const CardsList = ({ ids, renderCard }) => {
       list={cards}
       renderExists={(list) => (
         <CardsItemsBlock>
-          {list.map((card) =>
-            renderCard({ card, onUsefulClick: () => onUsefulClick(card.id) }),
-          )}
+          {list
+            .filter(Boolean)
+            .map((card) =>
+              renderCard({ card, onUsefulClick: () => onUsefulClick(card.id) }),
+            )}
         </CardsItemsBlock>
       )}
     />

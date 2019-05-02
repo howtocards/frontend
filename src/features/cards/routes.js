@@ -14,11 +14,11 @@ export const cardsRoutes = () => [
     exact: true,
     component: CardCreatePage,
   },
-  // {
-  //   path: "/open/:cardId",
-  //   exact: true,
-  //   component: CardViewPage,
-  // },
+  {
+    path: "/open/:cardId",
+    exact: true,
+    component: CardViewPage,
+  },
   // {
   //   path: "/edit/:cardId",
   //   exact: true,
