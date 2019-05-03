@@ -1,17 +1,8 @@
 // @flow
-import { createEvent, createEffect, type Event, type Effect } from "effector"
+import { createEvent, createEffect, type Effect } from "effector"
+import type { Card } from "../types"
 
-export type Card = {
-  id: number,
-  title: string,
-  createdAt: string,
-  meta: {
-    canEdit: boolean,
-    isUseful: boolean,
-  },
-}
-
-export const clearRegistry: Event<void> = createEvent()
+export const clearRegistry = createEvent<void>()
 
 export const setUsefulMark: Effect<
   { cardId: number, isUseful: boolean, previousValue?: boolean },

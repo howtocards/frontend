@@ -4,7 +4,7 @@ import type { Event, Effect, Store } from "effector"
 
 import { createFetching } from "@lib/fetching"
 import { cardsApi } from "../api"
-import type { Card } from "./registry.events"
+import type { Card } from "../types"
 import { $registry } from "./registry.store"
 import { cardsToObject } from "./registry.model"
 

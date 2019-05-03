@@ -1,13 +1,14 @@
+// @flow
 import Cookies from "browser-cookies"
 import { createStore, createEvent } from "effector"
 import { sessionFetchProcessing } from "./session.events"
 
 const TOKEN_ID = "hw-token"
 
-export const tokenChanged = createEvent()
-export const tokenDropped = createEvent()
+export const tokenChanged = createEvent<string>()
+export const tokenDropped = createEvent<void>()
 
-export const $token = createStore(Cookies.get(TOKEN_ID) || null)
+export const $token = createStore<?string>(Cookies.get(TOKEN_ID) || null)
 
 $token.on(tokenChanged, (current, token) => token)
 $token.on(tokenDropped, () => null)
