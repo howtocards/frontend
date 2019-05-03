@@ -9,7 +9,7 @@ export const CodePlugin = (options = {}) => {
 
   return [
     {
-      renderNode(props, editor, next) {
+      renderNode(props, _editor, next) {
         const { node, children, attributes } = props
 
         const Types = {

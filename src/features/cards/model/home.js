@@ -17,7 +17,7 @@ export const $cardsIds: Store<number[]> = createStore([])
 
 homeCardsLoading.use(() => cardsApi.getLatest())
 
-$cardsIds.on(homeCardsLoading.done, (list, { result }) =>
+$cardsIds.on(homeCardsLoading.done, (_, { result }) =>
   result.map((card) => card.id),
 )
 

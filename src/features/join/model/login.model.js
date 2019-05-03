@@ -19,8 +19,8 @@ formMounted.watch(() => {
 
 const trimEvent = (event) => event.target.value.trim()
 
-$email.on(emailChanged.map(trimEvent), (current, email) => email)
-$password.on(passwordChanged.map(trimEvent), (current, password) => password)
+$email.on(emailChanged.map(trimEvent), (_, email) => email)
+$password.on(passwordChanged.map(trimEvent), (_, password) => password)
 $form.reset(formUnmounted).reset(formMounted)
 
 formSubmitted.watch(() => {

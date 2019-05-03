@@ -26,8 +26,8 @@ const $form = createStoreObject({
 
 const trimEvent = (event) => event.target.value
 
-$title.on(titleChanged.map(trimEvent), (state, title) => title)
-$content.on(contentChanged, (state, content) => content)
+$title.on(titleChanged.map(trimEvent), (_, title) => title)
+$content.on(contentChanged, (_, content) => content)
 $form.reset(pageUnmounted)
 
 submitButtonPressed.watch(() => {
@@ -36,6 +36,6 @@ submitButtonPressed.watch(() => {
 
 cardCreate.use((form) => cardsApi.create(form))
 
-cardCreate.done.watch(({ params, result }) => {
+cardCreate.done.watch(() => {
   history.push("/")
 })

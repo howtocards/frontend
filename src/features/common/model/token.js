@@ -10,7 +10,7 @@ export const tokenDropped = createEvent<void>()
 
 export const $token = createStore<?string>(Cookies.get(TOKEN_ID) || null)
 
-$token.on(tokenChanged, (current, token) => token)
+$token.on(tokenChanged, (_, token) => token)
 $token.on(tokenDropped, () => null)
 
 $token.watch((token) => {

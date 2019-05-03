@@ -21,8 +21,8 @@ export const $card: Store<?Card> = createStore(null)
 
 cardLoading.use(({ cardId }) => cardsApi.getById(cardId))
 
-$card.on(cardLoading, (previous, { cardId }) => $registry.getState()[cardId])
-$card.on(cardLoading.done, (current, { result }) => result.card)
+$card.on(cardLoading, (_, { cardId }) => $registry.getState()[cardId])
+$card.on(cardLoading.done, (_, { result }) => result.card)
 $card.reset(pageUnloaded)
 
 $registry.on(cardLoading.done, (registry, { result }) => {
