@@ -18,7 +18,9 @@ const cardCreate = createEffect()
 export const cardCreateFetching = createFetching(cardCreate)
 
 export const $title = createStore("")
-export const $content = createStore(Plain.deserialize("").toJS())
+export const $content = createStore(
+  Plain.deserialize("Start typing here...").toJS(),
+)
 const $form = createStoreObject({
   title: $title,
   content: $content,

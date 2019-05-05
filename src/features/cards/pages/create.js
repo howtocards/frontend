@@ -1,9 +1,10 @@
-import React, { useEffect } from "react"
+import React from "react"
+import styled from "styled-components"
 
-import { Col } from "@lib/styled-components-layout"
+import { Col, Row } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
-import { Card, ButtonPrimary, Input } from "@howtocards/ui"
+import { Card, ButtonPrimary, H2 } from "@howtocards/ui"
 
 import { useStore } from "effector-react"
 import {
@@ -24,36 +25,33 @@ const onPressSubmit = (event) => {
 export const CardCreatePage = () => {
   const title = useStore($title)
   const content = useStore($content)
-  useEffect(() => () => pageUnmounted(), [])
+  const titleRef = React.createRef(null)
+
+  React.useEffect(() => {
+    titleRef.current.focus()
+    return () => pageUnmounted()
+  }, [])
 
   return (
-    <CardsCommonTemplate>
+    <CardsCommonTemplate sidebar={<Sidebar />}>
       <Authenticated
         render={() => (
           <Card style={{ marginBottom: "2rem" }}>
             <form onSubmit={onPressSubmit}>
               <Col gap="1rem">
-                <Input
+                <TitleInput
                   name="title"
                   autoComplete="title"
-                  placeholder="Card title"
-                  // disabled={isSubmitting}
+                  placeholder="Turtle of your card"
                   onChange={titleChanged}
-                  // onBlur={handleBlur}
                   value={title}
-                  // failed={touched.title && Boolean(errors.title)}
+                  ref={titleRef}
                 />
                 <RichEditor
                   content={content}
                   // disabled={isSubmitting}
                   onChange={contentChanged}
                 />
-                <ButtonPrimary
-                  type="submit"
-                  // disabled={isSubmitting}
-                >
-                  Create
-                </ButtonPrimary>
               </Col>
             </form>
           </Card>
@@ -63,4 +61,27 @@ export const CardCreatePage = () => {
   )
 }
 
-CardCreatePage.propTypes = {}
+const Sidebar = () => (
+  <Col gap="2rem">
+    <Row>
+      <H2 narrow>New card</H2>
+    </Row>
+    <Row>
+      The card is your personal solution of the specific case. Fill it with
+      enriched text without further ado.
+    </Row>
+    <Row>Select text to use rich editor features.</Row>
+    <Row>After creation your card will be available on the home page.</Row>
+    <ButtonPrimary onClick={onPressSubmit}>Create</ButtonPrimary>
+  </Col>
+)
+
+const TitleInput = styled.input`
+  box-sizing: border-box;
+  background-color: none;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  font-size: 1.8em;
+  margin-bottom: 1rem;
+`
