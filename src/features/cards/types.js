@@ -8,4 +8,5 @@ export type Card = {
     canEdit: boolean,
     isUseful: boolean,
   },
+  content: mixed,
 }
