@@ -16,6 +16,7 @@ export const Input = ({
   name,
   onBlur,
   onChange,
+  placeholder,
   type,
   value,
 }) => (
@@ -28,6 +29,7 @@ export const Input = ({
       name={name}
       onBlur={onBlur}
       onChange={onChange}
+      placeholder={placeholder}
       type={type}
       value={value}
     />
@@ -43,6 +45,7 @@ Input.propTypes = {
   name: PropTypes.string,
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
+  placeholder: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.string.isRequired,
 }
@@ -55,6 +58,7 @@ Input.defaultProps = {
   name: undefined,
   onBlur: undefined,
   onChange: undefined,
+  placeholder: undefined,
   type: "text",
 }
 
