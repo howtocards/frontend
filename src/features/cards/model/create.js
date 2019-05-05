@@ -18,7 +18,9 @@ const cardCreate = createEffect()
 export const cardCreateFetching = createFetching(cardCreate)
 
 export const $title = createStore("")
-export const $content = createStore(Plain.deserialize("").toJS())
+export const $content = createStore(
+  Plain.deserialize("Start typing here...").toJS(),
+)
 const $form = createStoreObject({
   title: $title,
   content: $content,
@@ -26,8 +28,8 @@ const $form = createStoreObject({
 
 const trimEvent = (event) => event.target.value
 
-$title.on(titleChanged.map(trimEvent), (state, title) => title)
-$content.on(contentChanged, (state, content) => content)
+$title.on(titleChanged.map(trimEvent), (_, title) => title)
+$content.on(contentChanged, (_, content) => content)
 $form.reset(pageUnmounted)
 
 submitButtonPressed.watch(() => {
@@ -36,6 +38,6 @@ submitButtonPressed.watch(() => {
 
 cardCreate.use((form) => cardsApi.create(form))
 
-cardCreate.done.watch(({ params, result }) => {
+cardCreate.done.watch(() => {
   history.push("/")
 })

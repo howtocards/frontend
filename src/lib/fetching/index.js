@@ -18,13 +18,13 @@ export const createFetching = (
     .reset(effect)
     .reset(effect.fail)
     .reset(reset)
-    .on(effect.done, (state, value) => value)
+    .on(effect.done, (_, value) => value)
 
   const error = createStore(ierror)
     .reset(effect)
     .reset(effect.done)
     .reset(reset)
-    .on(effect.fail, (state, value) => value)
+    .on(effect.fail, (_, value) => value)
 
   const status = createStore(initialStatus)
     .on(effect, () => "loading")

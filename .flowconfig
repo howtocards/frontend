@@ -9,6 +9,6 @@
 [options]
 module.name_mapper='^@lib' ->'<PROJECT_ROOT>/src/lib'
 module.name_mapper='^@features' ->'<PROJECT_ROOT>/src/features'
-module.name_mapper='^@ui' ->'<PROJECT_ROOT>/src/ui'
+module.name_mapper='^@howtocards/ui' ->'<PROJECT_ROOT>/src/ui'
 
 [strict]

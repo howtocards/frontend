@@ -1,11 +1,11 @@
-import React, { useEffect } from "react"
+import React from "react"
+import { useStore } from "effector-react"
 
-import { Col } from "@lib/styled-components-layout"
+import { Col, Row } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
-import { Card, ButtonPrimary, Input } from "@howtocards/ui"
+import { Card, ButtonPrimary, H2 } from "@howtocards/ui"
 
-import { useStore } from "effector-react"
 import {
   $title,
   $content,
@@ -15,6 +15,7 @@ import {
   submitButtonPressed,
 } from "../model/create"
 import { CardsCommonTemplate } from "../templates/common"
+import { TitleInput } from "../atoms/title-input"
 
 const onPressSubmit = (event) => {
   event.preventDefault()
@@ -22,38 +23,17 @@ const onPressSubmit = (event) => {
 }
 
 export const CardCreatePage = () => {
-  const title = useStore($title)
-  const content = useStore($content)
-  useEffect(() => () => pageUnmounted(), [])
+  React.useEffect(() => () => pageUnmounted(), [])
 
   return (
-    <CardsCommonTemplate>
+    <CardsCommonTemplate sidebar={<Sidebar />}>
       <Authenticated
         render={() => (
           <Card style={{ marginBottom: "2rem" }}>
             <form onSubmit={onPressSubmit}>
               <Col gap="1rem">
-                <Input
-                  name="title"
-                  autoComplete="title"
-                  placeholder="Card title"
-                  // disabled={isSubmitting}
-                  onChange={titleChanged}
-                  // onBlur={handleBlur}
-                  value={title}
-                  // failed={touched.title && Boolean(errors.title)}
-                />
-                <RichEditor
-                  content={content}
-                  // disabled={isSubmitting}
-                  onChange={contentChanged}
-                />
-                <ButtonPrimary
-                  type="submit"
-                  // disabled={isSubmitting}
-                >
-                  Create
-                </ButtonPrimary>
+                <Title />
+                <Content />
               </Col>
             </form>
           </Card>
@@ -63,4 +43,49 @@ export const CardCreatePage = () => {
   )
 }
 
-CardCreatePage.propTypes = {}
+const Title = () => {
+  const title = useStore($title)
+  const titleRef = React.createRef(null)
+
+  React.useEffect(() => {
+    titleRef.current.focus()
+  }, [])
+
+  return (
+    <TitleInput
+      name="title"
+      autoComplete="title"
+      placeholder="Turtle of your card"
+      onChange={titleChanged}
+      value={title}
+      ref={titleRef}
+    />
+  )
+}
+
+const Content = () => {
+  const content = useStore($content)
+
+  return (
+    <RichEditor
+      content={content}
+      // disabled={isSubmitting}
+      onChange={contentChanged}
+    />
+  )
+}
+
+const Sidebar = () => (
+  <Col gap="2rem">
+    <Row>
+      <H2 narrow>New card</H2>
+    </Row>
+    <Row>
+      The card is your personal solution of the specific case. Fill it with
+      enriched text without further ado.
+    </Row>
+    <Row>Select text to use rich editor features.</Row>
+    <Row>After creation your card will be available on the home page.</Row>
+    <ButtonPrimary onClick={onPressSubmit}>Create</ButtonPrimary>
+  </Col>
+)

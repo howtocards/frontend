@@ -8,7 +8,7 @@ sessionFetchProcessing.use(() => commonApi.getCurrentAccount())
 
 $session
   .reset(sessionDropped)
-  .on(sessionFetchProcessing.done, (current, { result }) => result)
+  .on(sessionFetchProcessing.done, (_, { result }) => result)
   .on(sessionFetchProcessing.fail, () => null)
 
 forward({ from: sessionFetchProcessing.fail, to: tokenDropped })

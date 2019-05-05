@@ -1,32 +1,35 @@
+// @flow
 import { request } from "@features/common"
+import type { Card } from "./types"
 
-/**
- * @param {{ title: string, content: string }} cardData
- * @return {Promise<{ id: number, title: string, content: string }>}
- */
-const create = (cardData) => request("POST", "/cards/", { body: cardData })
+type CreateCard = {
+  title: string,
+  content: mixed,
+}
+const create = (card: CreateCard): Promise<Card> =>
+  request("POST", "/cards/", { body: card })
 
-/**
- * @param {{ id: number, title: string, content: string }} cardData
- */
-const edit = (card) => request("PUT", `/cards/${card.id}/`, { body: card })
+type EditCard = {
+  id: number,
+  title?: string,
+  content?: mixed,
+}
+const edit = (card: EditCard): Promise<{ card: Card }> =>
+  request("PUT", `/cards/${card.id}/`, { body: card })
 
-/**
- * @return {Promise<{id: number, content: string, created: number, author_id: string, title: string}[]>}
- */
-const getLatest = () => request("GET", "/cards/")
+const getLatest = (): Promise<Card[]> => request("GET", "/cards/")
 
-/**
- * @return {Promise<{id: number, content: string, created: number, author_id: string, title: string}[]>}
- */
-const getById = (id) => request("GET", `/cards/${id}/`)
+const getById = (cardId: number): Promise<{ card: Card }> =>
+  request("GET", `/cards/${cardId}/`)
 
-/**
- * @param {number} cardId
- * @param {boolean} isUseful
- */
-const markUseful = (cardId, isUseful) =>
+const markUseful = (
+  cardId: number,
+  isUseful: boolean,
+): Promise<{ card: Card }> =>
   request("POST", `/cards/${cardId}/useful/`, { body: { isUseful } })
+
+const remove = (cardId: number): Promise<{ card: Card }> =>
+  request("DELETE", `/cards/${cardId}/`)
 
 export const cardsApi = {
   create,
@@ -34,4 +37,5 @@ export const cardsApi = {
   getLatest,
   getById,
   markUseful,
+  remove,
 }

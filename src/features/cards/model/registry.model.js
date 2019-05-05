@@ -1,6 +1,7 @@
 // @flow
 import { cardsApi } from "../api"
-import { clearRegistry, setUsefulMark, type Card } from "./registry.events"
+import type { Card } from "../types"
+import { clearRegistry, setUsefulMark } from "./registry.events"
 import { $registry } from "./registry.store"
 
 $registry.reset(clearRegistry)
@@ -57,8 +58,4 @@ const setUseful = (card, isUseful) => ({
     ...card.meta,
     isUseful,
   },
-})
-
-$registry.watch((reg) => {
-  console.log({ reg })
 })

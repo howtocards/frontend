@@ -12,12 +12,13 @@ export const SidebarTemplate = ({ sidebar, children, footer }) => (
 )
 
 SidebarTemplate.propTypes = {
-  sidebar: PropTypes.node.isRequired,
+  sidebar: PropTypes.node,
   children: PropTypes.node.isRequired,
   footer: PropTypes.node,
 }
 
 SidebarTemplate.defaultProps = {
+  sidebar: null,
   footer: null,
 }
 

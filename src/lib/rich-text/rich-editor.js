@@ -58,19 +58,16 @@ export class RichEditor extends React.Component {
     value: Value.fromJS(this.props.content),
   }
 
-  renderNode = (props, editor, next) => {
+  renderNode = (props, _editor, next) => {
     const { attributes, children, node } = props
-
     const Type = NODES_COMPONENTS[node.type]
 
     return Type ? <Type {...attributes}>{children}</Type> : next()
   }
 
-  renderMark = (props, editor, next) => {
+  renderMark = (props, _editor, next) => {
     const { children, mark, attributes } = props
-
     const Type = MARKS_COMPONENTS[mark.type]
-
     const className = mark.type === "code" ? { className: "code_inline" } : {}
 
     return Type ? (
@@ -82,7 +79,7 @@ export class RichEditor extends React.Component {
     )
   }
 
-  renderEditor = (props, editor, next) => {
+  renderEditor = (_props, editor, next) => {
     const children = next()
 
     return (

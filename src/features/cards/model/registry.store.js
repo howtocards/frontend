@@ -1,6 +1,6 @@
 // @flow
 import { createStore, type Store } from "effector"
-import { type Card } from "./registry.events"
+import { type Card } from "../types"
 
 type Registry = { [id: number]: Card }
 

@@ -13,8 +13,8 @@ import { insertImage } from "./insert-image"
 
 const isImage = (url) => {
   try {
-    return !!imageExtensions.find((item) => item && url.endsWith(item))
-  } catch (error) {
+    return Boolean(imageExtensions.find((item) => item && url.endsWith(item)))
+  } catch (_error) {
     return false
   }
 }

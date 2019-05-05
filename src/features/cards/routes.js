@@ -19,9 +19,9 @@ export const cardsRoutes = () => [
     exact: true,
     component: CardViewPage,
   },
-  // {
-  //   path: "/edit/:cardId",
-  //   exact: true,
-  //   component: CardEditPage,
-  // },
+  {
+    path: "/edit/:cardId",
+    exact: true,
+    component: CardEditPage,
+  },
 ]

@@ -1,107 +1,128 @@
+// @flow
 import React from "react"
 import PropTypes from "prop-types"
-import { connect } from "react-redux"
-import { withFormik } from "formik"
-import { compose, withPropsOnChange } from "recompose"
+import { useStore } from "effector-react"
 
-import { Col } from "@lib/styled-components-layout"
+import { Col, Row } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
-import { Card, ButtonPrimary, Input } from "@howtocards/ui/atoms"
+import { Card, ButtonPrimary, H2 } from "@howtocards/ui"
+
 import { CardsCommonTemplate } from "../templates/common"
-import { fetchFullCard, cardEdit } from "../effects"
-import { setupFormikForCreateEdit } from "../setup-formik-for-create-edit"
-import { cardsRegistrySelector } from "../selectors"
+import { TitleInput } from "../atoms/title-input"
 
-const mapStateToProps = (state, props) => {
-  const { cardId } = props.match.params
+import {
+  $content,
+  $title,
+  cardFetching,
+  cardLoading,
+  contentChanged,
+  pageUnloaded,
+  savePressed,
+  titleChanged,
+} from "../model/edit"
 
-  return {
-    cardId,
-    card: cardsRegistrySelector(state)[cardId],
-  }
+type Props = {
+  match: {
+    params: {
+      cardId: string,
+    },
+  },
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  onFetch: (id) => dispatch(fetchFullCard, id),
-  onSubmit: (card) => dispatch(cardEdit, card),
-})
+export const CardEditPage = ({ match }: Props) => {
+  const isLoading = useStore(cardFetching.isLoading)
 
-const enhance = compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  ),
-  withPropsOnChange(
-    (props, nextProps) => props.cardId !== nextProps.cardId,
-    (props) => props.onFetch(props.cardId),
-  ),
-  withFormik(setupFormikForCreateEdit),
-)
+  React.useEffect(() => {
+    cardLoading(parseInt(match.params.cardId, 10))
+    return () => pageUnloaded()
+  }, [])
 
-const CardEditView = ({
-  card,
-  errors,
-  handleBlur,
-  handleChange,
-  handleSubmit,
-  setFieldValue,
-  isSubmitting,
-  touched,
-  values,
-}) => (
-  <>
-    {values.content && (
+  if (isLoading) {
+    return (
       <CardsCommonTemplate>
-        <Authenticated
-          render={() => (
-            <Card style={{ marginBottom: "2rem" }}>
-              <form onSubmit={handleSubmit}>
-                <Col gap="1rem">
-                  <Input
-                    name="title"
-                    autoComplete="title"
-                    placeholder="Card title"
-                    disabled={isSubmitting}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.title}
-                    failed={touched.title && Boolean(errors.title)}
-                  />
-                  <RichEditor
-                    key={card.id}
-                    disabled={isSubmitting}
-                    content={values.content}
-                    onChange={(content) => setFieldValue("content", content)}
-                  />
-                  <ButtonPrimary type="submit" disabled={isSubmitting}>
-                    Edit
-                  </ButtonPrimary>
-                </Col>
-              </form>
-            </Card>
-          )}
-        />
+        <div>Loading...</div>
       </CardsCommonTemplate>
-    )}
-  </>
-)
+    )
+  }
 
-CardEditView.propTypes = {
-  // eslint-disable-next-line react/require-default-props
-  card: PropTypes.shape({
-    title: PropTypes.string,
-    id: PropTypes.number,
-    content: PropTypes.shape({}),
-  }),
-  errors: PropTypes.shape({}).isRequired,
-  handleBlur: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  isSubmitting: PropTypes.bool.isRequired,
-  setFieldValue: PropTypes.func.isRequired,
-  touched: PropTypes.shape({}).isRequired,
-  values: PropTypes.shape({}).isRequired,
+  return (
+    <CardsCommonTemplate sidebar={<Sidebar />}>
+      <Authenticated
+        render={() => (
+          <Card style={{ marginBottom: "2rem" }}>
+            <form onSubmit={onPressSubmit}>
+              <Col gap="1rem">
+                <Title />
+                <Content />
+              </Col>
+            </form>
+          </Card>
+        )}
+      />
+    </CardsCommonTemplate>
+  )
 }
 
-export const CardEditPage = enhance(CardEditView)
+CardEditPage.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      cardId: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+}
+
+const onPressSubmit = (event) => {
+  event.preventDefault()
+  savePressed()
+}
+
+const Title = () => {
+  const title = useStore($title) || ""
+  const titleRef = React.createRef()
+
+  React.useEffect(() => {
+    if (titleRef.current) {
+      titleRef.current.focus()
+    }
+  }, [])
+
+  return (
+    <TitleInput
+      name="title"
+      autoComplete="title"
+      placeholder="Turtle of your card"
+      onChange={titleChanged}
+      value={title}
+      ref={titleRef}
+    />
+  )
+}
+
+const Content = () => {
+  const content = useStore($content)
+
+  if (!content) return null
+
+  return (
+    <RichEditor
+      content={content}
+      // disabled={isSubmitting}
+      onChange={contentChanged}
+    />
+  )
+}
+
+const Sidebar = () => (
+  <Col gap="2rem">
+    <Row>
+      <H2 narrow>Edit card</H2>
+    </Row>
+    <Row>
+      The card is your personal solution of the specific case. Fill it with
+      enriched text without further ado.
+    </Row>
+    <Row>Select text to use rich editor features.</Row>
+    <ButtonPrimary onClick={onPressSubmit}>Save</ButtonPrimary>
+  </Col>
+)

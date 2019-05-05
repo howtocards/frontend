@@ -22,7 +22,6 @@ import {
 } from "../model/login.events"
 import {
   $isFormDisabled,
-  $form,
   $isSubmitEnabled,
   $email,
   $emailError,
