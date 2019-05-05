@@ -13,7 +13,7 @@ export const CardsCommonTemplate = ({ children, sidebar }) => (
   <CommonContentTemplate>
     <Container>
       <SidebarTemplate
-        sidebar={<Sidebar>{sidebar}</Sidebar>}
+        sidebar={sidebar && <Sidebar>{sidebar}</Sidebar>}
         footer={FooterContent}
       >
         {children}
@@ -28,5 +28,5 @@ CardsCommonTemplate.propTypes = {
 }
 
 CardsCommonTemplate.defaultProps = {
-  sidebar: "Sidebar placeholder",
+  sidebar: undefined,
 }
