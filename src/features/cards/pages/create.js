@@ -23,14 +23,7 @@ const onPressSubmit = (event) => {
 }
 
 export const CardCreatePage = () => {
-  const title = useStore($title)
-  const content = useStore($content)
-  const titleRef = React.createRef(null)
-
-  React.useEffect(() => {
-    titleRef.current.focus()
-    return () => pageUnmounted()
-  }, [])
+  React.useEffect(() => () => pageUnmounted(), [])
 
   return (
     <CardsCommonTemplate sidebar={<Sidebar />}>
@@ -39,25 +32,46 @@ export const CardCreatePage = () => {
           <Card style={{ marginBottom: "2rem" }}>
             <form onSubmit={onPressSubmit}>
               <Col gap="1rem">
-                <TitleInput
-                  name="title"
-                  autoComplete="title"
-                  placeholder="Turtle of your card"
-                  onChange={titleChanged}
-                  value={title}
-                  ref={titleRef}
-                />
-                <RichEditor
-                  content={content}
-                  // disabled={isSubmitting}
-                  onChange={contentChanged}
-                />
+                <Title />
+                <Content />
               </Col>
             </form>
           </Card>
         )}
       />
     </CardsCommonTemplate>
+  )
+}
+
+const Title = () => {
+  const title = useStore($title)
+  const titleRef = React.createRef(null)
+
+  React.useEffect(() => {
+    titleRef.current.focus()
+  }, [])
+
+  return (
+    <TitleInput
+      name="title"
+      autoComplete="title"
+      placeholder="Turtle of your card"
+      onChange={titleChanged}
+      value={title}
+      ref={titleRef}
+    />
+  )
+}
+
+const Content = () => {
+  const content = useStore($content)
+
+  return (
+    <RichEditor
+      content={content}
+      // disabled={isSubmitting}
+      onChange={contentChanged}
+    />
   )
 }
 
