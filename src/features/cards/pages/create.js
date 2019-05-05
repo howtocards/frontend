@@ -1,12 +1,11 @@
 import React from "react"
-import styled from "styled-components"
+import { useStore } from "effector-react"
 
 import { Col, Row } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
 import { Card, ButtonPrimary, H2 } from "@howtocards/ui"
 
-import { useStore } from "effector-react"
 import {
   $title,
   $content,
@@ -16,6 +15,7 @@ import {
   submitButtonPressed,
 } from "../model/create"
 import { CardsCommonTemplate } from "../templates/common"
+import { TitleInput } from "../atoms/title-input"
 
 const onPressSubmit = (event) => {
   event.preventDefault()
@@ -89,13 +89,3 @@ const Sidebar = () => (
     <ButtonPrimary onClick={onPressSubmit}>Create</ButtonPrimary>
   </Col>
 )
-
-const TitleInput = styled.input`
-  box-sizing: border-box;
-  background-color: none;
-  outline: none;
-  box-shadow: none;
-  border: none;
-  font-size: 1.8em;
-  margin-bottom: 1rem;
-`
