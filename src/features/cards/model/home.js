@@ -31,3 +31,5 @@ $registry.on(homeCardsLoading.done, (registry, { result }) => {
 pageReady.watch(() => {
   homeCardsLoading()
 })
+
+export const cardsFetching = createFetching(homeCardsLoading, "loading")
