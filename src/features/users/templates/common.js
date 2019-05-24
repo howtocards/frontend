@@ -1,4 +1,5 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import PropTypes from "prop-types"
 
 import { CommonContentTemplate } from "@features/common"
@@ -9,7 +10,12 @@ import {
   SidebarTemplate,
 } from "@howtocards/ui"
 
-export const UsersCommonTemplate = ({ children, sidebar }) => (
+type Props = {
+  children: React.Node,
+  sidebar?: React.Node,
+}
+
+export const UsersCommonTemplate = ({ children, sidebar }: Props) => (
   <CommonContentTemplate>
     <Container>
       <SidebarTemplate
