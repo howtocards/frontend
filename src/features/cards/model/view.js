@@ -2,7 +2,7 @@
 import { createEffect, createStore, createEvent } from "effector"
 import type { Event, Effect, Store } from "effector"
 
-import { createFetching } from "@lib/fetching"
+import { createFetching, type Fetching } from "@lib/fetching"
 import { cardsApi } from "../api"
 import type { Card } from "../types"
 import { $registry } from "./registry.store"
@@ -15,7 +15,10 @@ export const cardLoading: Effect<
   { card: Card },
   void,
 > = createEffect()
-export const cardFetching = createFetching(cardLoading, "loading")
+export const cardFetching: Fetching<*, void> = createFetching(
+  cardLoading,
+  "loading",
+)
 
 export const $card: Store<?Card> = createStore(null)
 

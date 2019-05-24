@@ -2,7 +2,7 @@
 import { createEvent, createEffect, createStore } from "effector"
 import type { Effect, Store } from "effector"
 
-import { createFetching } from "@lib/fetching"
+import { createFetching, type Fetching } from "@lib/fetching"
 import { history } from "@lib/routing"
 import { cardsApi } from "../api"
 import type { Card } from "../types"
@@ -13,15 +13,23 @@ export const contentChanged = createEvent<mixed>()
 export const savePressed = createEvent<void>()
 
 export const cardLoading: Effect<number, { card: Card }, void> = createEffect()
-export const cardFetching = createFetching(cardLoading, "loading", {
-  reset: pageUnloaded,
-})
+export const cardFetching: Fetching<*, void> = createFetching(
+  cardLoading,
+  "loading",
+  {
+    reset: pageUnloaded,
+  },
+)
 
 type SaveCard = { id: number, title: string, content: mixed }
 export const cardSaving: Effect<SaveCard, { card: Card }, void> = createEffect()
-export const cardSaveFetching = createFetching(cardSaving, "initial", {
-  reset: pageUnloaded,
-})
+export const cardSaveFetching: Fetching<*, void> = createFetching(
+  cardSaving,
+  "initial",
+  {
+    reset: pageUnloaded,
+  },
+)
 
 export const $card: Store<?Card> = createStore(null)
 export const $title: Store<?string> = $card.map((card) => card && card.title)
