@@ -1,11 +1,17 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 
 import { MainTemplate } from "@howtocards/ui/templates"
 import { Header } from "../organisms"
 
-export const CommonContentTemplate = ({ header, children }) => (
+type Props = {
+  children: React.Node,
+  header?: React.Node,
+}
+
+export const CommonContentTemplate = ({ header, children }: Props) => (
   <MainTemplate header={header}>
     <CommonContent>{children}</CommonContent>
   </MainTemplate>

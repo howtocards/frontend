@@ -1,20 +1,24 @@
+// @flow
 import { request } from "@features/common"
+import { type Card } from "@features/cards"
+import { type User } from "./types"
 
 /**
  * Get info about user
  */
-const getInfo = (userId) => request("GET", `/users/${userId}/`)
+const getInfo = (userId: number): Promise<User> =>
+  request("GET", `/users/${userId}/`)
 
 /**
  * Get useful cards for user
  */
-const getUsefulCardsFor = (userId) =>
+const getUsefulCardsFor = (userId: number): Promise<{ cards: Card[] }> =>
   request("GET", `/users/${userId}/cards/useful/`)
 
 /**
  * Get cards created by user
  */
-const getCardsCreatedBy = (userId) =>
+const getCardsCreatedBy = (userId: number): Promise<{ cards: Card[] }> =>
   request("GET", `/users/${userId}/cards/authors/`)
 
 /**

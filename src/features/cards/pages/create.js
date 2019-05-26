@@ -12,14 +12,14 @@ import {
   contentChanged,
   titleChanged,
   pageUnmounted,
-  submitButtonPressed,
+  formSubmitted,
 } from "../model/create"
 import { CardsCommonTemplate } from "../templates/common"
 import { TitleInput } from "../atoms/title-input"
 
-const onPressSubmit = (event) => {
+const onFormSubmitted = (event) => {
   event.preventDefault()
-  submitButtonPressed()
+  formSubmitted()
 }
 
 export const CardCreatePage = () => {
@@ -30,7 +30,7 @@ export const CardCreatePage = () => {
       <Authenticated
         render={() => (
           <Card style={{ marginBottom: "2rem" }}>
-            <form onSubmit={onPressSubmit}>
+            <form onSubmit={onFormSubmitted}>
               <Col gap="1rem">
                 <Title />
                 <Content />
@@ -86,6 +86,6 @@ const Sidebar = () => (
     </Row>
     <Row>Select text to use rich editor features.</Row>
     <Row>After creation your card will be available on the home page.</Row>
-    <ButtonPrimary onClick={onPressSubmit}>Create</ButtonPrimary>
+    <ButtonPrimary onClick={onFormSubmitted}>Create</ButtonPrimary>
   </Col>
 )

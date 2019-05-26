@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { fetchStatus } from "symbiote-fetching"
 
 import { WithAccount } from "./with-account"
 
@@ -9,8 +8,8 @@ export const Authenticated = ({ render }) => (
     renderExists={render}
     render={({ fetching }) => {
       switch (fetching.status) {
-        case fetchStatus.initial:
-        case fetchStatus.failed:
+        case "initial":
+        case "failed":
           return <div>Authenticated only</div>
 
         default:

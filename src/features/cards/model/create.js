@@ -11,7 +11,7 @@ import { cardsApi } from "../api"
 
 export const titleChanged = createEvent()
 export const contentChanged = createEvent()
-export const submitButtonPressed = createEvent()
+export const formSubmitted = createEvent()
 export const pageUnmounted = createEvent()
 
 const cardCreate = createEffect()
@@ -32,12 +32,12 @@ $title.on(titleChanged.map(trimEvent), (_, title) => title)
 $content.on(contentChanged, (_, content) => content)
 $form.reset(pageUnmounted)
 
-submitButtonPressed.watch(() => {
+formSubmitted.watch(() => {
   cardCreate($form.getState())
 })
 
 cardCreate.use((form) => cardsApi.create(form))
 
-cardCreate.done.watch(() => {
-  history.push("/")
+cardCreate.done.watch(({ result: card }) => {
+  history.push(`/open/${card.id}`)
 })
