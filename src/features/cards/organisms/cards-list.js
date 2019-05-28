@@ -24,26 +24,27 @@ export const CardsList = ({ ids, renderCard }) => {
 
   return (
     <>
-      {isLoading && (
+      {isLoading ? (
         <>
           <CardSkeleton />
           <CardSkeleton />
+          <CardSkeleton />
         </>
+      ) : (
+        <ConditionalList
+          list={cards}
+          renderExists={(list) => (
+            <CardsItemsBlock>
+              {list.filter(Boolean).map((card) =>
+                renderCard({
+                  card,
+                  onUsefulClick: () => onUsefulClick(card.id),
+                }),
+              )}
+            </CardsItemsBlock>
+          )}
+        />
       )}
-
-      <ConditionalList
-        list={cards}
-        renderExists={(list) => (
-          <CardsItemsBlock>
-            {list.filter(Boolean).map((card) =>
-              renderCard({
-                card,
-                onUsefulClick: () => onUsefulClick(card.id),
-              }),
-            )}
-          </CardsItemsBlock>
-        )}
-      />
     </>
   )
 }

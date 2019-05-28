@@ -1,6 +1,5 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import PropTypes from "prop-types"
 
 import { Row } from "@lib/styled-components-layout"
 import { H2, Icon, CardNarrow } from "@howtocards/ui"
@@ -15,7 +14,16 @@ export const CardSkeleton = () => (
           </CellCardFlag>
 
           <CellCardHeader>
-            <CardHeader />
+            <HeadingLine>
+              <H2 narrow>
+                <TextSkeleton width="245px" />
+              </H2>
+
+              <Row basis="25%" justify="flex-end" gap="1.4em" align="center">
+                <TextSkeleton width="65px" />
+                <TextSkeleton width="45px" />
+              </Row>
+            </HeadingLine>
           </CellCardHeader>
 
           <CellCardContent>
@@ -28,7 +36,6 @@ export const CardSkeleton = () => (
 
           <CellCardFooter>
             <TextSkeleton />
-            {/* <Link to="/">14 Comments</Link> */}
           </CellCardFooter>
         </GridCard>
       </CardBox>
@@ -55,26 +62,6 @@ const BeFirst = styled.div`
   font-size: 0.7em;
   opacity: 0.5;
 `
-
-const CardHeader = () => (
-  <HeadingLine>
-    <H2 narrow>
-      <TextSkeleton width="245px" />
-    </H2>
-
-    <Row basis="25%" justify="flex-end" gap="1.4em" align="center">
-      <TextSkeleton width="65px" />
-      <TextSkeleton width="45px" />
-      {/* <Icon name="dots-v" height="1.6rem" /> */}
-    </Row>
-  </HeadingLine>
-)
-
-const CardInfo = (card) => (
-  <Row>
-    <TextSkeleton width="30px" />
-  </Row>
-)
 
 const CardBox = styled.div`
   box-sizing: border-box;
@@ -140,31 +127,20 @@ const CellCardContent = styled.div`
   overflow-y: hidden;
 `
 
-CardHeader.propTypes = {
-  card: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
-    meta: PropTypes.shape({
-      canEdit: PropTypes.bool,
-      isUseful: PropTypes.bool,
-    }).isRequired,
-  }).isRequired,
-}
-
 export const ZeroButton = styled.button`
   background-color: transparent;
   border: none;
 `
+export const SkeletonCard = styled.div`
+  margin-bottom: 20px;
+`
 
 export const TextSkeleton = styled.div`
   border-radius: 5px;
-
   margin: 3px;
   width: ${(props) => props.width || "120px"};
   height: 15px;
 
- 
   background: linear-gradient(-45deg, #ccc,lightgrey, grey);
   background-size: 400% 400%;
   -webkit-animation: Gradient 2s ease infinite;
@@ -207,8 +183,4 @@ export const TextSkeleton = styled.div`
       background-position: 0% 50%
   }
 }
-`
-
-export const SkeletonCard = styled.div`
-  margin-bottom: 10px;
 `
