@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import { useStore } from "effector-react"
 
 import { Col, Row } from "@lib/styled-components-layout"
-import { H3, H1, ZeroButton } from "@howtocards/ui"
+import { H3, H1, ZeroTab } from "@howtocards/ui"
 import { CardsList, CardItem } from "@features/cards"
 
 import { UsersCommonTemplate } from "../templates/common"
@@ -67,21 +67,21 @@ export const UserPage = ({ match }: Props) => {
 
   return (
     <UsersCommonTemplate sidebar={<UserInfo user={user} />}>
-      <ZeroButton
+      <ZeroTab
         onClick={() => {
           setFilter("my")
         }}
       >
         My cards
-      </ZeroButton>
+      </ZeroTab>
       |
-      <ZeroButton
+      <ZeroTab
         onClick={() => {
           setFilter("useful")
         }}
       >
         Favorite
-      </ZeroButton>
+      </ZeroTab>
       {renderFiltered(filterBy)}
     </UsersCommonTemplate>
   )
