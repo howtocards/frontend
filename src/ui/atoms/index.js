@@ -1,4 +1,4 @@
-export { Button, ButtonPrimary } from "./button"
+export { Button, ButtonPrimary, ZeroButton, ZeroTab } from "./button"
 export { Card, CardSticky, CardNarrow } from "./card"
 export { ErrorBox } from "./error-box"
 export { FooterContent } from "./footer-content"

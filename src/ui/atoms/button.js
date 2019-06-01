@@ -53,3 +53,20 @@ export const ButtonPrimary = styled(Button)`
     }
   `}
 `
+
+export const ZeroButton = styled.button`
+  background-color: transparent;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+  &:active {
+    outline: none;
+  }
+`
+
+export const ZeroTab = styled(ZeroButton)`
+  &:hover {
+    color: ${({ theme }) => theme.palette.primary.initial.background};
+  }
+`

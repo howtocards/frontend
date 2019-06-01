@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import { useStore } from "effector-react"
 
 import { Col, Row } from "@lib/styled-components-layout"
-import { H3, H1 } from "@howtocards/ui"
+import { H3, H1, ZeroTab } from "@howtocards/ui"
 import { CardsList, CardItem } from "@features/cards"
 
 import { UsersCommonTemplate } from "../templates/common"
@@ -28,6 +28,8 @@ type Props = {
 }
 
 export const UserPage = ({ match }: Props) => {
+  const [filterBy, setFilter] = React.useState("all")
+
   const userId = parseInt(match.params.userId, 10)
   const user = useStore($user)
   const { created, useful } = useStore($cards)
@@ -43,16 +45,44 @@ export const UserPage = ({ match }: Props) => {
   if (isFailed)
     return <ErrorView error={error || "Cannot load. Please, try again later"} />
 
+  const renderFiltered = (filter) => {
+    switch (filter) {
+      case "useful":
+        return (
+          <NamedCardsList
+            title={`Useful cards for ${displayName(user)}`}
+            cards={useful}
+          />
+        )
+      case "my":
+      default:
+        return (
+          <NamedCardsList
+            title={`Cards created by ${displayName(user)}`}
+            cards={created}
+          />
+        )
+    }
+  }
+
   return (
     <UsersCommonTemplate sidebar={<UserInfo user={user} />}>
-      <NamedCardsList
-        title={`Cards created by ${displayName(user)}`}
-        cards={created}
-      />
-      <NamedCardsList
-        title={`Useful cards for ${displayName(user)}`}
-        cards={useful}
-      />
+      <ZeroTab
+        onClick={() => {
+          setFilter("my")
+        }}
+      >
+        My cards
+      </ZeroTab>
+      |
+      <ZeroTab
+        onClick={() => {
+          setFilter("useful")
+        }}
+      >
+        Favorite
+      </ZeroTab>
+      {renderFiltered(filterBy)}
     </UsersCommonTemplate>
   )
 }
