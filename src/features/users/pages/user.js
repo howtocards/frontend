@@ -47,13 +47,6 @@ export const UserPage = ({ match }: Props) => {
 
   const renderFiltered = (filter) => {
     switch (filter) {
-      case "my":
-        return (
-          <NamedCardsList
-            title={`Cards created by ${displayName(user)}`}
-            cards={created}
-          />
-        )
       case "useful":
         return (
           <NamedCardsList
@@ -61,33 +54,19 @@ export const UserPage = ({ match }: Props) => {
             cards={useful}
           />
         )
-      case "all":
+      case "my":
       default:
         return (
-          <>
-            <NamedCardsList
-              title={`Cards created by ${displayName(user)}`}
-              cards={created}
-            />
-            <NamedCardsList
-              title={`Useful cards for ${displayName(user)}`}
-              cards={useful}
-            />
-          </>
+          <NamedCardsList
+            title={`Cards created by ${displayName(user)}`}
+            cards={created}
+          />
         )
     }
   }
 
   return (
     <UsersCommonTemplate sidebar={<UserInfo user={user} />}>
-      <ZeroButton
-        onClick={() => {
-          setFilter("all")
-        }}
-      >
-        All
-      </ZeroButton>
-      |
       <ZeroButton
         onClick={() => {
           setFilter("my")
