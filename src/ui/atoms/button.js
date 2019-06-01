@@ -53,3 +53,8 @@ export const ButtonPrimary = styled(Button)`
     }
   `}
 `
+
+export const ZeroButton = styled.button`
+  background-color: transparent;
+  border: none;
+`
