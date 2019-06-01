@@ -4,8 +4,10 @@ import { useStore } from "effector-react"
 import styled from "styled-components"
 
 import { ConditionalList } from "@howtocards/ui"
+import { cardsFetching } from "../model/home"
 import { $registry, getCard } from "../model/registry.store"
 import { setUsefulMark } from "../model/registry.events"
+import { CardSkeleton } from "./card-skeleton"
 
 const onUsefulClick = (cardId) => {
   const card = getCard(cardId)
@@ -18,20 +20,32 @@ export const CardsList = ({ ids, renderCard }) => {
   const cards = useStore(
     $registry.map((registry) => ids.map((id) => registry[id])),
   )
+  const isLoading = useStore(cardsFetching.isLoading)
 
   return (
-    <ConditionalList
-      list={cards}
-      renderExists={(list) => (
-        <CardsItemsBlock>
-          {list
-            .filter(Boolean)
-            .map((card) =>
-              renderCard({ card, onUsefulClick: () => onUsefulClick(card.id) }),
-            )}
-        </CardsItemsBlock>
+    <>
+      {isLoading ? (
+        <>
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+        </>
+      ) : (
+        <ConditionalList
+          list={cards}
+          renderExists={(list) => (
+            <CardsItemsBlock>
+              {list.filter(Boolean).map((card) =>
+                renderCard({
+                  card,
+                  onUsefulClick: () => onUsefulClick(card.id),
+                }),
+              )}
+            </CardsItemsBlock>
+          )}
+        />
       )}
-    />
+    </>
   )
 }
 
