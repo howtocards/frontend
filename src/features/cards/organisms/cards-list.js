@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { useStore, createComponent } from "effector-react"
+import { createStoreObject } from "effector"
+import { createComponent } from "effector-react"
 import styled from "styled-components"
 
 import { ConditionalList } from "@howtocards/ui"
@@ -17,13 +18,14 @@ const onUsefulClick = (cardId) => {
 }
 
 const selectCards = (props) =>
-  $registry.map((reg) => props.ids.map((id) => reg[id]))
+  createStoreObject({
+    cards: $registry.map((reg) => props.ids.map((id) => reg[id])),
+    isLoading: cardsFetching.isLoading,
+  })
 
 export const CardsList = createComponent(
   selectCards,
-  ({ renderCard }, cards) => {
-    const isLoading = useStore(cardsFetching.isLoading)
-
+  ({ renderCard }, { cards, isLoading }) => {
     return (
       <>
         {isLoading ? (
