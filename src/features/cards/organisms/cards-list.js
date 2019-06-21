@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { useStore } from "effector-react"
+import { useStore, createComponent } from "effector-react"
 import styled from "styled-components"
 
 import { ConditionalList } from "@howtocards/ui"
@@ -16,38 +16,41 @@ const onUsefulClick = (cardId) => {
   }
 }
 
-export const CardsList = ({ ids, renderCard }) => {
-  const cards = useStore(
-    $registry.map((registry) => ids.map((id) => registry[id])),
-  )
-  const isLoading = useStore(cardsFetching.isLoading)
+const selectCards = (props) =>
+  $registry.map((reg) => props.ids.map((id) => reg[id]))
 
-  return (
-    <>
-      {isLoading ? (
-        <>
-          <CardSkeleton />
-          <CardSkeleton />
-          <CardSkeleton />
-        </>
-      ) : (
-        <ConditionalList
-          list={cards}
-          renderExists={(list) => (
-            <CardsItemsBlock>
-              {list.filter(Boolean).map((card) =>
-                renderCard({
-                  card,
-                  onUsefulClick: () => onUsefulClick(card.id),
-                }),
-              )}
-            </CardsItemsBlock>
-          )}
-        />
-      )}
-    </>
-  )
-}
+export const CardsList = createComponent(
+  selectCards,
+  ({ renderCard }, cards) => {
+    const isLoading = useStore(cardsFetching.isLoading)
+
+    return (
+      <>
+        {isLoading ? (
+          <>
+            <CardSkeleton />
+            <CardSkeleton />
+            <CardSkeleton />
+          </>
+        ) : (
+          <ConditionalList
+            list={cards}
+            renderExists={(list) => (
+              <CardsItemsBlock>
+                {list.filter(Boolean).map((card) =>
+                  renderCard({
+                    card,
+                    onUsefulClick: () => onUsefulClick(card.id),
+                  }),
+                )}
+              </CardsItemsBlock>
+            )}
+          />
+        )}
+      </>
+    )
+  },
+)
 
 CardsList.propTypes = {
   ids: PropTypes.arrayOf(PropTypes.number).isRequired,
