@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import { useStore } from "effector-react"
 
 import { Col, Row } from "@lib/styled-components-layout"
-import { H3, H1, ZeroTab } from "@howtocards/ui"
+import { H3, H1, ZeroTab, Button, Link } from "@howtocards/ui"
 import { CardsList, CardItem } from "@features/cards"
 
 import { UsersCommonTemplate } from "../templates/common"
@@ -52,6 +52,18 @@ export const UserPage = ({ match }: Props) => {
           <NamedCardsList
             title={`Useful cards for ${displayName(user)}`}
             cards={useful}
+            renderEmpty={() => (
+              <>
+                <Row>
+                  <H3>No useful cards for you?</H3>
+                </Row>
+                <Row>
+                  <Button as={Link} to="/">
+                    Search useful cards
+                  </Button>
+                </Row>
+              </>
+            )}
           />
         )
       case "my":
@@ -60,6 +72,18 @@ export const UserPage = ({ match }: Props) => {
           <NamedCardsList
             title={`Cards created by ${displayName(user)}`}
             cards={created}
+            renderEmpty={() => (
+              <>
+                <Row>
+                  <H3>You don&apos;t have cards yet</H3>
+                </Row>
+                <Row>
+                  <Button as={Link} to="/new/card">
+                    Create new card
+                  </Button>
+                </Row>
+              </>
+            )}
           />
         )
     }
@@ -126,7 +150,7 @@ CurrentUserInfo.propTypes = {
 
 const displayName = (user) => (user && user.displayName) || "user"
 
-const NamedCardsList = ({ cards, title }) => {
+const NamedCardsList = ({ cards, title, renderEmpty = () => null }) => {
   if (cards && cards.length !== 0) {
     return (
       <>
@@ -144,10 +168,15 @@ const NamedCardsList = ({ cards, title }) => {
       </>
     )
   }
-  return null
+  return <Col padding="2rem">{renderEmpty()}</Col>
 }
 
 NamedCardsList.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.number).isRequired,
   title: PropTypes.string.isRequired,
+  renderEmpty: PropTypes.func,
+}
+
+NamedCardsList.defaultProps = {
+  renderEmpty: () => null,
 }
