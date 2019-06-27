@@ -7,8 +7,7 @@ import { H2 } from "@howtocards/ui"
 
 import { $cardsIds, pageReady, homeCardsFetching } from "../model/home"
 import { CardsCommonTemplate } from "../templates/common"
-import { CardsList } from "../organisms"
-import { CardSkeleton } from "../organisms/card-skeleton"
+import { SkeletonList } from "../organisms"
 
 export const CardsHomePage = () => {
   const ids = useStore($cardsIds)
@@ -20,18 +19,11 @@ export const CardsHomePage = () => {
 
   return (
     <CardsCommonTemplate sidebar={<Sidebar />}>
-      {isLoading ? (
-        <>
-          <CardSkeleton />
-          <CardSkeleton />
-          <CardSkeleton />
-        </>
-      ) : (
-        <CardsList
-          ids={ids}
-          renderEmpty={() => <p>What about to create new card?</p>}
-        />
-      )}
+      <SkeletonList
+        isLoading={isLoading}
+        ids={ids}
+        renderEmpty={() => <p>What about to create new card?</p>}
+      />
     </CardsCommonTemplate>
   )
 }
