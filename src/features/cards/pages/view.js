@@ -62,7 +62,7 @@ const Sidebar = ({ card }) => (
   <Col gap="3rem">
     <Row>
       {card ? (
-        <Text>
+        <Text title={createdAt(card)}>
           Created {distanceInWordsToNow(card.createdAt, { addSuffix: true })}
         </Text>
       ) : (
@@ -78,4 +78,9 @@ Sidebar.propTypes = {
 
 Sidebar.defaultProps = {
   card: null,
+}
+
+function createdAt(card) {
+  const date = new Date(card.createdAt)
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
 }
