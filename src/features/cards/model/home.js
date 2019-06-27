@@ -3,6 +3,7 @@ import { createEvent, createEffect, createStore } from "effector"
 import type { Event, Effect, Store } from "effector"
 
 import { createFetching, type Fetching } from "@lib/fetching"
+
 import { cardsApi } from "../api"
 import type { Card } from "../types"
 import { $registry } from "./registry.store"
@@ -34,5 +35,3 @@ $registry.on(homeCardsLoading.done, (registry, { result }) => {
 pageReady.watch(() => {
   homeCardsLoading()
 })
-
-export const cardsFetching = createFetching(homeCardsLoading, "loading")

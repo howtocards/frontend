@@ -1,3 +1,4 @@
+// @flow
 export { Button, ButtonPrimary, ZeroButton, ZeroTab } from "./button"
 export { Card, CardSticky, CardNarrow } from "./card"
 export { ErrorBox } from "./error-box"

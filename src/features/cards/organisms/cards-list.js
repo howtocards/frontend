@@ -1,16 +1,15 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { createStoreObject } from "effector"
+// @flow
+import * as React from "react"
 import { createComponent } from "effector-react"
 import styled from "styled-components"
 
 import { ConditionalList } from "@howtocards/ui"
-import { cardsFetching } from "../model/home"
 import { $registry, getCard } from "../model/registry.store"
 import { setUsefulMark } from "../model/registry.events"
-import { CardSkeleton } from "./card-skeleton"
+import { type Card } from "../types"
+import { CardItem } from "./card-item"
 
-const onUsefulClick = (cardId) => {
+const handleUsefulClick = (cardId) => {
   const card = getCard(cardId)
   if (card) {
     setUsefulMark({ cardId: card.id, isUseful: !card.meta.isUseful })
@@ -18,46 +17,42 @@ const onUsefulClick = (cardId) => {
 }
 
 const selectCards = (props) =>
-  createStoreObject({
-    cards: $registry.map((reg) => props.ids.map((id) => reg[id])),
-    isLoading: cardsFetching.isLoading,
-  })
+  $registry.map((reg) => props.ids.map((id) => reg[id]))
 
-export const CardsList = createComponent(
+type Props = {
+  ids: number[],
+  renderCard?: (param: { card: Card, onUsefulClick: () => * }) => React.Node,
+  renderEmpty?: () => React.Node,
+}
+
+export const CardsList = createComponent<Props, Card[]>(
   selectCards,
-  ({ renderCard }, { cards, isLoading }) => {
-    return (
-      <>
-        {isLoading ? (
-          <>
-            <CardSkeleton />
-            <CardSkeleton />
-            <CardSkeleton />
-          </>
-        ) : (
-          <ConditionalList
-            list={cards}
-            renderExists={(list) => (
-              <CardsItemsBlock>
-                {list.filter(Boolean).map((card) =>
-                  renderCard({
-                    card,
-                    onUsefulClick: () => onUsefulClick(card.id),
-                  }),
-                )}
-              </CardsItemsBlock>
-            )}
-          />
-        )}
-      </>
-    )
-  },
+  ({ renderCard = defaultCardRender, renderEmpty = emptyRenderer }, cards) => (
+    <ConditionalList
+      list={cards}
+      renderExists={(list) => (
+        <CardsItemsBlock>
+          {list.filter(Boolean).map((card) =>
+            renderCard({
+              card,
+              onUsefulClick: () => handleUsefulClick(card.id),
+            }),
+          )}
+        </CardsItemsBlock>
+      )}
+      renderEmpty={renderEmpty}
+    />
+  ),
 )
 
-CardsList.propTypes = {
-  ids: PropTypes.arrayOf(PropTypes.number).isRequired,
-  renderCard: PropTypes.func.isRequired,
-}
+const emptyRenderer = () => <p>No cards in that list</p>
+const defaultCardRender = ({
+  card,
+  onUsefulClick,
+}: {
+  card: Card,
+  onUsefulClick: () => *,
+}) => <CardItem key={card.id} card={card} onUsefulClick={onUsefulClick} />
 
 export const CardsItemsBlock = styled.div`
   display: flex;
