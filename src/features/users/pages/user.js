@@ -2,13 +2,13 @@
 import * as React from "react"
 import PropTypes from "prop-types"
 import { useStore } from "effector-react"
+import styled from "styled-components"
 
 import { Col, Row } from "@lib/styled-components-layout"
 import { H3, H1, ZeroTab, Button, Link } from "@howtocards/ui"
-import { CardsList, CardItem } from "@features/cards"
+import { SkeletonList } from "@features/cards"
 
 import { UsersCommonTemplate } from "../templates/common"
-import { LoadingView } from "../organisms/loading"
 import { ErrorView } from "../organisms/error"
 import {
   $user,
@@ -28,9 +28,9 @@ type Props = {
 }
 
 export const UserPage = ({ match }: Props) => {
-  const [filterBy, setFilter] = React.useState("all")
-
+  const [tab, setTab] = React.useState<"created" | "useful">("useful")
   const userId = parseInt(match.params.userId, 10)
+
   const user = useStore($user)
   const { created, useful } = useStore($cards)
   const isLoading = useStore($isLoading)
@@ -41,74 +41,54 @@ export const UserPage = ({ match }: Props) => {
     pageMounted({ userId })
   }, [userId])
 
-  if (isLoading) return <LoadingView />
   if (isFailed)
     return <ErrorView error={error || "Cannot load. Please, try again later"} />
 
-  const renderFiltered = (filter) => {
-    switch (filter) {
-      case "useful":
-        return (
-          <NamedCardsList
-            title={`Useful cards for ${displayName(user)}`}
-            filter="useful"
-            cards={useful}
-            renderEmpty={() => (
-              <>
-                <Row>
-                  <H3>No useful cards for you?</H3>
-                </Row>
-                <Row>
-                  <Button as={Link} to="/">
-                    Search useful cards
-                  </Button>
-                </Row>
-              </>
-            )}
-          />
-        )
-      case "my":
-      default:
-        return (
-          <NamedCardsList
-            title={`Cards created by ${displayName(user)}`}
-            filter="my"
-            cards={created}
-            renderEmpty={() => (
-              <>
-                <Row>
-                  <H3>You don&apos;t have cards yet</H3>
-                </Row>
-                <Row>
-                  <Button as={Link} to="/new/card">
-                    Create new card
-                  </Button>
-                </Row>
-              </>
-            )}
-          />
-        )
-    }
-  }
-
   return (
     <UsersCommonTemplate sidebar={<UserInfo user={user} />}>
-      <ZeroTab
-        onClick={() => {
-          setFilter("my")
-        }}
-      >
-        My cards
+      <ZeroTab active={tab === "useful"} onClick={() => setTab("useful")}>
+        Useful
       </ZeroTab>
       |
-      <ZeroTab
-        onClick={() => {
-          setFilter("useful")
-        }}
-      >
-        Favorite
+      <ZeroTab active={tab === "created"} onClick={() => setTab("created")}>
+        My cards
       </ZeroTab>
-      {renderFiltered(filterBy)}
+      <NamedCardsList
+        show={tab === "useful"}
+        title={`Useful cards for ${displayName(user)}`}
+        cards={useful}
+        isLoading={isLoading}
+        renderEmpty={() => (
+          <Col>
+            <Row>
+              <H3>No useful cards?</H3>
+            </Row>
+            <Row>
+              <Button as={Link} to="/">
+                Search useful cards
+              </Button>
+            </Row>
+          </Col>
+        )}
+      />
+      <NamedCardsList
+        show={tab === "created"}
+        title={`Cards created by ${displayName(user)}`}
+        cards={created}
+        isLoading={isLoading}
+        renderEmpty={() => (
+          <>
+            <Row>
+              <H3>No created cards yet</H3>
+            </Row>
+            <Row>
+              <Button as={Link} to="/new/card">
+                Create new card
+              </Button>
+            </Row>
+          </>
+        )}
+      />
     </UsersCommonTemplate>
   )
 }
@@ -152,20 +132,28 @@ CurrentUserInfo.propTypes = {
 
 const displayName = (user) => (user && user.displayName) || "user"
 
-const NamedCardsList = ({ filter, cards, title, renderEmpty = () => null }) => {
-  if (cards && cards.length !== 0) {
-    return (
-      <>
-        <H1>{title}</H1>
-        <CardsList ids={cards} key={`t-${filter}`} />
-      </>
-    )
-  }
-  return <Col padding="2rem">{renderEmpty()}</Col>
+const NamedCardsList = ({
+  show,
+  isLoading,
+  cards,
+  title,
+  renderEmpty = () => null,
+}) => {
+  return (
+    <ListWrapper show={show}>
+      <H1>{title}</H1>
+      <SkeletonList
+        ids={cards}
+        isLoading={isLoading}
+        renderEmpty={renderEmpty}
+      />
+    </ListWrapper>
+  )
 }
 
 NamedCardsList.propTypes = {
-  filter: PropTypes.string.isRequired,
+  show: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   cards: PropTypes.arrayOf(PropTypes.number).isRequired,
   title: PropTypes.string.isRequired,
   renderEmpty: PropTypes.func,
@@ -174,3 +162,8 @@ NamedCardsList.propTypes = {
 NamedCardsList.defaultProps = {
   renderEmpty: () => null,
 }
+
+const ListWrapper = styled.div`
+  display: ${(p) => (p.show ? "flex" : "none")};
+  flex-direction: column;
+`
