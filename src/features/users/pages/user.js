@@ -51,6 +51,7 @@ export const UserPage = ({ match }: Props) => {
         return (
           <NamedCardsList
             title={`Useful cards for ${displayName(user)}`}
+            filter="useful"
             cards={useful}
             renderEmpty={() => (
               <>
@@ -71,6 +72,7 @@ export const UserPage = ({ match }: Props) => {
         return (
           <NamedCardsList
             title={`Cards created by ${displayName(user)}`}
+            filter="my"
             cards={created}
             renderEmpty={() => (
               <>
@@ -150,21 +152,12 @@ CurrentUserInfo.propTypes = {
 
 const displayName = (user) => (user && user.displayName) || "user"
 
-const NamedCardsList = ({ cards, title, renderEmpty = () => null }) => {
+const NamedCardsList = ({ filter, cards, title, renderEmpty = () => null }) => {
   if (cards && cards.length !== 0) {
     return (
       <>
         <H1>{title}</H1>
-        <CardsList
-          ids={cards}
-          renderCard={({ card, onUsefulClick }) =>
-            React.createElement(CardItem, {
-              card,
-              key: card.id,
-              onUsefulClick,
-            })
-          }
-        />
+        <CardsList ids={cards} key={`t-${filter}`} />
       </>
     )
   }
@@ -172,6 +165,7 @@ const NamedCardsList = ({ cards, title, renderEmpty = () => null }) => {
 }
 
 NamedCardsList.propTypes = {
+  filter: PropTypes.string.isRequired,
   cards: PropTypes.arrayOf(PropTypes.number).isRequired,
   title: PropTypes.string.isRequired,
   renderEmpty: PropTypes.func,
