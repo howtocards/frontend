@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
-import { above } from "styled-breakpoints"
+import { up } from "@typographist/styled"
 
 export const SidebarTemplate = ({ sidebar, children, footer }) => (
   <SidebarContainer>
@@ -36,7 +36,7 @@ const SidebarContainer = styled.div`
     "main"
     "footer";
 
-  ${above("tablet")} {
+  ${up("tablet")} {
     grid-template-rows: 1fr auto;
     grid-template-columns: auto 30%;
     grid-template-areas:

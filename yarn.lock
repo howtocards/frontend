@@ -2034,6 +2034,26 @@
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-12.0.12.tgz#45dd1d0638e8c8f153e87d296907659296873916"
   integrity sha512-SOhuU4wNBxhhTHxYaiG5NY4HBhDIDnJF60GU+2LqHAdKKer86//e4yg69aENCtQ04n0ovz+tq2YPME5t5yp4pw==
 
+"@typographist/core@^19.1.1":
+  version "19.1.1"
+  resolved "https://registry.yarnpkg.com/@typographist/core/-/core-19.1.1.tgz#066f819ac3b1b2d2fa03e62db65c6a8df0852d8a"
+  integrity sha512-TXkx6in0SErxNO39tDMEmMV2I/9hG05YZHx1k2yRfD2P7XSOuPYAstnlvGA3y7w9wAn9xQPKfyDD6dCdGPc80A==
+
+"@typographist/styled-devtools@^2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@typographist/styled-devtools/-/styled-devtools-2.0.7.tgz#85f45f92e9d6242ae0ee1ca9098926041d866578"
+  integrity sha512-gpPS18AJEX/hRw5rkxTYfx5rC2irGU00ATQ5wjfkAoWJ1uqsxR+DRwAUkKiVJK2XA0ihP5hxLpteQMjbf3tIMA==
+
+"@typographist/styled@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@typographist/styled/-/styled-1.3.2.tgz#dfa9aa5d0b4cab8b375cabef495f15bbf8b9a13a"
+  integrity sha512-VdQjslO7RRsY38OxxeAqKl5B8BeQue4VuS3OJEVBnaZhqLU6bhzXSG0Vgl7bRhp9R7mPDoInfvsF8mbhQgNwlQ==
+  dependencies:
+    "@typographist/core" "^19.1.1"
+    "@typographist/styled-devtools" "^2.0.7"
+    ramda "0.26.1"
+    styled-breakpoints "6.6.2"
+
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.7.11.tgz#b988582cafbb2b095e8b556526f30c90d057cace"
@@ -11380,6 +11400,11 @@ raf@3.4.1, raf@^3.4.0:
   dependencies:
     performance-now "^2.1.0"
 
+ramda@0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
+  integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
+
 randomatic@^3.0.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/randomatic/-/randomatic-3.1.1.tgz#b776efc59375984e36c537b2f51a1f0aff0da1ed"
@@ -13302,6 +13327,11 @@ style-loader@0.23.1:
   dependencies:
     loader-utils "^1.1.0"
     schema-utils "^1.0.0"
+
+styled-breakpoints@6.6.2:
+  version "6.6.2"
+  resolved "https://registry.yarnpkg.com/styled-breakpoints/-/styled-breakpoints-6.6.2.tgz#85094a8d1bf28d29db43d1031b3e6c364d226e17"
+  integrity sha512-JrrUcAudLhJexy5V7OEbS7Ji2qKbV0+l/A4buQoxrYx+UXR6UNuI8GLYO1vNk7IMBc+dTMe3+KeiZyxqK5B+5w==
 
 styled-breakpoints@^4.0.3:
   version "4.0.3"
