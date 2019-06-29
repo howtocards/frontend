@@ -69,4 +69,10 @@ export const ZeroTab = styled(ZeroButton)`
   &:hover {
     color: ${({ theme }) => theme.palette.primary.initial.background};
   }
+
+  ${(p) =>
+    p.active &&
+    css`
+      text-decoration: underline;
+    `}
 `
