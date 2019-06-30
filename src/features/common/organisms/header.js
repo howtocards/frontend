@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 
 import { WithThemeToggler } from "@lib/theme-context"
 import { Container } from "@howtocards/ui"
+import { SearchBar } from "@features/search"
 import { WithAccount } from "./with-account"
 
 // https://codepen.io/anon/pen/PebeaL
@@ -14,13 +15,7 @@ export const Header = () => (
     <Container>
       <NavLink to="/">HowToCards</NavLink>
       <SearchBox>
-        <SearchInput
-          placeholder="Search..."
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck="false"
-        />
+        <SearchBar />
       </SearchBox>
       <Navigation />
       <ToggleThemeButton />
@@ -79,26 +74,6 @@ const SearchBox = styled.div`
   display: flex;
   align-items: stretch;
   padding: 1.3rem 0;
-`
-
-const SearchInput = styled.input`
-  appearance: none;
-  border: none;
-  border-radius: 6px;
-  box-shadow: none;
-  box-sizing: border-box;
-  font-size: 1.6rem;
-  outline: none;
-  width: 100%;
-  padding: 0 2rem;
-  transition: box-shadow 120ms;
-
-  &:focus {
-    box-shadow: 0 0 0 3px
-      ${({ theme }) => theme.palette.primary.initial.background};
-  }
-
-  ${({ theme }) => theme.embed.canvas}
 `
 
 const NavItem = styled.a`
