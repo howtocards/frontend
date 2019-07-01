@@ -7,37 +7,33 @@ import { RichEditor } from "@lib/rich-text"
 import { Row } from "@lib/styled-components-layout"
 import { Link, H2, Icon, Text, Modal, CardNarrow } from "@howtocards/ui"
 
-import { Rhythm } from "@typographist/styled"
-
 export const CardItem = ({ onUsefulClick, card, maximized }) => (
-  <Rhythm>
-    <CardNarrow>
-      <CardBox maximized={maximized}>
-        <GridCard maximized={maximized}>
-          <CellCardFlag>
-            <CardFlagWithNumber
-              usefulFor={card.usefulFor}
-              isUseful={card.meta.isUseful}
-              onUsefulClick={onUsefulClick}
-            />
-          </CellCardFlag>
+  <CardNarrow>
+    <CardBox maximized={maximized}>
+      <GridCard maximized={maximized}>
+        <CellCardFlag>
+          <CardFlagWithNumber
+            usefulFor={card.usefulFor}
+            isUseful={card.meta.isUseful}
+            onUsefulClick={onUsefulClick}
+          />
+        </CellCardFlag>
 
-          <CellCardHeader>
-            <CardHeader card={card} />
-          </CellCardHeader>
+        <CellCardHeader>
+          <CardHeader card={card} />
+        </CellCardHeader>
 
-          <CellCardContent>
-            <RichEditor readOnly content={card.content} />
-          </CellCardContent>
+        <CellCardContent>
+          <RichEditor readOnly content={card.content} />
+        </CellCardContent>
 
-          <CellCardFooter>
-            <CardInfo createdAt={card.createdAt} />
-            {/* <Link to="/">14 Comments</Link> */}
-          </CellCardFooter>
-        </GridCard>
-      </CardBox>
-    </CardNarrow>
-  </Rhythm>
+        <CellCardFooter>
+          <CardInfo createdAt={card.createdAt} />
+          {/* <Link to="/">14 Comments</Link> */}
+        </CellCardFooter>
+      </GridCard>
+    </CardBox>
+  </CardNarrow>
 )
 
 CardItem.propTypes = {

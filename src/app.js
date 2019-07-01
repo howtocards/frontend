@@ -8,7 +8,7 @@ import { ToggleThemeProvider } from "@lib/theme-context"
 import { lightTheme } from "@howtocards/ui/themes/light"
 import { darkTheme } from "@howtocards/ui/themes/dark"
 
-import { TypographistProvider, Rhythm } from "@typographist/styled"
+import { TypographistProvider } from "@typographist/styled"
 import { Routes } from "./routes"
 import { GlobalStyles } from "./global-styles"
 

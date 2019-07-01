@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 import { steps } from "@typographist/styled"
 
 export const H1 = styled.h1`
-  /* margin: ${(p) => (p.narrow ? 0 : 3)}rem 0; */
   ${steps(6)};
   line-height: 4rem;
   margin-top: 6rem;
@@ -16,7 +15,6 @@ H1.propTypes = {
 }
 
 export const H2 = styled.h2`
-  /* margin: ${(p) => (p.narrow ? 0 : 2)}rem 0; */
   ${steps(5)};
   line-height: 3rem;
   margin-top: 5rem;
@@ -28,7 +26,6 @@ H2.propTypes = {
 }
 
 export const H3 = styled.h3`
-  /* margin: ${(p) => (p.narrow ? 0 : 2)}rem 0; */
   ${steps(4)};
   line-height: 2rem;
   margin-top: 4rem;
