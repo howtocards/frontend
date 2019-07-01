@@ -8,17 +8,32 @@ import { ToggleThemeProvider } from "@lib/theme-context"
 import { lightTheme } from "@howtocards/ui/themes/light"
 import { darkTheme } from "@howtocards/ui/themes/dark"
 
+import { TypographistProvider } from "@typographist/styled"
 import { Routes } from "./routes"
 import { GlobalStyles } from "./global-styles"
 
+export const config = {
+  base: "14px",
+  lineHeight: 1.4,
+  ratio: "28px at 6",
+  tablet: {
+    breakpoint: "768px",
+  },
+  desktop: {
+    breakpoint: "992px",
+  },
+}
+
 export const App = hot(module)(() => (
   <ToggleThemeProvider light={lightTheme} dark={darkTheme}>
-    <>
-      <Normalize />
-      <GlobalStyles />
-      <AccountLoader>
-        <Routes />
-      </AccountLoader>
-    </>
+    <TypographistProvider config={config} withToggle>
+      <>
+        <Normalize />
+        <GlobalStyles />
+        <AccountLoader>
+          <Routes />
+        </AccountLoader>
+      </>
+    </TypographistProvider>
   </ToggleThemeProvider>
 ))
