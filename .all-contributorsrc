@@ -59,6 +59,15 @@
         "infra",
         "review"
       ]
+    },
+    {
+      "login": "meowsun",
+      "name": "Natalia",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3519260?v=4",
+      "profile": "https://github.com/meowsun",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
