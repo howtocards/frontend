@@ -179,6 +179,10 @@ const HeadingLine = styled.div`
   justify-content: space-between;
   flex-shrink: 0;
   line-height: 2.4rem;
+
+  ${H2} {
+    margin: 0;
+  }
 `
 const IconWrapper = styled.div`
   padding: 0 0.6rem;
