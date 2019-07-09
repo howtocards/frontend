@@ -10,18 +10,16 @@ type Props = {
   renderEmpty: () => React.Node,
 }
 
+const DEFAULT_SKELETON_COUNT = 3
+
 export const SkeletonList = ({
   isLoading,
   ids,
-  count = 3,
+  count = DEFAULT_SKELETON_COUNT,
   renderEmpty,
 }: Props) =>
   isLoading ? (
-    <>
-      {Array.from({ length: count }, (_, idx) => (
-        <CardSkeleton key={idx} />
-      ))}
-    </>
+    Array.from<*>({ length: count }, (_, idx) => <CardSkeleton key={idx} />)
   ) : (
     <CardsList ids={ids} renderEmpty={renderEmpty} />
   )
