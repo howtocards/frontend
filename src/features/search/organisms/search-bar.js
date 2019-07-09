@@ -5,8 +5,8 @@ import { useLocation } from "@lib/router-hooks"
 import { useDebouncedValue } from "@lib/debounce-hooks"
 import { history } from "@lib/routing"
 import { useStore } from "effector-react"
-import { $searchHistory, appendToSearchHistory } from "../model/search-history"
-import { search as triggerSearch } from "../model/main"
+import { $searchHistory, searchHistoryChanged } from "../model/search-history"
+import { searchTriggered } from "../model/main"
 
 const UPDATE_INTERVAL = 500
 
@@ -34,12 +34,12 @@ export const SearchBar = () => {
     if (debouncedSearchString) {
       if (!searchHistory.includes(debouncedSearchString)) {
         queryParams.set("q", debouncedSearchString)
-        appendToSearchHistory(debouncedSearchString)
+        searchHistoryChanged(debouncedSearchString)
 
         // $off
         history.push(`/search?${queryParams}`)
       }
-      triggerSearch(debouncedSearchString)
+      searchTriggered(debouncedSearchString)
     }
   }, [debouncedSearchString])
 

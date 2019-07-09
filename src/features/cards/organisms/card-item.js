@@ -15,7 +15,7 @@ export const CardItem = ({ onUsefulClick, card, maximized }) => (
           <CardFlagWithNumber
             usefulFor={card.usefulFor}
             isUseful={card.meta.isUseful}
-            onUsefulClick={onUsefulClick}
+            onUsefulClick={() => onUsefulClick(card.id)}
           />
         </CellCardFlag>
 

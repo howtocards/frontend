@@ -1,11 +1,10 @@
 // @flow
 import { createStore, createEvent } from "effector"
-import type { Event, Store } from "effector"
 
-export const $searchHistory: Store<string[]> = createStore([])
+export const $searchHistory = createStore<string[]>([])
 
-export const appendToSearchHistory: Event<string> = createEvent()
+export const searchHistoryChanged = createEvent<string>()
 
-$searchHistory.on(appendToSearchHistory, (state, newRecord) =>
+$searchHistory.on(searchHistoryChanged, (state, newRecord) =>
   state.concat(newRecord),
 )
