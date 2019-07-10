@@ -8,7 +8,6 @@ type Props = {
   ids: number[],
   count?: number,
   renderEmpty: () => React.Node,
-  renderCard?: *,
 }
 
 export const SkeletonList = ({
@@ -16,7 +15,6 @@ export const SkeletonList = ({
   ids,
   count = 3,
   renderEmpty,
-  renderCard,
 }: Props) =>
   isLoading ? (
     <>
@@ -25,10 +23,9 @@ export const SkeletonList = ({
       ))}
     </>
   ) : (
-    <CardsList ids={ids} renderEmpty={renderEmpty} renderCard={renderCard} />
+    <CardsList ids={ids} renderEmpty={renderEmpty} />
   )
 
 SkeletonList.defaultProps = {
   count: undefined,
-  renderCard: undefined,
 }

@@ -1,8 +1,21 @@
 // @flow
+import { sample } from "effector"
 import { cardsApi } from "../api"
 import type { Card } from "../types"
-import { clearRegistry, setUsefulMark } from "./registry.events"
+import {
+  clearRegistry,
+  setUsefulMark,
+  usefulMarkClicked,
+} from "./registry.events"
 import { $registry } from "./registry.store"
+
+sample(
+  $registry,
+  usefulMarkClicked,
+  (registry, cardId) => registry[cardId],
+).watch((card) => {
+  if (card) setUsefulMark({ cardId: card.id, isUseful: !card.meta.isUseful })
+})
 
 $registry.reset(clearRegistry)
 

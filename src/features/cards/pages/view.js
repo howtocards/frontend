@@ -7,9 +7,11 @@ import { distanceInWordsToNow } from "date-fns"
 
 import { Col, Row } from "@lib/styled-components-layout"
 import { Text } from "@howtocards/ui"
+
 import { CardsCommonTemplate } from "../templates/common"
 import { cardLoading, $card } from "../model/view"
-import { CardItem, CardSkeleton, CardsList } from "../organisms"
+import { CardItem, CardSkeleton } from "../organisms"
+import { usefulMarkClicked } from "../model/registry.events"
 
 type Props = {
   match: {
@@ -31,31 +33,17 @@ export const CardViewPage = ({ match }: Props) => {
   return (
     <CardsCommonTemplate sidebar={<Sidebar card={current} />}>
       {current ? (
-        <CardsList
-          key={`card-view-${current.id}`}
-          ids={[current.id]}
-          renderCard={({ card, onUsefulClick }) => (
-            <CardItem
-              key={card.id}
-              maximized
-              card={card}
-              onUsefulClick={onUsefulClick}
-            />
-          )}
+        <CardItem
+          key={current.id}
+          maximized
+          card={current}
+          onUsefulClick={usefulMarkClicked}
         />
       ) : (
         <CardSkeleton />
       )}
     </CardsCommonTemplate>
   )
-}
-
-CardViewPage.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      cardId: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
 }
 
 const Sidebar = ({ card }) => (
