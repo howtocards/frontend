@@ -1,18 +1,20 @@
 import React from "react"
 import { CodeBlock } from "./code-block"
-import { Options } from "./options"
+
+const defaultOptions = {
+  block: "",
+  line: "",
+}
 
 export const CodePlugin = (options = {}) => {
-  const config = new Options({
-    ...options,
-  })
+  const config = { ...defaultOptions, ...options }
 
   return [
     {
-      renderNode(props, _editor, next) {
+      renderBlock(props, _editor, next) {
         const { node, children, attributes } = props
 
-        const Types = {
+        const NodeTypes = {
           [config.block]: <CodeBlock className={config.block} {...props} />,
           [config.line]: (
             <div className={config.line} {...attributes}>
@@ -21,7 +23,7 @@ export const CodePlugin = (options = {}) => {
           ),
         }
 
-        return Types[node.type] || next()
+        return NodeTypes[node.type] || next()
       },
     },
   ]

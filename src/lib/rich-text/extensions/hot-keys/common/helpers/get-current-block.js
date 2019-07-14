@@ -1,4 +1,4 @@
-export function getCurrentBlock(block, value, parent) {
+export function getCurrentBlock(block, value, { parent }) {
   const { document } = value
 
   if (!value.selection.start.key) return null

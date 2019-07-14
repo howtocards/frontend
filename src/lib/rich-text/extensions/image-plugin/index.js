@@ -26,7 +26,7 @@ const schema = {
 
 export const ImagePlugin = () => [
   {
-    renderNode(props, _editor, next) {
+    renderBlock(props, _editor, next) {
       const { attributes, node } = props
 
       switch (node.type) {

@@ -8,7 +8,7 @@ export const onSelectAll = ({ opts, event, change }) => {
 
   event.preventDefault()
 
-  const block = getCurrentBlock(opts.block, value, true)
+  const block = getCurrentBlock(opts.block, value, { parent: true })
 
   return change
     .moveToStartOfNode(block.getFirstText())

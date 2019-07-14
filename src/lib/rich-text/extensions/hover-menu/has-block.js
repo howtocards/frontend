@@ -1,5 +1,2 @@
-export const hasBlock = (type, editor) => {
-  const { value } = editor
-
-  return value.blocks.some((node) => node.type === type)
-}
+export const hasBlock = (type, editor) =>
+  editor.value.blocks.some((node) => node.type === type)

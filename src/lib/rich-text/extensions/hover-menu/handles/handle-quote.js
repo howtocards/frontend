@@ -1,16 +1,14 @@
 import { DEFAULT_NODE } from "../constant"
 import { unWrapBlocks } from "../unwrap-blocks"
 import { hasBlock } from "../has-block"
+import { hasParent } from "../has-parent"
 
-export const handleQuote = (type, editor, configCodePlugin) => {
+export const handleQuote = ({ type, editor, configCodePlugin }) => {
   const { value } = editor
-  const { document } = value
 
   if (type === "block-quote") {
-    const isLine = hasBlock(DEFAULT_NODE, editor)
-    const isType = value.blocks.some((block) =>
-      Boolean(document.getClosest(block.key, (parent) => parent.type === type)),
-    )
+    const hasDefaultNode = hasBlock(DEFAULT_NODE, editor)
+    const hasParentQuoteBlock = hasParent(value, type)
 
     unWrapBlocks(editor, [
       "bulleted-list",
@@ -18,12 +16,23 @@ export const handleQuote = (type, editor, configCodePlugin) => {
       configCodePlugin.block,
     ])
 
-    if (isLine && isType) {
-      editor.setBlocks(DEFAULT_NODE).unwrapBlock(type)
-    } else if (isLine) {
-      editor.wrapBlock(type)
-    } else {
-      editor.setBlocks(DEFAULT_NODE).wrapBlock(type)
+    const changesList = [
+      {
+        condition: hasDefaultNode && hasParentQuoteBlock,
+        fn: () => editor.setBlocks(DEFAULT_NODE).unwrapBlock(type),
+      },
+      {
+        condition: hasDefaultNode,
+        fn: () => editor.wrapBlock(type),
+      },
+    ]
+
+    const defaultChange = {
+      fn: () => editor.setBlocks(configCodePlugin.line).wrapBlock(type),
     }
+
+    const change = changesList.find((el) => el.condition) || defaultChange
+
+    change.fn()
   }
 }

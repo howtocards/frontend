@@ -19,7 +19,6 @@ export const prismcssDark = css`
     margin: 1.5em 10px;
     padding: 0.5em 10px;
   }
-  code[class*="language-"],
   pre[class*="language-"] {
     color: white;
     background: none;
@@ -43,15 +42,9 @@ export const prismcssDark = css`
   }
 
   @media print {
-    code[class*="language-"],
     pre[class*="language-"] {
       text-shadow: none;
     }
-  }
-
-  pre[class*="language-"],
-  :not(pre) > code[class*="language-"] {
-    /* background: hsl(30, 20%, 25%); */
   }
 
   /* Code blocks */
@@ -62,16 +55,6 @@ export const prismcssDark = css`
     padding: 2rem;
     ${({ theme }) => theme.embed.canvas};
     background-color: #171717;
-  }
-
-  /* Inline code */
-  :not(pre) > code[class*="language-"] {
-    padding: 0.15em 0.2em 0.05em;
-    padding: 4rem 2rem;
-    ${({ theme }) => theme.embed.canvas}
-    border-radius: 0.3em;
-    box-shadow: 1px 1px 0.3em -0.1em black inset;
-    white-space: normal;
   }
 
   .token.comment,
@@ -185,7 +168,6 @@ export const prismcssLight = css`
     margin: 1.5em 10px;
     padding: 0.5em 10px;
   }
-  code[class*="language-"],
   pre[class*="language-"] {
     color: black;
     background: none;
@@ -209,15 +191,9 @@ export const prismcssLight = css`
   }
 
   @media print {
-    code[class*="language-"],
     pre[class*="language-"] {
       text-shadow: none;
     }
-  }
-
-  pre[class*="language-"],
-  :not(pre) > code[class*="language-"] {
-    /* background: hsl(30, 20%, 25%); */
   }
 
   /* Code blocks */
@@ -227,14 +203,6 @@ export const prismcssLight = css`
     overflow: auto;
     padding: 2rem;
     ${({ theme }) => theme.embed.canvas}
-  }
-
-  /* Inline code */
-  :not(pre) > code[class*="language-"] {
-    padding: 0.15em 0.2em 0.05em;
-    border-radius: 0.3em;
-    box-shadow: 1px 1px 0.3em -0.1em black inset;
-    white-space: normal;
   }
 
   .token.comment,

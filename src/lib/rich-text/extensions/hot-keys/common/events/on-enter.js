@@ -14,12 +14,13 @@ export const onEnter = ({ event, change, editor }) => {
   }
   event.preventDefault()
 
-  const { startBlock } = value
-  const currentLineText = startBlock.text
-  const indent = getIndent(currentLineText, "")
+  // const { startBlock } = value
+  // const currentLineText = startBlock.text
+  // const indent = getIndent(currentLineText, "")
+  // return change
+  //   .splitBlock()
+  //   .insertText()
+  //   .focus()
 
-  return change
-    .splitBlock()
-    .insertText(indent)
-    .focus()
+  return change.insertText("\n").focus()
 }

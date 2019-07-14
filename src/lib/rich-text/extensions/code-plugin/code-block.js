@@ -15,21 +15,20 @@ const exclude = {
 
 const languages = Object.entries(PrismComponents.languages).reduce(
   (acc, [key, value]) => {
-    if (exclude[key]) {
-      return acc
-    }
-    return {
-      ...acc,
-      [key]: {
-        label: value.title,
-        isLoaded: false,
-      },
-    }
+    return exclude[key]
+      ? acc
+      : {
+          ...acc,
+          [key]: {
+            label: value.title,
+            isLoaded: false,
+          },
+        }
   },
   {},
 )
 
-const optionsForSelect = Object.entries(languages)
+const languagesForSelect = Object.entries(languages)
   .reduce(
     (acc, [key, value]) => [...acc, { value: key, label: value.label }],
     [],
@@ -61,7 +60,6 @@ export class CodeBlock extends React.Component {
 
   componentDidMount() {
     const { editor, node } = this.props
-
     const codeLanguage = node.data.get("language")
 
     if (languages[codeLanguage]) {
@@ -72,7 +70,9 @@ export class CodeBlock extends React.Component {
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
-          console.warn(`[@code-plugin/code-block:onChange]: ${error.message}`)
+          console.warn(
+            `[@code-plugin/code-block:componentDidMount]: ${error.message}`,
+          )
         })
     }
   }
@@ -102,7 +102,7 @@ export class CodeBlock extends React.Component {
   render() {
     const { editor, className, node, attributes, children } = this.props
     const language = node.data.get("language")
-    const selectedValueForSelect = optionsForSelect.find(
+    const selectedLanguages = languagesForSelect.find(
       (item) => item.value === language,
     )
 
@@ -110,18 +110,16 @@ export class CodeBlock extends React.Component {
       <p style={{ textAlign: "right", paddingRight: "10px" }}>{language}</p>
     ) : (
       <MultiSelect
-        value={selectedValueForSelect}
+        value={selectedLanguages}
         onChange={({ value }) => this.onChange(value)}
-        options={optionsForSelect}
+        options={languagesForSelect}
       />
     )
 
     return (
       <div className={className} style={{ position: "relative" }}>
         <pre className={`language-${language}`}>
-          <code {...attributes} className={`language-${language}`}>
-            {children}
-          </code>
+          <code {...attributes}>{children}</code>
         </pre>
         <div
           contentEditable={false}

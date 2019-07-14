@@ -34,7 +34,9 @@ export const HotKeys = (config) => {
       const { value } = change
       const args = { event, change, editor }
 
-      const isCodeBlock = getCurrentBlock(commonOptions.block, value, true)
+      const isCodeBlock = getCurrentBlock(commonOptions.block, value, {
+        parent: true,
+      })
       const isNumberedListBlock = getCurrentBlock(
         numberedListBlockOptions.block,
         value,
@@ -45,7 +47,9 @@ export const HotKeys = (config) => {
         value,
         true,
       )
-      const isBlockQuote = getCurrentBlock(blockQuoteOptions.block, value, true)
+      const isBlockQuote = getCurrentBlock(blockQuoteOptions.block, value, {
+        parent: true,
+      })
 
       // @TODO: improve in the future (make it more readable)
       if (isCodeBlock) {
@@ -80,7 +84,9 @@ export const HotKeys = (config) => {
       const { endBlock } = value
       const args = { event, change, editor }
 
-      const codeBlock = getCurrentBlock(commonOptions.block, value, true)
+      const codeBlock = getCurrentBlock(commonOptions.block, value, {
+        parent: true,
+      })
 
       if (codeBlock && codeBlock.hasDescendant(endBlock.key)) {
         return onPasteCodeBlock({

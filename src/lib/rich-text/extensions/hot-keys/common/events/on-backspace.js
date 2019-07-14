@@ -27,7 +27,7 @@ export const onBackspace = ({ opts, event, change, editor }) => {
   }
   if (opts.exitBlockType) {
     // Otherwise check if we are in an empty block container...
-    const parentBlock = getCurrentBlock(opts.block, value, true)
+    const parentBlock = getCurrentBlock(opts.block, value, { parent: true })
     const isStartOfText =
       selection.start.offset === 0 && parentBlock.getFirstText() === startText
     // PERF: avoid checking for whole Block.text

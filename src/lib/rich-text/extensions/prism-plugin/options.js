@@ -1,5 +1,4 @@
 import * as React from "react"
-import { Record } from "immutable"
 import PropTypes from "prop-types"
 import { TOKEN_MARK } from "./constant"
 
@@ -14,34 +13,39 @@ const defaultOnlyIn = (node) => node.object === "block" && node.type === "code"
 const defaultGetSyntax = () => "js"
 
 /**
- * Default rendering for marks
+ * Default rendering for decorations
  */
-const defaultRenderMark = (props) => {
-  const { mark, children } = props
+const defaultRenderDecoration = (props) => {
+  const { children, decoration, attributes } = props
 
-  if (mark.type !== TOKEN_MARK) {
+  if (decoration.data.get("token") !== TOKEN_MARK) {
     return undefined
   }
-  const className = mark.data.get("className")
 
-  return <span className={className}>{children}</span>
+  return (
+    <span {...attributes} className={decoration.data.get("className")}>
+      {children}
+    </span>
+  )
 }
 
-defaultRenderMark.propTypes = {
-  mark: PropTypes.shape({
+defaultRenderDecoration.propTypes = {
+  decoration: PropTypes.shape({
     type: PropTypes.string,
   }).isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+  attributes: PropTypes.oneOfType([]).isRequired,
 }
 
 /**
  * The plugin options
  */
-export class Options extends Record({
+
+export const defaultOptions = {
   onlyIn: defaultOnlyIn,
   getSyntax: defaultGetSyntax,
-  renderMark: defaultRenderMark,
-}) {}
+  renderDecoration: defaultRenderDecoration,
+}

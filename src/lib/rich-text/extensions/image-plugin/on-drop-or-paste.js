@@ -1,5 +1,4 @@
 import { getEventRange, getEventTransfer } from "slate-react"
-// eslint-disable-next-line import/extensions
 import imageExtensions from "image-extensions"
 import isUrl from "is-url"
 import { insertImage } from "./insert-image"
@@ -34,26 +33,6 @@ export const onDropOrPaste = (event, editor, next) => {
 
   const transfer = getEventTransfer(event)
   const { type, text } = transfer
-
-  // const { type, text, files } = transfer
-  // if (type === "files") {
-  //   // eslint-disable-next-line no-restricted-syntax
-  //   for (const file of files) {
-  //     const reader = new FileReader()
-  //     const [mime] = file.type.split("/")
-
-  //     // eslint-disable-next-line no-continue
-  //     if (mime !== "image") continue
-
-  //     // eslint-disable-next-line no-loop-func
-  //     reader.addEventListener("load", () => {
-  //       editor.command(insertImage, reader.result, target)
-  //     })
-
-  //     reader.readAsDataURL(file)
-  //   }
-  //   return next()
-  // }
 
   if (type === "text") {
     if (!isUrl(text)) return next()

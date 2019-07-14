@@ -1,126 +1,148 @@
-import React from "react"
-import PropTypes from "prop-types"
+// @flow
+
+import * as React from "react"
 import { Value } from "slate"
 import { Editor } from "slate-react"
-import {
-  HoverMenu,
-  CodePlugin,
-  HotKeys,
-  PrismPlugin,
-  ImagePlugin,
-} from "./extensions"
 import { RichEditorStyle } from "./styles"
+// import { AddMenu } from "./plugins"
 
-const configCodePlugin = {
-  block: "code_block",
-  line: "code_line",
+// import {
+//   HoverMenu,
+//   CodePlugin,
+//   HotKeys,
+//   PrismPlugin,
+//   ImagePlugin,
+// } from "./extensions"
+
+// const configCodePlugin = {
+//   block: "code_block",
+//   line: "code_line",
+// }
+
+// // const plugins = [
+// //   ImagePlugin(),
+// //   PrismPlugin({
+// //     onlyIn: (node) => node.type === configCodePlugin.block,
+// //     getSyntax: (node) => node.data.get("language"),
+// //   }),
+// //   CodePlugin(configCodePlugin),
+// // ]
+
+// const NODES_COMPONENTS = {
+//   "block-quote": "blockquote",
+//   "bulleted-list": "ul",
+//   "list-item": "li",
+//   "numbered-list": "ol",
+// }
+
+// const MARKS_COMPONENTS = {
+//   bold: "strong",
+//   italic: "em",
+//   underlined: "u",
+//   code: "code",
+// }
+
+// Add the plugin to your set of plugins...
+// const plugins = []
+
+type Props = {
+  readOnly?: boolean,
+  // eslint-disable-next-line react/require-default-props
+  onChange: (content: Object) => any,
+  content: {
+    document: Object,
+  },
 }
 
-const plugins = [
-  ImagePlugin(),
-  PrismPlugin({
-    onlyIn: (node) => node.type === configCodePlugin.block,
-    getSyntax: (node) => node.data.get("language"),
-  }),
-  CodePlugin(configCodePlugin),
-]
-
-const NODES_COMPONENTS = {
-  "block-quote": "blockquote",
-  "bulleted-list": "ul",
-  "list-item": "li",
-  "numbered-list": "ol",
+type State = {
+  value: Object,
 }
 
-const MARKS_COMPONENTS = {
-  bold: "strong",
-  italic: "em",
-  underlined: "u",
-  code: "code",
-}
+export class RichEditor extends React.Component<Props, State> {
+  editorContainerNode = React.createRef<HTMLDivElement>()
 
-export class RichEditor extends React.Component {
   static defaultProps = {
+    // eslint-disable-next-line react/default-props-match-prop-types
     onChange: () => {},
     readOnly: false,
   }
 
-  static propTypes = {
-    readOnly: PropTypes.bool,
-    onChange: PropTypes.func,
-    content: PropTypes.shape({
-      document: PropTypes.shape({}).isRequired,
-    }).isRequired,
+  // $FlowIssue
+  renderBlock = (_props, _editor, next) => {
+    const { attributes, children, node } = _props
+    if (node.type === "line") {
+      return (
+        <div className="block-paragraph">
+          <span {...attributes}>{children}</span>
+        </div>
+      )
+    }
+    console.log("node", node.type)
+    return next()
+    // const Type = NODES_COMPONENTS[node.type]
+
+    // return Type ? <Type {...attributes}>{children}</Type> : next()
   }
 
-  state = {
-    // eslint-disable-next-line react/no-unused-state, react/destructuring-assignment
-    value: Value.fromJS(this.props.content),
+  // $FlowIssue
+  renderMark = (_props, _editor, next) => {
+    const { children, mark, attributes } = _props
+    console.log("mark", mark.type)
+    return next()
+    // const Type = MARKS_COMPONENTS[mark.type]
+    // const className = mark.type === "code" ? { className: "code_inline" } : {}
+    // return Type ? (
+    //   <Type {...attributes} {...className}>
+    //     {children}
+    //   </Type>
+    // ) : (
+    //   next()
+    // )
   }
 
-  renderNode = (props, _editor, next) => {
-    const { attributes, children, node } = props
-    const Type = NODES_COMPONENTS[node.type]
-
-    return Type ? <Type {...attributes}>{children}</Type> : next()
-  }
-
-  renderMark = (props, _editor, next) => {
-    const { children, mark, attributes } = props
-    const Type = MARKS_COMPONENTS[mark.type]
-    const className = mark.type === "code" ? { className: "code_inline" } : {}
-
-    return Type ? (
-      <Type {...attributes} {...className}>
-        {children}
-      </Type>
-    ) : (
-      next()
-    )
-  }
-
-  renderEditor = (_props, editor, next) => {
-    const children = next()
+  // $FlowIssue
+  renderEditor = (_props, change, next) => {
+    const editorComponent = next()
+    const { content } = this.props
 
     return (
-      <React.Fragment>
-        {children}
-        <HoverMenu configCodePlugin={configCodePlugin} editor={editor} />
-      </React.Fragment>
+      <div ref={this.editorContainerNode}>
+        {editorComponent}
+        {/* <AddMenu
+          value={Value.fromJS(content)}
+          editorContainerNode={this.editorContainerNode.current}
+          change={change}
+        /> */}
+        {/* <HoverMenu configCodePlugin={configCodePlugin} editor={_editor} /> */}
+      </div>
     )
   }
 
+  // // $FlowIssue
   onChange = ({ value }) => {
-    const { onChange, readOnly } = this.props
-    const toJS = value.toJS()
-
-    this.setState({ value }, () => {
-      if (!readOnly && typeof onChange === "function") {
-        onChange(toJS)
-      }
-    })
+    const { onChange } = this.props
+    onChange(value)
   }
 
   render() {
-    const { readOnly } = this.props
-    const { value } = this.state
+    const { readOnly, content } = this.props
 
     return (
       <RichEditorStyle>
         <Editor
-          tabIndex={0}
-          spellcheck={false}
-          readOnly={readOnly}
-          {...HotKeys(configCodePlugin)}
+          spellCheck={false}
           style={{
             minHeight: "300px",
           }}
-          value={value}
+          tabIndex={0}
+          readOnly={readOnly}
+          value={Value.fromJS(content)}
           onChange={this.onChange}
+          // plugins={plugins}
+          // {...HotKeys(configCodePlugin)}
           renderEditor={this.renderEditor}
           renderMark={this.renderMark}
-          renderNode={this.renderNode}
-          plugins={plugins}
+          renderBlock={this.renderBlock}
         />
       </RichEditorStyle>
     )

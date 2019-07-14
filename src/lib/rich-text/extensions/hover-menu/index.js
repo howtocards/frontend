@@ -1,12 +1,13 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import PropTypes from "prop-types"
-import { insertImage } from "../image-plugin/insert-image"
+// import { insertImage } from "../image-plugin/insert-image"
 import { hasMark } from "./has-mark"
 import { hasBlock } from "./has-block"
 import { DEFAULT_NODE, ICONS_LIST } from "./constant"
 import { StyledMenu, Button } from "./styles"
-import { handleQuote, handleCode, handleList } from "./handles"
+// import { handleQuote, handleCode, handleList } from "./handles"
+import { hasParent } from "./has-parent"
 
 const getIconComponent = (type) => ICONS_LIST[type] || "span"
 
@@ -25,25 +26,14 @@ export class HoverMenu extends React.Component {
   }
 
   menu = React.createRef()
-  state = {
-    isHoverInCodeBlock: false,
-  }
 
   updateMenu() {
     const { menu } = this
-    const { isHoverInCodeBlock } = this.state
-    const { editor, configCodePlugin } = this.props
+    const { editor } = this.props
     const { value } = editor
     const { fragment, selection, startBlock } = value
 
     if (!menu.current || !startBlock) return
-    const isCodeBlock =
-      startBlock.type === configCodePlugin.block ||
-      startBlock.type === configCodePlugin.line
-
-    if (isCodeBlock !== isHoverInCodeBlock) {
-      this.setState({ isHoverInCodeBlock: isCodeBlock })
-    }
 
     if (selection.isBlurred || selection.isCollapsed || fragment.text === "") {
       menu.current.removeAttribute("style")
@@ -68,72 +58,86 @@ export class HoverMenu extends React.Component {
     menu.current.style.left = leftPosition
   }
 
-  renderImageButton(type) {
-    const IconComponent = getIconComponent(type)
+  // renderImageButton(type) {
+  //   const IconComponent = getIconComponent(type)
 
-    return (
-      <Button onMouseDown={(event) => this.onClickImage(event)}>
-        <IconComponent fill="#aaa" width="20px" height="20px" />
-      </Button>
-    )
-  }
+  //   return (
+  //     <Button onMouseDown={(event) => this.onClickImage(event)}>
+  //       <IconComponent fill="#aaa" width="20px" height="20px" />
+  //     </Button>
+  //   )
+  // }
 
-  onClickImage = (event) => {
-    const { editor } = this.props
+  // onClickImage = (event) => {
+  //   const { editor } = this.props
 
-    event.preventDefault()
-    // eslint-disable-next-line no-alert
-    const src = window.prompt("Enter the URL of the image:")
+  //   event.preventDefault()
+  //   // eslint-disable-next-line no-alert
+  //   const src = window.prompt("Enter the URL of the image:")
 
-    if (!src) return
-    editor.command(insertImage, src)
-  }
+  //   if (!src) return
+  //   editor.command(insertImage, src)
+  // }
 
-  renderBlockButton = (type) => {
-    const { editor, configCodePlugin } = this.props
-    const { value } = editor
-    let isActive = hasBlock(type, editor)
+  // renderBlockButton = (type) => {
+  //   const { editor, configCodePlugin } = this.props
+  //   const { value } = editor
+  //   let isActive = hasBlock(type, editor)
 
-    const checkisActiveBlockButton = (blocks, list) => {
-      if (blocks.includes(type)) {
-        if (value.blocks.size > 0) {
-          const parent = value.document.getParent(value.blocks.first().key)
+  //   const checkisActiveBlock = (blocks, list) => {
+  //     if (blocks.includes(type)) {
+  //       if (value.blocks.size > 0) {
+  //         const parent = value.document.getParent(value.blocks.first().key)
 
-          isActive = hasBlock(list, editor) && parent && parent.type === type
-        }
-      }
-    }
+  //         isActive = hasBlock(list, editor) && parent && parent.type === type
+  //       }
+  //     }
+  //   }
 
-    checkisActiveBlockButton(["numbered-list", "bulleted-list"], "list-item")
-    checkisActiveBlockButton([configCodePlugin.block], configCodePlugin.line)
-    checkisActiveBlockButton(["block-quote"], DEFAULT_NODE)
+  //   checkisActiveBlock(["numbered-list", "bulleted-list"], "list-item")
+  //   checkisActiveBlock([configCodePlugin.block], configCodePlugin.line)
+  //   checkisActiveBlock(["block-quote"], DEFAULT_NODE)
 
-    const IconComponent = getIconComponent(type)
+  //   // const allBlockTypes = [
+  //   //   {
+  //   //     parentBlockType: ["numbered-list", "bulleted-list"],
+  //   //     child: "list-item",
+  //   //   },
+  //   //   {
+  //   //     parentBlockType: [configCodePlugin.block],
+  //   //     child: configCodePlugin.line,
+  //   //   },
+  //   //   {
+  //   //     parentBlockType: ["block-quote"],
+  //   //     child: DEFAULT_NODE,
+  //   //   },
+  //   // ]
 
-    return (
-      <Button
-        active={isActive}
-        onMouseDown={(event) => this.onClickBlock(event, type)}
-      >
-        <IconComponent
-          fill={isActive ? "white" : "#aaa"}
-          width="20px"
-          height="20px"
-        />
-      </Button>
-    )
-  }
+  //   const IconComponent = getIconComponent(type)
 
-  onClickBlock = (event, type) => {
-    event.preventDefault()
-    const { editor, configCodePlugin } = this.props
+  //   return (
+  //     <Button
+  //       active={isActive}
+  //       onMouseDown={(event) => this.onClickBlock(event, type)}
+  //     >
+  //       <IconComponent
+  //         fill={isActive ? "white" : "#aaa"}
+  //         width="20px"
+  //         height="20px"
+  //       />
+  //     </Button>
+  //   )
+  // }
 
-    handleList(type, editor, configCodePlugin)
-    handleQuote(type, editor, configCodePlugin)
-    if (configCodePlugin.block && configCodePlugin.line) {
-      handleCode(type, editor, configCodePlugin)
-    }
-  }
+  // onClickBlock = (event, type) => {
+  //   event.preventDefault()
+  //   const { editor, configCodePlugin } = this.props
+  //   const args = { type, editor, configCodePlugin }
+
+  //   handleList(args)
+  //   handleQuote(args)
+  //   handleCode(args)
+  // }
 
   renderMarkButton = (type) => {
     const { editor } = this.props
@@ -153,9 +157,15 @@ export class HoverMenu extends React.Component {
   }
 
   onClickMark = (event, type) => {
-    const { editor } = this.props
+    const { editor, configCodePlugin } = this.props
 
     event.preventDefault()
+
+    const hasCodeLine = hasBlock(configCodePlugin.line, editor)
+    const hasParentCodeBlock = hasParent(editor.value, type)
+
+    if (hasCodeLine || hasParentCodeBlock) return
+
     editor.toggleMark(type)
   }
 
@@ -169,31 +179,22 @@ export class HoverMenu extends React.Component {
 
   render() {
     const { className, configCodePlugin } = this.props
-    const { isHoverInCodeBlock } = this.state
-
     const root = document.querySelector("#root")
-    const codeBlockButton =
-      configCodePlugin.block && this.renderBlockButton(configCodePlugin.block)
-
-    const buttons = isHoverInCodeBlock ? (
-      <>{codeBlockButton}</>
-    ) : (
-      <>
-        {this.renderMarkButton("bold")}
-        {this.renderMarkButton("italic")}
-        {this.renderMarkButton("underlined")}
-        {this.renderImageButton("image")}
-        {this.renderMarkButton("code")}
-        {codeBlockButton}
-        {this.renderBlockButton("block-quote")}
-        {this.renderBlockButton("numbered-list")}
-        {this.renderBlockButton("bulleted-list")}
-      </>
-    )
 
     return ReactDOM.createPortal(
       <StyledMenu className={className} ref={this.menu}>
-        {buttons}
+        <>
+          {this.renderMarkButton("bold")}
+          {this.renderMarkButton("italic")}
+          {this.renderMarkButton("underlined")}
+          {this.renderMarkButton("code")}
+
+          {/* {this.renderImageButton("image")}
+          {this.renderBlockButton(configCodePlugin.block)}
+          {this.renderBlockButton("block-quote")}
+          {this.renderBlockButton("numbered-list")}
+          {this.renderBlockButton("bulleted-list")} */}
+        </>
       </StyledMenu>,
       root,
     )

@@ -6,7 +6,7 @@ import { getIndent } from "./get-indent"
  */
 
 export function getCurrentIndent(block, value) {
-  const currentBlcok = getCurrentBlock(block, value, true)
+  const currentBlcok = getCurrentBlock(block, value, { parent: true })
 
   if (!currentBlcok) {
     return ""

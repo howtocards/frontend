@@ -1,36 +1,47 @@
 import { DEFAULT_NODE } from "../constant"
 import { unWrapBlocks } from "../unwrap-blocks"
 import { hasBlock } from "../has-block"
+import { hasParent } from "../has-parent"
 
-export const handleCode = (type, editor, configCodePlugin) => {
+const deleteMarks = (editor) => {
+  const allMarks = editor.value.marks
+    .toArray()
+    .reduce((acc, mark) => [...acc, mark.type], [])
+
+  editor.value.texts.toArray().forEach((text) => {
+    allMarks.forEach((typeMark) =>
+      editor.removeMarkByKey(text.key, 0, text.text.length, typeMark),
+    )
+  })
+}
+
+export const handleCode = ({ type, editor, configCodePlugin }) => {
   const { value } = editor
-  const { document } = value
 
   if (type === configCodePlugin.block) {
-    const isCodeLine = hasBlock(configCodePlugin.line, editor)
-    const isType = value.blocks.some((block) =>
-      Boolean(document.getClosest(block.key, (parent) => parent.type === type)),
-    )
+    const hasCodeLine = hasBlock(configCodePlugin.line, editor)
+    const hasParentCodeBlock = hasParent(value, type)
 
-    const allMarks = value.marks.toArray().reduce((acc, mark) => {
-      acc[mark.type] = true
-      return acc
-    }, {})
-
-    value.texts.toArray().forEach((text) => {
-      Object.keys(allMarks).forEach((typeMark) =>
-        editor.removeMarkByKey(text.key, 0, text.text.length, typeMark),
-      )
-    })
-
+    deleteMarks(editor)
     unWrapBlocks(editor, ["bulleted-list", "numbered-list", "block-quote"])
 
-    if (isCodeLine && isType) {
-      editor.setBlocks(DEFAULT_NODE).unwrapBlock(type)
-    } else if (isCodeLine) {
-      editor.wrapBlock(type)
-    } else {
-      editor.setBlocks(configCodePlugin.line).wrapBlock(type)
+    const changesList = [
+      {
+        condition: hasCodeLine && hasParentCodeBlock,
+        fn: () => editor.setBlocks(DEFAULT_NODE).unwrapBlock(type),
+      },
+      {
+        condition: hasCodeLine,
+        fn: () => editor.wrapBlock(type),
+      },
+    ]
+
+    const defaultChange = {
+      fn: () => editor.setBlocks(configCodePlugin.line).wrapBlock(type),
     }
+
+    const change = changesList.find((el) => el.condition) || defaultChange
+
+    change.fn()
   }
 }

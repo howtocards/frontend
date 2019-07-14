@@ -54,7 +54,8 @@ savePressed.watch(() => {
   const card = $card.getState()
   if (card) {
     const { id, title, content } = card
-    cardSaving({ id, title, content })
+    // $FlowIssue
+    cardSaving({ id, title, content: content.toJS() })
   }
 })
 
