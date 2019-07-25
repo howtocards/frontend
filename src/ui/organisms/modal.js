@@ -6,9 +6,9 @@ import PropTypes from "prop-types"
 import { H3, Icon, Text, Button, Box } from "@howtocards/ui"
 import { Row } from "@lib/styled-components-layout"
 
-export const Modal = ({ children, title, onClose, onDeleteClick }) => {
+export const Modal = ({ children, title, onClose, onDeleteClick, isOpen }) => {
   const ref = useRef(null)
-  useOnClickOutside(ref, onClose)
+  useOnClickOutside(ref, isOpen)
 
   return (
     <div ref={ref}>
@@ -55,6 +55,7 @@ Modal.propTypes = {
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func,
+  isOpen: PropTypes.bool.isRequired,
 }
 
 Modal.defaultProps = {

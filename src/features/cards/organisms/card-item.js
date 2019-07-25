@@ -120,18 +120,17 @@ const CardInfo = (card) => (
 )
 
 const CardDeleteModalButton = ({ card }) => {
-  const [opened, setOpened] = useState(false)
+  const [isOpen, setOpened] = useState(false)
   const close = () => setOpened(() => false)
-  const toggle = () => setOpened((isOpen) => !isOpen)
+  const toggle = () => setOpened(!isOpen)
 
   return (
     <div>
       <ZeroButton onClick={toggle}>
         <Icon name="trash" height="1.6rem" />
       </ZeroButton>
-
-      {opened && (
-        <Modal onClose={close}>
+      {isOpen && (
+        <Modal isOpen={isOpen} onClose={close}>
           <div>Do you absolutely sure you want to delete card</div>
           <div>
             <b>&#8220; {card.title} &#8221; </b>?
