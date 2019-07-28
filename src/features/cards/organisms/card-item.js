@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import styled, { css } from "styled-components"
 import PropTypes from "prop-types"
 import { format } from "date-fns"
+import useOnClickOutside from "use-onclickoutside"
 
 import { RichEditor } from "@lib/rich-text"
 import { Row } from "@lib/styled-components-layout"
@@ -120,17 +121,20 @@ const CardInfo = (card) => (
 )
 
 const CardDeleteModalButton = ({ card }) => {
-  const [isOpen, setOpened] = useState(false)
+  const [opened, setOpened] = useState(false)
   const close = () => setOpened(() => false)
-  const toggle = () => setOpened(!isOpen)
+  const toggle = () => setOpened(!opened)
+
+  const ref = useRef(null)
+  useOnClickOutside(ref, close)
 
   return (
-    <div>
+    <div ref={ref}>
       <ZeroButton onClick={toggle}>
         <Icon name="trash" height="1.6rem" />
       </ZeroButton>
-      {isOpen && (
-        <Modal isOpen={isOpen} onClose={close}>
+      {opened && (
+        <Modal onClose={close}>
           <div>Do you absolutely sure you want to delete card</div>
           <div>
             <b>&#8220; {card.title} &#8221; </b>?

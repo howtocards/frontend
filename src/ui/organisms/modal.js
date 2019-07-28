@@ -1,17 +1,13 @@
-import React, { useRef } from "react"
+import React from "react"
 import styled from "styled-components"
-import useOnClickOutside from "use-onclickoutside"
 import PropTypes from "prop-types"
 
 import { H3, Icon, Text, Button, Box } from "@howtocards/ui"
 import { Row } from "@lib/styled-components-layout"
 
-export const Modal = ({ children, title, onClose, onDeleteClick, isOpen }) => {
-  const ref = useRef(null)
-  useOnClickOutside(ref, isOpen)
-
+export const Modal = ({ children, title, onClose, onDeleteClick }) => {
   return (
-    <div ref={ref}>
+    <div>
       <Box popup>
         <GridPopUp>
           {title && (
@@ -55,7 +51,6 @@ Modal.propTypes = {
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func,
-  isOpen: PropTypes.bool.isRequired,
 }
 
 Modal.defaultProps = {
