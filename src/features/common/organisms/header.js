@@ -1,9 +1,11 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 
 import { WithThemeToggler } from "@lib/theme-context"
+import * as Menu from "@lib/context-menu"
 import { Container } from "@howtocards/ui"
 import { SearchBar } from "@features/search"
 import { WithAccount } from "./with-account"
@@ -30,8 +32,24 @@ const Navigation = () => (
 const linksForUser = ({ account }) => (
   <>
     <NavLink to="/new/card">+ New</NavLink>
-    <NavLink to={`/user/${account.user.id}`}>{account.user.email}</NavLink>
-    <NavLink to="/logout">Logout</NavLink>
+    <Menu.Context
+      as={NavItem}
+      trigger={<span>Profile</span>}
+      menu={({ close }) => (
+        <>
+          <Menu.Item as={Link} to={`/user/${account.id}`} onClick={close}>
+            {account.email}
+          </Menu.Item>
+          <Menu.Item as={Link} to="/settings" onClick={close}>
+            Settings
+          </Menu.Item>
+          <Menu.Separator />
+          <Menu.Item as={Link} to="/logout">
+            Logout
+          </Menu.Item>
+        </>
+      )}
+    />
   </>
 )
 
