@@ -94,7 +94,7 @@ Context.defaultProps = {
 
 const Positioner = styled.div`
   position: relative;
-  display: flex;
+  display: inline-block;
   ${(p) =>
     p.position
       ? css`
@@ -107,10 +107,7 @@ const Positioner = styled.div`
 `
 
 const Background = styled.div`
-  background-color: rgba(0, 0, 0, 0.2);
   bottom: 0;
-  display: flex;
-  flex-direction: column;
   left: 0;
   position: fixed;
   right: 0;
