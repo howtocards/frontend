@@ -26,7 +26,10 @@ export const config = {
 
 export const App = hot(module)(() => (
   <ToggleThemeProvider light={lightTheme} dark={darkTheme}>
-    <TypographistProvider config={config} withToggle>
+    <TypographistProvider
+      config={config}
+      withToggle={process.env.NODE_ENV === "development"}
+    >
       <>
         <Normalize />
         <GlobalStyles />
