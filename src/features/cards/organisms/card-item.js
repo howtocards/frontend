@@ -2,9 +2,11 @@ import React, { useState } from "react"
 import styled, { css } from "styled-components"
 import PropTypes from "prop-types"
 import { format } from "date-fns"
+import { Link as RouterLink } from "react-router-dom"
 
 import { RichEditor } from "@lib/rich-text"
 import { Row } from "@lib/styled-components-layout"
+import * as Menu from "@lib/context-menu"
 import { Link, H2, Icon, Text, Modal, CardNarrow } from "@howtocards/ui"
 
 export const CardItem = ({ onUsefulClick, card, maximized }) => (
@@ -106,9 +108,29 @@ const CardHeader = ({ card }) => (
       <H2 narrow>{card.title}</H2>
     </Link>
     <Row basis="25%" justify="flex-end" gap="1.4em" align="center">
-      {card.meta.canEdit && <Link to={`/edit/${card.id}`}>Edit</Link>}
-      {card.meta.canEdit && <CardDeleteModalButton card={card} />}
-      {/* <Icon name="dots-v" height="1.6rem" /> */}
+      {card.meta.canEdit && (
+        <Menu.Context
+          trigger={<Icon name="dots-v" height="1.6rem" />}
+          menu={({ close }) => (
+            <>
+              <Menu.Item
+                as={RouterLink}
+                to={`/edit/${card.id}`}
+                onClick={close}
+              >
+                Edit
+              </Menu.Item>
+              <Menu.Item
+                as={RouterLink}
+                to={`/card/${card.id}/delete`}
+                onClick={close}
+              >
+                Delete
+              </Menu.Item>
+            </>
+          )}
+        />
+      )}
     </Row>
   </HeadingLine>
 )

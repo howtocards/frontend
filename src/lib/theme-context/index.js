@@ -1,7 +1,7 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import { createStore, createEvent } from "effector"
 import { useStore } from "effector-react"
-import PropTypes from "prop-types"
 import { ThemeProvider } from "styled-components"
 
 const themeToggled = createEvent()
@@ -13,25 +13,44 @@ $isDark.watch((isDark) => {
   localStorage.setItem("theme", isDark ? "dark" : "light")
 })
 
-export const ToggleThemeProvider = ({ dark, light, children }) => {
+type ProviderProps = {
+  dark: {},
+  light: {},
+  children: React.Node,
+}
+
+export const ToggleThemeProvider = ({
+  dark,
+  light,
+  children,
+}: ProviderProps) => {
   const isDark = useStore($isDark)
+
+  React.useEffect(() => {
+    const html = document.querySelector("html")
+    if (html) {
+      if (isDark) {
+        html.classList.add("theme-dark")
+      } else {
+        html.classList.remove("theme-dark")
+      }
+    }
+  }, [isDark])
 
   return <ThemeProvider theme={isDark ? dark : light}>{children}</ThemeProvider>
 }
 
-ToggleThemeProvider.propTypes = {
-  dark: PropTypes.shape({}).isRequired,
-  light: PropTypes.shape({}).isRequired,
-  children: PropTypes.node.isRequired,
+type TogglerProps = {
+  render: (p: {
+    isDark: boolean,
+    theme: "dark" | "light",
+    toggle: () => void,
+  }) => React.Node,
 }
 
-export const WithThemeToggler = ({ render }) => {
+export const WithThemeToggler = ({ render }: TogglerProps) => {
   const isDark = useStore($isDark)
   const theme = isDark ? "dark" : "light"
 
   return render({ isDark, theme, toggle: themeToggled })
-}
-
-WithThemeToggler.propTypes = {
-  render: PropTypes.func.isRequired,
 }

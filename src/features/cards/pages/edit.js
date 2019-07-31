@@ -1,12 +1,12 @@
 // @flow
-import React from "react"
-import PropTypes from "prop-types"
+import * as React from "react"
 import { useStore } from "effector-react"
+import { Link } from "react-router-dom"
 
 import { Col, Row } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
-import { Card, ButtonPrimary, H2 } from "@howtocards/ui"
+import { Card, ButtonPrimary, Button, H2 } from "@howtocards/ui"
 
 import { CardsCommonTemplate } from "../templates/common"
 import { TitleInput } from "../atoms/title-input"
@@ -20,6 +20,7 @@ import {
   pageUnloaded,
   savePressed,
   titleChanged,
+  $cardId,
 } from "../model/edit"
 
 type Props = {
@@ -64,14 +65,6 @@ export const CardEditPage = ({ match }: Props) => {
   )
 }
 
-CardEditPage.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      cardId: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-}
-
 const onPressSubmit = (event) => {
   event.preventDefault()
   savePressed()
@@ -113,16 +106,30 @@ const Content = () => {
   )
 }
 
-const Sidebar = () => (
-  <Col gap="2rem">
-    <Row>
-      <H2 narrow>Edit card</H2>
-    </Row>
-    <Row>
-      The card is your personal solution of the specific case. Fill it with
-      enriched text without further ado.
-    </Row>
-    <Row>Select text to use rich editor features.</Row>
-    <ButtonPrimary onClick={onPressSubmit}>Save</ButtonPrimary>
-  </Col>
-)
+const Sidebar = () => {
+  const id = useStore($cardId)
+  return (
+    <Col gap="2rem">
+      <Row>
+        <H2 narrow>Edit card</H2>
+      </Row>
+      <Row>
+        The card is your personal solution of the specific case. Fill it with
+        enriched text without further ado.
+      </Row>
+      <Row>Select text to use rich editor features.</Row>
+      <Row gap="1rem" justify="stretch">
+        <Col grow="1">
+          <ButtonPrimary onClick={onPressSubmit}>Save</ButtonPrimary>
+        </Col>
+        <Col>
+          {typeof id === "number" && (
+            <Button as={Link} to={`/open/${id}`}>
+              Cancel
+            </Button>
+          )}
+        </Col>
+      </Row>
+    </Col>
+  )
+}

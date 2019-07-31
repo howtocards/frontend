@@ -1,10 +1,21 @@
-import React from "react"
-import PropTypes from "prop-types"
+// @flow
+import * as React from "react"
+import styled from "styled-components"
 
-import { CardSticky } from "../atoms"
+import { CardSticky, H2 } from "../atoms"
 
-export const Sidebar = ({ children }) => <CardSticky>{children}</CardSticky>
-
-Sidebar.propTypes = {
-  children: PropTypes.node.isRequired,
+type Props = {
+  children: React.Node,
 }
+
+export const Sidebar = ({ children }: Props) => (
+  <CardSticky>
+    <SidebarWrapper>{children}</SidebarWrapper>
+  </CardSticky>
+)
+
+const SidebarWrapper = styled.div`
+  ${H2} {
+    margin-top: 0;
+  }
+`

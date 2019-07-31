@@ -1,5 +1,5 @@
-import React from "react"
-import PropTypes from "prop-types"
+// @flow
+import * as React from "react"
 
 import { CommonContentTemplate } from "@features/common"
 import {
@@ -9,7 +9,12 @@ import {
   SidebarTemplate,
 } from "@howtocards/ui"
 
-export const CardsCommonTemplate = ({ children, sidebar }) => (
+type Props = {
+  children: React.Node,
+  sidebar?: React.Node,
+}
+
+export const CardsCommonTemplate = ({ children, sidebar }: Props) => (
   <CommonContentTemplate>
     <Container>
       <SidebarTemplate
@@ -21,11 +26,6 @@ export const CardsCommonTemplate = ({ children, sidebar }) => (
     </Container>
   </CommonContentTemplate>
 )
-
-CardsCommonTemplate.propTypes = {
-  children: PropTypes.node.isRequired,
-  sidebar: PropTypes.node,
-}
 
 CardsCommonTemplate.defaultProps = {
   sidebar: undefined,

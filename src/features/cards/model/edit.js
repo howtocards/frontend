@@ -32,6 +32,7 @@ export const cardSaveFetching: Fetching<*, void> = createFetching(
 )
 
 export const $card: Store<?Card> = createStore(null)
+export const $cardId: Store<?number> = $card.map((card) => card && card.id)
 export const $title: Store<?string> = $card.map((card) => card && card.title)
 export const $content: Store<?mixed> = $card.map((card) => card && card.content)
 
