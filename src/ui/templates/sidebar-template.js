@@ -1,9 +1,15 @@
-import React from "react"
-import PropTypes from "prop-types"
+// @flow
+import * as React from "react"
 import styled from "styled-components"
 import { up } from "@typographist/styled"
 
-export const SidebarTemplate = ({ sidebar, children, footer }) => (
+type Props = {
+  children: React.Node,
+  sidebar?: React.Node,
+  footer?: React.Node,
+}
+
+export const SidebarTemplate = ({ sidebar, children, footer }: Props) => (
   <SidebarContainer>
     <Main>{children}</Main>
     <Sidebar>{sidebar}</Sidebar>
@@ -11,16 +17,18 @@ export const SidebarTemplate = ({ sidebar, children, footer }) => (
   </SidebarContainer>
 )
 
-SidebarTemplate.propTypes = {
-  sidebar: PropTypes.node,
-  children: PropTypes.node.isRequired,
-  footer: PropTypes.node,
-}
-
 SidebarTemplate.defaultProps = {
   sidebar: null,
   footer: null,
 }
+
+const Sidebar = styled.aside`
+  grid-area: sidebar;
+`
+
+const Main = styled.div`
+  grid-area: main;
+`
 
 const SidebarContainer = styled.div`
   display: grid;
@@ -36,21 +44,21 @@ const SidebarContainer = styled.div`
     "main"
     "footer";
 
+  ${Sidebar} {
+    margin-bottom: 2rem;
+  }
+
   ${up("tablet")} {
     grid-template-rows: 1fr auto;
     grid-template-columns: auto 30%;
     grid-template-areas:
       "main sidebar"
       "footer footer";
+
+    ${Sidebar} {
+      margin-bottom: 0;
+    }
   }
-`
-
-const Sidebar = styled.aside`
-  grid-area: sidebar;
-`
-
-const Main = styled.div`
-  grid-area: main;
 `
 
 const ScrollableFooter = styled.footer`
