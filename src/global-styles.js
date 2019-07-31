@@ -1,4 +1,6 @@
 import { createGlobalStyle } from "styled-components"
+import { staticLight } from "@howtocards/ui/themes/light"
+import { staticDark } from "@howtocards/ui/themes/dark"
 
 export const GlobalStyles = createGlobalStyle`
   body {
@@ -6,6 +8,14 @@ export const GlobalStyles = createGlobalStyle`
     height: 100vh;
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
+  }
+
+  :root {
+    ${staticLight}
+  }
+
+  html.theme-dark {
+    ${staticDark}
   }
 
   #root {
