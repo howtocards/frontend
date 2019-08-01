@@ -1,6 +1,6 @@
 import { history } from "@lib/routing"
 import { $isAuthenticated, tokenChanged } from "@features/common"
-import { sessionApi, accountApi } from "../api"
+import { sessionApi, accountApi } from "@api/session"
 import {
   formMounted,
   emailChanged,

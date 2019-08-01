@@ -1,4 +1,5 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import { useStore } from "effector-react"
 
 import {
@@ -15,35 +16,41 @@ import {
 
 import { Col, Row } from "@lib/styled-components-layout"
 import {
-  formSubmitted,
-  loginFetching,
-  emailChanged,
-  passwordChanged,
-} from "../model/login.events"
-import {
-  $isFormDisabled,
-  $isSubmitEnabled,
   $email,
   $emailError,
+  $isFormDisabled,
+  $isSubmitEnabled,
   $password,
   $passwordError,
-} from "../model/login.store"
+  emailChanged,
+  formMounted,
+  formSubmitted,
+  formUnmounted,
+  loginFetching,
+  passwordChanged,
+} from "./model"
 
-export const LoginPage = () => (
-  <CenterContentTemplate footer={<PrimitiveFooter />}>
-    <Container justify="center" align="center">
-      <Col align="stretch" width="40rem">
-        <Card>
-          <LoginForm />
-        </Card>
-        <Row padding="3rem 0 0" gap="0.5rem">
-          <span>Don&quot;t have account? </span>
-          <Link to="/join/registration">Register</Link>
-        </Row>
-      </Col>
-    </Container>
-  </CenterContentTemplate>
-)
+export const JoinLoginPage = () => {
+  React.useEffect(() => {
+    formMounted()
+    return formUnmounted
+  })
+  return (
+    <CenterContentTemplate footer={<PrimitiveFooter />}>
+      <Container justify="center" align="center">
+        <Col align="stretch" width="40rem">
+          <Card>
+            <LoginForm />
+          </Card>
+          <Row padding="3rem 0 0" gap="0.5rem">
+            <span>Don&quot;t have account? </span>
+            <Link to="/join/registration">Register</Link>
+          </Row>
+        </Col>
+      </Container>
+    </CenterContentTemplate>
+  )
+}
 
 const handleSubmit = (event) => {
   event.preventDefault()

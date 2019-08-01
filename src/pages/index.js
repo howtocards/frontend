@@ -1,20 +1,21 @@
 // @flow
 import { CardCreatePage } from "./create/page"
+import { CardEditPage } from "./edit/page"
 import { CardsHomePage } from "./home/page"
 import { CardViewPage } from "./view/page"
+import { JoinLoginPage } from "./join/login/page"
 import { SettingsPage } from "./settings/page"
-import { CardEditPage } from "./edit/page"
 
 export const routes = () => [
-  {
-    path: "/settings",
-    exact: true,
-    component: SettingsPage,
-  },
   {
     path: "/",
     exact: true,
     component: CardsHomePage,
+  },
+  {
+    path: "/join",
+    exact: true,
+    component: JoinLoginPage,
   },
   {
     path: "/new/card",
@@ -30,5 +31,10 @@ export const routes = () => [
     path: "/edit/:cardId",
     exact: true,
     component: CardEditPage,
+  },
+  {
+    path: "/settings",
+    exact: true,
+    component: SettingsPage,
   },
 ]
