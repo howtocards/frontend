@@ -1,4 +1,5 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import { useStore } from "effector-react"
 
 import { Col, Row } from "@lib/styled-components-layout"
@@ -13,22 +14,20 @@ import {
 import { PrimitiveFooter } from "@howtocards/ui/organisms"
 import { Container, CenterContentTemplate } from "@howtocards/ui/templates"
 import {
-  $form,
-  $isSubmitEnabled,
   $email,
-  $isFormDisabled,
   $emailError,
+  $form,
+  $isFormDisabled,
+  $isSubmitEnabled,
   $password,
   $passwordError,
-} from "../model/register.store"
-import {
-  registerFetching,
-  formSubmitted,
   emailChanged,
+  formSubmitted,
   passwordChanged,
-} from "../model/register.events"
+  registerFetching,
+} from "./model"
 
-export const RegistrationPage = () => (
+export const JoinRegistrationPage = () => (
   <CenterContentTemplate footer={<PrimitiveFooter />}>
     <Container justify="center" align="center">
       <Col align="stretch" width="40rem">

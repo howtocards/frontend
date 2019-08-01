@@ -4,6 +4,7 @@ import { CardEditPage } from "./edit/page"
 import { CardsHomePage } from "./home/page"
 import { CardViewPage } from "./view/page"
 import { JoinLoginPage } from "./join/login/page"
+import { JoinRegistrationPage } from "./join/registration/page"
 import { SettingsPage } from "./settings/page"
 
 export const routes = () => [
@@ -16,6 +17,11 @@ export const routes = () => [
     path: "/join",
     exact: true,
     component: JoinLoginPage,
+  },
+  {
+    path: "/join/registration",
+    exact: true,
+    component: JoinRegistrationPage,
   },
   {
     path: "/new/card",
