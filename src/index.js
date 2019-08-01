@@ -1,3 +1,4 @@
+// @flow
 import * as React from "react"
 import ReactDom from "react-dom"
 import { Router } from "react-router"
@@ -18,6 +19,7 @@ const render = () => {
   }
 }
 
+// $FlowIssue
 if (module.hot) {
   module.hot.accept("./app", render)
 }

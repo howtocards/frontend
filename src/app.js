@@ -1,4 +1,5 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import { hot } from "react-hot-loader"
 
 import { Normalize } from "styled-normalize"

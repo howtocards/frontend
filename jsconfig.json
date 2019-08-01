@@ -5,7 +5,9 @@
     "jsx": "react",
     "lib": ["es2015", "es2016", "dom"],
     "paths": {
+      "@api/*": ["./api/*"],
       "@features/*": ["./features/*"],
+      "@howtocards/ui": ["./ui"],
       "@howtocards/ui/*": ["./ui/*"],
       "@lib/*": ["./lib/*"]
     }

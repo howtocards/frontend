@@ -1,10 +1,20 @@
 // @flow
 import { request } from "@features/common"
-import type { Card } from "./types"
+
+export type Card = {
+  id: number,
+  title: string,
+  createdAt: string,
+  meta: {
+    canEdit: boolean,
+    isUseful: boolean,
+  },
+  content: mixed,
+}
 
 type CreateCard = {
   title: string,
-  content: mixed,
+  content: {},
 }
 const create = (card: CreateCard): Promise<Card> =>
   request("POST", "/cards/", { body: card })

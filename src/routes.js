@@ -1,14 +1,15 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import { renderRoutes } from "react-router-config"
 
 import { NotFoundPage } from "@features/common"
-import { cardsRoutes } from "@features/cards"
 import { joinRoutes } from "@features/join"
 import { usersRoutes } from "@features/users"
 import { searchRoutes } from "@features/search"
+import { routes as root } from "./pages"
 
 const routes = [
-  ...cardsRoutes(),
+  ...root(),
   ...joinRoutes(),
   ...usersRoutes(),
   ...searchRoutes(),

@@ -3,11 +3,8 @@ import { createEvent, createEffect, createStore } from "effector"
 import type { Event, Effect, Store } from "effector"
 
 import { createFetching, type Fetching } from "@lib/fetching"
-
-import { cardsApi } from "../api"
-import type { Card } from "../types"
-import { $registry } from "./registry.store"
-import { cardsToObject } from "./registry.model"
+import { cardsApi, type Card } from "@api/cards"
+import { $cardsRegistry, cardsToObject } from "@features/cards"
 
 export const pageReady: Event<void> = createEvent()
 
@@ -25,7 +22,7 @@ $cardsIds.on(homeCardsLoading.done, (_, { result }) =>
   result.map((card) => card.id),
 )
 
-$registry.on(homeCardsLoading.done, (registry, { result }) => {
+$cardsRegistry.on(homeCardsLoading.done, (registry, { result }) => {
   return {
     ...registry,
     ...cardsToObject(result),

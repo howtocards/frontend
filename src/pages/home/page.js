@@ -4,10 +4,9 @@ import { useStore } from "effector-react"
 
 import { Col, Row } from "@lib/styled-components-layout"
 import { H2 } from "@howtocards/ui"
+import { CardsCommonTemplate, SkeletonList } from "@features/cards"
 
-import { $cardsIds, pageReady, homeCardsFetching } from "../model/home"
-import { CardsCommonTemplate } from "../templates/common"
-import { SkeletonList } from "../organisms"
+import { $cardsIds, pageReady, homeCardsFetching } from "./model"
 
 export const CardsHomePage = () => {
   const ids = useStore($cardsIds)

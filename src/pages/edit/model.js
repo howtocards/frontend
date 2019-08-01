@@ -4,8 +4,7 @@ import type { Effect, Store } from "effector"
 
 import { createFetching, type Fetching } from "@lib/fetching"
 import { history } from "@lib/routing"
-import { cardsApi } from "../api"
-import type { Card } from "../types"
+import { cardsApi, type Card } from "@api/cards"
 
 export const pageUnloaded = createEvent<void>()
 export const titleChanged = createEvent<SyntheticEvent<HTMLInputElement>>()

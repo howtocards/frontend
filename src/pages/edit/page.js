@@ -7,9 +7,7 @@ import { Col, Row } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
 import { Card, ButtonPrimary, Button, H2 } from "@howtocards/ui"
-
-import { CardsCommonTemplate } from "../templates/common"
-import { TitleInput } from "../atoms/title-input"
+import { CardsCommonTemplate, TitleInput } from "@features/cards"
 
 import {
   $content,
@@ -21,7 +19,7 @@ import {
   savePressed,
   titleChanged,
   $cardId,
-} from "../model/edit"
+} from "./model"
 
 type Props = {
   match: {

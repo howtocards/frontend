@@ -1,6 +1,6 @@
 // @flow
 import { request } from "@features/common"
-import { type Card } from "@features/cards"
+import { type Card } from "@api/cards"
 import { type User } from "./types"
 
 /**
