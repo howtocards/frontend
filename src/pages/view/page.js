@@ -1,17 +1,20 @@
 // @flow
-/* eslint-disable import/no-duplicates */
 import * as React from "react"
-import PropTypes from "prop-types"
 import { useStore } from "effector-react"
 import { distanceInWordsToNow } from "date-fns"
 
 import { Col, Row } from "@lib/styled-components-layout"
+import { type Card } from "@api/cards"
 import { Text } from "@howtocards/ui"
 
-import { CardsCommonTemplate } from "../templates/common"
-import { cardLoading, $card } from "../model/view"
-import { CardItem, CardSkeleton } from "../organisms"
-import { usefulMarkClicked } from "../model/registry.events"
+import {
+  CardsCommonTemplate,
+  CardItem,
+  CardSkeleton,
+  usefulMarkClicked,
+} from "@features/cards"
+
+import { cardLoading, $card } from "./model"
 
 type Props = {
   match: {
@@ -46,7 +49,11 @@ export const CardViewPage = ({ match }: Props) => {
   )
 }
 
-const Sidebar = ({ card }) => (
+type SidebarProps = {
+  card: ?Card,
+}
+
+const Sidebar = ({ card }: SidebarProps) => (
   <Col gap="3rem">
     <Row>
       {card ? (
@@ -59,14 +66,6 @@ const Sidebar = ({ card }) => (
     </Row>
   </Col>
 )
-
-Sidebar.propTypes = {
-  card: PropTypes.shape({}),
-}
-
-Sidebar.defaultProps = {
-  card: null,
-}
 
 function createdAt(card) {
   const date = new Date(card.createdAt)

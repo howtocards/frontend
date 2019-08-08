@@ -1,10 +1,12 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import { useStore } from "effector-react"
 
 import { Col, Row } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
-import { Authenticated } from "@features/common"
 import { Card, ButtonPrimary, H2 } from "@howtocards/ui"
+import { Authenticated } from "@features/common"
+import { CardsCommonTemplate, TitleInput } from "@features/cards"
 
 import {
   $title,
@@ -13,9 +15,7 @@ import {
   titleChanged,
   pageUnmounted,
   formSubmitted,
-} from "../model/create"
-import { CardsCommonTemplate } from "../templates/common"
-import { TitleInput } from "../atoms/title-input"
+} from "./model"
 
 const onFormSubmitted = (event) => {
   event.preventDefault()
@@ -45,10 +45,10 @@ export const CardCreatePage = () => {
 
 const Title = () => {
   const title = useStore($title)
-  const titleRef = React.createRef(null)
+  const titleRef = React.createRef()
 
   React.useEffect(() => {
-    titleRef.current.focus()
+    if (titleRef.current) titleRef.current.focus()
   }, [])
 
   return (

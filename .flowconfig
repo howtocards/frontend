@@ -26,6 +26,7 @@ esproposal.decorators=ignore
 module.use_strict=true
 esproposal.export_star_as=enable
 
+module.name_mapper='^@api/' ->'<PROJECT_ROOT>/src/api/'
 module.name_mapper='^@lib/' ->'<PROJECT_ROOT>/src/lib/'
 module.name_mapper='^@features/' ->'<PROJECT_ROOT>/src/features/'
 module.name_mapper='^@howtocards/ui' ->'<PROJECT_ROOT>/src/ui'

@@ -276,6 +276,7 @@ module.exports = (webpackEnv) => {
           ? { "react-dom": "@hot-loader/react-dom" }
           : undefined),
 
+        "@api": path.resolve(paths.appSrc, "api"),
         "@features": path.resolve(paths.appSrc, "features"),
         "@lib": path.resolve(paths.appSrc, "lib"),
         "@howtocards/ui": path.resolve(paths.appSrc, "ui"),

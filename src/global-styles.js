@@ -1,3 +1,4 @@
+// @flow
 import { createGlobalStyle } from "styled-components"
 import { staticLight } from "@howtocards/ui/themes/light"
 import { staticDark } from "@howtocards/ui/themes/dark"

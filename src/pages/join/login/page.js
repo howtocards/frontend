@@ -1,7 +1,7 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import { useStore } from "effector-react"
 
-import { Col, Row } from "@lib/styled-components-layout"
 import {
   Card,
   Input,
@@ -9,72 +9,79 @@ import {
   ButtonPrimary,
   Link,
   ErrorBox,
-} from "@howtocards/ui/atoms"
-import { PrimitiveFooter } from "@howtocards/ui/organisms"
-import { Container, CenterContentTemplate } from "@howtocards/ui/templates"
+  PrimitiveFooter,
+  Container,
+  CenterContentTemplate,
+} from "@howtocards/ui"
+
+import { Col, Row } from "@lib/styled-components-layout"
 import {
-  $form,
-  $isSubmitEnabled,
   $email,
-  $isFormDisabled,
   $emailError,
+  $isFormDisabled,
+  $isSubmitEnabled,
   $password,
   $passwordError,
-} from "../model/register.store"
-import {
-  registerFetching,
-  formSubmitted,
   emailChanged,
+  formMounted,
+  formSubmitted,
+  formUnmounted,
+  loginFetching,
   passwordChanged,
-} from "../model/register.events"
+} from "./model"
 
-export const RegistrationPage = () => (
-  <CenterContentTemplate footer={<PrimitiveFooter />}>
-    <Container justify="center" align="center">
-      <Col align="stretch" width="40rem">
-        <Card>
-          <RegisterForm />
-        </Card>
-        <Row padding="3rem 0 0" gap="0.5rem">
-          <span>Already have account?</span>
-          <Link to="/join">Log in</Link>
-        </Row>
-      </Col>
-    </Container>
-  </CenterContentTemplate>
-)
+export const JoinLoginPage = () => {
+  React.useEffect(() => {
+    formMounted()
+    return formUnmounted
+  })
+  return (
+    <CenterContentTemplate footer={<PrimitiveFooter />}>
+      <Container justify="center" align="center">
+        <Col align="stretch" width="40rem">
+          <Card>
+            <LoginForm />
+          </Card>
+          <Row padding="3rem 0 0" gap="0.5rem">
+            <span>Don&quot;t have account? </span>
+            <Link to="/join/registration">Register</Link>
+          </Row>
+        </Col>
+      </Container>
+    </CenterContentTemplate>
+  )
+}
 
 const handleSubmit = (event) => {
   event.preventDefault()
   formSubmitted()
 }
 
-const RegisterForm = () => {
-  const form = useStore($form)
-  const formError = useStore(registerFetching.error)
+const LoginForm = () => {
+  const formError = useStore(loginFetching.error)
   const isSubmitEnabled = useStore($isSubmitEnabled)
 
   return (
     <form onSubmit={handleSubmit}>
       <Col gap="1rem">
-        <H2>Registration to HowToCards</H2>
+        <H2>Welcome to HowToCards</H2>
         {formError && (
           <ErrorBox>{mapServerToClientError(formError.error)}</ErrorBox>
         )}
+        <Email />
+        <Password />
+        <ButtonPrimary disabled={!isSubmitEnabled} type="submit">
+          Continue
+        </ButtonPrimary>
       </Col>
-      <Email />
-      <Password />
-      <ButtonPrimary type="submit" disabled={!isSubmitEnabled}>
-        Create account
-      </ButtonPrimary>
     </form>
   )
 }
 
 const Email = () => {
   const email = useStore($email)
-  const emailError = useStore($emailError)
   const isFormDisabled = useStore($isFormDisabled)
+  const emailError = useStore($emailError)
 
   return (
     <Input
@@ -111,13 +118,9 @@ const Password = () => {
 
 const mapServerToClientError = (error) => {
   switch (error) {
-    case "email_already_exists":
-      return (
-        <span>
-          That email already exists. Maybe <Link to="/join">login</Link>?
-        </span>
-      )
-
+    case "user_not_found":
+      return "Email not found or password is wrong"
+    case "cant_create_session": // pass thru
     default:
       return "Got an unexpected error. Try again later"
   }

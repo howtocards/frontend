@@ -1,6 +1,8 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import { useStore } from "effector-react"
 
+import { Col, Row } from "@lib/styled-components-layout"
 import {
   Card,
   Input,
@@ -8,37 +10,33 @@ import {
   ButtonPrimary,
   Link,
   ErrorBox,
-  PrimitiveFooter,
-  Container,
-  CenterContentTemplate,
-} from "@howtocards/ui"
-
-import { Col, Row } from "@lib/styled-components-layout"
+} from "@howtocards/ui/atoms"
+import { PrimitiveFooter } from "@howtocards/ui/organisms"
+import { Container, CenterContentTemplate } from "@howtocards/ui/templates"
 import {
-  formSubmitted,
-  loginFetching,
-  emailChanged,
-  passwordChanged,
-} from "../model/login.events"
-import {
-  $isFormDisabled,
-  $isSubmitEnabled,
   $email,
   $emailError,
+  $form,
+  $isFormDisabled,
+  $isSubmitEnabled,
   $password,
   $passwordError,
-} from "../model/login.store"
+  emailChanged,
+  formSubmitted,
+  passwordChanged,
+  registerFetching,
+} from "./model"
 
-export const LoginPage = () => (
+export const JoinRegistrationPage = () => (
   <CenterContentTemplate footer={<PrimitiveFooter />}>
     <Container justify="center" align="center">
       <Col align="stretch" width="40rem">
         <Card>
-          <LoginForm />
+          <RegisterForm />
         </Card>
         <Row padding="3rem 0 0" gap="0.5rem">
-          <span>Don&quot;t have account? </span>
-          <Link to="/join/registration">Register</Link>
+          <span>Already have account?</span>
+          <Link to="/join">Log in</Link>
         </Row>
       </Col>
     </Container>
@@ -50,31 +48,32 @@ const handleSubmit = (event) => {
   formSubmitted()
 }
 
-const LoginForm = () => {
-  const formError = useStore(loginFetching.error)
+const RegisterForm = () => {
+  const form = useStore($form)
+  const formError = useStore(registerFetching.error)
   const isSubmitEnabled = useStore($isSubmitEnabled)
 
   return (
     <form onSubmit={handleSubmit}>
       <Col gap="1rem">
-        <H2>Welcome to HowToCards</H2>
+        <H2>Registration to HowToCards</H2>
         {formError && (
           <ErrorBox>{mapServerToClientError(formError.error)}</ErrorBox>
         )}
-        <Email />
-        <Password />
-        <ButtonPrimary disabled={!isSubmitEnabled} type="submit">
-          Continue
-        </ButtonPrimary>
       </Col>
+      <Email />
+      <Password />
+      <ButtonPrimary type="submit" disabled={!isSubmitEnabled}>
+        Create account
+      </ButtonPrimary>
     </form>
   )
 }
 
 const Email = () => {
   const email = useStore($email)
-  const isFormDisabled = useStore($isFormDisabled)
   const emailError = useStore($emailError)
+  const isFormDisabled = useStore($isFormDisabled)
 
   return (
     <Input
@@ -111,9 +110,13 @@ const Password = () => {
 
 const mapServerToClientError = (error) => {
   switch (error) {
-    case "user_not_found":
-      return "Email not found or password is wrong"
-    case "cant_create_session": // pass thru
+    case "email_already_exists":
+      return (
+        <span>
+          That email already exists. Maybe <Link to="/join">login</Link>?
+        </span>
+      )
+
     default:
       return "Got an unexpected error. Try again later"
   }
