@@ -4,5 +4,5 @@ import { type Session } from "./session.store"
 
 export const sessionDropped: Event<*> = createEvent()
 
-export const sessionFetchProcessing: Effect<void, Session, *> = createEffect()
-export const sessionFetching = createFetching(sessionFetchProcessing)
+export const loadSession: Effect<void, Session, *> = createEffect()
+export const loadSessionFetching = createFetching(loadSession)

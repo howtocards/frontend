@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useStore } from "effector-react"
 
 import { $session } from "../model/session.store"
-import { sessionFetchProcessing } from "../model/session.events"
+import { loadSession } from "../model/session.events"
 import { $token } from "../model/token"
 
 export const AccountLoader = ({ children }) => {
@@ -10,7 +10,7 @@ export const AccountLoader = ({ children }) => {
   const token = useStore($token)
 
   useEffect(() => {
-    sessionFetchProcessing()
+    loadSession()
   }, [])
 
   if (token && !session) return null
