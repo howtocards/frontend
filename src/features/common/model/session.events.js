@@ -1,4 +1,4 @@
-import { createEvent, createEffect, type Event, type Effect } from "effector"
+import { type Effect, type Event, createEffect, createEvent } from "effector"
 import { createFetching } from "@lib/fetching"
 import { type Session } from "./session.store"
 

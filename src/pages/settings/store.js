@@ -1,13 +1,13 @@
 // @flow
 import {
+  type Store,
+  combine,
+  createEffect,
   createEvent,
   createStore,
-  type Store,
-  createEffect,
   forward,
-  combine,
 } from "effector"
-import { accountApi, type Settings } from "@api/account"
+import { type Settings, accountApi } from "@api/account"
 import { loadSession } from "@features/common"
 
 /**

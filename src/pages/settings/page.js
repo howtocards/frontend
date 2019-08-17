@@ -4,15 +4,15 @@ import styled from "styled-components"
 import { useStore } from "effector-react"
 
 import { SettingsTemplate } from "@features/settings"
-import { H4, Input, Button } from "@howtocards/ui"
+import { Button, H4, Input } from "@howtocards/ui"
 import {
-  pageMounted,
-  pageUnmounted,
+  $isDisabled,
   $name,
+  $nameChanged,
   nameChanged,
   nameSubmitted,
-  $isDisabled,
-  $nameChanged,
+  pageMounted,
+  pageUnmounted,
 } from "./store"
 
 export const SettingsPage = () => {

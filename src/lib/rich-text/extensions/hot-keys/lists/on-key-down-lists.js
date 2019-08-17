@@ -1,5 +1,5 @@
-import { onModEnter, onBackspace } from "../common/events"
-import { isModEnter, isBackspace } from "../constant"
+import { onBackspace, onModEnter } from "../common/events"
+import { isBackspace, isModEnter } from "../constant"
 
 export const onKeyDownLists = ({ opts, event, change, editor }) => {
   const args = { opts, event, change, editor }

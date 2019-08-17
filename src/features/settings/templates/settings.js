@@ -4,7 +4,7 @@ import * as React from "react"
 import styled from "styled-components"
 
 import { CommonContentTemplate } from "@features/common"
-import { Container, Card, H1 } from "@howtocards/ui"
+import { Card, Container, H1 } from "@howtocards/ui"
 
 type Props = {
   children: React.Node,

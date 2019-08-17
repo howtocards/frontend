@@ -1,14 +1,14 @@
 // @flow
 import {
-  createEvent,
+  type Store,
+  combine,
   createEffect,
+  createEvent,
   createStore,
   createStoreObject,
-  combine,
-  type Store,
   sample,
 } from "effector"
-import { createFetching, type Fetching } from "@lib/fetching"
+import { type Fetching, createFetching } from "@lib/fetching"
 import { emailValidator, passwordValidator } from "@lib/validators"
 import { history } from "@lib/routing"
 import { $isAuthenticated, tokenChanged } from "@features/common"

@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react"
-import { createStore, createEvent } from "effector"
+import { createEvent, createStore } from "effector"
 import { useStore } from "effector-react"
 import { ThemeProvider } from "styled-components"
 

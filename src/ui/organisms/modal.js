@@ -3,7 +3,7 @@ import styled from "styled-components"
 import useOnClickOutside from "use-onclickoutside"
 import PropTypes from "prop-types"
 
-import { H3, Icon, Text, Button, Box } from "@howtocards/ui"
+import { Box, Button, H3, Icon, Text } from "@howtocards/ui"
 import { Row } from "@lib/styled-components-layout"
 
 export const Modal = ({ children, title, onClose, onDeleteClick }) => {

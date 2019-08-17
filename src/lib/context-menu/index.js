@@ -6,8 +6,8 @@ import useOnClickOutside from "use-onclickoutside"
 
 import {
   MenuContainer as Container,
-  MenuSeparator as Separator,
   MenuItem as Item,
+  MenuSeparator as Separator,
 } from "@howtocards/ui"
 
 export { Separator, Item }

@@ -1,10 +1,10 @@
 // @flow
 import {
-  createStore,
-  createEvent,
   type Effect,
   type Event,
   type Store,
+  createEvent,
+  createStore,
 } from "effector"
 
 // export const createRequestState = (effect, initial = false) =>

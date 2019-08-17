@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from "react"
 import { Record } from "immutable"
 import PropTypes from "prop-types"

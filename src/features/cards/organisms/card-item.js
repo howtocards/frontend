@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
 import PropTypes from "prop-types"
@@ -7,7 +8,7 @@ import { Link as RouterLink } from "react-router-dom"
 import { RichEditor } from "@lib/rich-text"
 import { Row } from "@lib/styled-components-layout"
 import * as Menu from "@lib/context-menu"
-import { Link, H2, Icon, Text, Modal, CardNarrow } from "@howtocards/ui"
+import { CardNarrow, H2, Icon, Link, Modal, Text } from "@howtocards/ui"
 
 export const CardItem = ({ onUsefulClick, card, maximized }) => (
   <CardNarrow>

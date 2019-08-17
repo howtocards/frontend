@@ -3,9 +3,9 @@ import * as React from "react"
 
 import { CommonContentTemplate } from "@features/common"
 import {
+  Container,
   FooterContent,
   Sidebar,
-  Container,
   SidebarTemplate,
 } from "@howtocards/ui"
 

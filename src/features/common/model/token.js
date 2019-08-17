@@ -1,6 +1,6 @@
 // @flow
 import Cookies from "browser-cookies"
-import { createStore, createEvent } from "effector"
+import { createEvent, createStore } from "effector"
 import { loadSession } from "./session.events"
 
 const TOKEN_ID = "hw-token"

@@ -1,4 +1,4 @@
-import { isModEnter, isBackspace, isEnter, isModA, isTab } from "../../constant"
+import { isBackspace, isEnter, isModA, isModEnter, isTab } from "../../constant"
 import { onBackspace } from "./on-backspace"
 import { onModEnter } from "./on-mod-enter"
 import { onEnter } from "./on-enter"

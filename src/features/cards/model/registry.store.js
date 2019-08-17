@@ -1,6 +1,6 @@
 // @flow
-import { createStore, sample, type Store } from "effector"
-import { cardsApi, type Card } from "@api/cards"
+import { type Store, createStore, sample } from "effector"
+import { type Card, cardsApi } from "@api/cards"
 import {
   clearRegistry,
   setUsefulMark,

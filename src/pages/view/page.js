@@ -8,13 +8,13 @@ import { type Card } from "@api/cards"
 import { Text } from "@howtocards/ui"
 
 import {
-  CardsCommonTemplate,
   CardItem,
   CardSkeleton,
+  CardsCommonTemplate,
   usefulMarkClicked,
 } from "@features/cards"
 
-import { cardLoading, $card } from "./model"
+import { $card, cardLoading } from "./model"
 
 type Props = {
   match: {

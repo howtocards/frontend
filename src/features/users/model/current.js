@@ -1,14 +1,14 @@
 // @flow
 import {
-  createEvent,
-  createStore,
-  createEffect,
   type Effect,
   type Store,
   combine,
+  createEffect,
+  createEvent,
+  createStore,
 } from "effector"
 import { type User } from "@api/account"
-import { createFetching, type Fetching } from "@lib/fetching"
+import { type Fetching, createFetching } from "@lib/fetching"
 import { $cardsRegistry, cardsToObject } from "@features/cards"
 // TODO: fix type reexport
 import { type Card } from "../../cards/types"

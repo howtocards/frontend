@@ -1,15 +1,15 @@
 // @flow
 import Plain from "slate-plain-serializer"
 import {
-  createEvent,
   createEffect,
+  createEvent,
   createStore,
   createStoreObject,
 } from "effector"
 
-import { createFetching, type Fetching } from "@lib/fetching"
+import { type Fetching, createFetching } from "@lib/fetching"
 import { history } from "@lib/routing"
-import { cardsApi, type Card } from "@api/cards"
+import { type Card, cardsApi } from "@api/cards"
 
 export const titleChanged = createEvent<SyntheticEvent<HTMLInputElement>>()
 export const contentChanged = createEvent<*>()
