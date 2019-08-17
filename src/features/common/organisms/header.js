@@ -34,11 +34,11 @@ const linksForUser = ({ account }) => (
     <NavLink to="/new/card">+ New</NavLink>
     <Menu.Context
       as={NavItem}
-      trigger={<span>Profile</span>}
+      trigger={<span>{account.displayName || "Profile"}</span>}
       menu={({ close }) => (
         <>
           <Menu.Item as={Link} to={`/user/${account.id}`} onClick={close}>
-            {account.email}
+            Profile: {account.email}
           </Menu.Item>
           <Menu.Item as={Link} to="/settings" onClick={close}>
             Settings
