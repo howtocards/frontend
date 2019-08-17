@@ -1,10 +1,19 @@
 // @flow
 import * as React from "react"
 import styled from "styled-components"
+import { useStore } from "effector-react"
 
 import { SettingsTemplate } from "@features/settings"
-import { H4 } from "@howtocards/ui"
-import { pageMounted, pageUnmounted } from "./store"
+import { H4, Input, Button } from "@howtocards/ui"
+import {
+  pageMounted,
+  pageUnmounted,
+  $name,
+  nameChanged,
+  nameSubmitted,
+  $isDisabled,
+  $nameChanged,
+} from "./store"
 
 export const SettingsPage = () => {
   React.useEffect(() => (pageMounted(), pageUnmounted))
@@ -18,9 +27,31 @@ export const SettingsPage = () => {
 }
 
 const NameSection = () => {
+  const name = useStore($name)
+  const isDisabled = useStore($isDisabled)
+  const isChanged = useStore($nameChanged)
+  const submit = React.useCallback(
+    (event) => {
+      event.preventDefault()
+      if (!isDisabled) nameSubmitted(event)
+    },
+    [isDisabled],
+  )
+  const buttonDisabled = isDisabled || !isChanged
+
   return (
     <FormSection title="Display name">
-      Display name form here with some logic
+      <form onSubmit={submit}>
+        <Input
+          disabled={isDisabled}
+          label="Enter your name and press Enter"
+          value={name}
+          onChange={nameChanged}
+        />
+        <Button disabled={buttonDisabled} type="submit">
+          Save
+        </Button>
+      </form>
     </FormSection>
   )
 }

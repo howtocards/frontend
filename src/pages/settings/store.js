@@ -5,11 +5,10 @@ import {
   type Store,
   createEffect,
   forward,
-  sample,
   combine,
-  createStoreObject,
 } from "effector"
 import { accountApi, type Settings } from "@api/account"
+import { loadSession } from "@features/common"
 
 /**
  * 1. load user settings object
@@ -17,28 +16,43 @@ import { accountApi, type Settings } from "@api/account"
  */
 
 type InputEvent = SyntheticEvent<HTMLInputElement>
-type ButtonEvent = SyntheticEvent<HTMLButtonElement>
+type FormEvent = SyntheticEvent<HTMLFormElement>
 
 export const pageMounted = createEvent<void>()
 export const pageUnmounted = createEvent<void>()
 
 export const nameChanged = createEvent<InputEvent>()
-export const nameSubmitted = createEvent<ButtonEvent>()
+export const nameSubmitted = createEvent<FormEvent>()
 
-export const avaChangePressed = createEvent<ButtonEvent>()
 export const avaEmailChanged = createEvent<InputEvent>()
-export const avaEmailSubmitted = createEvent<ButtonEvent>()
+export const avaEmailSubmitted = createEvent<FormEvent>()
 
 const loadSettings = createEffect()
 const saveSettings = createEffect()
 
 export const $settings: Store<?Settings> = createStore(null)
 export const $isSettingsReady = $settings.map<boolean>(Boolean)
+export const $isLoading: Store<boolean> = combine(
+  loadSettings.pending,
+  saveSettings.pending,
+  (loading, saving) => loading || saving,
+)
+export const $isDisabled: Store<boolean> = combine(
+  $isSettingsReady,
+  $isLoading,
+  (ready, loading) => !ready || loading,
+)
 
 // Stores for inputs
 
 export const $name: Store<string> = createStore("")
 export const $avaEmail: Store<string> = createStore("")
+
+export const $nameChanged: Store<boolean> = combine(
+  $settings,
+  $name,
+  (settings, name) => settings?.displayName !== filterName(name),
+)
 
 forward({
   from: pageMounted,
@@ -47,6 +61,8 @@ forward({
 
 loadSettings.use(accountApi.getSettings)
 saveSettings.use(accountApi.updateSettings)
+
+forward({ from: saveSettings.done, to: loadSession })
 
 $settings
   .on(loadSettings.done, (_, { result }) => result.settings)
@@ -58,7 +74,7 @@ $name
   .on(nameChanged, (_, event) => event.currentTarget.value)
   .reset(pageUnmounted)
   .watch(nameSubmitted, (displayName) => {
-    saveSettings({ displayName })
+    saveSettings({ displayName: filterName(displayName) })
   })
 
 $avaEmail
@@ -70,9 +86,6 @@ $avaEmail
     // saveSettings({ gravatarEmail })
   })
 
-$settings.watch((settings) => console.log("SETTINGS", settings))
-$isSettingsReady.watch((settingsReady) =>
-  console.log("settingsReady", settingsReady),
-)
-$name.watch((name) => console.log("name", name))
-$avaEmail.watch((avaEmail) => console.log("avaEmail", avaEmail))
+function filterName(value) {
+  return value.trim().replace(/\s+/, " ")
+}
