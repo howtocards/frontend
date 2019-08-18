@@ -15,6 +15,7 @@ module.exports = {
     ],
     quotes: "off",
     "react/sort-comp": "off",
+    "react/require-default-props": "off",
     "sort-imports": [
       "warn",
       {
