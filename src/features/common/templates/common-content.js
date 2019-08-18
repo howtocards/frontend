@@ -11,7 +11,7 @@ type Props = {
   header?: React.Node,
 }
 
-export const CommonContentTemplate = ({ header, children }: Props) => (
+export const CommonContentTemplate = ({ header = <Header />, children }: Props) => (
   <MainTemplate header={header}>
     <CommonContent>{children}</CommonContent>
   </MainTemplate>
@@ -20,10 +20,6 @@ export const CommonContentTemplate = ({ header, children }: Props) => (
 CommonContentTemplate.propTypes = {
   children: PropTypes.node.isRequired,
   header: PropTypes.node,
-}
-
-CommonContentTemplate.defaultProps = {
-  header: <Header />,
 }
 
 export const CommonContent = styled.div`

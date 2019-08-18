@@ -1,5 +1,6 @@
 // @flow
 import * as React from "react"
+import PropTypes from "prop-types"
 import styled from "styled-components"
 import { up } from "@typographist/styled"
 
@@ -17,9 +18,10 @@ export const SidebarTemplate = ({ sidebar, children, footer }: Props) => (
   </SidebarContainer>
 )
 
-SidebarTemplate.defaultProps = {
-  sidebar: null,
-  footer: null,
+SidebarTemplate.propTypes = {
+  children: PropTypes.node.isRequired,
+  footer: PropTypes.node,
+  sidebar: PropTypes.node,
 }
 
 const Sidebar = styled.aside`

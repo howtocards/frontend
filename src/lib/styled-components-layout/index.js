@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import styled, { css } from "styled-components"
 
-export const WithTag = ({ as: HtmlTagName, children, ...props }) => (
+export const WithTag = ({ as: HtmlTagName = "div", children, ...props }) => (
   <HtmlTagName {...props}>{children}</HtmlTagName>
 )
 
@@ -15,10 +15,6 @@ WithTag.propTypes = {
    */
   as: PropTypes.string,
   children: PropTypes.node.isRequired,
-}
-
-WithTag.defaultProps = {
-  as: "div",
 }
 
 const is = (value) => typeof value !== "undefined"

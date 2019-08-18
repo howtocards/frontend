@@ -32,6 +32,3 @@ UsersCommonTemplate.propTypes = {
   children: PropTypes.node.isRequired,
   sidebar: PropTypes.node,
 }
-UsersCommonTemplate.defaultProps = {
-  sidebar: null,
-}

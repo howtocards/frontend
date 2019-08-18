@@ -11,14 +11,9 @@ export const MainTemplate = ({ header, footer, children }) => (
 )
 
 MainTemplate.propTypes = {
-  header: PropTypes.node,
-  footer: PropTypes.node,
   children: PropTypes.node.isRequired,
-}
-
-MainTemplate.defaultProps = {
-  header: null,
-  footer: null,
+  footer: PropTypes.node,
+  header: PropTypes.node,
 }
 
 const MainContainer = styled.div`

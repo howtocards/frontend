@@ -10,7 +10,7 @@ import { Row } from "@lib/styled-components-layout"
 import * as Menu from "@lib/context-menu"
 import { CardNarrow, H2, Icon, Link, Modal, Text } from "@howtocards/ui"
 
-export const CardItem = ({ onUsefulClick, card, maximized }) => (
+export const CardItem = ({ onUsefulClick, card, maximized = false }) => (
   <CardNarrow>
     <CardBox maximized={maximized}>
       <GridCard maximized={maximized}>
@@ -51,10 +51,6 @@ CardItem.propTypes = {
   }).isRequired,
   onUsefulClick: PropTypes.func.isRequired,
   maximized: PropTypes.bool,
-}
-
-CardItem.defaultProps = {
-  maximized: false,
 }
 
 const CardFlagWithNumber = ({ usefulFor, isUseful, onUsefulClick }) => (

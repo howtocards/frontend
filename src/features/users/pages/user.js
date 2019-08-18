@@ -27,6 +27,8 @@ type Props = {
   },
 }
 
+const noop = () => null;
+ 
 export const UserPage = ({ match }: Props) => {
   const [tab, setTab] = React.useState<"created" | "useful">("useful")
   const userId = parseInt(match.params.userId, 10)
@@ -119,10 +121,6 @@ UserInfo.propTypes = {
   }),
 }
 
-UserInfo.defaultProps = {
-  user: null,
-}
-
 const CurrentUserInfo = ({ user }) =>
   user.email ? <Row>You: {user.email}</Row> : null
 
@@ -137,7 +135,7 @@ const NamedCardsList = ({
   isLoading,
   cards,
   title,
-  renderEmpty = () => null,
+  renderEmpty = noop,
 }) => {
   return (
     <ListWrapper show={show}>
@@ -157,10 +155,6 @@ NamedCardsList.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.number).isRequired,
   title: PropTypes.string.isRequired,
   renderEmpty: PropTypes.func,
-}
-
-NamedCardsList.defaultProps = {
-  renderEmpty: () => null,
 }
 
 const ListWrapper = styled.div`

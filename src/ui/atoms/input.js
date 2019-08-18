@@ -10,14 +10,14 @@ import { Col } from "@lib/styled-components-layout"
  */
 export const Input = ({
   autoComplete,
-  disabled,
+  disabled = false,
   error,
   label,
   name,
   onBlur,
   onChange,
   placeholder,
-  type,
+  type = "text",
   value,
 }) => (
   <Col>
@@ -48,18 +48,6 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.string.isRequired,
-}
-
-Input.defaultProps = {
-  autoComplete: undefined,
-  disabled: false,
-  error: undefined,
-  label: undefined,
-  name: undefined,
-  onBlur: undefined,
-  onChange: undefined,
-  placeholder: undefined,
-  type: "text",
 }
 
 const InputNative = styled.input`

@@ -27,13 +27,10 @@ export const CardsList = ({ ids, renderEmpty = emptyRenderer }: Props) => (
   />
 )
 
-CardsList.defaultProps = {
-  renderEmpty: undefined,
-}
-
 type CardProps = {
   id: number,
 }
+
 const CardComponent = ({ id }: CardProps) => {
   const card = useStoreMap({
     store: $registry,

@@ -11,6 +11,8 @@ import {
 } from "./extensions"
 import { RichEditorStyle } from "./styles"
 
+const noop = () => {}
+
 const configCodePlugin = {
   block: "code_block",
   line: "code_line",
@@ -39,90 +41,76 @@ const MARKS_COMPONENTS = {
   code: "code",
 }
 
-export class RichEditor extends React.Component {
-  static defaultProps = {
-    onChange: () => {},
-    readOnly: false,
-  }
 
-  static propTypes = {
-    readOnly: PropTypes.bool,
-    onChange: PropTypes.func,
-    content: PropTypes.shape({
-      document: PropTypes.shape({}).isRequired,
-    }).isRequired,
-  }
 
-  state = {
-    // eslint-disable-next-line react/no-unused-state, react/destructuring-assignment
-    value: Value.fromJS(this.props.content),
-  }
+const renderNode = (props, _editor, next) => {
+  const { attributes, children, node } = props
+  const Type = NODES_COMPONENTS[node.type]
 
-  renderNode = (props, _editor, next) => {
-    const { attributes, children, node } = props
-    const Type = NODES_COMPONENTS[node.type]
+  return Type ? <Type {...attributes}>{children}</Type> : next()
+}
 
-    return Type ? <Type {...attributes}>{children}</Type> : next()
-  }
+const renderMark = (props, _editor, next) => {
+  const { children, mark, attributes } = props
+  const Type = MARKS_COMPONENTS[mark.type]
+  const className = mark.type === "code" ? { className: "code_inline" } : {}
 
-  renderMark = (props, _editor, next) => {
-    const { children, mark, attributes } = props
-    const Type = MARKS_COMPONENTS[mark.type]
-    const className = mark.type === "code" ? { className: "code_inline" } : {}
+  return Type ? (
+    <Type {...attributes} {...className}>
+      {children}
+    </Type>
+  ) : (
+    next()
+  )
+}
 
-    return Type ? (
-      <Type {...attributes} {...className}>
-        {children}
-      </Type>
-    ) : (
-      next()
-    )
-  }
+const renderEditor = (_props, editor, next) => {
+  const children = next()
 
-  renderEditor = (_props, editor, next) => {
-    const children = next()
+  return (
+    <React.Fragment>
+      {children}
+      <HoverMenu configCodePlugin={configCodePlugin} editor={editor} />
+    </React.Fragment>
+  )
+}
 
-    return (
-      <React.Fragment>
-        {children}
-        <HoverMenu configCodePlugin={configCodePlugin} editor={editor} />
-      </React.Fragment>
-    )
-  }
+export const RichEditor = ({ content, onChange, readOnly }) => {
+  const [stateValue, setValue] = useState(Value.fromJS(content))
 
-  onChange = ({ value }) => {
-    const { onChange, readOnly } = this.props
-    const toJS = value.toJS()
-
-    this.setState({ value }, () => {
+  const onChange = ({ value }) => {
+    setValue(value, () => {
       if (!readOnly && typeof onChange === "function") {
-        onChange(toJS)
+        onChange(value.toJS())
       }
     })
   }
 
-  render() {
-    const { readOnly } = this.props
-    const { value } = this.state
+  return (
+    <RichEditorStyle>
+      <Editor
+        tabIndex={0}
+        spellcheck={false}
+        readOnly={readOnly}
+        {...HotKeys(configCodePlugin)}
+        style={{
+          minHeight: "300px",
+        }}
+        value={stateValue}
+        onChange={onChange}
+        renderEditor={renderEditor}
+        renderMark={renderMark}
+        renderNode={renderNode}
+        plugins={plugins}
+      />
+    </RichEditorStyle>
+  )
+}
 
-    return (
-      <RichEditorStyle>
-        <Editor
-          tabIndex={0}
-          spellcheck={false}
-          readOnly={readOnly}
-          {...HotKeys(configCodePlugin)}
-          style={{
-            minHeight: "300px",
-          }}
-          value={value}
-          onChange={this.onChange}
-          renderEditor={this.renderEditor}
-          renderMark={this.renderMark}
-          renderNode={this.renderNode}
-          plugins={plugins}
-        />
-      </RichEditorStyle>
-    )
-  }
+RichEditor.propTypes = {
+  readOnly: PropTypes.bool,
+  onChange: PropTypes.func,
+  content: PropTypes.shape({
+    document: PropTypes.shape({}).isRequired,
+  }).isRequired,
 }

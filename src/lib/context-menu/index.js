@@ -20,8 +20,8 @@ type Props = {
 
 type Ref<T> = {| current: T |}
 
-export const Context = ({ as, trigger, menu }: Props) => {
-  const Wrapper = as || "div"
+export const Context = ({ as = "div", trigger, menu }: Props) => {
+  const Wrapper = as
   const rootElement = document.querySelector("#context-menu")
 
   const wrapperRef: Ref<?HTMLElement> = React.useRef(null)
@@ -86,10 +86,6 @@ export const Context = ({ as, trigger, menu }: Props) => {
         )}
     </>
   )
-}
-
-Context.defaultProps = {
-  as: "div",
 }
 
 const Positioner = styled.div`

@@ -43,10 +43,6 @@ export const CardSkeleton = () => (
   </SkeletonCard>
 )
 
-CardSkeleton.defaultProps = {
-  maximized: false,
-}
-
 const CardFlagWithNumber = () => (
   <div>
     <IconWrapper>

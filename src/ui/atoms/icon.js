@@ -78,12 +78,3 @@ Icon.propTypes = {
   style: PropTypes.string,
   viewBox: PropTypes.string,
 }
-
-Icon.defaultProps = {
-  id: undefined,
-  width: undefined,
-  height: undefined,
-  fill: undefined,
-  style: undefined,
-  viewBox: undefined,
-}

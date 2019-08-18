@@ -26,7 +26,3 @@ export const CardsCommonTemplate = ({ children, sidebar }: Props) => (
     </Container>
   </CommonContentTemplate>
 )
-
-CardsCommonTemplate.defaultProps = {
-  sidebar: undefined,
-}

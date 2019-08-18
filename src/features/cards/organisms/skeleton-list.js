@@ -23,7 +23,3 @@ export const SkeletonList = ({
   ) : (
     <CardsList ids={ids} renderEmpty={renderEmpty} />
   )
-
-SkeletonList.defaultProps = {
-  count: undefined,
-}

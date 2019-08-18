@@ -24,10 +24,6 @@ export const SettingsTemplate = ({ children, title }: Props) => (
   </CommonContentTemplate>
 )
 
-SettingsTemplate.defaultProps = {
-  title: undefined,
-}
-
 const Main = styled.main`
   display: flex;
   flex-direction: column;

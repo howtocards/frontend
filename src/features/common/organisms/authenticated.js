@@ -3,7 +3,9 @@ import PropTypes from "prop-types"
 
 import { WithAccount } from "./with-account"
 
-export const Authenticated = ({ render }) => (
+const noop = () => null;
+
+export const Authenticated = ({ render = noop }) => (
   <WithAccount
     renderExists={render}
     render={({ fetching }) => {
@@ -21,8 +23,4 @@ export const Authenticated = ({ render }) => (
 
 Authenticated.propTypes = {
   render: PropTypes.func,
-}
-
-Authenticated.defaultProps = {
-  render: () => null,
 }

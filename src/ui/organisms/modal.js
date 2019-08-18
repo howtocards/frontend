@@ -6,7 +6,9 @@ import PropTypes from "prop-types"
 import { Box, Button, H3, Icon, Text } from "@howtocards/ui"
 import { Row } from "@lib/styled-components-layout"
 
-export const Modal = ({ children, title, onClose, onDeleteClick }) => {
+const noop = () => {};
+
+export const Modal = ({ children, title, onClose, onDeleteClick = noop }) => {
   const ref = useRef(null)
   useOnClickOutside(ref, onClose)
 
@@ -55,11 +57,6 @@ Modal.propTypes = {
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
   onDeleteClick: PropTypes.func,
-}
-
-Modal.defaultProps = {
-  title: undefined,
-  onDeleteClick: () => {},
 }
 
 const GridPopUp = styled.div`

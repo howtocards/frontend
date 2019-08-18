@@ -14,10 +14,6 @@ CenterContentTemplate.propTypes = {
   footer: PropTypes.node,
 }
 
-CenterContentTemplate.defaultProps = {
-  footer: null,
-}
-
 export const CenterContent = styled.main`
   display: flex;
   justify-content: center;
