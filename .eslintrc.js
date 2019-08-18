@@ -15,5 +15,13 @@ module.exports = {
     ],
     quotes: "off",
     "react/sort-comp": "off",
+    "sort-imports": [
+      "warn",
+      {
+        ignoreCase: false,
+        ignoreDeclarationSort: true,
+        ignoreMemberSort: false,
+      },
+    ],
   },
 }

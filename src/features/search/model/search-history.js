@@ -1,5 +1,5 @@
 // @flow
-import { createStore, createEvent } from "effector"
+import { createEvent, createStore } from "effector"
 
 export const $searchHistory = createStore<string[]>([])
 

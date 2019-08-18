@@ -3,15 +3,15 @@ import * as React from "react"
 import { useStore } from "effector-react"
 
 import {
-  Card,
-  Input,
-  H2,
   ButtonPrimary,
-  Link,
-  ErrorBox,
-  PrimitiveFooter,
-  Container,
+  Card,
   CenterContentTemplate,
+  Container,
+  ErrorBox,
+  H2,
+  Input,
+  Link,
+  PrimitiveFooter,
 } from "@howtocards/ui"
 
 import { Col, Row } from "@lib/styled-components-layout"

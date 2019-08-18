@@ -6,7 +6,7 @@ import { Col, Row } from "@lib/styled-components-layout"
 import { H2 } from "@howtocards/ui"
 import { CardsCommonTemplate, SkeletonList } from "@features/cards"
 
-import { $cardsIds, pageReady, homeCardsFetching } from "./model"
+import { $cardsIds, homeCardsFetching, pageReady } from "./model"
 
 export const CardsHomePage = () => {
   const ids = useStore($cardsIds)

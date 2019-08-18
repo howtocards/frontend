@@ -1,18 +1,18 @@
 // @flow
 import {
-  createEvent,
-  createStore,
-  createEffect,
   type Effect,
   type Store,
   combine,
+  createEffect,
+  createEvent,
+  createStore,
 } from "effector"
-import { createFetching, type Fetching } from "@lib/fetching"
+import { type User } from "@api/account"
+import { type Fetching, createFetching } from "@lib/fetching"
 import { $cardsRegistry, cardsToObject } from "@features/cards"
 // TODO: fix type reexport
 import { type Card } from "../../cards/types"
 import { usersApi } from "../api"
-import { type User } from "../types"
 
 export const pageMounted = createEvent<{ userId: number }>()
 
@@ -27,7 +27,7 @@ type Cards = {
   created: Card[],
 }
 const loadCards: Effect<number, Cards, void> = createEffect()
-export const cardsFetching: Fetching<User, void> = createFetching(
+export const cardsFetching: Fetching<Cards, void> = createFetching(
   loadCards,
   "loading",
 )

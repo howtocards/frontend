@@ -4,9 +4,9 @@ import PropTypes from "prop-types"
 
 import { CommonContentTemplate } from "@features/common"
 import {
+  Container,
   FooterContent,
   Sidebar,
-  Container,
   SidebarTemplate,
 } from "@howtocards/ui"
 

@@ -1,8 +1,8 @@
 // @flow
-import { createEvent, createEffect, createStore, forward } from "effector"
+import { createEffect, createEvent, createStore, forward } from "effector"
 
-import { createFetching, type Fetching } from "@lib/fetching"
-import { cardsToObject, $cardsRegistry } from "@features/cards"
+import { type Fetching, createFetching } from "@lib/fetching"
+import { $cardsRegistry, cardsToObject } from "@features/cards"
 import type { Card } from "@features/common"
 
 import { searchApi } from "../api"

@@ -1,5 +1,5 @@
 // @flow
-import { createEvent, createEffect, type Effect } from "effector"
+import { type Effect, createEffect, createEvent } from "effector"
 import type { Card } from "../types"
 
 export const clearRegistry = createEvent<void>()

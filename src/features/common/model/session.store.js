@@ -1,5 +1,5 @@
 // @flow
-import { createStore, type Store } from "effector"
+import { type Store, createStore } from "effector"
 
 export type Session = {
   id: number,

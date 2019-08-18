@@ -1,7 +1,7 @@
 // @flow
 import Cookies from "browser-cookies"
-import { createStore, createEvent } from "effector"
-import { sessionFetchProcessing } from "./session.events"
+import { createEvent, createStore } from "effector"
+import { loadSession } from "./session.events"
 
 const TOKEN_ID = "hw-token"
 
@@ -16,7 +16,7 @@ $token.on(tokenDropped, () => null)
 $token.watch((token) => {
   if (token) {
     Cookies.set(TOKEN_ID, token)
-    setTimeout(() => sessionFetchProcessing(), 0)
+    setTimeout(() => loadSession(), 0)
   }
 })
 

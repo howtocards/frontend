@@ -2,8 +2,9 @@ import styled, { css } from "styled-components"
 
 export const Button = styled.button`
   border-radius: 4px;
-  border: 1px solid var(--bw50);
+  border: 2px solid var(--borders);
   color: var(--bw85);
+  background-color: var(--borders);
   cursor: pointer;
   font-size: 1.4rem;
   line-height: 1.4rem;
@@ -11,13 +12,19 @@ export const Button = styled.button`
   padding: 1rem;
   text-align: center;
   text-decoration: none;
-  transition: background-color 120ms, color 120ms, border-color;
+  transition: background-color 120ms, color 120ms, border-color 120ms;
   user-select: none;
 
   &:hover {
-    background: var(--primary);
+    background-color: var(--primary);
     color: var(--primary-text);
     border-color: var(--primary);
+  }
+
+  &:disabled, &:disabled:hover, &:disabled:focus, &:disabled:active {
+    background-color: var(--canvas);
+    border-color: var(--canvas);
+    color: var(--bw40);
   }
 
   ${({ small }) =>
@@ -61,7 +68,7 @@ export const ButtonPrimary = styled(Button)`
 
 export const ZeroButton = styled.button`
   background-color: transparent;
-  border: none;
+  border-color: transparent;
 
   &:focus {
     outline: none;

@@ -5,18 +5,18 @@ import { useStore } from "effector-react"
 import styled from "styled-components"
 
 import { Col, Row } from "@lib/styled-components-layout"
-import { H3, H1, ZeroTab, Button, Link } from "@howtocards/ui"
+import { Button, H1, H3, Link, ZeroTab } from "@howtocards/ui"
 import { SkeletonList } from "@features/cards"
 
 import { UsersCommonTemplate } from "../templates/common"
 import { ErrorView } from "../organisms/error"
 import {
-  $user,
   $cards,
-  pageMounted,
-  $isLoading,
-  $isFailed,
   $error,
+  $isFailed,
+  $isLoading,
+  $user,
+  pageMounted,
 } from "../model/current"
 
 type Props = {

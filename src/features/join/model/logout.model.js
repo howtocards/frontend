@@ -1,6 +1,6 @@
 import { sessionDropped } from "@features/common"
 import { history } from "@lib/routing"
-import { logoutPressed, cancelPressed } from "./logout.events"
+import { cancelPressed, logoutPressed } from "./logout.events"
 
 logoutPressed.watch(() => {
   sessionDropped()

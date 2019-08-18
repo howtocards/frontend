@@ -6,10 +6,11 @@ import { Link } from "react-router-dom"
 import { Col, Row } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
 import { Authenticated } from "@features/common"
-import { Card, ButtonPrimary, Button, H2 } from "@howtocards/ui"
+import { Button, ButtonPrimary, Card, H2 } from "@howtocards/ui"
 import { CardsCommonTemplate, TitleInput } from "@features/cards"
 
 import {
+  $cardId,
   $content,
   $title,
   cardFetching,
@@ -18,7 +19,6 @@ import {
   pageUnloaded,
   savePressed,
   titleChanged,
-  $cardId,
 } from "./model"
 
 type Props = {

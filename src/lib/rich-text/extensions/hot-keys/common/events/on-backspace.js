@@ -1,4 +1,4 @@
-import { getCurrentIndent, getCurrentBlock } from "../helpers"
+import { getCurrentBlock, getCurrentIndent } from "../helpers"
 
 /**
  * User pressed Delete in an editor:

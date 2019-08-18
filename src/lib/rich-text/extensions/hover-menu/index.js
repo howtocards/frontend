@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react"
 import ReactDOM from "react-dom"
 import PropTypes from "prop-types"
@@ -5,8 +6,8 @@ import { insertImage } from "../image-plugin/insert-image"
 import { hasMark } from "./has-mark"
 import { hasBlock } from "./has-block"
 import { DEFAULT_NODE, ICONS_LIST } from "./constant"
-import { StyledMenu, Button } from "./styles"
-import { handleQuote, handleCode, handleList } from "./handles"
+import { Button, StyledMenu } from "./styles"
+import { handleCode, handleList, handleQuote } from "./handles"
 
 const getIconComponent = (type) => ICONS_LIST[type] || "span"
 

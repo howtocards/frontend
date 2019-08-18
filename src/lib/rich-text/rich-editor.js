@@ -3,11 +3,11 @@ import PropTypes from "prop-types"
 import { Value } from "slate"
 import { Editor } from "slate-react"
 import {
-  HoverMenu,
   CodePlugin,
   HotKeys,
-  PrismPlugin,
+  HoverMenu,
   ImagePlugin,
+  PrismPlugin,
 } from "./extensions"
 import { RichEditorStyle } from "./styles"
 

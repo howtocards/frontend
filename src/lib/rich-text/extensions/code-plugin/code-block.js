@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react"
 import PrismComponents from "prismjs/components"
 import ReactSelect from "react-select"

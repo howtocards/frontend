@@ -2,11 +2,11 @@ import React from "react"
 
 import { Col, Row } from "@lib/styled-components-layout"
 
-import { Card, ButtonPrimary, Button } from "@howtocards/ui/atoms"
+import { Button, ButtonPrimary, Card } from "@howtocards/ui/atoms"
 import { PrimitiveFooter } from "@howtocards/ui/organisms"
-import { Container, CenterContentTemplate } from "@howtocards/ui/templates"
+import { CenterContentTemplate, Container } from "@howtocards/ui/templates"
 
-import { logoutPressed, cancelPressed } from "../model/logout.events"
+import { cancelPressed, logoutPressed } from "../model/logout.events"
 
 export const LogoutPage = () => (
   <CenterContentTemplate footer={<PrimitiveFooter />}>

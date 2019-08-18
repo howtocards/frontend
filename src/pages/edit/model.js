@@ -1,10 +1,10 @@
 // @flow
-import { createEvent, createEffect, createStore } from "effector"
+import { createEffect, createEvent, createStore } from "effector"
 import type { Effect, Store } from "effector"
 
-import { createFetching, type Fetching } from "@lib/fetching"
+import { type Fetching, createFetching } from "@lib/fetching"
 import { history } from "@lib/routing"
-import { cardsApi, type Card } from "@api/cards"
+import { type Card, cardsApi } from "@api/cards"
 
 export const pageUnloaded = createEvent<void>()
 export const titleChanged = createEvent<SyntheticEvent<HTMLInputElement>>()

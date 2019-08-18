@@ -4,15 +4,15 @@ import { useStore } from "effector-react"
 
 import { Col, Row } from "@lib/styled-components-layout"
 import {
-  Card,
-  Input,
-  H2,
   ButtonPrimary,
-  Link,
+  Card,
   ErrorBox,
+  H2,
+  Input,
+  Link,
 } from "@howtocards/ui/atoms"
 import { PrimitiveFooter } from "@howtocards/ui/organisms"
-import { Container, CenterContentTemplate } from "@howtocards/ui/templates"
+import { CenterContentTemplate, Container } from "@howtocards/ui/templates"
 import {
   $email,
   $emailError,

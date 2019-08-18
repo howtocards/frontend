@@ -2,7 +2,7 @@ import React from "react"
 import styled, { css } from "styled-components"
 
 import { Row } from "@lib/styled-components-layout"
-import { H2, Icon, CardNarrow } from "@howtocards/ui"
+import { CardNarrow, H2, Icon } from "@howtocards/ui"
 
 export const CardSkeleton = () => (
   <SkeletonCard>

@@ -1,9 +1,9 @@
 // @flow
-import { createEvent, createEffect, createStore } from "effector"
-import type { Event, Effect, Store } from "effector"
+import { createEffect, createEvent, createStore } from "effector"
+import type { Effect, Event, Store } from "effector"
 
-import { createFetching, type Fetching } from "@lib/fetching"
-import { cardsApi, type Card } from "@api/cards"
+import { type Fetching, createFetching } from "@lib/fetching"
+import { type Card, cardsApi } from "@api/cards"
 import { $cardsRegistry, cardsToObject } from "@features/cards"
 
 export const pageReady: Event<void> = createEvent()

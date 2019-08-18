@@ -1,18 +1,18 @@
 // @flow
 
 import {
-  createEvent,
+  type Store,
+  combine,
   createEffect,
+  createEvent,
   createStore,
   createStoreObject,
-  combine,
-  type Store,
 } from "effector"
-import { createFetching, type Fetching } from "@lib/fetching"
+import { type Fetching, createFetching } from "@lib/fetching"
 import { emailValidator } from "@lib/validators"
 import { history } from "@lib/routing"
 
-import { tokenChanged, $isAuthenticated } from "@features/common"
+import { $isAuthenticated, tokenChanged } from "@features/common"
 import { sessionApi } from "@api/session"
 
 export const emailChanged = createEvent<SyntheticEvent<HTMLInputElement>>()

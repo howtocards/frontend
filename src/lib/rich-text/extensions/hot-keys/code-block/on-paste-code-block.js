@@ -1,4 +1,4 @@
-import { Document, Block, Text } from "slate"
+import { Block, Document, Text } from "slate"
 import { getEventTransfer } from "slate-react"
 import { List } from "immutable"
 import detectNewline from "detect-newline"

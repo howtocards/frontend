@@ -4,17 +4,17 @@ import { useStore } from "effector-react"
 
 import { Col, Row } from "@lib/styled-components-layout"
 import { RichEditor } from "@lib/rich-text"
-import { Card, ButtonPrimary, H2 } from "@howtocards/ui"
+import { ButtonPrimary, Card, H2 } from "@howtocards/ui"
 import { Authenticated } from "@features/common"
 import { CardsCommonTemplate, TitleInput } from "@features/cards"
 
 import {
-  $title,
   $content,
+  $title,
   contentChanged,
-  titleChanged,
-  pageUnmounted,
   formSubmitted,
+  pageUnmounted,
+  titleChanged,
 } from "./model"
 
 const onFormSubmitted = (event) => {
