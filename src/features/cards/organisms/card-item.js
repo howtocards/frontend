@@ -172,7 +172,7 @@ CardDeleteModalButton.propTypes = {
   }).isRequired,
 }
 
-const CardBox = styled.div`
+const CardBox = styled.article`
   box-sizing: border-box;
   overflow-y: hidden;
   padding: 2rem;
