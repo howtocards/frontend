@@ -3,12 +3,36 @@ language: minimal
 os:
   - linux
 
+env:
+  - DOCKER_IMAGE=howtocards/frontend
+
 jobs:
   include:
-    - stage: test and build docker image
+    - stage: build
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker build -t howtocards-frontend .
-        - docker tag howtocards-frontend howtocards/frontend:$TRAVIS_COMMIT
+        - docker pull $DOCKER_IMAGE:latest || true
+        - docker build -t $DOCKER_IMAGE:$TRAVIS_COMMIT --cache-from $DOCKER_IMAGE:latest .
         - docker images
-        - docker push howtocards/frontend:$TRAVIS_COMMIT
+        - docker push $DOCKER_IMAGE:$TRAVIS_COMMIT
+    - stage: push latest
+      if:
+        - branch = master
+      script:
+        - docker pull $DOCKER_IMAGE:$TRAVIS_COMMIT
+        - docker tag $DOCKER_IMAGE:$TRAVIS_COMMIT $DOCKER_IMAGE:latest
+        - docker push $DOCKER_IMAGE:latest
+    - stage: push nightly
+      if:
+        - branch = dev
+      script:
+        - docker pull $DOCKER_IMAGE:$TRAVIS_COMMIT
+        - docker tag $DOCKER_IMAGE:$TRAVIS_COMMIT $DOCKER_IMAGE:nightly
+        - docker push $DOCKER_IMAGE:nightly
+    - stage: push tag
+      if:
+        - tag =~ /^v\d+\.\d+\.\d+/
+      script:
+        - docker pull $DOCKER_IMAGE:$TRAVIS_COMMIT
+        - docker tag $DOCKER_IMAGE:$TRAVIS_COMMIT $DOCKER_IMAGE:$TRAVIS_TAG
+        - docker push $DOCKER_IMAGE:$TRAVIS_TAG
