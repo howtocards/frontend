@@ -14,7 +14,7 @@ RUN yarn build
 # ---- Release ----
 FROM nginx:alpine
 # copy production node_modules
-COPY --from=base /root/build/dist /var/www
+COPY --from=base /root/build/build /var/www
 COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
