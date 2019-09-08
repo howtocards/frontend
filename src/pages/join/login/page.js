@@ -1,0 +1,127 @@
+// @flow
+import * as React from "react"
+import { useStore } from "effector-react"
+
+import {
+  ButtonPrimary,
+  Card,
+  CenterContentTemplate,
+  Container,
+  ErrorBox,
+  H2,
+  Input,
+  Link,
+  PrimitiveFooter,
+} from "@howtocards/ui"
+
+import { Col, Row } from "@lib/styled-components-layout"
+import {
+  $email,
+  $emailError,
+  $isFormDisabled,
+  $isSubmitEnabled,
+  $password,
+  $passwordError,
+  emailChanged,
+  formMounted,
+  formSubmitted,
+  formUnmounted,
+  loginFetching,
+  passwordChanged,
+} from "./model"
+
+export const JoinLoginPage = () => {
+  React.useEffect(() => {
+    formMounted()
+    return formUnmounted
+  })
+  return (
+    <CenterContentTemplate footer={<PrimitiveFooter />}>
+      <Container justify="center" align="center">
+        <Col align="stretch" width="40rem">
+          <Card>
+            <LoginForm />
+          </Card>
+          <Row padding="3rem 0 0" gap="0.5rem">
+            <span>Don&quot;t have account? </span>
+            <Link to="/join/registration">Register</Link>
+          </Row>
+        </Col>
+      </Container>
+    </CenterContentTemplate>
+  )
+}
+
+const handleSubmit = (event) => {
+  event.preventDefault()
+  formSubmitted()
+}
+
+const LoginForm = () => {
+  const formError = useStore(loginFetching.error)
+  const isSubmitEnabled = useStore($isSubmitEnabled)
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <Col gap="1rem">
+        <H2>Welcome to HowToCards</H2>
+        {formError && (
+          <ErrorBox>{mapServerToClientError(formError.error)}</ErrorBox>
+        )}
+        <Email />
+        <Password />
+        <ButtonPrimary disabled={!isSubmitEnabled} type="submit">
+          Continue
+        </ButtonPrimary>
+      </Col>
+    </form>
+  )
+}
+
+const Email = () => {
+  const email = useStore($email)
+  const isFormDisabled = useStore($isFormDisabled)
+  const emailError = useStore($emailError)
+
+  return (
+    <Input
+      type="email"
+      name="email"
+      autoComplete="email"
+      label="Email"
+      disabled={isFormDisabled}
+      onChange={emailChanged}
+      value={email}
+      error={email && emailError}
+    />
+  )
+}
+
+const Password = () => {
+  const password = useStore($password)
+  const isFormDisabled = useStore($isFormDisabled)
+  const passwordError = useStore($passwordError)
+
+  return (
+    <Input
+      type="password"
+      name="password"
+      autoComplete="password"
+      label="Password"
+      disabled={isFormDisabled}
+      onChange={passwordChanged}
+      value={password}
+      error={password && passwordError}
+    />
+  )
+}
+
+const mapServerToClientError = (error) => {
+  switch (error) {
+    case "user_not_found":
+      return "Email not found or password is wrong"
+    case "cant_create_session": // pass thru
+    default:
+      return "Got an unexpected error. Try again later"
+  }
+}

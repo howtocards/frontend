@@ -1,0 +1,34 @@
+[ignore]
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+all=false
+server.max_workers=1
+include_warnings=false
+max_header_tokens=5
+esproposal.class_instance_fields=enable
+esproposal.class_static_fields=enable
+esproposal.optional_chaining=enable
+esproposal.nullish_coalescing=enable
+suppress_comment=\\(.\\|\n\\)*\\$FlowIssue
+suppress_comment=\\(.\\|\n\\)*\\$off
+suppress_comment=\\(.\\|\n\\)*\\$todo
+suppress_type=$FlowIssue
+suppress_type=$off
+suppress_type=$todo
+emoji=true
+esproposal.decorators=ignore
+module.use_strict=true
+esproposal.export_star_as=enable
+
+module.name_mapper='^@api/' ->'<PROJECT_ROOT>/src/api/'
+module.name_mapper='^@lib/' ->'<PROJECT_ROOT>/src/lib/'
+module.name_mapper='^@features/' ->'<PROJECT_ROOT>/src/features/'
+module.name_mapper='^@howtocards/ui' ->'<PROJECT_ROOT>/src/ui'
+
+[strict]

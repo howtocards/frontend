@@ -1,7 +1,34 @@
-import React from "react"
-import PropTypes from "prop-types"
+// @flow
+import * as React from "react"
 import styled from "styled-components"
-import { above } from "styled-breakpoints"
+import { up } from "@typographist/styled"
+
+type Props = {
+  children: React.Node,
+  sidebar?: React.Node,
+  footer?: React.Node,
+}
+
+export const SidebarTemplate = ({ sidebar, children, footer }: Props) => (
+  <SidebarContainer>
+    <Main>{children}</Main>
+    <Sidebar>{sidebar}</Sidebar>
+    {footer && <ScrollableFooter>{footer}</ScrollableFooter>}
+  </SidebarContainer>
+)
+
+SidebarTemplate.defaultProps = {
+  sidebar: null,
+  footer: null,
+}
+
+const Sidebar = styled.aside`
+  grid-area: sidebar;
+`
+
+const Main = styled.div`
+  grid-area: main;
+`
 
 const SidebarContainer = styled.div`
   display: grid;
@@ -17,21 +44,21 @@ const SidebarContainer = styled.div`
     "main"
     "footer";
 
-  ${above("tablet")} {
+  ${Sidebar} {
+    margin-bottom: 2rem;
+  }
+
+  ${up("tablet")} {
     grid-template-rows: 1fr auto;
     grid-template-columns: auto 30%;
     grid-template-areas:
       "main sidebar"
       "footer footer";
+
+    ${Sidebar} {
+      margin-bottom: 0;
+    }
   }
-`
-
-const Sidebar = styled.aside`
-  grid-area: sidebar;
-`
-
-const Main = styled.div`
-  grid-area: main;
 `
 
 const ScrollableFooter = styled.footer`
@@ -40,21 +67,3 @@ const ScrollableFooter = styled.footer`
   display: block;
   height: 4rem;
 `
-
-export const SidebarTemplate = ({ sidebar, children, footer }) => (
-  <SidebarContainer>
-    <Main>{children}</Main>
-    <Sidebar>{sidebar}</Sidebar>
-    {footer && <ScrollableFooter>{footer}</ScrollableFooter>}
-  </SidebarContainer>
-)
-
-SidebarTemplate.propTypes = {
-  sidebar: PropTypes.node.isRequired,
-  children: PropTypes.node.isRequired,
-  footer: PropTypes.string,
-}
-
-SidebarTemplate.defaultProps = {
-  footer: null,
-}

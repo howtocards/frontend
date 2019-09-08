@@ -3,6 +3,14 @@ import styled from "styled-components"
 
 import { Link } from "../atoms"
 
+export const PrimitiveFooter = () => (
+  <FooterBlock>
+    Go to&nbsp;
+    <Link to="/">home</Link>
+    &nbsp;page
+  </FooterBlock>
+)
+
 const FooterBlock = styled.footer`
   display: flex;
   flex-flow: row;
@@ -11,11 +19,3 @@ const FooterBlock = styled.footer`
   width: 100%;
   justify-content: center;
 `
-
-export const PrimitiveFooter = () => (
-  <FooterBlock>
-    Go to&nbsp;
-    <Link to="/">home</Link>
-    &nbsp;page
-  </FooterBlock>
-)

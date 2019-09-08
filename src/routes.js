@@ -1,12 +1,19 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import { renderRoutes } from "react-router-config"
 
 import { NotFoundPage } from "@features/common"
 import { joinRoutes } from "@features/join"
-import { cardsRoutes } from "@features/cards"
+import { usersRoutes } from "@features/users"
+import { searchRoutes } from "@features/search"
+import { routes as root } from "./pages"
 
-const routes = [...cardsRoutes(), ...joinRoutes(), { component: NotFoundPage }]
+const routes = [
+  ...root(),
+  ...joinRoutes(),
+  ...usersRoutes(),
+  ...searchRoutes(),
+  { component: NotFoundPage },
+]
 
-export const rootRoutes = () => (
-  <React.Fragment>{renderRoutes(routes)}</React.Fragment>
-)
+export const Routes = () => <>{renderRoutes(routes)}</>

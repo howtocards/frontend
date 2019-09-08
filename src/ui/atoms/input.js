@@ -5,6 +5,63 @@ import styled, { css } from "styled-components"
 // TODO remove layout
 import { Col } from "@lib/styled-components-layout"
 
+/**
+ * Required: `value`
+ */
+export const Input = ({
+  autoComplete,
+  disabled,
+  error,
+  label,
+  name,
+  onBlur,
+  onChange,
+  placeholder,
+  type,
+  value,
+}) => (
+  <Col>
+    {label && <InputLabel>{label}</InputLabel>}
+    <InputNative
+      autoComplete={autoComplete}
+      disabled={disabled}
+      error={Boolean(error)}
+      name={name}
+      onBlur={onBlur}
+      onChange={onChange}
+      placeholder={placeholder}
+      type={type}
+      value={value}
+    />
+    <ErrorLabel>{error}</ErrorLabel>
+  </Col>
+)
+
+Input.propTypes = {
+  autoComplete: PropTypes.string,
+  disabled: PropTypes.bool,
+  error: PropTypes.string,
+  label: PropTypes.string,
+  name: PropTypes.string,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  placeholder: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.string.isRequired,
+}
+
+Input.defaultProps = {
+  autoComplete: undefined,
+  disabled: false,
+  error: undefined,
+  label: undefined,
+  name: undefined,
+  onBlur: undefined,
+  onChange: undefined,
+  placeholder: undefined,
+  type: "text",
+}
+
 const InputNative = styled.input`
   border: 1px solid;
   border-radius: 4px;
@@ -51,56 +108,3 @@ const ErrorLabel = styled.label`
   margin-top: 0.2rem;
   text-align: left;
 `
-
-/**
- * Required: `value`
- */
-export const Input = ({
-  autoComplete,
-  disabled,
-  error,
-  label,
-  name,
-  onBlur,
-  onChange,
-  type,
-  value,
-}) => (
-  <Col>
-    {label && <InputLabel>{label}</InputLabel>}
-    <InputNative
-      autoComplete={autoComplete}
-      disabled={disabled}
-      error={Boolean(error)}
-      name={name}
-      onBlur={onBlur}
-      onChange={onChange}
-      type={type}
-      value={value}
-    />
-    <ErrorLabel>{error}</ErrorLabel>
-  </Col>
-)
-
-Input.propTypes = {
-  autoComplete: PropTypes.string,
-  disabled: PropTypes.bool,
-  error: PropTypes.string,
-  label: PropTypes.string,
-  name: PropTypes.string,
-  onBlur: PropTypes.func,
-  onChange: PropTypes.func,
-  type: PropTypes.string,
-  value: PropTypes.string.isRequired,
-}
-
-Input.defaultProps = {
-  autoComplete: undefined,
-  disabled: false,
-  error: undefined,
-  label: undefined,
-  name: undefined,
-  onBlur: undefined,
-  onChange: undefined,
-  type: "text",
-}

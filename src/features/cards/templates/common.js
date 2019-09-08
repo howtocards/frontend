@@ -1,24 +1,25 @@
-import React from "react"
-import PropTypes from "prop-types"
-import styled from "styled-components"
+// @flow
+import * as React from "react"
 
 import { CommonContentTemplate } from "@features/common"
-import { Container, SidebarTemplate } from "@ui/templates"
-import { Card } from "@ui/atoms"
+import {
+  Container,
+  FooterContent,
+  Sidebar,
+  SidebarTemplate,
+} from "@howtocards/ui"
 
-const StickyCard = styled(Card)`
-  position: sticky;
-  top: 2rem;
-`
+type Props = {
+  children: React.Node,
+  sidebar?: React.Node,
+}
 
-const Sidebar = () => <StickyCard>Sidebar placeholder</StickyCard>
-
-export const CardsCommonTemplate = ({ children }) => (
+export const CardsCommonTemplate = ({ children, sidebar }: Props) => (
   <CommonContentTemplate>
     <Container>
       <SidebarTemplate
-        sidebar={<Sidebar />}
-        footer="&copy; 2018 HowTo.cards Team"
+        sidebar={sidebar && <Sidebar>{sidebar}</Sidebar>}
+        footer={FooterContent}
       >
         {children}
       </SidebarTemplate>
@@ -26,6 +27,6 @@ export const CardsCommonTemplate = ({ children }) => (
   </CommonContentTemplate>
 )
 
-CardsCommonTemplate.propTypes = {
-  children: PropTypes.node.isRequired,
+CardsCommonTemplate.defaultProps = {
+  sidebar: undefined,
 }

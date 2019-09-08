@@ -1,47 +1,56 @@
-import React, { createContext, PureComponent } from "react"
-import PropTypes from "prop-types"
+// @flow
+import * as React from "react"
+import { createEvent, createStore } from "effector"
+import { useStore } from "effector-react"
 import { ThemeProvider } from "styled-components"
 
-const ThemeContext = createContext({
-  dark: false,
-  toggleDark: () => {},
+const themeToggled = createEvent()
+const $isDark = createStore(localStorage.getItem("theme") === "dark")
+
+$isDark.on(themeToggled, (isDark) => !isDark)
+
+$isDark.watch((isDark) => {
+  localStorage.setItem("theme", isDark ? "dark" : "light")
 })
 
-const getCurrentTheme = () =>
-  String(localStorage.getItem("dark-theme")) === "true"
-
-/* eslint-disable react/no-unused-state, react/forbid-prop-types */
-export class ToggleThemeProvider extends PureComponent {
-  static propTypes = {
-    dark: PropTypes.object.isRequired,
-    light: PropTypes.object.isRequired,
-    children: PropTypes.node.isRequired,
-  }
-
-  toggleDark = () => {
-    this.setState((prevState) => {
-      localStorage.setItem("dark-theme", String(!prevState.dark))
-      return { dark: !prevState.dark }
-    })
-  }
-
-  state = {
-    dark: getCurrentTheme(),
-    toggleDark: this.toggleDark,
-  }
-
-  render() {
-    const { dark, light, children } = this.props
-    const { dark: stateDark } = this.state
-
-    return (
-      <ThemeContext.Provider value={this.state}>
-        <ThemeProvider theme={stateDark ? dark : light}>
-          {children}
-        </ThemeProvider>
-      </ThemeContext.Provider>
-    )
-  }
+type ProviderProps = {
+  dark: {},
+  light: {},
+  children: React.Node,
 }
 
-export const ToggleThemeConsumer = ThemeContext.Consumer
+export const ToggleThemeProvider = ({
+  dark,
+  light,
+  children,
+}: ProviderProps) => {
+  const isDark = useStore($isDark)
+
+  React.useEffect(() => {
+    const html = document.querySelector("html")
+    if (html) {
+      if (isDark) {
+        html.classList.add("theme-dark")
+      } else {
+        html.classList.remove("theme-dark")
+      }
+    }
+  }, [isDark])
+
+  return <ThemeProvider theme={isDark ? dark : light}>{children}</ThemeProvider>
+}
+
+type TogglerProps = {
+  render: (p: {
+    isDark: boolean,
+    theme: "dark" | "light",
+    toggle: () => void,
+  }) => React.Node,
+}
+
+export const WithThemeToggler = ({ render }: TogglerProps) => {
+  const isDark = useStore($isDark)
+  const theme = isDark ? "dark" : "light"
+
+  return render({ isDark, theme, toggle: themeToggled })
+}

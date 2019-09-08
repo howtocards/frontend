@@ -1,27 +1,25 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import ReactDom from "react-dom"
-import { Provider } from "react-redux"
-import { ConnectedRouter } from "connected-react-router"
-import { createBrowserHistory } from "history"
+import { Router } from "react-router"
 
+import { history } from "@lib/routing"
 import { App } from "./app"
-import { configureStore } from "./store"
 
-const root = document.getElementById("root")
-const history = createBrowserHistory()
-const store = configureStore({ history })
+const root = document.querySelector("#root")
 
 const render = () => {
-  ReactDom.render(
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
+  if (root) {
+    ReactDom.render(
+      <Router history={history}>
         <App />
-      </ConnectedRouter>
-    </Provider>,
-    root,
-  )
+      </Router>,
+      root,
+    )
+  }
 }
 
+// $FlowIssue
 if (module.hot) {
   module.hot.accept("./app", render)
 }

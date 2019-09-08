@@ -1,159 +1,128 @@
 import React from "react"
-import { Editor } from "slate-react"
-import { Value } from "slate"
-import { isKeyHotkey } from "is-hotkey"
 import PropTypes from "prop-types"
-import { defaultValue } from "./default-value"
-import { renderNode, renderMark } from "./helpers"
+import { Value } from "slate"
+import { Editor } from "slate-react"
+import {
+  CodePlugin,
+  HotKeys,
+  HoverMenu,
+  ImagePlugin,
+  PrismPlugin,
+} from "./extensions"
+import { RichEditorStyle } from "./styles"
 
-const DEFAULT_NODE = "paragraph"
-const isBoldHotkey = isKeyHotkey("mod+b")
-const isItalicHotkey = isKeyHotkey("mod+i")
-const isUnderlinedHotkey = isKeyHotkey("mod+u")
-const isCodeHotkey = isKeyHotkey("mod+`")
+const configCodePlugin = {
+  block: "code_block",
+  line: "code_line",
+}
+
+const plugins = [
+  ImagePlugin(),
+  PrismPlugin({
+    onlyIn: (node) => node.type === configCodePlugin.block,
+    getSyntax: (node) => node.data.get("language"),
+  }),
+  CodePlugin(configCodePlugin),
+]
+
+const NODES_COMPONENTS = {
+  "block-quote": "blockquote",
+  "bulleted-list": "ul",
+  "list-item": "li",
+  "numbered-list": "ol",
+}
+
+const MARKS_COMPONENTS = {
+  bold: "strong",
+  italic: "em",
+  underlined: "u",
+  code: "code",
+}
 
 export class RichEditor extends React.Component {
+  static defaultProps = {
+    onChange: () => {},
+    readOnly: false,
+  }
+
+  static propTypes = {
+    readOnly: PropTypes.bool,
+    onChange: PropTypes.func,
+    content: PropTypes.shape({
+      document: PropTypes.shape({}).isRequired,
+    }).isRequired,
+  }
+
   state = {
-    value: Value.fromJSON(defaultValue),
+    // eslint-disable-next-line react/no-unused-state, react/destructuring-assignment
+    value: Value.fromJS(this.props.content),
   }
 
-  hasMark = (type) => {
-    const { value } = this.state
+  renderNode = (props, _editor, next) => {
+    const { attributes, children, node } = props
+    const Type = NODES_COMPONENTS[node.type]
 
-    return value.activeMarks.some((mark) => mark.type === type)
+    return Type ? <Type {...attributes}>{children}</Type> : next()
   }
 
-  hasBlock = (type) => {
-    const { value } = this.state
+  renderMark = (props, _editor, next) => {
+    const { children, mark, attributes } = props
+    const Type = MARKS_COMPONENTS[mark.type]
+    const className = mark.type === "code" ? { className: "code_inline" } : {}
 
-    return value.blocks.some((node) => node.type === type)
+    return Type ? (
+      <Type {...attributes} {...className}>
+        {children}
+      </Type>
+    ) : (
+      next()
+    )
   }
 
-  renderButton = (type, cb) => {
-    const markLists = ["bold", "italic", "underlined"]
-    let isActive = false
-    let onClickButton = () => {}
+  renderEditor = (_props, editor, next) => {
+    const children = next()
 
-    if (markLists.includes(type)) {
-      isActive = this.hasMark(type)
-      onClickButton = this.onClickMark
-    } else if (["numbered-list", "bulleted-list"].includes(type)) {
-      const { value } = this.state
-      const parent = value.document.getParent(value.blocks.first().key)
-
-      isActive = this.hasBlock("list-item") && parent && parent.type === type
-      onClickButton = this.onClickBlock
-    } else {
-      isActive = this.hasBlock(type)
-      onClickButton = this.onClickBlock
-    }
-
-    return cb({ isActive, onClick: (event) => onClickButton(event, type) })
+    return (
+      <React.Fragment>
+        {children}
+        <HoverMenu configCodePlugin={configCodePlugin} editor={editor} />
+      </React.Fragment>
+    )
   }
 
   onChange = ({ value }) => {
-    const { onChange } = this.props
+    const { onChange, readOnly } = this.props
+    const toJS = value.toJS()
 
-    this.setState({ value }, () => onChange(JSON.stringify(value.toJSON())))
-  }
-
-  // eslint-disable-next-line consistent-return
-  onKeyDown = (event, editor, next) => {
-    let mark
-
-    if (isBoldHotkey(event)) {
-      mark = "bold"
-    } else if (isItalicHotkey(event)) {
-      mark = "italic"
-    } else if (isUnderlinedHotkey(event)) {
-      mark = "underlined"
-    } else if (isCodeHotkey(event)) {
-      mark = "code"
-    } else {
-      return next()
-    }
-
-    event.preventDefault()
-    editor.toggleMark(mark)
-  }
-
-  onClickMark = (event, type) => {
-    event.preventDefault()
-    this.editor.toggleMark(type)
-  }
-
-  onClickBlock = (event, type) => {
-    event.preventDefault()
-
-    const { editor } = this
-    const { value } = editor
-    const { document } = value
-
-    if (type !== "bulleted-list" && type !== "numbered-list") {
-      const isActive = this.hasBlock(type)
-      const isList = this.hasBlock("list-item")
-
-      if (isList) {
-        editor
-          .setBlocks(isActive ? DEFAULT_NODE : type)
-          .unwrapBlock("bulleted-list")
-          .unwrapBlock("numbered-list")
-      } else {
-        editor.setBlocks(isActive ? DEFAULT_NODE : type)
+    this.setState({ value }, () => {
+      if (!readOnly && typeof onChange === "function") {
+        onChange(toJS)
       }
-    } else {
-      const isList = this.hasBlock("list-item")
-      const isType = value.blocks.some(
-        (block) =>
-          !!document.getClosest(block.key, (parent) => parent.type === type),
-      )
-
-      if (isList && isType) {
-        editor
-          .setBlocks(DEFAULT_NODE)
-          .unwrapBlock("bulleted-list")
-          .unwrapBlock("numbered-list")
-      } else if (isList) {
-        editor
-          .unwrapBlock(
-            type === "bulleted-list" ? "numbered-list" : "bulleted-list",
-          )
-          .wrapBlock(type)
-      } else {
-        editor.setBlocks("list-item").wrapBlock(type)
-      }
-    }
-  }
-
-  ref = (editor) => {
-    this.editor = editor
+    })
   }
 
   render() {
+    const { readOnly } = this.props
     const { value } = this.state
-    const { renderToolbar } = this.props
 
     return (
-      <div>
-        {renderToolbar(this.renderButton)}
+      <RichEditorStyle>
         <Editor
-          style={{ margin: "20px 0" }}
-          spellCheck
-          autoFocus
-          placeholder="Enter some rich text..."
-          ref={this.ref}
+          tabIndex={0}
+          spellcheck={false}
+          readOnly={readOnly}
+          {...HotKeys(configCodePlugin)}
+          style={{
+            minHeight: "300px",
+          }}
           value={value}
           onChange={this.onChange}
-          onKeyDown={this.onKeyDown}
-          renderNode={renderNode}
-          renderMark={renderMark}
+          renderEditor={this.renderEditor}
+          renderMark={this.renderMark}
+          renderNode={this.renderNode}
+          plugins={plugins}
         />
-      </div>
+      </RichEditorStyle>
     )
   }
-}
-
-RichEditor.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  renderToolbar: PropTypes.func.isRequired,
 }

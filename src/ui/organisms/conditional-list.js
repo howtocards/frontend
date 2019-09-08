@@ -1,19 +1,24 @@
-import React, { Fragment } from "react"
-import PropTypes from "prop-types"
+// @flow
+import * as React from "react"
 
-export const ConditionalList = ({ list, renderExists, renderEmpty }) => (
-  <Fragment>
-    {list && list.length > 0 ? renderExists(list) : renderEmpty()}
-  </Fragment>
-)
-
-ConditionalList.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  list: PropTypes.array.isRequired,
-  renderExists: PropTypes.func.isRequired,
-  renderEmpty: PropTypes.func,
+type Props<T> = {
+  list: T[],
+  renderExists: (T[]) => React.Node,
+  renderEmpty?: () => React.Node,
 }
 
+export const ConditionalList = <T>({
+  list,
+  renderExists,
+  renderEmpty = () => null,
+}: Props<T>) => (
+  <>
+    {list && list.filter(Boolean).length > 0
+      ? renderExists(list)
+      : renderEmpty()}
+  </>
+)
+
 ConditionalList.defaultProps = {
-  renderEmpty: () => <p>Not Found</p>,
+  renderEmpty: undefined,
 }

@@ -1,36 +1,26 @@
-// import React from 'react'
-import { connect } from "react-redux"
+// @flow
+import * as React from "react"
+import { useStore } from "effector-react"
+import { $session, type Session } from "../model/session.store"
 
-import {
-  accountFetchingSelector,
-  accountSelector,
-  accountIdSelector,
-} from "../selectors"
+type Props = {|
+  render?: ({ account: ?Session, accountId: ?number }) => React.Node,
+  renderExists?: ({ account: Session, accountId: number }) => React.Node,
+  renderEmpty?: ({ account: null, accountId: null }) => React.Node,
+|}
 
-const mapStateToProps = (state) => ({
-  fetching: accountFetchingSelector(state),
-  account: accountSelector(state),
-  accountId: accountIdSelector(state),
-})
+export const WithAccount = (props: Props) => {
+  const session = useStore($session)
 
-const enhance = connect(mapStateToProps)
-
-const passProps = ({
-  render,
-  renderExists,
-  renderEmpty,
-  fetching,
-  account,
-  accountId,
-}) => {
-  if (account && renderExists) {
-    return renderExists({ fetching, account, accountId })
-  }
-  if (renderEmpty) {
-    return renderEmpty({ fetching, account, accountId })
+  if (session && props.renderExists) {
+    return props.renderExists({ account: session, accountId: session.id })
   }
 
-  return render ? render({ fetching, account, accountId }) : null
+  if (!session && props.renderEmpty) {
+    return props.renderEmpty({ account: null, accountId: null })
+  }
+
+  return props.render
+    ? props.render({ account: session, accountId: session ? session.id : null })
+    : null
 }
-
-export const WithAccount = enhance(passProps)

@@ -1,33 +1,19 @@
-// import React from 'react'
-import { compose, withPropsOnChange } from "recompose"
-import { connect } from "react-redux"
+import { useEffect } from "react"
+import { useStore } from "effector-react"
 
-import { accountFetch, tokenGet } from "../effects"
-import { accountFetchingSelector, accountIdSelector } from "../selectors"
+import { $session } from "../model/session.store"
+import { loadSession } from "../model/session.events"
+import { $token } from "../model/token"
 
-const mapStateToProps = (state) => ({
-  fetching: accountFetchingSelector(state),
-  accountId: accountIdSelector(state),
-})
+export const AccountLoader = ({ children }) => {
+  const session = useStore($session)
+  const token = useStore($token)
 
-const mapDispatchToProps = (dispatch) => ({
-  onFetch: () => dispatch(accountFetch),
-  getToken: () => dispatch(tokenGet),
-})
+  useEffect(() => {
+    loadSession()
+  }, [])
 
-const enhance = compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  ),
-  withPropsOnChange(
-    (props, nextProps) => props.accountId !== nextProps.accountId,
-    ({ accountId, getToken, onFetch }) => {
-      if (getToken() && !accountId) {
-        onFetch()
-      }
-    },
-  ),
-)
+  if (token && !session) return null
 
-export const AccountLoader = enhance(({ children }) => children)
+  return children
+}

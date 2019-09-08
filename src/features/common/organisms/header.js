@@ -1,13 +1,77 @@
-import React from "react"
-// import PropTypes from 'prop-types'
+// @flow
+/* eslint-disable react/prop-types */
+import * as React from "react"
+import PropTypes from "prop-types"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 
-import { ToggleThemeConsumer } from "@lib/theme-context"
-import { Container } from "@ui/templates"
+import { WithThemeToggler } from "@lib/theme-context"
+import * as Menu from "@lib/context-menu"
+import { Container } from "@howtocards/ui"
+import { SearchBar } from "@features/search"
 import { WithAccount } from "./with-account"
 
 // https://codepen.io/anon/pen/PebeaL
+
+export const Header = () => (
+  <HeaderBox>
+    <Container>
+      <NavLink to="/">HowToCards</NavLink>
+      <SearchBox>
+        <SearchBar />
+      </SearchBox>
+      <Navigation />
+      <ToggleThemeButton />
+    </Container>
+  </HeaderBox>
+)
+
+const Navigation = () => (
+  <WithAccount renderExists={linksForUser} renderEmpty={linksForAnonym} />
+)
+
+const linksForUser = ({ account }) => (
+  <>
+    <NavLink to="/new/card">+ New</NavLink>
+    <Menu.Context
+      as={NavItem}
+      trigger={<span>{account.displayName || "Profile"}</span>}
+      menu={({ close }) => (
+        <>
+          <Menu.Item as={Link} to={`/user/${account.id}`} onClick={close}>
+            Profile: {account.email}
+          </Menu.Item>
+          <Menu.Item as={Link} to="/settings" onClick={close}>
+            Settings
+          </Menu.Item>
+          <Menu.Separator />
+          <Menu.Item as={Link} to="/logout">
+            Logout
+          </Menu.Item>
+        </>
+      )}
+    />
+  </>
+)
+
+linksForUser.propTypes = {
+  account: PropTypes.shape({
+    user: PropTypes.shape({
+      id: PropTypes.number,
+      email: PropTypes.string,
+    }),
+  }).isRequired,
+}
+
+const linksForAnonym = () => <NavLink to="/join">Join</NavLink>
+
+const ToggleThemeButton = () => (
+  <WithThemeToggler
+    render={({ toggle, isDark }) => (
+      <NavItem onClick={toggle}>{isDark ? "🌔" : "☀️"}</NavItem>
+    )}
+  />
+)
 
 const HeaderBox = styled.header`
   display: flex;
@@ -31,26 +95,6 @@ const SearchBox = styled.div`
   padding: 1.3rem 0;
 `
 
-const SearchInput = styled.input`
-  appearance: none;
-  border: none;
-  border-radius: 6px;
-  box-shadow: none;
-  box-sizing: border-box;
-  font-size: 1.6rem;
-  outline: none;
-  width: 100%;
-  padding: 0 2rem;
-  transition: box-shadow 120ms;
-
-  &:focus {
-    box-shadow: 0 0 0 3px
-      ${({ theme }) => theme.palette.primary.initial.background};
-  }
-
-  ${({ theme }) => theme.embed.canvas}
-`
-
 const NavItem = styled.a`
   display: flex;
   flex-flow: row nowrap;
@@ -69,37 +113,3 @@ const NavItem = styled.a`
 `
 
 const NavLink = NavItem.withComponent(Link)
-
-export const Header = () => (
-  <HeaderBox>
-    <Container>
-      <NavLink to="/">HowToCards</NavLink>
-      <SearchBox>
-        <SearchInput
-          placeholder="Search..."
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck="false"
-        />
-      </SearchBox>
-      <WithAccount renderExists={() => <NavLink to="/new">+ New</NavLink>} />
-      {/* <NavLink to="/feed">Feed</NavLink> */}
-      {/* <NavItem href="https://github.com/howtocards/frontend" target="_blank">Contribute</NavItem> */}
-      <WithAccount
-        renderExists={({ account }) => (
-          <React.Fragment>
-            <NavLink to={`/@${account.id}`}>{account.email}</NavLink>
-            <NavLink to="/logout">Logout</NavLink>
-          </React.Fragment>
-        )}
-        renderEmpty={() => <NavLink to="/join">Join</NavLink>}
-      />
-      <ToggleThemeConsumer>
-        {({ toggleDark, dark }) => (
-          <NavItem onClick={toggleDark}>{dark ? "🌔" : "☀️"}</NavItem>
-        )}
-      </ToggleThemeConsumer>
-    </Container>
-  </HeaderBox>
-)

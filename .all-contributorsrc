@@ -1,0 +1,93 @@
+{
+  "projectName": "frontend",
+  "projectOwner": "howtocards",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "sergeysova",
+      "name": "Sergey Sova",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5620073?v=4",
+      "profile": "https://sergeysova.com",
+      "contributions": [
+        "doc",
+        "code",
+        "financial",
+        "eventOrganizing",
+        "ideas",
+        "infra",
+        "review"
+      ]
+    },
+    {
+      "login": "yakotika",
+      "name": "Abu Shamsutdinov",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/22033385?v=4",
+      "profile": "https://github.com/yakotika",
+      "contributions": [
+        "doc",
+        "code",
+        "ideas",
+        "infra",
+        "review"
+      ]
+    },
+    {
+      "login": "mg901",
+      "name": "Maxim",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/7874664?v=4",
+      "profile": "https://github.com/mg901",
+      "contributions": [
+        "code",
+        "ideas",
+        "design",
+        "tool"
+      ]
+    },
+    {
+      "login": "atassis",
+      "name": "Taymuraz Kaytmazov",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5769345?v=4",
+      "profile": "https://github.com/atassis",
+      "contributions": [
+        "ideas",
+        "infra",
+        "review"
+      ]
+    },
+    {
+      "login": "meowsun",
+      "name": "Natalia",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3519260?v=4",
+      "profile": "https://github.com/meowsun",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "artalar",
+      "name": "Arutyunyan Artyom",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/27290320?v=4",
+      "profile": "https://t.me/artalar",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "Djelnar",
+      "name": "Elnar Ibragimov",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/4393143?v=4",
+      "profile": "https://github.com/Djelnar",
+      "contributions": [
+        "code",
+        "infra"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

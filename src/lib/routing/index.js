@@ -1,9 +1,3 @@
-import React from "react"
-import { Redirect } from "react-router-dom"
+import { createBrowserHistory } from "history"
 
-export const redirectTo = (path, key) => () => <Redirect key={key} to={path} />
-export const redirectFrom = (from, to) => ({
-  path: from,
-  exact: true,
-  component: redirectTo(to),
-})
+export const history = createBrowserHistory()

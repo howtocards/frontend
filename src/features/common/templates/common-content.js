@@ -1,18 +1,17 @@
-import React from "react"
+// @flow
+import * as React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
 
-import { MainTemplate } from "@ui/templates"
+import { MainTemplate } from "@howtocards/ui/templates"
 import { Header } from "../organisms"
 
-export const CommonContent = styled.div`
-  display: flex;
-  justify-content: center;
-  overflow-y: auto;
-  ${({ theme }) => theme.embed.canvas}
-`
+type Props = {
+  children: React.Node,
+  header?: React.Node,
+}
 
-export const CommonContentTemplate = ({ header, children }) => (
+export const CommonContentTemplate = ({ header, children }: Props) => (
   <MainTemplate header={header}>
     <CommonContent>{children}</CommonContent>
   </MainTemplate>
@@ -26,3 +25,10 @@ CommonContentTemplate.propTypes = {
 CommonContentTemplate.defaultProps = {
   header: <Header />,
 }
+
+export const CommonContent = styled.div`
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+  ${({ theme }) => theme.embed.canvas}
+`
