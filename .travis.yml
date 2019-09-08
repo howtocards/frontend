@@ -3,6 +3,9 @@ language: minimal
 os:
   - linux
 
+services:
+  - docker
+
 env:
   - DOCKER_IMAGE=howtocards/frontend
 
