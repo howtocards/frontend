@@ -4,11 +4,10 @@ FROM node:dubnium-alpine as base
 WORKDIR /root/build
 
 # install and cache node packages
-COPY package.json package-lock.json ./
-RUN npm set progress=false && npm config set depth 0
-RUN npm install
+COPY package.json yarn.lock ./
+RUN yarn install
 COPY . .
-RUN npm run build:prod
+RUN yarn build
 
 #
 # ---- Release ----
