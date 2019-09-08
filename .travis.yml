@@ -13,6 +13,7 @@ jobs:
   include:
     - stage: build
       script:
+        - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull $DOCKER_IMAGE:latest || true
         - docker build -t $DOCKER_IMAGE:$TRAVIS_COMMIT --cache-from $DOCKER_IMAGE:latest .
