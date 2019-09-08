@@ -1,16 +1,41 @@
-language: node_js
-node_js:
-  - 10
+language: minimal
 
 os:
   - linux
-  - osx
 
-cache:
-  yarn: true
-  directories:
-    - node_modules
+services:
+  - docker
 
-script:
-  - yarn test
-  - yarn build
+env:
+  - DOCKER_IMAGE=howtocards/frontend
+
+before_script:
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+jobs:
+  include:
+    - stage: build
+      script:
+        - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+        - docker pull $DOCKER_IMAGE:latest || true
+        - docker build -t $DOCKER_IMAGE:$TRAVIS_COMMIT --cache-from $DOCKER_IMAGE:latest .
+        - docker images
+        - docker push $DOCKER_IMAGE:$TRAVIS_COMMIT
+    - stage: push latest
+      if: branch = master
+      script:
+        - docker pull $DOCKER_IMAGE:$TRAVIS_COMMIT
+        - docker tag $DOCKER_IMAGE:$TRAVIS_COMMIT $DOCKER_IMAGE:latest
+        - docker push $DOCKER_IMAGE:latest
+    - stage: push nightly
+      if: branch = dev
+      script:
+        - docker pull $DOCKER_IMAGE:$TRAVIS_COMMIT
+        - docker tag $DOCKER_IMAGE:$TRAVIS_COMMIT $DOCKER_IMAGE:nightly
+        - docker push $DOCKER_IMAGE:nightly
+    - stage: push tag
+      if: tag =~ /^v\d+\.\d+\.\d+/
+      script:
+        - docker pull $DOCKER_IMAGE:$TRAVIS_COMMIT
+        - docker tag $DOCKER_IMAGE:$TRAVIS_COMMIT $DOCKER_IMAGE:$TRAVIS_TAG
+        - docker push $DOCKER_IMAGE:$TRAVIS_TAG

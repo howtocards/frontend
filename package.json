@@ -1,12 +1,12 @@
 {
   "name": "@howtocards/frontend",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "description": "Save and share your solutions",
   "private": true,
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "yarn test:lint && yarn test:code",
+    "test": "yarn test:lint && yarn test:code --no-watch",
     "test:code": "node scripts/test.js",
     "test:lint": "eslint .",
     "commit": "git-cz",
