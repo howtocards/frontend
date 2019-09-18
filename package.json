@@ -1,6 +1,6 @@
 {
   "name": "@howtocards/frontend",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Save and share your solutions",
   "private": true,
   "scripts": {
