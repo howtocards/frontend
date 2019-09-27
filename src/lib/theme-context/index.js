@@ -1,17 +1,25 @@
 // @flow
 import * as React from "react"
-import { createEvent, createStore } from "effector"
+import { combine } from "effector"
 import { useStore } from "effector-react"
 import { ThemeProvider } from "styled-components"
 
-const themeToggled = createEvent()
-const $isDark = createStore(localStorage.getItem("theme") === "dark")
+import { $prefersDark } from "./system-prefers"
+import { $selectedTheme, themeToggled } from "./user-prefers"
 
-$isDark.on(themeToggled, (isDark) => !isDark)
+const $theme = combine(
+  $selectedTheme,
+  $prefersDark,
+  (selected, prefersDark) => {
+    if (selected === "auto") {
+      return prefersDark ? "dark" : "light"
+    }
 
-$isDark.watch((isDark) => {
-  localStorage.setItem("theme", isDark ? "dark" : "light")
-})
+    return selected // "dark" | "light"
+  },
+)
+
+const $isDark = $theme.map((theme) => theme === "dark")
 
 type ProviderProps = {
   dark: {},
@@ -19,6 +27,7 @@ type ProviderProps = {
   children: React.Node,
 }
 
+// TODO remove ThemeProvider in prefer to css theme
 export const ToggleThemeProvider = ({
   dark,
   light,
@@ -40,17 +49,8 @@ export const ToggleThemeProvider = ({
   return <ThemeProvider theme={isDark ? dark : light}>{children}</ThemeProvider>
 }
 
-type TogglerProps = {
-  render: (p: {
-    isDark: boolean,
-    theme: "dark" | "light",
-    toggle: () => void,
-  }) => React.Node,
-}
+export const useTheme = () => {
+  const theme = useStore($selectedTheme)
 
-export const WithThemeToggler = ({ render }: TogglerProps) => {
-  const isDark = useStore($isDark)
-  const theme = isDark ? "dark" : "light"
-
-  return render({ isDark, theme, toggle: themeToggled })
+  return { theme, toggle: themeToggled }
 }
