@@ -8,7 +8,7 @@ const availableThemes: Theme[] = ["dark", "light", "auto"]
 
 export const $selectedTheme = createStore<Theme>(restoreTheme())
 
-$selectedTheme.on(themeToggled, nextTheme)
+$selectedTheme.on(themeToggled, toNextTheme)
 
 $selectedTheme.watch(saveTheme)
 
@@ -26,16 +26,12 @@ function saveTheme(theme: Theme) {
   localStorage.setItem("theme", theme)
 }
 
-function nextTheme(theme: Theme): Theme {
-  switch (theme) {
-    case "auto":
-      return "dark"
+const nextTheme: { [key: Theme]: Theme } = {
+  auto: "dark",
+  dark: "light",
+  light: "auto",
+}
 
-    case "dark":
-      return "light"
-
-    case "light":
-    default:
-      return "auto"
-  }
+function toNextTheme(theme) {
+  return nextTheme[theme]
 }

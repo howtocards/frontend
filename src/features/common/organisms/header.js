@@ -65,24 +65,16 @@ linksForUser.propTypes = {
 
 const linksForAnonym = () => <NavLink to="/join">Join</NavLink>
 
-const themeEmoji = (theme) => {
-  switch (theme) {
-    case "dark":
-      return "🌚"
-
-    case "light":
-      return "🌝"
-
-    case "auto":
-    default:
-      return "🌗"
-  }
+const themeEmoji = {
+  dark: "🌚",
+  light: "🌝",
+  auto: "🌗",
 }
 
 const ToggleThemeButton = () => {
   const { theme, toggle } = useTheme()
 
-  return <NavItem onClick={toggle}>{themeEmoji(theme)}</NavItem>
+  return <NavItem onClick={toggle}>{themeEmoji[theme]}</NavItem>
 }
 
 const HeaderBox = styled.header`
