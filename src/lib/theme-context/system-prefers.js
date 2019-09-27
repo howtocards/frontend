@@ -11,4 +11,3 @@ matcher.addEventListener("change", (event) => {
   prefersChanged(event.matches)
 })
 
-$prefersDark.watch((t) => console.info("prefersDark", t))
