@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 
-import { WithThemeToggler } from "@lib/theme-context"
+import { useTheme } from "@lib/theme-context"
 import * as Menu from "@lib/context-menu"
 import { Container } from "@howtocards/ui"
 import { SearchBar } from "@features/search"
@@ -65,13 +65,17 @@ linksForUser.propTypes = {
 
 const linksForAnonym = () => <NavLink to="/join">Join</NavLink>
 
-const ToggleThemeButton = () => (
-  <WithThemeToggler
-    render={({ toggle, isDark }) => (
-      <NavItem onClick={toggle}>{isDark ? "🌔" : "☀️"}</NavItem>
-    )}
-  />
-)
+const themeEmoji = {
+  dark: "🌚",
+  light: "🌝",
+  auto: "🌗",
+}
+
+const ToggleThemeButton = () => {
+  const { theme, toggle } = useTheme()
+
+  return <NavItem onClick={toggle}>{themeEmoji[theme]}</NavItem>
+}
 
 const HeaderBox = styled.header`
   display: flex;
