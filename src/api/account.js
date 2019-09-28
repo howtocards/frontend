@@ -27,10 +27,12 @@ const createAccount = (registerData: RegisterData): Promise<number> =>
 export type Settings = {|
   displayName: string | null,
   gravatarEmail: string | null,
+  currentEmail: string | null,
 |}
 
 export type UpdateSettings = {|
   displayName?: string,
+  gravatarEmail?: string,
 |}
 
 const updateSettings = (
