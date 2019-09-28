@@ -103,6 +103,7 @@ UserPage.propTypes = {
 const UserInfo = ({ user }) =>
   user ? (
     <Col gap="1rem">
+      <Avatar src={`${user.avatar}&s=512`} />
       <Row>
         <H3 narrow>{user.displayName || user.id}</H3>
       </Row>
@@ -115,12 +116,20 @@ UserInfo.propTypes = {
     id: PropTypes.number.isRequired,
     email: PropTypes.string,
     displayName: PropTypes.string,
+    avatar: PropTypes.string,
   }),
 }
 
 UserInfo.defaultProps = {
   user: null,
 }
+
+const Avatar = styled.img`
+  width: 320px;
+  height: 320px;
+  display: block;
+  border: 1px solid var(--bw50);
+`
 
 const CurrentUserInfo = ({ user }) =>
   user.email ? <Row>You: {user.email}</Row> : null

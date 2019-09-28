@@ -5,11 +5,13 @@ export type CurrentUser = {|
   id: number,
   displayName: string,
   email: string,
+  avatar: string,
 |}
 
 export type ExternalUser = {|
   id: number,
   displayName: string,
+  avatar: string,
 |}
 
 export type User = ExternalUser | CurrentUser
