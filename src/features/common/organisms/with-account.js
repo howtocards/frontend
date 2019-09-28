@@ -1,11 +1,13 @@
 // @flow
 import * as React from "react"
 import { useStore } from "effector-react"
-import { $session, type Session } from "../model/session.store"
+
+import { type CurrentUser } from "@api/account"
+import { $session } from "../model/session.store"
 
 type Props = {|
-  render?: ({ account: ?Session, accountId: ?number }) => React.Node,
-  renderExists?: ({ account: Session, accountId: number }) => React.Node,
+  render?: ({ account: ?CurrentUser, accountId: ?number }) => React.Node,
+  renderExists?: ({ account: CurrentUser, accountId: number }) => React.Node,
   renderEmpty?: ({ account: null, accountId: null }) => React.Node,
 |}
 

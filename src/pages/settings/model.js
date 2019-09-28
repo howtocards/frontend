@@ -106,6 +106,7 @@ sample({
   target: saveSettings,
   fn: (settings, gravatarEmail) => ({
     displayName: settings?.displayName || "",
+    username: settings?.username || "",
     gravatarEmail,
   }),
 })
@@ -116,6 +117,7 @@ sample({
   target: saveSettings,
   fn: (settings, displayName) => ({
     gravatarEmail: settings?.gravatarEmail || "",
+    username: settings?.username || "",
     displayName,
   }),
 })

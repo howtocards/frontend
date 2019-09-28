@@ -45,7 +45,7 @@ export const routes = () => [
     component: SettingsPage,
   },
   {
-    path: "/user/:userId",
+    path: "/@:username",
     exact: true,
     component: UserPage,
   },

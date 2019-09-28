@@ -21,14 +21,14 @@ import {
 type Props = {
   match: {
     params: {
-      userId: string,
+      username: string,
     },
   },
 }
 
 export const UserPage = ({ match }: Props) => {
   const [tab, setTab] = React.useState<"created" | "useful">("useful")
-  const userId = parseInt(match.params.userId, 10)
+  const { username } = match.params
 
   const user = useStore($user)
   const { created, useful } = useStore($cards)
@@ -37,8 +37,8 @@ export const UserPage = ({ match }: Props) => {
   const error = useStore($error)
 
   React.useEffect(() => {
-    pageMounted({ userId })
-  }, [userId])
+    pageMounted({ username })
+  }, [username])
 
   if (isFailed)
     return <ErrorView error={error || "Cannot load. Please, try again later"} />
@@ -92,20 +92,12 @@ export const UserPage = ({ match }: Props) => {
   )
 }
 
-UserPage.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      userId: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-}
-
 const UserInfo = ({ user }) =>
   user ? (
     <Col gap="1rem">
       <Avatar src={`${user.avatar}&s=512`} />
       <Row>
-        <H3 narrow>{user.displayName || user.id}</H3>
+        <H3 narrow>{user.displayName || user.username}</H3>
       </Row>
       <CurrentUserInfo user={user} />
     </Col>
@@ -117,6 +109,7 @@ UserInfo.propTypes = {
     email: PropTypes.string,
     displayName: PropTypes.string,
     avatar: PropTypes.string,
+    username: PropTypes.string.isRequired,
   }),
 }
 
@@ -132,13 +125,13 @@ const Avatar = styled.img`
 `
 
 const CurrentUserInfo = ({ user }) =>
-  user.email ? <Row>You: {user.email}</Row> : null
+  user.email ? <Row>Email: {user.email}</Row> : null
 
 CurrentUserInfo.propTypes = {
   user: PropTypes.shape({ email: PropTypes.string }).isRequired,
 }
 
-const displayName = (user) => (user && user.displayName) || "user"
+const displayName = (user) => user?.displayName || user?.username || "{UNNAMED}"
 
 const NamedCardsList = ({
   show,
