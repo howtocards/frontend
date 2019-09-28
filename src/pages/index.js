@@ -6,6 +6,7 @@ import { CardViewPage } from "./view/page"
 import { JoinLoginPage } from "./join/login/page"
 import { JoinRegistrationPage } from "./join/registration/page"
 import { SettingsPage } from "./settings/page"
+import { UserPage } from "./users/current/page"
 
 export const routes = () => [
   {
@@ -42,5 +43,10 @@ export const routes = () => [
     path: "/settings",
     exact: true,
     component: SettingsPage,
+  },
+  {
+    path: "/user/:userId",
+    exact: true,
+    component: UserPage,
   },
 ]

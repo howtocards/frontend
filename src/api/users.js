@@ -1,12 +1,12 @@
 // @flow
 import { request } from "@features/common"
 import { type Card } from "@api/cards"
-import { type User } from "./types"
+import { type User } from "@api/account"
 
 /**
  * Get info about user
  */
-const getInfo = (userId: number): Promise<User> =>
+const getInfo = (userId: number): Promise<{ user: User }> =>
   request("GET", `/users/${userId}/`)
 
 /**

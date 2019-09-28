@@ -8,8 +8,7 @@ import { Col, Row } from "@lib/styled-components-layout"
 import { Button, H1, H3, Link, ZeroTab } from "@howtocards/ui"
 import { SkeletonList } from "@features/cards"
 
-import { UsersCommonTemplate } from "../templates/common"
-import { ErrorView } from "../organisms/error"
+import { ErrorView, UsersCommonTemplate } from "@features/users"
 import {
   $cards,
   $error,
@@ -17,7 +16,7 @@ import {
   $isLoading,
   $user,
   pageMounted,
-} from "../model/current"
+} from "./model"
 
 type Props = {
   match: {
