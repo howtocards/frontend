@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable no-sequences */
 import * as React from "react"
 import styled from "styled-components"
 import { useStore } from "effector-react"
@@ -29,6 +30,7 @@ export const SettingsPage = () => {
     <SettingsTemplate title="Personal settings">
       <AvatarSection />
       <NameSection />
+      <UsernameSection />
     </SettingsTemplate>
   )
 }
@@ -155,6 +157,26 @@ const AvatarTemplate = styled.div`
     flex-grow: 1;
   }
 `
+
+const UsernameSection = () => {
+  return (
+    <FormSection title="Username">
+      <form>
+        <Col gap="1rem">
+          <span>Username is an identifier for your profile page.</span>
+          <Input
+            label="Short identifier with letters, digits, . and _"
+            value=""
+            onChange={() => {}}
+          />
+          <Row>
+            <Button type="submit">Change</Button>
+          </Row>
+        </Col>
+      </form>
+    </FormSection>
+  )
+}
 
 type FormSectionProps = {
   title: string,

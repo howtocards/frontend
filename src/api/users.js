@@ -6,20 +6,20 @@ import { type User } from "@api/account"
 /**
  * Get info about user
  */
-const getInfo = (userId: number): Promise<{ user: User }> =>
-  request("GET", `/users/${userId}/`)
+const getInfo = (username: string): Promise<{ user: User }> =>
+  request("GET", `/users/${username}/`)
 
 /**
  * Get useful cards for user
  */
-const getUsefulCardsFor = (userId: number): Promise<{ cards: Card[] }> =>
-  request("GET", `/users/${userId}/cards/useful/`)
+const getUsefulCardsFor = (username: string): Promise<{ cards: Card[] }> =>
+  request("GET", `/users/${username}/cards/useful/`)
 
 /**
  * Get cards created by user
  */
-const getCardsCreatedBy = (userId: number): Promise<{ cards: Card[] }> =>
-  request("GET", `/users/${userId}/cards/authors/`)
+const getCardsCreatedBy = (username: string): Promise<{ cards: Card[] }> =>
+  request("GET", `/users/${username}/cards/authors/`)
 
 /**
  * @see https://documenter.getpostman.com/view/6101539/RzfiGTRx#409d7cc1-252a-48c8-bd32-bc373879adc5

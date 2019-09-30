@@ -1,7 +1,6 @@
 // @flow
 /* eslint-disable react/prop-types */
 import * as React from "react"
-import PropTypes from "prop-types"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 
@@ -38,7 +37,7 @@ const linksForUser = ({ account }) => (
       trigger={<span>{account.displayName || "Profile"}</span>}
       menu={({ close }) => (
         <>
-          <Menu.Item as={Link} to={`/user/${account.id}`} onClick={close}>
+          <Menu.Item as={Link} to={`/@${account.username}`} onClick={close}>
             Profile: {account.email}
           </Menu.Item>
           <Menu.Item as={Link} to="/settings" onClick={close}>
@@ -53,15 +52,6 @@ const linksForUser = ({ account }) => (
     />
   </>
 )
-
-linksForUser.propTypes = {
-  account: PropTypes.shape({
-    user: PropTypes.shape({
-      id: PropTypes.number,
-      email: PropTypes.string,
-    }),
-  }).isRequired,
-}
 
 const linksForAnonym = () => <NavLink to="/join">Join</NavLink>
 
