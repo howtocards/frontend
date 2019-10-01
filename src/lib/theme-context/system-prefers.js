@@ -7,6 +7,6 @@ const prefersChanged = createEvent<boolean>()
 
 export const $prefersDark = restore<boolean>(prefersChanged, matcher.matches)
 
-matcher.addEventListener("change", (event) => {
+matcher.addListener((event) => {
   prefersChanged(event.matches)
 })
