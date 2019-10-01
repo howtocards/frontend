@@ -73,7 +73,7 @@ const HeaderBox = styled.header`
   justify-content: center;
   z-index: 1000;
   box-sizing: border-box;
-  box-shadow: 0 10px 20px rgba(36, 37, 38, 0.08);
+  box-shadow: 0 -1rem 4rem rgba(36, 37, 38, 0.3);
 
   & > div > * + * {
     margin-left: 2rem;
