@@ -1,12 +1,12 @@
-import React from "react"
+// @flow
+import * as React from "react"
 
 import { Col, Row } from "@lib/styled-components-layout"
 
-import { Button, ButtonPrimary, Card } from "@howtocards/ui/atoms"
-import { PrimitiveFooter } from "@howtocards/ui/organisms"
+import { Button, ButtonPrimary, Card, PrimitiveFooter } from "@howtocards/ui"
 import { CenterContentTemplate, Container } from "@howtocards/ui/templates"
 
-import { cancelPressed, logoutPressed } from "../model/logout.events"
+import { cancelPressed, logoutPressed } from "./model"
 
 export const LogoutPage = () => (
   <CenterContentTemplate footer={<PrimitiveFooter />}>

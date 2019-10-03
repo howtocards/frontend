@@ -5,6 +5,7 @@ import { CardsHomePage } from "./home/page"
 import { CardViewPage } from "./view/page"
 import { JoinLoginPage } from "./join/login/page"
 import { JoinRegistrationPage } from "./join/registration/page"
+import { LogoutPage } from "./logout/page"
 import { SettingsPage } from "./settings/page"
 import { UserPage } from "./users/current/page"
 
@@ -38,6 +39,11 @@ export const routes = () => [
     path: "/edit/:cardId",
     exact: true,
     component: CardEditPage,
+  },
+  {
+    path: "/logout",
+    exact: true,
+    component: LogoutPage,
   },
   {
     path: "/settings",
