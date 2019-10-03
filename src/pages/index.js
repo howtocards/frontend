@@ -9,6 +9,8 @@ import { LogoutPage } from "./logout/page"
 import { SettingsPage } from "./settings/page"
 import { UserPage } from "./users/current/page"
 
+import { NotFoundPage } from "./internal/not-found/page"
+
 export const routes = () => [
   {
     path: "/",
@@ -55,4 +57,6 @@ export const routes = () => [
     exact: true,
     component: UserPage,
   },
+
+  { component: NotFoundPage },
 ]
