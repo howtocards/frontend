@@ -6,6 +6,7 @@ import { CardViewPage } from "./view/page"
 import { JoinLoginPage } from "./join/login/page"
 import { JoinRegistrationPage } from "./join/registration/page"
 import { LogoutPage } from "./logout/page"
+import { SearchPage } from "./search/page"
 import { SettingsPage } from "./settings/page"
 import { UserPage } from "./users/current/page"
 
@@ -46,6 +47,11 @@ export const routes = () => [
     path: "/logout",
     exact: true,
     component: LogoutPage,
+  },
+  {
+    path: "/search",
+    exact: true,
+    component: SearchPage,
   },
   {
     path: "/settings",
