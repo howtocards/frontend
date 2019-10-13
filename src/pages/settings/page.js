@@ -8,19 +8,25 @@ import { Col, Row } from "@lib/styled-components-layout"
 import { SettingsTemplate } from "@features/settings"
 import { Button, ButtonPrimary, H4, Input, ZeroButton } from "@howtocards/ui"
 import {
-  $avaEmail,
-  $avaEmailChanged,
   $avatarUrl,
+  $displayName,
+  $gravatarEmail,
   $isDisabled,
-  $name,
-  $nameChanged,
+  $isDisplayNameChanged,
+  $isGravatarEmailChanged,
+  $isUsernameChanged,
+  $username,
+  $usernameError,
+  type UsernameError,
+  displayNameChanged,
+  displayNameSubmitted,
   gravatarChangeCancelled,
   gravatarEmailChanged,
   gravatarEmailSubmitted,
-  nameChanged,
-  nameSubmitted,
   pageMounted,
   pageUnmounted,
+  usernameChanged,
+  usernameSubmitted,
 } from "./model"
 
 export const SettingsPage = () => {
@@ -29,20 +35,20 @@ export const SettingsPage = () => {
   return (
     <SettingsTemplate title="Personal settings">
       <AvatarSection />
-      <NameSection />
+      <DisplayNameSection />
       <UsernameSection />
     </SettingsTemplate>
   )
 }
 
-const NameSection = () => {
-  const name = useStore($name)
+const DisplayNameSection = () => {
+  const name = useStore($displayName)
   const isDisabled = useStore($isDisabled)
-  const isChanged = useStore($nameChanged)
+  const isChanged = useStore($isDisplayNameChanged)
   const submit = React.useCallback(
     (event) => {
       event.preventDefault()
-      if (!isDisabled) nameSubmitted(event)
+      if (!isDisabled) displayNameSubmitted(event)
     },
     [isDisabled],
   )
@@ -56,7 +62,7 @@ const NameSection = () => {
             disabled={isDisabled}
             label="Enter your name and press Enter"
             value={name}
-            onChange={nameChanged}
+            onChange={displayNameChanged}
           />
           <Row>
             <Button disabled={buttonDisabled} type="submit">
@@ -84,9 +90,9 @@ const AvatarSection = () => {
 
 const ChangeAvatar = () => {
   const [opened, setOpened] = React.useState(false)
-  const gravatarEmail = useStore($avaEmail)
+  const gravatarEmail = useStore($gravatarEmail)
   const isDisabled = useStore($isDisabled)
-  const isChanged = useStore($avaEmailChanged)
+  const isChanged = useStore($isGravatarEmailChanged)
 
   const isSaveDisabled = isDisabled || !isChanged
 
@@ -159,23 +165,45 @@ const AvatarTemplate = styled.div`
 `
 
 const UsernameSection = () => {
+  const username = useStore($username)
+  const isDisabled = useStore($isDisabled)
+  const isChanged = useStore($isUsernameChanged)
+  const error = useStore($usernameError)
+
+  const onSubmit = React.useCallback((event) => {
+    event.preventDefault()
+    usernameSubmitted(event)
+  })
+
+  const isSaveDisabled = isDisabled || !isChanged
+
   return (
     <FormSection title="Username">
-      <form>
+      <form disabled={isSaveDisabled} onSubmit={onSubmit}>
         <Col gap="1rem">
           <span>Username is an identifier for your profile page.</span>
           <Input
             label="Short identifier with letters, digits, . and _"
-            value=""
-            onChange={() => {}}
+            value={username}
+            onChange={usernameChanged}
+            disabled={isDisabled}
           />
+          {error ? UsernameErrors[error] : null}
           <Row>
-            <Button type="submit">Change</Button>
+            <Button disabled={isSaveDisabled} type="submit">
+              Change
+            </Button>
           </Row>
         </Col>
       </form>
     </FormSection>
   )
+}
+
+const UsernameErrors: { [key: UsernameError]: string } = {
+  username_empty: "Please, enter a username",
+  username_incorrect: "That username is incorrect",
+  username_taken: "Please, enter another username",
 }
 
 type FormSectionProps = {
