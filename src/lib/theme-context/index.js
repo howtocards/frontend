@@ -38,11 +38,7 @@ export const ToggleThemeProvider = ({
   React.useEffect(() => {
     const html = document.querySelector("html")
     if (html) {
-      if (isDark) {
-        html.classList.add("theme-dark")
-      } else {
-        html.classList.remove("theme-dark")
-      }
+      html.dataset.theme = isDark ? "dark" : "light"
     }
   }, [isDark])
 

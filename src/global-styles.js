@@ -12,19 +12,25 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   :root {
-    ${staticLight}
+    font-size: 10px;
   }
 
-  html.theme-dark {
+  [data-theme="dark"] {
     ${staticDark}
   }
 
-  #root {
+  [data-theme="light"] {
+    ${staticLight}
+  }
+
+  body {
     display: flex;
     flex-flow: column nowrap;
     align-items: stretch;
     height: 100vh;
     overflow: hidden;
+    background-color: var(--canvas);
+    color: var(--canvas-text);
   }
 
   tt,
