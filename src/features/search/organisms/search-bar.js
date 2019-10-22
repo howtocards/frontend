@@ -11,24 +11,20 @@ import { searchTriggered } from "../model/main"
 const UPDATE_INTERVAL = 500
 
 export const SearchBar = () => {
-  const inputRef = React.useRef(null)
-  const [searchString, setSearchString] = React.useState("")
   const searchHistory = useStore($searchHistory)
-
-  const debouncedSearchString = useDebouncedValue(searchString, UPDATE_INTERVAL)
+  const inputRef = React.useRef(null)
 
   const { pathname, search } = useLocation()
   const autoFocus = pathname === "/search"
 
   const queryParams = new URLSearchParams(search.replace(/^\?/, ""))
-
   const searchQuery = queryParams.get("q")
 
-  React.useEffect(() => {
-    if (searchQuery) {
-      setSearchString(searchQuery)
-    }
-  }, [searchQuery])
+  const [searchString, setSearchString] = React.useState(
+    () => searchQuery || "",
+  )
+
+  const debouncedSearchString = useDebouncedValue(searchString, UPDATE_INTERVAL)
 
   React.useEffect(() => {
     if (debouncedSearchString) {
@@ -38,8 +34,13 @@ export const SearchBar = () => {
 
         // $off
         history.push(`/search?${queryParams}`)
+
+        searchTriggered(debouncedSearchString)
       }
-      searchTriggered(debouncedSearchString)
+    }
+
+    if (!debouncedSearchString && searchHistory.length > 0) {
+      history.push("/")
     }
   }, [debouncedSearchString])
 
