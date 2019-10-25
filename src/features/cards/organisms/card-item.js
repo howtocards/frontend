@@ -256,6 +256,19 @@ const CellCardHeader = styled.div`
 const CellCardContent = styled.div`
   grid-area: content;
   overflow-y: hidden;
+  position: relative;
+
+  ${media.mobile} {
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2rem;
+      background: linear-gradient(to top, var(--card) 10%, transparent);
+    }
+  }
 `
 
 CardHeader.propTypes = {
