@@ -60,6 +60,7 @@ export const prismcssDark = css`
     margin: 0.5em 0;
     overflow: auto;
     padding: 2rem;
+    padding-left: 3rem;
     ${({ theme }) => theme.embed.canvas};
     background-color: #171717;
   }
@@ -226,6 +227,7 @@ export const prismcssLight = css`
     margin: 0.5em 0;
     overflow: auto;
     padding: 2rem;
+    padding-left: 3rem;
     ${({ theme }) => theme.embed.canvas}
   }
 

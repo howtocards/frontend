@@ -108,34 +108,44 @@ export class CodeBlock extends React.Component {
     )
 
     const languageComponent = editor.readOnly ? (
-      <p style={{ textAlign: "right", paddingRight: "10px" }}>{language}</p>
+      <LanguageName>{language}</LanguageName>
     ) : (
-      <MultiSelect
-        value={selectedValueForSelect}
-        onChange={({ value }) => this.onChange(value)}
-        options={optionsForSelect}
-      />
+      <div
+        contentEditable={false}
+        style={{
+          position: "absolute",
+          top: "5px",
+          right: "5px",
+          width: "200px",
+        }}
+      >
+        <MultiSelect
+          value={selectedValueForSelect}
+          onChange={({ value }) => this.onChange(value)}
+          options={optionsForSelect}
+        />
+      </div>
     )
 
     return (
-      <div className={className} style={{ position: "relative" }}>
-        <pre className={`language-${language}`}>
-          <code {...attributes} className={`language-${language}`}>
-            {children}
-          </code>
-        </pre>
-        <div
-          contentEditable={false}
-          style={{
-            position: "absolute",
-            top: "5px",
-            right: "5px",
-            width: "200px",
-          }}
-        >
-          {languageComponent}
+      <div style={{ position: "relative" }}>
+        <div className={className} style={{ position: "relative" }}>
+          <pre className={`language-${language}`}>
+            <code {...attributes} className={`language-${language}`}>
+              {children}
+            </code>
+          </pre>
         </div>
+        {languageComponent}
       </div>
     )
   }
 }
+
+const LanguageName = styled.div`
+  position: absolute;
+  left: 0rem;
+  top: 0.5rem;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+`

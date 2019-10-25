@@ -113,7 +113,7 @@ export class RichEditor extends React.Component {
           readOnly={readOnly}
           {...HotKeys(configCodePlugin)}
           style={{
-            minHeight: "300px",
+            minHeight: "50px",
           }}
           value={value}
           onChange={this.onChange}
