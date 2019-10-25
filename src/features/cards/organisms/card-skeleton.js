@@ -15,19 +15,11 @@ export const CardSkeleton = () => (
 
           <CellCardHeader>
             <HeadingLine>
-              <H2 narrow>
-                <TextSkeleton width="245px" />
-              </H2>
-
-              <Row basis="25%" justify="flex-end" gap="1.4em" align="center">
-                <TextSkeleton width="65px" />
-                <TextSkeleton width="45px" />
-              </Row>
+              <TextSkeleton width="245px" />
             </HeadingLine>
           </CellCardHeader>
 
           <CellCardContent>
-            <br />
             <TextSkeleton width="485px" />
             <TextSkeleton width="525px" />
             <TextSkeleton width="515px" />
@@ -45,6 +37,10 @@ export const CardSkeleton = () => (
 
 CardSkeleton.defaultProps = {
   maximized: false,
+}
+
+const media = {
+  mobile: "@media screen and (max-width: 500px)",
 }
 
 const CardFlagWithNumber = () => (
@@ -68,6 +64,10 @@ const CardBox = styled.div`
   overflow-y: hidden;
   padding: 2rem;
   max-height: ${(p) => (p.maximized ? "auto" : "24rem")};
+
+  ${media.mobile} {
+    padding: 2rem 1rem;
+  }
 `
 
 const GridCard = styled.div`
@@ -76,15 +76,22 @@ const GridCard = styled.div`
     "flag header"
     "flag content"
     "flag footer";
-  grid-template-rows: 2rem 10rem 3rem;
+  grid-template-rows: auto 10rem auto;
   grid-template-columns: 50px 1fr;
   grid-gap: 8px;
 
   ${(p) =>
     p.maximized &&
     css`
-      grid-template-rows: 2rem 1fr 3rem;
+      grid-template-rows: auto 1fr auto;
     `}
+
+  ${media.mobile} {
+    grid-template-areas:
+      "flag header"
+      "content content"
+      "footer footer";
+  }
 `
 
 const HeadingLine = styled.div`
