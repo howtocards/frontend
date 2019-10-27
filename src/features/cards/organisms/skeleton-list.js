@@ -19,7 +19,7 @@ export const SkeletonList = ({
   renderEmpty,
 }: Props) =>
   isLoading ? (
-    Array.from<*>({ length: count }, (_, idx) => <CardSkeleton key={idx} />)
+    Array.from({ length: count }, (_, idx) => <CardSkeleton key={idx} />)
   ) : (
     <CardsList ids={ids} renderEmpty={renderEmpty} />
   )

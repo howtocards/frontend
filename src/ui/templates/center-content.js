@@ -26,5 +26,6 @@ export const CenterContent = styled.main`
   overflow-y: auto;
   flex-direction: column;
   width: 100%;
-  ${({ theme }) => theme.embed.canvas}
+  color: var(--canvas-text);
+  background-color: var(--canvas);
 `

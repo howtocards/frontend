@@ -33,6 +33,12 @@ export const GlobalStyles = createGlobalStyle`
     color: var(--canvas-text);
   }
 
+  #root {
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+  }
+
   tt,
   code,
   kbd,

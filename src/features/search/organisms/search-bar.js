@@ -69,11 +69,10 @@ const SearchInput = styled.input`
   width: 100%;
   padding: 0 2rem;
   transition: box-shadow 120ms;
+  color: var(--canvas-text);
+  background-color: var(--canvas);
 
   &:focus {
-    box-shadow: 0 0 0 3px
-      ${({ theme }) => theme.palette.primary.initial.background};
+    box-shadow: 0 0 0 3px var(--primary);
   }
-
-  ${({ theme }) => theme.embed.canvas}
 `

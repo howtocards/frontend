@@ -9,7 +9,9 @@ export const Card = styled.div`
   box-sizing: border-box;
   box-shadow: 0 0.6rem 1rem rgba(36, 37, 38, 0.08);
 
-  ${({ theme }) => theme.embed.card}
+  background-color: var(--card);
+  color: var(--card-text);
+  border-color: var(--borders);
 `
 
 export const CardSticky = styled(Card)`

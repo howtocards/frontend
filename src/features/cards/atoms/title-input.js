@@ -9,6 +9,7 @@ export const TitleInput = styled.input`
   border: none;
   font-size: 1.8em;
   margin-bottom: 1rem;
-
-  ${({ theme }) => theme.embed.card}
+  color: var(--card-text);
+  background-color: var(--card);
+  border-color: var(--borders);
 `

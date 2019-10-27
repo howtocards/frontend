@@ -30,6 +30,7 @@ const MainContainer = styled.div`
     "header"
     "."
     "footer";
+  flex-grow: 1;
 `
 
 const Header = styled.header`

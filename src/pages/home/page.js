@@ -6,29 +6,28 @@ import { Col, Row } from "@lib/styled-components-layout"
 import { H2 } from "@howtocards/ui"
 import { CardsCommonTemplate, SkeletonList } from "@features/cards"
 
-import { $cardsIds, homeCardsFetching, pageReady } from "./model"
+import { $cardsIds, Gate, homeCardsFetching } from "./model"
 
 export const CardsHomePage = () => {
   const ids = useStore($cardsIds)
   const isLoading = useStore(homeCardsFetching.isLoading)
 
-  React.useEffect(() => {
-    pageReady()
-  }, [])
-
   return (
-    <CardsCommonTemplate sidebar={<Sidebar />}>
-      <SkeletonList
-        isLoading={isLoading}
-        ids={ids}
-        renderEmpty={() => <p>What about to create new card?</p>}
-      />
-    </CardsCommonTemplate>
+    <>
+      <Gate />
+      <CardsCommonTemplate sidebar={<Sidebar />}>
+        <SkeletonList
+          isLoading={ids.length === 0 && isLoading}
+          ids={ids}
+          renderEmpty={() => <p>What about to create new card?</p>}
+        />
+      </CardsCommonTemplate>
+    </>
   )
 }
 
 const Sidebar = () => (
-  <Col gap="3rem">
+  <Col gap="1rem">
     <Row>
       <H2 narrow>Latest cards</H2>
     </Row>

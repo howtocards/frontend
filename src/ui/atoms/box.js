@@ -5,12 +5,14 @@ export const Box = styled.div`
   display: flex;
   flex-flow: column;
   flex-shrink: 0;
-  ${({ theme }) => theme.embed.card}
+  background-color: var(--card);
+  color: var(--card-text);
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   padding: 2rem;
   box-sizing: border-box;
-  &: hover {
+
+  &:hover {
     display: flex;
     flex-flow: column;
     flex-shrink: 0;
@@ -18,14 +20,16 @@ export const Box = styled.div`
     padding: 2rem;
     box-sizing: border-box;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
-    //transform: scale(1.001);
+    transform: scale(1.001);
   }
+
   ${({ sticky }) =>
     sticky &&
     css`
       position: sticky;
       top: 2rem;
-      &: hover {
+
+      &:hover {
         display: flex;
         flex-flow: column;
         flex-shrink: 0;
@@ -35,6 +39,7 @@ export const Box = styled.div`
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
       }
     `}
+
   ${({ popup }) =>
     popup &&
     css`
