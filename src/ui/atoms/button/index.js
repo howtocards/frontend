@@ -21,7 +21,10 @@ export const Button = styled.button`
     border-color: var(--primary);
   }
 
-  &:disabled, &:disabled:hover, &:disabled:focus, &:disabled:active {
+  &:disabled,
+  &:disabled:hover,
+  &:disabled:focus,
+  &:disabled:active {
     background-color: var(--canvas);
     border-color: var(--canvas);
     color: var(--bw40);
@@ -35,8 +38,6 @@ export const Button = styled.button`
       line-height: 1rem;
     `}
 
-
-  ${({ theme }) => theme.embed.button.primary}
   ${({ grow }) =>
     grow &&
     css`

@@ -79,7 +79,9 @@ const HeaderBox = styled.header`
     margin-left: 2rem;
   }
 
-  ${({ theme }) => theme.embed.card}
+  color: var(--card-text);
+  background-color: var(--card);
+  border-color: var(--borders);
 `
 
 const SearchBox = styled.div`
@@ -100,10 +102,10 @@ const NavItem = styled.a`
   user-select: none;
 
   &:hover {
-    color: ${({ theme }) => theme.palette.primary.initial.background};
+    color: var(--primary);
   }
 
-  ${({ theme }) => theme.embed.link}
+  color: var(--secondary);
 `
 
 const NavLink = NavItem.withComponent(Link)

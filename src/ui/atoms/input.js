@@ -74,16 +74,18 @@ const InputNative = styled.input`
   box-shadow: none;
   background-color: white;
   transition: box-shadow 120ms, border-color 120ms;
-  ${(p) => p.theme.embed.card}
-  box-shadow: 0 0 0 1px ${(p) => p.theme.palette.decoration.borders};
+  color: var(--card-text);
+  background-color: var(--card);
+  border-color: var(--borders);
+  box-shadow: 0 0 0 1px var(--borders);
 
   &:focus {
-    box-shadow: 0 0 0 1px ${(p) => p.theme.palette.primary.initial.background};
-    border-color: ${(p) => p.theme.palette.primary.initial.background};
+    box-shadow: 0 0 0 1px var(--primary);
+    border-color: var(--primary);
   }
 
   &:disabled {
-    background-color: rgba(80, 80, 80, .1);
+    background-color: var(--borders);
   }
 
   ${(p) =>

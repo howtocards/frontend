@@ -30,5 +30,6 @@ export const CommonContent = styled.div`
   display: flex;
   justify-content: center;
   overflow-y: auto;
-  ${({ theme }) => theme.embed.canvas}
+  color: var(--canvas-text);
+  background-color: var(--canvas);
 `
