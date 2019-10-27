@@ -73,7 +73,6 @@ export const prismcssDark = css`
     padding: 4rem 2rem;
     color: var(--canvas-text);
     background-color: var(--canvas);
-    ${({ theme }) => theme.embed.canvas}
     border-radius: 0.3em;
     box-shadow: 1px 1px 0.3em -0.1em black inset;
     white-space: normal;
