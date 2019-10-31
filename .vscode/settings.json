@@ -1,3 +1,5 @@
 {
-  "javascript.validate.enable": false
+  "javascript.validate.enable": false,
+  "cucumberautocomplete.steps": ["cypress/integration/**/opening*.js"],
+  "cucumberautocomplete.syncfeatures": "cypress/integration/**/*.feature"
 }

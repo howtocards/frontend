@@ -178,3 +178,4 @@ yarn-debug.log*
 yarn-error.log*
 .docz/cache
 .docz/dist
+cypress/videos

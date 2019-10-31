@@ -1,7 +1,6 @@
 module.exports = {
   // clearMocks: true,
-  // coverageDirectory: "coverage",
-
+  coverageDirectory: "coverage",
   collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts"],
   resolver: "jest-pnp-resolver",
   setupFiles: ["react-app-polyfill/jsdom"],
