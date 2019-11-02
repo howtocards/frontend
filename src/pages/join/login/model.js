@@ -7,6 +7,9 @@ import {
   createEvent,
   createStore,
   createStoreObject,
+  forward,
+  guard,
+  sample,
 } from "effector"
 import { type Fetching, createFetching } from "@lib/fetching"
 import { emailValidator } from "@lib/validators"
@@ -20,6 +23,8 @@ export const passwordChanged = createEvent<SyntheticEvent<HTMLInputElement>>()
 export const formSubmitted = createEvent<*>()
 export const formMounted = createEvent<*>()
 export const formUnmounted = createEvent<void>()
+const historyPushed = createEvent<string>()
+const historyReplaced = createEvent<string>()
 
 type LoginData = {
   email: string,
@@ -32,13 +37,13 @@ export const loginFetching: Fetching<{ token: string }, *> = createFetching(
 )
 
 export const $email = createStore<string>("")
-export const $emailError = $email.map<?string>(emailValidator)
+export const $emailError = $email.map<string | null>(emailValidator)
 export const $isEmailCorrect = $emailError.map<boolean>(
   (value) => value === null,
 )
 
 export const $password = createStore<string>("")
-export const $passwordError = $password.map<?string>((value) => {
+export const $passwordError = $password.map<null | string>((value) => {
   if (value && value.length > 1) return null
   return "Please, enter password"
 })
@@ -64,10 +69,12 @@ export const $isSubmitEnabled: Store<boolean> = combine(
   (isFormValid, isLoginFetching) => isFormValid && !isLoginFetching,
 )
 
-formMounted.watch(() => {
-  if ($isAuthenticated.getState()) {
-    history.replace("/")
-  }
+loginProcessing.use(sessionApi.createSession)
+
+guard({
+  source: sample($isAuthenticated, formMounted),
+  filter: (isAuth) => isAuth,
+  target: historyReplaced.prepend(() => "/"),
 })
 
 const trimEvent = (event) => event.currentTarget.value.trim()
@@ -77,15 +84,21 @@ $password.on(passwordChanged.map(trimEvent), (_, password) => password)
 $email.reset(formUnmounted, formMounted)
 $password.reset(formUnmounted, formMounted)
 
-formSubmitted.watch(() => {
-  if (!$isSubmitEnabled.getState()) return
-
-  const form = $form.getState()
-  loginProcessing(form)
+guard({
+  source: sample(combine($isSubmitEnabled, $form), formSubmitted),
+  filter: ([isEnabled]) => isEnabled,
+  target: loginProcessing.prepend(([_, form]) => form),
 })
 
-loginProcessing.use(sessionApi.createSession)
-loginProcessing.done.watch(({ result }) => {
-  tokenChanged(result.token)
-  history.push("/")
+forward({
+  from: loginProcessing.done.map(({ result }) => result.token),
+  to: tokenChanged,
 })
+
+forward({
+  from: loginProcessing.done,
+  to: historyPushed.prepend(() => "/"),
+})
+
+historyPushed.watch((path) => history.push(path))
+historyReplaced.watch((path) => history.replace(path))
