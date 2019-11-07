@@ -7,7 +7,6 @@ WORKDIR /root/build
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
-RUN yarn test
 RUN yarn build
 
 #
