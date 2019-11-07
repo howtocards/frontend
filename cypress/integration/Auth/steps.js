@@ -16,6 +16,10 @@ Then("I see {string} in the {string} field", (text, type) => {
   cy.get(`input[type="${type}"]`).should("have.value", text)
 })
 
+Then("I make a screenshot", () => {
+  cy.percySnapshot()
+})
+
 Then("I see {string} in the title", (title) => {
   cy.title().should("include", title)
 })

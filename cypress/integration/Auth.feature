@@ -7,6 +7,8 @@ Feature: Authentication
     When I click to Join
     Then I see "join" in the URL
 
+    Then I make a screenshot
+
     When I type "mysuper@email.com" to the "email" field
     Then I see "mysuper@email.com" in the "email" field
 

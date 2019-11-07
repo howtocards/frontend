@@ -1,4 +1,4 @@
-language: minimal
+language: nodejs
 
 os:
   - linux
@@ -14,6 +14,11 @@ before_script:
 
 jobs:
   include:
+    - stage: screenshot
+      if: type = pull_request
+      script:
+        - yarn
+        - yarn e2e:run
     - stage: build
       script:
         - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
