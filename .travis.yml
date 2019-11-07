@@ -3,6 +3,10 @@ language: node_js
 node_js:
   - stable
 
+cache:
+  directories:
+    - ~/.cache/Cypress
+
 os:
   - linux
 
