@@ -19,13 +19,18 @@ env:
 before_script:
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
+install: skip
+
 jobs:
   include:
-    - stage: screenshot
+    - stage: test
       if: type = pull_request
       script:
         - yarn
         - yarn test
+    - stage: screenshot
+      if: type = pull_request
+      script:
         - yarn e2e:run
     - stage: build
       script:
