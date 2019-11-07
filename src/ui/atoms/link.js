@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom"
 export const Link = styled(RouterLink)`
   text-decoration: none;
 
-  color: ${({ theme }) => theme.palette.primary.initial.background};
+  color: var(--primary);
 
   &:hover {
     text-decoration: underline;

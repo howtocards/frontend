@@ -4,8 +4,7 @@ import { createEffect, createEvent, createStore, forward } from "effector"
 import { type Fetching, createFetching } from "@lib/fetching"
 import { $cardsRegistry, cardsToObject } from "@features/cards"
 import type { Card } from "@features/common"
-
-import { searchApi } from "../api"
+import { searchApi } from "@api/search"
 
 export const searchTriggered = createEvent<string>()
 

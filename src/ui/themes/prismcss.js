@@ -13,8 +13,9 @@ export const prismcssDark = css`
   }
   blockquote {
     padding: 4rem 2rem;
-    border: 1px solid ${(p) => p.theme.palette.decoration.borders};
-    ${({ theme }) => theme.embed.canvas}
+    border: 1px solid var(--borders);
+    color: var(--canvas-text);
+    background-color: var(--canvas);
     border-left: 10px solid #232222;
     margin: 1.5em 10px;
     padding: 0.5em 10px;
@@ -60,7 +61,9 @@ export const prismcssDark = css`
     margin: 0.5em 0;
     overflow: auto;
     padding: 2rem;
-    ${({ theme }) => theme.embed.canvas};
+    padding-left: 3rem;
+    color: var(--canvas-text);
+    background-color: var(--canvas);
     background-color: #171717;
   }
 
@@ -68,7 +71,8 @@ export const prismcssDark = css`
   :not(pre) > code[class*="language-"] {
     padding: 0.15em 0.2em 0.05em;
     padding: 4rem 2rem;
-    ${({ theme }) => theme.embed.canvas}
+    color: var(--canvas-text);
+    background-color: var(--canvas);
     border-radius: 0.3em;
     box-shadow: 1px 1px 0.3em -0.1em black inset;
     white-space: normal;
@@ -180,8 +184,9 @@ export const prismcssLight = css`
   }
   blockquote {
     padding: 4rem 2rem;
-    border: 1px solid ${(p) => p.theme.palette.decoration.borders};
-    ${({ theme }) => theme.embed.canvas}
+    border: 1px solid var(--borders);
+    color: var(--canvas-text);
+    background-color: var(--canvas);
     margin: 1.5em 10px;
     padding: 0.5em 10px;
   }
@@ -226,7 +231,9 @@ export const prismcssLight = css`
     margin: 0.5em 0;
     overflow: auto;
     padding: 2rem;
-    ${({ theme }) => theme.embed.canvas}
+    padding-left: 3rem;
+    color: var(--canvas-text);
+    background-color: var(--canvas);
   }
 
   /* Inline code */

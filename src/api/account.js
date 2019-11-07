@@ -5,11 +5,15 @@ export type CurrentUser = {|
   id: number,
   displayName: string,
   email: string,
+  avatar: string,
+  username: string,
 |}
 
 export type ExternalUser = {|
   id: number,
   displayName: string,
+  avatar: string,
+  username: string,
 |}
 
 export type User = ExternalUser | CurrentUser
@@ -27,10 +31,14 @@ const createAccount = (registerData: RegisterData): Promise<number> =>
 export type Settings = {|
   displayName: string | null,
   gravatarEmail: string | null,
+  currentEmail: string | null,
+  username: string,
 |}
 
 export type UpdateSettings = {|
-  displayName?: string,
+  displayName: string,
+  gravatarEmail: string,
+  username: string,
 |}
 
 const updateSettings = (

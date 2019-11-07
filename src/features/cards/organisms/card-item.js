@@ -108,8 +108,8 @@ const CardHeader = ({ card }) => (
     <Link to={`/open/${card.id}`}>
       <H2 narrow>{card.title}</H2>
     </Link>
-    <Row basis="25%" justify="flex-end" gap="1.4em" align="center">
-      {card.meta.canEdit && (
+    {card.meta.canEdit && (
+      <Row basis="25%" justify="flex-end" gap="1.4em" align="center">
         <Menu.Context
           trigger={<Icon name="dots-v" height="1.6rem" />}
           menu={({ close }) => (
@@ -131,8 +131,8 @@ const CardHeader = ({ card }) => (
             </>
           )}
         />
-      )}
-    </Row>
+      </Row>
+    )}
   </HeadingLine>
 )
 
@@ -172,11 +172,18 @@ CardDeleteModalButton.propTypes = {
   }).isRequired,
 }
 
+const media = {
+  mobile: "@media screen and (max-width: 500px)",
+}
+
 const CardBox = styled.article`
   box-sizing: border-box;
   overflow-y: hidden;
   padding: 2rem;
-  max-height: ${(p) => (p.maximized ? "auto" : "24rem")};
+
+  ${media.mobile} {
+    padding: 2rem 1rem;
+  }
 `
 
 const GridCard = styled.div`
@@ -185,15 +192,22 @@ const GridCard = styled.div`
     "flag header"
     "flag content"
     "flag footer";
-  grid-template-rows: 2rem 10rem 3rem;
+  grid-template-rows: auto 14rem auto;
   grid-template-columns: 50px 1fr;
   grid-gap: 8px;
 
   ${(p) =>
     p.maximized &&
     css`
-      grid-template-rows: 2rem 1fr 3rem;
+      grid-template-rows: auto 1fr auto;
     `}
+
+  ${media.mobile} {
+    grid-template-areas:
+      "flag header"
+      "content content"
+      "footer footer";
+  }
 `
 
 const HeadingLine = styled.div`
@@ -227,6 +241,10 @@ const CellCardFooter = styled.div`
   align-items: flex-end;
   line-height: 2.4rem;
   padding: 8px 0;
+
+  ${media.mobile} {
+    padding: 0;
+  }
 `
 
 const CellCardFlag = styled.div`

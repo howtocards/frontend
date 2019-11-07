@@ -1,11 +1,10 @@
 // @flow
 /* eslint-disable react/prop-types */
 import * as React from "react"
-import PropTypes from "prop-types"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 
-import { WithThemeToggler } from "@lib/theme-context"
+import { useTheme } from "@lib/theme-context"
 import * as Menu from "@lib/context-menu"
 import { Container } from "@howtocards/ui"
 import { SearchBar } from "@features/search"
@@ -38,7 +37,7 @@ const linksForUser = ({ account }) => (
       trigger={<span>{account.displayName || "Profile"}</span>}
       menu={({ close }) => (
         <>
-          <Menu.Item as={Link} to={`/user/${account.id}`} onClick={close}>
+          <Menu.Item as={Link} to={`/@${account.username}`} onClick={close}>
             Profile: {account.email}
           </Menu.Item>
           <Menu.Item as={Link} to="/settings" onClick={close}>
@@ -54,24 +53,19 @@ const linksForUser = ({ account }) => (
   </>
 )
 
-linksForUser.propTypes = {
-  account: PropTypes.shape({
-    user: PropTypes.shape({
-      id: PropTypes.number,
-      email: PropTypes.string,
-    }),
-  }).isRequired,
-}
-
 const linksForAnonym = () => <NavLink to="/join">Join</NavLink>
 
-const ToggleThemeButton = () => (
-  <WithThemeToggler
-    render={({ toggle, isDark }) => (
-      <NavItem onClick={toggle}>{isDark ? "🌔" : "☀️"}</NavItem>
-    )}
-  />
-)
+const themeEmoji = {
+  dark: "🌚",
+  light: "🌝",
+  auto: "🌗",
+}
+
+const ToggleThemeButton = () => {
+  const { theme, toggle } = useTheme()
+
+  return <NavItem onClick={toggle}>{themeEmoji[theme]}</NavItem>
+}
 
 const HeaderBox = styled.header`
   display: flex;
@@ -79,13 +73,15 @@ const HeaderBox = styled.header`
   justify-content: center;
   z-index: 1000;
   box-sizing: border-box;
-  box-shadow: 0 10px 20px rgba(36, 37, 38, 0.08);
+  box-shadow: 0 -1rem 4rem rgba(36, 37, 38, 0.3);
 
   & > div > * + * {
     margin-left: 2rem;
   }
 
-  ${({ theme }) => theme.embed.card}
+  color: var(--card-text);
+  background-color: var(--card);
+  border-color: var(--borders);
 `
 
 const SearchBox = styled.div`
@@ -106,10 +102,10 @@ const NavItem = styled.a`
   user-select: none;
 
   &:hover {
-    color: ${({ theme }) => theme.palette.primary.initial.background};
+    color: var(--primary);
   }
 
-  ${({ theme }) => theme.embed.link}
+  color: var(--secondary);
 `
 
 const NavLink = NavItem.withComponent(Link)

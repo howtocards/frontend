@@ -14,7 +14,7 @@ import {
   usefulMarkClicked,
 } from "@features/cards"
 
-import { $card, cardLoading } from "./model"
+import { $card, $error, type Errors, Gate } from "./model"
 
 type Props = {
   match: {
@@ -26,27 +26,48 @@ type Props = {
 
 export const CardViewPage = ({ match }: Props) => {
   const cardId = parseInt(match.params.cardId, 10)
-
-  React.useEffect(() => {
-    cardLoading({ cardId })
-  }, [cardId])
-
   const current = useStore($card)
+  const error = useStore($error)
 
   return (
-    <CardsCommonTemplate sidebar={<Sidebar card={current} />}>
-      {current ? (
-        <CardItem
-          key={current.id}
-          maximized
-          card={current}
-          onUsefulClick={usefulMarkClicked}
-        />
-      ) : (
-        <CardSkeleton />
-      )}
-    </CardsCommonTemplate>
+    <>
+      <Gate cardId={cardId} />
+      <CardsCommonTemplate
+        error={errorToMessage(error)}
+        sidebar={<Sidebar card={current} />}
+      >
+        <SkeletonCard card={current} />
+      </CardsCommonTemplate>
+    </>
   )
+}
+
+type SkeletonProps = {
+  card: ?Card,
+}
+
+const SkeletonCard = ({ card }: SkeletonProps) => {
+  if (!card) {
+    return <CardSkeleton />
+  }
+
+  return (
+    <CardItem
+      card={card}
+      key={card.id}
+      maximized
+      onUsefulClick={usefulMarkClicked}
+    />
+  )
+}
+
+function errorToMessage(error: ?Errors) {
+  switch (error) {
+    case "id_not_found":
+      return "Card not found. Use search to find another"
+    default:
+      return undefined
+  }
 }
 
 type SidebarProps = {

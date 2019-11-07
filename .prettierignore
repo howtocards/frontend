@@ -1,3 +1,4 @@
 build
 .docz/cache
 .docz/dist
+flow-typed

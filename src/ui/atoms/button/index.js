@@ -21,7 +21,10 @@ export const Button = styled.button`
     border-color: var(--primary);
   }
 
-  &:disabled, &:disabled:hover, &:disabled:focus, &:disabled:active {
+  &:disabled,
+  &:disabled:hover,
+  &:disabled:focus,
+  &:disabled:active {
     background-color: var(--canvas);
     border-color: var(--canvas);
     color: var(--bw40);
@@ -35,8 +38,6 @@ export const Button = styled.button`
       line-height: 1rem;
     `}
 
-
-  ${({ theme }) => theme.embed.button.primary}
   ${({ grow }) =>
     grow &&
     css`
@@ -68,7 +69,22 @@ export const ButtonPrimary = styled(Button)`
 
 export const ZeroButton = styled.button`
   background-color: transparent;
-  border-color: transparent;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-size: 1.4rem;
+  line-height: 1.4rem;
+  outline: none;
+  padding: 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 120ms, color 120ms, border-color 120ms;
+
+  &:hover,
+  &:focus {
+    background-color: var(--bw20);
+    border-color: var(--bw20);
+  }
 
   &:focus {
     outline: none;

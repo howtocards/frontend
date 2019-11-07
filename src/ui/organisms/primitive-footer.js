@@ -14,7 +14,7 @@ export const PrimitiveFooter = () => (
 const FooterBlock = styled.footer`
   display: flex;
   flex-flow: row;
-  border-top: 1px solid ${({ theme }) => theme.palette.decoration.borders};
+  border-top: 1px solid var(--borders);
   padding: 2rem 0;
   width: 100%;
   justify-content: center;
