@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "jest/valid-expect": "off",
+    "unicorn/filename-case": "off",
+    "import/no-extraneous-dependencies": "off"
+  },
+  "globals": {
+    "cy": "readonly"
+  }
+}
