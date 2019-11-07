@@ -21,6 +21,7 @@ jobs:
       if: type = pull_request
       script:
         - yarn
+        - yarn test
         - yarn e2e:run
     - stage: build
       script:
