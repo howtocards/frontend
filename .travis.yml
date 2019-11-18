@@ -37,8 +37,8 @@ jobs:
       if: branch = dev AND type != pull_request
       script:
         - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-        - docker build -t "$DOCKER_IMAGE:nightly" .
-        - docker push $DOCKER_IMAGE:nightly
+        - docker build -t "$DOCKER_IMAGE:dev" .
+        - docker push $DOCKER_IMAGE:dev
 
     - stage: deploy dev
       if: branch = dev AND type != pull_request
