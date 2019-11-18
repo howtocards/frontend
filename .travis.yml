@@ -27,26 +27,31 @@ jobs:
       script:
         - yarn
         - NODE_ENV=test yarn test
+
     - stage: screenshot
       if: type = pull_request
       script:
         - yarn e2e:run
-    - stage: build dev
+
+    - stage: push dev
       if: branch = dev AND type != pull_request
       script:
         - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
         - docker build -t "$DOCKER_IMAGE:nightly" .
         - docker push $DOCKER_IMAGE:nightly
+
     - stage: deploy dev
       if: branch = dev AND type != pull_request
       script:
         - curl -X POST https://app.buddy.works/sergeysova/frontend/pipelines/pipeline/173542/trigger-webhook?token=$BUDDY_TOKEN&revision=$TRAVIS_COMMIT
-    - stage: build latest
+
+    - stage: push latest
       if: branch = master AND type != pull_request
       script:
         - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
         - docker build -t \"$DOCKER_IMAGE:latest\" .
         - docker push $DOCKER_IMAGE:latest
+
     - stage: push tag
       if: tag =~ /^v\d+\.\d+\.\d+/
       script:
