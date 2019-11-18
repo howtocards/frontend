@@ -37,6 +37,9 @@ jobs:
         - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
         - docker build -t "$DOCKER_IMAGE:nightly" .
         - docker push $DOCKER_IMAGE:nightly
+    - stage: deploy dev
+      if: branch = dev AND type != pull_request
+      script:
         - curl -X POST https://app.buddy.works/sergeysova/frontend/pipelines/pipeline/173542/trigger-webhook?token=$BUDDY_TOKEN&revision=$TRAVIS_COMMIT
     - stage: build latest
       if: branch = master AND type != pull_request
