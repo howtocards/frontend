@@ -49,7 +49,7 @@ jobs:
       if: branch = master AND type != pull_request
       script:
         - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-        - docker build -t \"$DOCKER_IMAGE:latest\" .
+        - docker build -t "$DOCKER_IMAGE:latest" .
         - docker push $DOCKER_IMAGE:latest
 
     - stage: push tag
@@ -57,5 +57,5 @@ jobs:
       script:
         - yarn
         - yarn e2e:run
-        - docker build -t \"$DOCKER_IMAGE:$TRAVIS_TAG\" .
+        - docker build -t "$DOCKER_IMAGE:$TRAVIS_TAG" .
         - docker push $DOCKER_IMAGE:$TRAVIS_TAG
