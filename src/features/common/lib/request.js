@@ -31,9 +31,9 @@ export const request = (method: Method, url: string, options: Options = {}) => {
   const { body, ...restOptions } = options
 
   const config = new Request(uri, {
+    ...restOptions,
     method,
     headers,
-    ...restOptions,
     body: createBody(options, headers),
   })
 
