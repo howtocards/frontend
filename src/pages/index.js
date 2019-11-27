@@ -34,6 +34,7 @@ export const routes = () => [
     component: CardCreatePage,
   },
   {
+    // https://github.com/howtocards/preview-worker#api
     path: "/open/:cardId",
     exact: true,
     component: CardViewPage,
