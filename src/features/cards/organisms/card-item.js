@@ -11,6 +11,8 @@ import * as Menu from "@lib/context-menu"
 import { CardNarrow, H2, Icon, Link, Modal, Text } from "@howtocards/ui"
 
 export const CardItem = ({ onUsefulClick, card, maximized }) => (
+  // preview-worker depends on card structure
+  // https://github.com/howtocards/preview-worker#api
   <CardNarrow>
     <CardBox maximized={maximized}>
       <GridCard maximized={maximized}>
