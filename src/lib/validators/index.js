@@ -7,7 +7,7 @@ export const emailValidator = (value: string) => {
   return null
 }
 
-const passwordRegexp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\d)(?=.*?[#?!@$%^&*-]).{8,}$/
+const passwordRegexp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\d)(?=.*?[#?!@$%^&*-_]).{8,}$/
 export const passwordValidator = (value: string) => {
   if (!passwordRegexp.test(value))
     return "Your password should include at least uppercase, lowercase, number and special symbol"
