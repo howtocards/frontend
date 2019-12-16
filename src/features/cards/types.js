@@ -4,7 +4,7 @@ export type Card = {
   id: number,
   title: string,
   createdAt: string,
-  meta: {
+  permissions: {
     canEdit: boolean,
     isUseful: boolean,
   },

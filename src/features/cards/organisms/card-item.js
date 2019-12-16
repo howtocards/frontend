@@ -19,7 +19,7 @@ export const CardItem = ({ onUsefulClick, card, maximized }) => (
         <CellCardFlag>
           <CardFlagWithNumber
             usefulFor={card.usefulFor}
-            isUseful={card.meta.isUseful}
+            isUseful={card.permissions.isUseful}
             onUsefulClick={() => onUsefulClick(card.id)}
           />
         </CellCardFlag>
@@ -46,7 +46,7 @@ CardItem.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
-    meta: PropTypes.shape({
+    permissions: PropTypes.shape({
       canEdit: PropTypes.bool,
       isUseful: PropTypes.bool,
     }).isRequired,
@@ -110,7 +110,7 @@ const CardHeader = ({ card }) => (
     <Link to={`/open/${card.id}`}>
       <H2 narrow>{card.title}</H2>
     </Link>
-    {card.meta.canEdit && (
+    {card.permissions.canEdit && (
       <Row basis="25%" justify="flex-end" gap="1.4em" align="center">
         <Menu.Context
           trigger={<Icon name="dots-v" height="1.6rem" />}
@@ -265,7 +265,7 @@ CardHeader.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
-    meta: PropTypes.shape({
+    permissions: PropTypes.shape({
       canEdit: PropTypes.bool,
       isUseful: PropTypes.bool,
     }).isRequired,

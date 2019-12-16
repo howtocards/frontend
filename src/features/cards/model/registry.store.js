@@ -40,7 +40,7 @@ $registry.on(setUsefulMark, (registry, params) => {
 })
 
 $registry.on(setUsefulMark.done, (registry, { params, result }) => {
-  if (result.card.meta.isUseful === params.previousValue) {
+  if (result.card.permissions.isUseful === params.previousValue) {
     return registry
   }
 
@@ -73,8 +73,8 @@ export const cardsToObject = (list: Card[]) =>
 
 const setUseful = (card, isUseful) => ({
   ...card,
-  meta: {
-    ...card.meta,
+  permissions: {
+    ...card.permissions,
     isUseful,
   },
 })
