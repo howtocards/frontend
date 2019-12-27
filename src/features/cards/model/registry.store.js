@@ -31,7 +31,7 @@ $registry.on(setUsefulMark, (registry, params) => {
   if (!card) return registry
 
   // eslint-disable-next-line no-param-reassign
-  params.previousValue = card.meta.isUseful
+  params.previousValue = card.permissions.isUseful
 
   return {
     ...registry,
