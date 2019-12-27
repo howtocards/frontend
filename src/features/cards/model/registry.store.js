@@ -20,7 +20,8 @@ sample(
   usefulMarkClicked,
   (registry, cardId) => registry[cardId],
 ).watch((card) => {
-  if (card) setUsefulMark({ cardId: card.id, isUseful: !card.permissions.isUseful })
+  if (card)
+    setUsefulMark({ cardId: card.id, isUseful: !card.permissions.isUseful })
 })
 
 $registry.reset(clearRegistry)
