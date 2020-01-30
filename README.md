@@ -1,6 +1,6 @@
 # @howtocards/frontend
 
-[![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/howtocards/howtocards) [![](https://img.shields.io/badge/feature/slices-0.1.0-orange)](https://featureslices.dev)
+[![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/howtocards/howtocards) [![](https://img.shields.io/badge/feature/slices-0.1-orange)](https://featureslices.dev)
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg)](#contributors)
 
