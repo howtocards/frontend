@@ -20,7 +20,8 @@ sample(
   usefulMarkClicked,
   (registry, cardId) => registry[cardId],
 ).watch((card) => {
-  if (card) setUsefulMark({ cardId: card.id, isUseful: !card.meta.isUseful })
+  if (card)
+    setUsefulMark({ cardId: card.id, isUseful: !card.permissions.isUseful })
 })
 
 $registry.reset(clearRegistry)
@@ -31,7 +32,7 @@ $registry.on(setUsefulMark, (registry, params) => {
   if (!card) return registry
 
   // eslint-disable-next-line no-param-reassign
-  params.previousValue = card.meta.isUseful
+  params.previousValue = card.permissions.isUseful
 
   return {
     ...registry,
@@ -40,7 +41,7 @@ $registry.on(setUsefulMark, (registry, params) => {
 })
 
 $registry.on(setUsefulMark.done, (registry, { params, result }) => {
-  if (result.card.meta.isUseful === params.previousValue) {
+  if (result.card.permissions.isUseful === params.previousValue) {
     return registry
   }
 
@@ -73,8 +74,8 @@ export const cardsToObject = (list: Card[]) =>
 
 const setUseful = (card, isUseful) => ({
   ...card,
-  meta: {
-    ...card.meta,
+  permissions: {
+    ...card.permissions,
     isUseful,
   },
 })
