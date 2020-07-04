@@ -1,47 +1,12 @@
 # @howtocards/frontend
 
-[![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/howtocards/howtocards) [![](https://img.shields.io/badge/feature/slices-0.1-orange)](https://featureslices.dev/v0.1)
+> This is new version of Howtocards. If you want previous, see `master` branch
 
+[![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/howtocards/howtocards) [![](https://img.shields.io/badge/feature/slices-1.0-blue)](https://featureslices.dev/v1.0)
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg)](#contributors) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](http://prettier.io)
 
-## Aliases
-
-- `@features` resolves to `./src/features/`
-- `@howtocards/ui` resolves to `./src/ui/`
-- `@lib` resolves to `./src/lib/`
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Lints the code an launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-Use `npm run test:code` to run only `jest`<br>
-And `npm run test:lint` to run only `eslint`<br>
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run commit`
+### `yarn commit`
 
 **Please, always commit with this tool!**
 Prompts commit type, scope and message.<br>

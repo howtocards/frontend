@@ -5,23 +5,30 @@ on:
     branches:
       - master
       - dev
+    tags:
+      - 'v*'
 
 jobs:
   docker:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Publish Docker
-        uses: elgohr/Publish-Docker-Github-Action@2.8
+        uses: sergeysova/docker-publish-action@v1
         with:
-          name: howtocards/frontend/frontend
-          username: sergeysova
-          password: ${{ secrets.GITHUB_TOKEN }}
-          snapshot: true
-          tagging: ${{contains(github.ref, 'refs/tags/v')}}
           registry: docker.pkg.github.com
-      - name: Trigger Deploy Dev
-        run: |
-          curl -XPOST -u "sergeysova:${{secrets.GITHUB_TOKEN}}" -H "Accept: application/vnd.github.everest-preview+json"  -H "Content-Type: application/json" https://api.github.com/repos/howtocards/releases/dispatches --data '{"event_type": "build_application"}'
+          image: howtocards/frontend/frontend
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          tag_extra: next
+          tag_semver: skip
+          semver_higher: true
+      # - name: Trigger deploy to Dev
+      #   uses: peter-evans/repository-dispatch@v1
+      #   with:
+      #     token: ${{ secrets.TRIGGER_DEPLOY_TOKEN }}
+      #     repository: howtocards/releases
+      #     event-type: deploy-dev
+      #     client-payload: '{"github": ${{ toJson(github) }}}'

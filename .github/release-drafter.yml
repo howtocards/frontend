@@ -1,0 +1,19 @@
+categories:
+  - title: Features
+    labels:
+      - feature
+      - enhancement
+  - title: Changes
+    labels:
+      - refactor
+      - chore
+  - title: Bug Fixes
+    labels:
+      - fix
+      - bug
+  - title: Tests
+    labels:
+      - test
+change-template: '- $TITLE #$NUMBER (@$AUTHOR)'
+template: |
+  $CHANGES
