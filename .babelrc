@@ -1,0 +1,7 @@
+{
+  "env": {},
+  "plugins": [
+    ["styled-components", { "displayName": true, "ssr": true }],
+    ["effector/babel-plugin", { "addLoc": true }]
+  ]
+}
