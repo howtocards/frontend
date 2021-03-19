@@ -2,6 +2,10 @@
 
 [![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/howtocards/howtocards) [![](https://img.shields.io/badge/feature/slices-0.1-orange)](https://featureslices.dev/v0.1)
 
+> Archived: see [cardbox] and [accesso]
+
+[cardbox]: https://github.com/cardbox/frontend
+[accesso]: https://github.com/accesso-app/frontend
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg)](#contributors)
 
